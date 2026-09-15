@@ -1,0 +1,230 @@
+/* User Top Navbar - Mobile Responsive Transparent */
+.navbar {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 15px rgba(255, 204, 0, 0.2);
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  height: 75px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Logo Section */
+.logo {
+  display: flex;
+  align-items: center;
+  height: 60px; /* Reduced from 65px */
+  transition: transform 0.3s ease;
+}
+
+/* Removed hover effect */
+
+.logoImage {
+  max-height: 100%;
+  height: auto;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+/* Navigation Links Section */
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Wallet Container */
+.walletContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 8px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+}
+
+/* Removed hover effect */
+
+.walletBalance {
+  font-size: 11px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: rgba(255, 255, 255, 0.95);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.balanceAmount {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-white);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Navigation Button */
+.navButton {
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--link-color);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 3px 12px rgba(255, 255, 255, 0.25);
+  min-width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Removed hover effect */
+
+.navButton:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 12px rgba(255, 255, 255, 0.25);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 10px 20px;
+    height: 75px;
+    background: rgba(0, 0, 0, 0.7);
+  }
+  
+  .logo {
+    height: 55px; /* Reduced from 65px */
+  }
+  
+  .navLinks {
+    gap: 15px;
+  }
+  
+  .walletContainer {
+    padding: 6px 12px;
+  }
+  
+  .walletBalance {
+    font-size: 10px;
+  }
+  
+  .balanceAmount {
+    font-size: 13px;
+  }
+  
+  .navButton {
+    padding: 8px 16px;
+    font-size: 12px;
+    min-width: 90px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 8px 16px;
+    height: 65px;
+    background: rgba(0, 0, 0, 0.6);
+  }
+  
+  .logo {
+    height: 45px; /* Reduced from 55px */
+  }
+  
+  .navLinks {
+    gap: 12px;
+  }
+  
+  .walletContainer {
+    padding: 5px 10px;
+  }
+  
+  .walletBalance {
+    font-size: 9px;
+    margin-bottom: 3px;
+  }
+  
+  .balanceAmount {
+    font-size: 12px;
+  }
+  
+  .navButton {
+    padding: 7px 14px;
+    font-size: 11px;
+    min-width: 80px;
+  }
+}
+
+@media (max-width: 360px) {
+  .navbar {
+    padding: 6px 12px;
+    height: 60px;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  
+  .logo {
+    height: 40px; /* Reduced from 50px */
+  }
+  
+  .navLinks {
+    gap: 8px;
+  }
+  
+  .walletContainer {
+    padding: 4px 8px;
+  }
+  
+  .walletBalance {
+    font-size: 8px;
+  }
+  
+  .balanceAmount {
+    font-size: 11px;
+  }
+  
+  .navButton {
+    padding: 6px 12px;
+    font-size: 10px;
+    min-width: 70px;
+  }
+}
+
+/* High DPI Displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .navbar {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .walletContainer {
+    border-width: 0.5px;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .navbar {
+    position: static;
+    background: var(--glass-bg);
+    box-shadow: none;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .navButton {
+    display: none;
+  }
+}

@@ -1,0 +1,264 @@
+/* ── HomeBannerCarousel.module.css ─────────────────────────────────── */
+
+.carouselSection {
+  width: 100%;
+  margin: 0 0 24px 0;
+  font-family: inherit;
+}
+
+/* ── Admin header ──────────────────────────────────────────────────── */
+.adminHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border-radius: 12px 12px 0 0;
+  border-bottom: 2px solid #4592ef;
+}
+
+.adminTitle {
+  margin: 0;
+  color: #e0e0e0;
+  font-size: 1rem;
+  font-weight: 600;
+  flex: 1;
+}
+
+.uploadBtn {
+  padding: 8px 18px;
+  background: linear-gradient(135deg, #4592ef, var(--primary-color));
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 2px 8px rgba(69, 146, 239, 0.4);
+}
+.uploadBtn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(69, 146, 239, 0.6);
+}
+.uploadBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── Empty state ─────────────────────────────────────────────────────── */
+.emptyState {
+  padding: 32px;
+  text-align: center;
+  background: rgba(255,255,255,0.04);
+  border: 2px dashed rgba(255,255,255,0.15);
+  border-radius: 0 0 12px 12px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+/* ── Carousel wrapper ────────────────────────────────────────────────── */
+.carouselWrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #0a0a0a;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  aspect-ratio: 16 / 5;   /* wide banner ratio */
+}
+
+/* ── Slides ──────────────────────────────────────────────────────────── */
+.slidesContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.7s ease;
+  pointer-events: none;
+}
+
+.slide.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.slideImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── Delete button on slide ──────────────────────────────────────────── */
+.deleteBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(220, 38, 38, 0.85);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, transform 0.2s;
+  z-index: 10;
+  backdrop-filter: blur(4px);
+}
+.deleteBtn:hover {
+  background: rgba(185, 28, 28, 1);
+  transform: scale(1.1);
+}
+
+/* ── Arrows ──────────────────────────────────────────────────────────── */
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.45);
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  line-height: 1;
+  padding: 0 14px;
+  height: 52px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.2s, transform 0.2s;
+  z-index: 5;
+  backdrop-filter: blur(4px);
+}
+.arrow:hover {
+  background: rgba(69, 146, 239, 0.7);
+  transform: translateY(-50%) scale(1.05);
+}
+.arrowLeft  { left: 10px; }
+.arrowRight { right: 10px; }
+
+/* ── Dots ────────────────────────────────────────────────────────────── */
+.dots {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 5;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.6);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.25s, border-color 0.25s, transform 0.2s;
+}
+.dot:hover { transform: scale(1.2); }
+.dotActive {
+  background: #4592ef;
+  border-color: var(--link-color);
+  transform: scale(1.25);
+}
+
+/* ── Admin grid (thumbnail management) ──────────────────────────────── */
+.adminGrid {
+  margin-top: 12px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.adminGridLabel {
+  margin: 0 0 10px;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.gridRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.gridThumb {
+  position: relative;
+  width: 100px;
+  height: 64px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.gridThumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gridDeleteBtn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(220, 38, 38, 0.9);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+.gridDeleteBtn:hover { background: #b91c1c; }
+
+/* ── Mobile responsive ───────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .carouselWrapper {
+    aspect-ratio: 16 / 6;
+    border-radius: 8px;
+  }
+
+  .arrow {
+    font-size: 1.4rem;
+    padding: 0 10px;
+    height: 40px;
+  }
+
+  .arrowLeft  { left: 4px; }
+  .arrowRight { right: 4px; }
+
+  .dot { width: 8px; height: 8px; }
+
+  .gridThumb { width: 80px; height: 52px; }
+
+  .adminHeader { flex-wrap: wrap; }
+  .uploadBtn { width: 100%; text-align: center; }
+}
+
+@media (max-width: 480px) {
+  .carouselWrapper {
+    aspect-ratio: 4 / 3;
+  }
+
+  .arrow { display: none; }   /* hidden on very small — use swipe-like dots */
+}

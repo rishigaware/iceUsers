@@ -1,0 +1,769 @@
+/* Main Container */
+.container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 10px 1rem 60px 1rem;
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* Loading State */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1rem;
+  gap: 12px;
+  color: var(--text-white, #ffffff);
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+/* Search and Filter Section */
+.searchSortWrapper {
+  width: 100%;
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.searchInput {
+  flex: 1;
+  min-width: 220px;
+  padding: 10px 14px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 0.92rem;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.searchInput:focus {
+  border-color: var(--primary-color, #ffcc00);
+  box-shadow: 0 0 0 2px rgba(255, 204, 0, 0.15);
+}
+
+.categoryDropdown {
+  min-width: 180px;
+  padding: 10px 14px;
+  background: rgba(18, 18, 24, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 0.92rem;
+  outline: none;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.categoryDropdown:focus {
+  border-color: var(--primary-color, #ffcc00);
+}
+
+.websitesCount {
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 14px;
+  font-weight: 500;
+}
+
+/* Website Cards */
+.websiteCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.websiteCard:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 204, 0, 0.2);
+}
+
+.websiteInfo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+.websiteLogo {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: #000;
+  border: 1px solid rgba(255, 204, 0, 0.25);
+  flex-shrink: 0;
+}
+
+.websiteDetails {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+.websiteUrlLink {
+  font-size: 0.82rem;
+  color: #60a5fa;
+  text-decoration: none;
+  padding: 3px 8px;
+  background: rgba(96, 165, 250, 0.1);
+  border: 1px solid rgba(96, 165, 250, 0.25);
+  border-radius: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;
+  transition: all 0.2s ease;
+}
+
+.websiteUrlLink:hover {
+  background: rgba(96, 165, 250, 0.2);
+  text-decoration: underline;
+}
+
+.adminUrlLink {
+  font-size: 0.82rem;
+  color: #fbbf24;
+  text-decoration: none;
+  padding: 3px 8px;
+  background: rgba(251, 191, 36, 0.12);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  border-radius: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.adminUrlLink:hover {
+  background: rgba(251, 191, 36, 0.22);
+  color: #fde047;
+  text-decoration: underline;
+}
+
+.categoryTag {
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(255, 204, 0, 0.12);
+  color: var(--primary-color, #ffcc00);
+  border: 1px solid rgba(255, 204, 0, 0.25);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.coinInfo {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.75);
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.statusTag {
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.activeStatus {
+  background: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.inactiveStatus {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.websiteActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.actionButton {
+  padding: 8px 18px;
+  background: var(--primary-color, #ffcc00);
+  color: #000;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.88rem;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.actionButton:hover {
+  background: #e6b800;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 204, 0, 0.35);
+}
+
+/* Pagination */
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+}
+
+.paginationButton {
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.88rem;
+}
+
+.paginationButton:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.paginationButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.paginationButton.active {
+  background: var(--primary-color, #ffcc00);
+  color: #000;
+  font-weight: 700;
+  border-color: var(--primary-color, #ffcc00);
+}
+
+.paginationInfo {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-left: 8px;
+}
+
+/* ==========================================================================
+   Modal Overlay & Content for Creating ID
+   ========================================================================== */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 16px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  animation: modalFadeIn 0.25s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modalContent {
+  background: rgba(18, 18, 24, 0.98);
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 16px;
+  padding: 24px;
+  margin: auto;
+  border: 1px solid rgba(255, 204, 0, 0.25);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 204, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  box-sizing: border-box;
+  color: #ffffff;
+  animation: modalSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Close Button (Clean Circular Button in Top-Right Corner) */
+.closeButton {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1.35rem;
+  font-weight: 300;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 10;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.closeButton:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.5);
+  color: #ff5555;
+  transform: scale(1.08);
+}
+
+/* Modal Header */
+.modalHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.modalHeader .websiteLogo {
+  width: 58px;
+  height: 58px;
+  border-radius: 12px;
+  object-fit: contain;
+  background: #000;
+  border: 1px solid rgba(255, 204, 0, 0.3);
+}
+
+.modalHeader h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--primary-color, #ffcc00);
+  margin: 0;
+  letter-spacing: 0.3px;
+}
+
+.modalLinksGroup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.websiteLink {
+  color: #60a5fa;
+  font-size: 0.82rem;
+  word-break: break-all;
+  text-decoration: none;
+  padding: 4px 10px;
+  background: rgba(96, 165, 250, 0.1);
+  border-radius: 6px;
+  border: 1px solid rgba(96, 165, 250, 0.2);
+  transition: all 0.2s ease;
+  max-width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.websiteLink:hover {
+  background: rgba(96, 165, 250, 0.2);
+  text-decoration: underline;
+}
+
+.adminModalLink {
+  color: #fbbf24;
+  font-size: 0.82rem;
+  word-break: break-all;
+  text-decoration: none;
+  padding: 4px 10px;
+  background: rgba(251, 191, 36, 0.12);
+  border-radius: 6px;
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  transition: all 0.2s ease;
+  max-width: 100%;
+  text-align: center;
+  font-weight: 600;
+  box-sizing: border-box;
+}
+
+.adminModalLink:hover {
+  background: rgba(251, 191, 36, 0.22);
+  color: #fde047;
+  text-decoration: underline;
+}
+
+/* Modal Body */
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Coin Conversion Info */
+.coinConversionInfo {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.coinInfoRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  flex-wrap: wrap;
+  padding: 3px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  box-sizing: border-box;
+}
+
+.coinInfoRow:last-child {
+  border-bottom: none;
+}
+
+.coinLabel {
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+  font-size: 0.86rem;
+}
+
+.coinValue {
+  color: #4ade80;
+  font-weight: 700;
+  font-size: 0.9rem;
+  background: rgba(74, 222, 128, 0.1);
+  padding: 2px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(74, 222, 128, 0.25);
+  text-align: right;
+}
+
+/* Form Input Groups */
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.inputLabel {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.86rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.inputField {
+  width: 100%;
+  padding: 10px 14px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 0.92rem;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.inputField:focus {
+  border-color: var(--primary-color, #ffcc00);
+  box-shadow: 0 0 0 2px rgba(255, 204, 0, 0.18);
+}
+
+.inputField::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+/* Coin Conversion Result Box */
+.coinConversionResult {
+  background: rgba(255, 204, 0, 0.1);
+  border: 1px solid rgba(255, 204, 0, 0.25);
+  border-radius: 8px;
+  padding: 10px 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Checkbox & Refund Policy */
+.checkboxLabel {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.checkboxLabel:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 204, 0, 0.3);
+}
+
+.checkbox {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--primary-color, #ffcc00);
+  margin-top: 2px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.checkboxText {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.84rem;
+  line-height: 1.35;
+}
+
+.refundMessage {
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 8px;
+  padding: 8px 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.refundText {
+  color: #4ade80;
+  font-size: 0.82rem;
+  margin: 0;
+  line-height: 1.35;
+}
+
+/* Modal Actions */
+.modalActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.submitButton {
+  flex: 2;
+  padding: 11px 16px;
+  background: var(--primary-color, #ffcc00);
+  color: #000000;
+  font-weight: 700;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.92rem;
+  transition: all 0.2s ease;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.submitButton:hover:not(:disabled) {
+  background: #e6b800;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 204, 0, 0.35);
+}
+
+.submitButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cancelButton {
+  flex: 1;
+  padding: 11px 16px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  cursor: pointer;
+  font-size: 0.92rem;
+  transition: background 0.2s ease;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.cancelButton:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.error {
+  color: #f87171;
+  font-size: 0.85rem;
+  text-align: center;
+  margin: 4px 0 0 0;
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .websiteCard {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 14px;
+  }
+
+  .websiteActions {
+    width: 100%;
+    justify-content: flex-end;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 8px;
+  }
+
+  .actionButton {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .modalContent {
+    max-width: 480px;
+    padding: 20px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 8px 10px 50px 10px;
+  }
+
+  .searchSortWrapper {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .searchInput,
+  .categoryDropdown {
+    min-width: 100%;
+    width: 100%;
+  }
+
+  .modal {
+    padding: 10px;
+  }
+
+  .modalContent {
+    max-width: 100%;
+    padding: 16px 12px;
+    border-radius: 12px;
+    gap: 12px;
+  }
+
+  .modalHeader h2 {
+    font-size: 1.25rem;
+  }
+
+  .modalHeader .websiteLogo {
+    width: 48px;
+    height: 48px;
+  }
+
+  .coinConversionInfo {
+    padding: 8px 10px;
+    gap: 6px;
+  }
+
+  .coinInfoRow {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3px 0;
+  }
+
+  .coinLabel {
+    font-size: 0.8rem;
+  }
+
+  .coinValue {
+    font-size: 0.84rem;
+    padding: 2px 6px;
+  }
+
+  .inputField {
+    padding: 9px 12px;
+    font-size: 0.88rem;
+  }
+
+  .modalActions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .submitButton,
+  .cancelButton {
+    width: 100%;
+    padding: 11px;
+    font-size: 0.9rem;
+  }
+}

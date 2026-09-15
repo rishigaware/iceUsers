@@ -1,0 +1,251 @@
+/* DepositPopup.module.css */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .popup {
+    background: #111111 !important;
+  border: 1px solid rgba(255, 204, 0, 0.3) !important;
+    padding: 20px;
+    border-radius: 15px;
+    width: 400px;
+    position: relative;
+    margin: 10px;
+  }
+  
+  .closeButton {
+    position: absolute;
+    top:-22px;
+    right: -25px;
+    background: none;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+    color: var(--link-color);
+  }
+  
+  .heading {
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--link-color);
+  }
+  
+  .inputLabel {
+    display: block;
+    margin: 15px 0;
+    color: var(--link-color);
+  }
+  .wallet{
+    color: var(--link-color);
+  }
+  
+  .input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    color: var(--link-color);
+  }
+  
+  .submitButton {
+    width: 100%;
+    margin-top: 5px;
+    padding: 10px;
+    background-color: var(--link-color);
+    color: var(--text-white);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+  }
+  
+  .tabButtons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    color: var(--link-color);
+  }
+  
+  .tabButton {
+    flex: 1;
+    margin-top:20px;
+    margin-right: 5px;
+    padding: 20px 10px 20px 10px ;
+    cursor: pointer;
+    background-color: #f1f1f1;
+    border: none;
+    text-align: center;
+    color: var(--link-color);
+  }
+  
+  .activeTab {
+    background-color: var(--primary-color);
+    color: rgb(255, 255, 255);
+  }
+  
+  .tabContent {
+    margin-top: 20px;
+    color: var(--secondary-color);
+    font-size: 15px;
+  }
+  
+
+  .balanceContainer {
+    width: 80%; /* Set width to 80% */
+    margin: 20px auto; /* Center horizontally with auto margins */
+    padding: 20px; /* Add padding inside the container */
+    text-align: center; /* Center all text */
+    background-color: #f9f9f9; /* Light background color */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  }
+  
+  .amount {
+    font-size: 2rem; /* Twice the size of normal text */
+    font-weight: bold; /* Make the text bold */
+    color: var(--text-primary); /* Darker text color */
+    margin-bottom: 10px; /* Space below the amount */
+  }
+  
+  .wallet {
+    font-size: 1rem; /* Normal size for balance text */
+    color: var(--text-secondary); /* Slightly lighter text color */
+  }
+  
+  .depositName {
+    font-size: 1.5rem; /* Same size as the amount */
+    font-weight: bold; /* Bold text */
+    color: var(--text-primary); /* Darker text color */
+    margin-bottom: 10px; /* Space below the heading */
+    text-align: center; /* Center-align the text */
+  }
+  
+
+  .inputSection {
+    display: flex;
+    flex-direction: column; /* Stack the label and input vertically */
+    align-items: center; /* Center-align the label and input */
+  }
+  
+  .inputLabel {
+    margin-top: -10px;
+    font-size: 1.2rem; /* Adjust font size for the label */
+    font-weight: bold; /* Bold the label text */
+    margin-bottom: 10px; /* Add space below the label */
+    text-align: center; /* Center-align the label text */
+  }
+  
+  .input {
+    width: 50%; /* Set input width to 50% of the container */
+    padding: 10px; /* Add padding inside the input box */
+    font-size: 1rem; /* Adjust font size for input text */
+    text-align: center; /* Center-align the input text and placeholder */
+    border: 1px solid #ccc; /* Add a border around the input */
+    border-radius: 5px; /* Round the input corners */
+    outline: none; /* Remove outline when focused */
+    transition: border-color 0.1s; /* Add a smooth transition for focus */
+    margin-bottom: 10px;
+    appearance: none; /* Disable default browser styling (for modern browsers) */
+  -moz-appearance: textfield; /* Remove spinner for Firefox */
+  }
+  
+  .input::placeholder {
+    font-size: 10px;
+    text-align: center; /* Center-align placeholder text */
+    color: var(--text-secondary); /* Set a light gray color for the placeholder */
+  }
+  
+  .input:focus {
+    border-color: var(--link-color); /* Change border color on focus */
+  }
+  
+
+  .errorMessage {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+  
+
+
+  .copyContainer {
+    display: inline-flex;  /* Align text and icon on the same line */
+    align-items: center;   /* Vertically center the items */
+  }
+  
+  .copyIcon {
+    margin-left: 8px;      /* Space between text and icon */
+    cursor: pointer;      /* Change cursor to pointer on hover */
+    color: var(--link-color);        /* Icon color */
+    font-size: 16px;       /* Icon size */
+  }
+  
+  .copyIcon:hover {
+    color: var(--secondary-color);        /* Darker color on hover */
+  }
+
+
+  
+/* Adjust the height of the dropdown */
+/* Adjust the height of the dropdown */
+.dropdownLabel{
+    margin-top: 15px;
+}
+.dropdown {
+    height: 30px; /* Adjust as per requirement */
+    padding: 5px; /* Adjust padding */
+    font-size: 14px; /* Optional: Adjust font size */
+    border: 1px solid var(--primary-color); /* Optional: Add border for styling */
+    border-radius: 4px; /* Optional: Rounded corners */
+  }
+  
+  /* Adjust the dropdown list (the options) */
+  .dropdown option {
+    padding: 8px; /* Adjust padding of the dropdown items */
+    font-size: 14px; /* Adjust font size */
+  }
+  
+  /* Optional: Add a rule to adjust the positioning of the dropdown options */
+  .dropdownSection select:focus {
+    border-color: var(--primary-color); /* Adjust border color when the dropdown is focused */
+    outline: none; /* Remove the default outline */
+  }
+  
+  /* Optional: Add styles to ensure the dropdown is visually close to the select box */
+  .dropdownSection select {
+    position: relative;
+    z-index: 10; /* Ensure dropdown is above other elements */
+  }
+  
+
+.amountDisplay {
+    color: rgb(74, 104, 234); /* Set the font color to red */
+    font-size: 18px; /* Adjust font size if needed */
+    margin-bottom: 20px; /* Add some space below the amount display */
+  }
+  
+
+  .depositImage{
+    top: 0;
+    left: 0;
+    height: 50px;
+    width: 50px;
+  }
+
+  .idName{
+    color: #0b5ab0;
+    font-size: 10px;
+    margin-bottom: -50px;
+  }
+  .username{
+    color: var(--primary-color);
+    font-size: 12px;
+  }

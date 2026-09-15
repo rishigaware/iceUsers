@@ -1,0 +1,118 @@
+/* src/index.css */
+/* src/index.css */
+@import 'flowbite';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+
+:root {
+  /* Color Theme Variables (Yellow, Black, White) */
+  --primary-color: #ffcc00;
+  --secondary-color: #000000;
+  --accent-color: #ffcc00;
+  --success-color: #2ecc71;
+  --error-color: #ef4444;
+  --warning-color: #ffcc00;
+  
+  /* Gradients */
+  --main-gradient: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+  --success-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  --error-gradient: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+  --glass-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  
+  /* Text Colors */
+  --text-primary: #ffffff;
+  --text-secondary: #ffcc00;
+  --text-white: #ffffff;
+  --heading-color: #ffcc00;
+  --link-color: #ffcc00;
+  --whatsapp-color: #25D366;
+  --telegram-color: #0088cc;
+  --instagram-color: #E1306C;
+
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  
+  /* Text Colors */
+  --text-main: rgba(255, 255, 255, 0.87);
+  --text-muted: rgba(255, 255, 255, 0.6);
+  --text-dark: #213547;
+
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--main-gradient);
+  min-height: 100vh;
+  color: var(--text-primary);
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light dark;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: #535bf2;
+}
+
+/* Reset default padding */
+* {
+  box-sizing: border-box;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.25s;
+  outline: none;
+  /* Removes the default black outline */
+
+}
+
+button:hover {
+  border-color: #646cff;
+}
+
+
+/* Disable mouse wheel scroll on number inputs to prevent accidental value changes */
+input[type="number"] {
+  -moz-appearance: textfield;
+  /* Remove arrows in Firefox */
+  appearance: textfield;
+  /* Standard property */
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Prevent scroll wheel from changing number input values */
+input[type="number"]:focus {
+  pointer-events: auto;
+}

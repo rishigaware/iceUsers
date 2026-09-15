@@ -1,0 +1,21 @@
+.carousel {
+    width: 90vw; /* Ensure the carousel takes 90% of the viewport width */
+    margin: 0; /* Remove any margins */
+    margin-top: 40px;
+    margin-bottom: 200px;
+    height: 20vh; /* Set a fixed height for the carousel */
+    overflow: hidden; /* Prevent overflow if images are larger */
+  }
+  
+  .slide img {
+    width: 100%; /* Ensure the image fills the width of the container */
+    height: 50px; /* Adjust the height to fill the carousel container */
+    object-fit: cover; /* Ensure the image scales without distortion */
+    display: block; /* Ensure proper rendering */
+    padding: 5px;
+  }
+  
+  .image {
+    border-radius: 8px; /* Rounded corners for images */
+  }
+  

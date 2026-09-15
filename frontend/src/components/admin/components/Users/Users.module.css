@@ -1,0 +1,1039 @@
+/* Responsive Users Page Styles */
+.container {
+  width: 100vw;
+  min-height: 100vh;
+  background: var(--main-gradient);
+  padding-top: 80px;
+  padding-bottom: 100px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* Header Section */
+.headerSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  padding: 0 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.heading {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin: 0;
+  padding: 0.5rem;
+  text-shadow: 0 2px 4px rgba(255, 204, 0, 0.1);
+  flex: 1;
+  text-align: center;
+}
+
+.addUserButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--success-gradient);
+  color: var(--text-white);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+  white-space: nowrap;
+}
+
+.addUserButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+}
+
+.addIcon {
+  font-size: 1.2rem !important;
+}
+
+/* Search Container */
+.searchContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  padding: 0 1rem;
+}
+
+.searchInput {
+  width: 100%;
+  max-width: 600px;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  color: var(--text-primary);
+  background: var(--glass-bg) !important;
+  border: 2px solid #e9ecef;
+  border-radius: 25px;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.searchInput:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.searchInput::placeholder {
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* Users Count */
+.usersCount {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* Users List Container */
+.userList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+  padding: 0 1rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* User Card */
+.userCard {
+  background: var(--glass-bg) !important;
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.userCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--main-gradient);
+}
+
+.userCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(255, 204, 0, 0.2);
+}
+
+.userCardContent {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+/* Initials Avatar */
+.initialsAvatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--main-gradient);
+  color: var(--text-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  box-shadow: 0 8px 20px rgba(255, 204, 0, 0.3);
+  flex-shrink: 0;
+  letter-spacing: 1px;
+}
+
+/* User Details */
+.userDetails {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.userDetails p {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.userDetails strong {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+/* Delete Icon */
+.deleteIcon {
+  color: #dc3545 !important;
+  cursor: pointer !important;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  background: rgba(220, 53, 69, 0.1);
+}
+
+.deleteIcon:hover {
+  background: rgba(220, 53, 69, 0.2);
+  transform: scale(1.1);
+}
+
+/* Pagination Container */
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  padding: 0 1rem;
+  gap: 0.5rem;
+}
+
+.paginationButton {
+  padding: 0.75rem 1rem;
+  border: 2px solid #e9ecef;
+  background: var(--glass-bg) !important;
+  color: var(--primary-color);
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  min-width: 45px;
+  text-align: center;
+}
+
+.paginationButton:hover:not(:disabled) {
+  border-color: var(--primary-color);
+  background: var(--primary-color);
+  color: var(--text-white);
+  transform: translateY(-2px);
+}
+
+.paginationButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.paginationButton.active {
+  background: var(--primary-color);
+  color: var(--text-white);
+  border-color: var(--primary-color);
+}
+
+.paginationInfo {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin: 0 1rem;
+  text-align: center;
+}
+
+/* Popup Styles */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.popupContent {
+  background: #111111 !important;
+  border: 1px solid rgba(255, 204, 0, 0.3);
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  max-width: 500px;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Popup Header */
+.popupHeader h2 {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.8rem;
+  color: var(--primary-color);
+  text-align: center;
+  font-weight: 700;
+}
+
+/* Popup Body */
+.popupBody p {
+  margin: 0.75rem 0;
+  color: var(--text-primary);
+  font-size: 1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.popupBody strong {
+  color: var(--primary-color);
+  font-weight: 600;
+  min-width: 120px;
+  display: inline-block;
+}
+
+/* Close Button */
+.closeButton {
+  position: sticky;
+  top: 0;
+  align-self: flex-end;
+  background: var(--secondary-color);
+  border: 1px solid rgba(255, 204, 0, 0.3);
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--primary-color);
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10;
+  margin-bottom: -1.5rem;
+  margin-right: -0.5rem;
+}
+
+.closeButton:hover {
+  background: var(--secondary-color);
+  color: var(--primary-color);
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(255, 204, 0, 0.2);
+}
+
+/* Update Balance Section */
+.updateBalance {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 204, 0, 0.2);
+}
+
+.updateBalance label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.balanceInput {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #e9ecef;
+  border-radius: 10px;
+  font-size: 1rem;
+  color: var(--text-primary);
+  background: var(--glass-bg) !important;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  margin-bottom: 1rem;
+}
+
+.balanceInput:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.1);
+}
+
+.updateButton {
+  width: 100%;
+  padding: 1rem;
+  background: var(--primary-color);
+  color: #000000;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+}
+
+.updateButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.updateButton:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Update Password Section */
+.updatePassword {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 204, 0, 0.2) !important;
+}
+
+.updatePassword label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.passwordInput {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid rgba(255, 204, 0, 0.2) !important;
+  border-radius: 10px;
+  font-size: 1rem;
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05) !important;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  margin-bottom: 1rem;
+}
+
+.passwordInput:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.1);
+}
+
+/* Loading State */
+.loading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-radius: 20px;
+  margin: 2rem auto;
+  max-width: 400px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 204, 0, 0.2) !important;
+}
+
+.loading p {
+  color: var(--primary-color);
+  margin-top: 1rem;
+  font-weight: 600;
+}
+
+
+/* Empty State */
+.emptyState {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-secondary);
+  grid-column: 1 / -1;
+}
+
+.emptyState h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+
+/* Add User Modal Styles */
+.addUserModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.addUserModalContent {
+  background: #111111 !important;
+  border: 1px solid rgba(255, 204, 0, 0.3);
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  max-width: 600px;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.addUserModalHeader {
+  margin-bottom: 20px;
+}
+
+.addUserModalHeader h2 {
+  margin: 0;
+  font-size: 28px;
+  color: var(--primary-color);
+  text-align: center;
+  font-weight: 700;
+}
+
+.addUserForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  font-weight: 600;
+  color: var(--primary-color);
+  font-size: 16px;
+}
+
+.input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e9ecef;
+  border-radius: 10px;
+  font-size: 16px;
+  color: var(--text-primary);
+  background: var(--glass-bg) !important;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.1);
+}
+
+.errorText {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+.formActions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  justify-content: flex-end;
+}
+
+.cancelButton {
+  padding: 0.75rem 1.5rem;
+  background: #6c757d;
+  color: var(--text-white);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+}
+
+.cancelButton:hover {
+  background: #5a6268;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(108, 117, 125, 0.4);
+}
+
+.submitButton {
+  padding: 0.75rem 1.5rem;
+  background: var(--primary-color);
+  color: #000000;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.submitButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+}
+
+.submitButton:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Responsive Design */
+@media (max-width: 1400px) {
+  .userList {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  .userList {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .userList {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding-top: 70px;
+    padding-bottom: 80px;
+  }
+  
+  .headerSection {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .heading {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+  
+  .addUserButton {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.9rem;
+  }
+  
+  .searchContainer {
+    margin-bottom: 1.5rem;
+  }
+  
+  .searchInput {
+    padding: 0.875rem 1.25rem;
+    font-size: 0.9rem;
+  }
+  
+  .userList {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 0 0.75rem;
+  }
+  
+  .userCard {
+    padding: 1.25rem;
+  }
+  
+  .userCardContent {
+    gap: 0.75rem;
+  }
+  
+  .initialsAvatar {
+    width: 50px;
+    height: 50px;
+    font-size: 1.25rem;
+  }
+  
+  .userDetails p {
+    font-size: 0.85rem;
+  }
+  
+  .popupContent {
+    padding: 1.5rem;
+    margin: 0.5rem;
+  }
+  
+  .popupHeader h2 {
+    font-size: 1.25rem;
+  }
+  
+  .updateBalance {
+    padding: 1rem;
+  }
+  
+  .addUserModalContent {
+    padding: 1.5rem;
+    margin: 0.5rem;
+  }
+  
+  .formActions {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+  
+  .cancelButton,
+  .submitButton,
+  .updateButton {
+    flex: 1;
+    padding: 8px 12px;
+    font-size: 14px;
+    min-height: 36px;
+  }
+  
+  .input {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+  
+  .label {
+    font-size: 14px;
+  }
+  
+  .paginationContainer {
+    flex-wrap: wrap;
+    gap: 0.25rem;
+  }
+  
+  .paginationButton {
+    padding: 0.625rem 0.875rem;
+    font-size: 0.9rem;
+    min-width: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding-top: 60px;
+    padding-bottom: 70px;
+  }
+  
+  .heading {
+    font-size: 1.3rem;
+    margin: 0 0 0.75rem 0;
+  }
+  
+  .searchInput {
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+  }
+  
+  .userCard {
+    padding: 1rem;
+  }
+  
+  .userCardContent {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+  }
+  
+  .initialsAvatar {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .deleteIcon {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+  }
+  
+  .popupContent {
+    padding: 1rem;
+  }
+  
+  .popupHeader h2,
+  .addUserModalHeader h2 {
+    font-size: 16px;
+  }
+  
+  .cancelButton,
+  .submitButton,
+  .updateButton {
+    padding: 6px 10px;
+    font-size: 12px;
+    min-height: 32px;
+  }
+  
+  .label {
+    font-size: 12px;
+    margin-bottom: 2px;
+  }
+  
+  .input {
+    padding: 6px 10px;
+    font-size: 12px;
+    border-radius: 8px;
+  }
+  
+  .popupBody p {
+    font-size: 0.85rem;
+  }
+  
+  .updateBalance {
+    padding: 0.75rem;
+  }
+  
+  .balanceInput {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+  
+  .updateButton {
+    padding: 0.625rem;
+    font-size: 0.85rem;
+  }
+  
+  .paginationContainer {
+    margin-top: 1.5rem;
+  }
+  
+  .paginationButton {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+    min-width: 35px;
+  }
+  
+  .paginationInfo {
+    font-size: 0.8rem;
+    margin: 0 0.5rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .heading {
+    font-size: 1.2rem;
+    margin: 0 0 0.5rem 0;
+  }
+  
+  .searchInput {
+    padding: 0.625rem 0.875rem;
+    font-size: 0.8rem;
+  }
+  
+  .userCard {
+    padding: 0.875rem;
+  }
+  
+  .userDetails p {
+    font-size: 0.8rem;
+  }
+  
+  .popupContent {
+    padding: 0.875rem;
+  }
+  
+  .popupHeader h2 {
+    font-size: 1.2rem;
+  }
+  
+  .paginationButton {
+    padding: 0.5rem 0.625rem;
+    font-size: 0.75rem;
+    min-width: 32px;
+  }
+}
+
+/* Landscape Mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+  .container {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+  
+  .popupContent {
+    max-height: 80vh;
+  }
+  
+  .paginationContainer {
+    margin-top: 1rem;
+  }
+}
+
+/* High DPI Displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .userCard {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  }
+  
+  .popupContent {
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+  }
+}
+
+/* Payment Details Section */
+.paymentDetailsSection {
+  margin: 1.5rem 0;
+  padding: 1.25rem;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 204, 0, 0.2) !important;
+}
+
+.paymentDetailsSection h3 {
+  margin: 0 0 1rem 0;
+  color: var(--primary-color);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.paymentDetails p {
+  margin: 0.5rem 0;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+}
+
+.paymentDetails strong {
+  color: var(--primary-color);
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+
+.loadingPayment {
+  display: flex;
+  align-items: center;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.noPaymentDetails {
+  color: var(--text-secondary);
+  font-style: italic;
+  text-align: center;
+  margin: 1rem 0;
+}
+
+/* Print Styles */
+@media print {
+  .container {
+    background: var(--glass-bg) !important;
+    padding: 0;
+  }
+  
+  .userCard {
+    box-shadow: none;
+    border: 1px solid #ddd;
+    break-inside: avoid;
+  }
+  
+  .deleteIcon,
+  .closeButton,
+  .updateButton,
+  .paginationContainer,
+  .addUserButton,
+  .addUserModal {
+    display: none;
+  }
+}
+
+/* Sub-admin Filter Styles */
+.filterContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  padding: 0 1rem;
+  flex-wrap: wrap;
+}
+
+.filterLabel {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary, #fff);
+}
+
+.subAdminFilterSelect {
+  padding: 0.65rem 1.25rem;
+  border-radius: 20px;
+  background: rgba(30, 30, 45, 0.85);
+  color: #fff;
+  border: 1.5px solid rgba(255, 204, 0, 0.4);
+  font-size: 0.95rem;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.subAdminFilterSelect:focus {
+  border-color: var(--primary-color, #ffcc00);
+  box-shadow: 0 0 10px rgba(255, 204, 0, 0.3);
+}
+
+.assignedAdminBadge {
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
+  background: rgba(255, 204, 0, 0.15);
+  border: 1px solid rgba(255, 204, 0, 0.35);
+  border-radius: 8px;
+  color: #ffcc00;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-top: 0.35rem;
+}
+
+@media (max-width: 600px) {
+  .filterContainer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+    padding: 0 0.5rem;
+  }
+
+  .filterLabel {
+    font-size: 0.85rem;
+    text-align: center;
+  }
+
+  .subAdminFilterSelect {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.8rem;
+    width: 100%;
+  }
+}
+

@@ -1,0 +1,17 @@
+.carousel {
+    width: 90vw; /* Ensure the carousel takes 100% width */
+    margin: 0; /* Remove any margins */
+    margin-top: 40px;
+  }
+  
+  .slide img {
+    width: 100%;
+    height:350px;
+    display: block; /* Ensure it’s displayed correctly */
+    padding: 30px;
+  }
+  
+  .image {
+    border-radius: 8px; /* Rounded corners for images */
+  }
+  

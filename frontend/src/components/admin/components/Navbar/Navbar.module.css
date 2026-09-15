@@ -1,0 +1,252 @@
+/* Admin Bottom Navbar - Modern Glass Morphism Design */
+.navbar {
+  width: 100%;
+  overflow: hidden;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background: var(--main-gradient);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255, 204, 0, 0.2);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  padding: 15px 0;
+  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Icon styling */
+.whatsappIcon {
+  font-size: 18px;
+}
+
+/* Global Styles for Material-UI components */
+:global(.MuiBottomNavigationAction-root) {
+  color: rgba(255, 255, 255, 0.8);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 70px;
+  padding: 10px 6px;
+  background: transparent !important;
+  border-radius: 0;
+  margin: 0 5px;
+  border: none !important;
+  position: relative;
+  overflow: visible;
+}
+
+:global(.MuiBottomNavigationAction-root:hover) {
+  color: var(--text-white);
+  transform: scale(1.05);
+  background: transparent !important;
+}
+
+:global(.Mui-selected) {
+  color: #ffffff !important;
+  font-weight: 700;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  transform: scale(1.1);
+}
+
+:global(.MuiBottomNavigationAction-label) {
+  font-size: 0.8rem !important;
+  font-weight: 600 !important;
+  margin-top: 6px !important;
+  transition: all 0.3s ease;
+  background: transparent !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  color: rgba(255, 255, 255, 0.8) !important;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  line-height: 1.2 !important;
+}
+
+:global(.Mui-selected .MuiBottomNavigationAction-label) {
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  background: transparent !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+:global(.MuiBottomNavigationAction-iconOnly) {
+  margin-bottom: 4px;
+}
+
+/* Enhanced Responsive Design for Admin Navbar */
+@media (max-width: 1024px) {
+  .navbar {
+    padding: 6px 0 calc(6px + env(safe-area-inset-bottom, 0px)) 0;
+  }
+  
+  :global(.MuiBottomNavigationAction-root) {
+    min-width: 0 !important;
+    flex: 1 1 0 !important;
+    padding: 5px 2px !important;
+    margin: 0 !important;
+  }
+  
+  :global(.MuiBottomNavigationAction-label) {
+    font-size: 0.68rem !important;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 5px 0 calc(5px + env(safe-area-inset-bottom, 0px)) 0;
+    min-height: 56px;
+  }
+  
+  :global(.MuiBottomNavigationAction-root) {
+    min-width: 0 !important;
+    flex: 1 1 0 !important;
+    padding: 4px 1px !important;
+    margin: 0 !important;
+  }
+  
+  :global(.MuiBottomNavigationAction-label) {
+    font-size: 0.6rem !important;
+    margin-top: 2px !important;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    letter-spacing: -0.2px !important;
+  }
+
+  :global(.MuiSvgIcon-root) {
+    font-size: 1.3rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 4px 0 calc(4px + env(safe-area-inset-bottom, 0px)) 0;
+    min-height: 52px;
+  }
+  
+  :global(.MuiBottomNavigationAction-root) {
+    min-width: 0 !important;
+    flex: 1 1 0 !important;
+    padding: 3px 0.5px !important;
+    margin: 0 !important;
+  }
+  
+  :global(.MuiBottomNavigationAction-label) {
+    font-size: 0.52rem !important;
+    margin-top: 1px !important;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    letter-spacing: -0.3px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    text-align: center !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  :global(.MuiSvgIcon-root) {
+    font-size: 1.2rem !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .navbar {
+    padding: 3px 0 calc(3px + env(safe-area-inset-bottom, 0px)) 0;
+    min-height: 48px;
+  }
+  
+  :global(.MuiBottomNavigationAction-root) {
+    min-width: 0 !important;
+    flex: 1 1 0 !important;
+    padding: 2px 0px !important;
+    margin: 0 !important;
+  }
+  
+  :global(.MuiBottomNavigationAction-label) {
+    font-size: 0.48rem !important;
+    margin-top: 1px !important;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    letter-spacing: -0.4px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    text-align: center !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  :global(.MuiSvgIcon-root) {
+    font-size: 1.1rem !important;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 320px) {
+  .navbar {
+    padding: 2px 0 calc(2px + env(safe-area-inset-bottom, 0px)) 0;
+  }
+  
+  :global(.MuiBottomNavigationAction-root) {
+    min-width: 0 !important;
+    flex: 1 1 0 !important;
+    padding: 1px 0px !important;
+  }
+  
+  :global(.MuiBottomNavigationAction-label) {
+    font-size: 0.45rem !important;
+    margin-top: 0px !important;
+    letter-spacing: -0.5px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    text-align: center !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  :global(.MuiSvgIcon-root) {
+    font-size: 1.0rem !important;
+  }
+}
+
+/* High DPI Displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  :global(.MuiBottomNavigationAction-root) {
+    border-width: 0;
+  }
+}
+
+/* Landscape Mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+  .navbar {
+    padding: 8px 0;
+  }
+  
+  :global(.MuiBottomNavigationAction-label) {
+    font-size: 0.65rem;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .navbar {
+    display: none;
+  }
+}
+
+/* Body content styling (to allow scrolling) */
+.body-content {
+  padding-bottom: 80px;
+  overflow-y: scroll;
+  height: 100vh;
+}

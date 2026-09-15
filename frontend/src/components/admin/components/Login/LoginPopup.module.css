@@ -1,0 +1,290 @@
+/* Modern Glass Morphism Login Popup Styles */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.modalContent {
+  background: rgba(30, 30, 30, 0.8);
+  backdrop-filter: blur(15px);
+  padding: 2.5rem;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 450px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: slideIn 0.3s ease-out;
+  transform: translateZ(0);
+}
+
+.modalContent::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(135deg, var(--primary-color) 0%, #3b70d9 100%);
+  border-radius: 20px 20px 0 0;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Heading Styling */
+.loginHeading {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--link-color);
+  margin-bottom: 2rem;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(255, 204, 0, 0.3);
+}
+
+/* Form Group Styling */
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+}
+
+.formGroup label {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text-white);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.formGroup input {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  background: rgba(40, 40, 40, 0.6);
+  color: var(--text-white);
+  transition: all 0.3s ease;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.formGroup input:focus {
+  border-color: var(--link-color);
+  box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.1);
+  background: rgba(40, 40, 40, 0.8);
+  transform: translateY(-2px);
+}
+
+.formGroup input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.9rem;
+}
+
+/* Card Style Button */
+.cardButton {
+  width: 100%;
+  margin-top: 1.5rem;
+  padding: 14px 24px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-white);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color) 100%);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(96, 165, 250, 0.4);
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cardButton:hover {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color) 100%);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(96, 165, 250, 0.5);
+}
+
+.cardButton:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(96, 165, 250, 0.4);
+}
+
+.signupLink {
+  margin-top: 1.5rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.signupTrigger {
+  background: transparent;
+  border: none;
+  color: var(--link-color);
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.signupTrigger:hover {
+  color: var(--link-color);
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .modalOverlay {
+    padding: 15px;
+  }
+  
+  .modalContent {
+    padding: 2rem;
+    max-width: 100%;
+    border-radius: 16px;
+  }
+  
+  .loginHeading {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .formGroup {
+    margin-bottom: 1.25rem;
+  }
+  
+  .formGroup input {
+    padding: 14px 16px;
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+  
+  .cardButton {
+    padding: 16px 24px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .modalOverlay {
+    padding: 10px;
+  }
+  
+  .modalContent {
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+  
+  .loginHeading {
+    font-size: 1.6rem;
+    margin-bottom: 1.25rem;
+  }
+  
+  .formGroup {
+    margin-bottom: 1rem;
+  }
+  
+  .formGroup input {
+    padding: 12px 14px;
+  }
+  
+  .cardButton {
+    padding: 14px 20px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .modalContent {
+    padding: 1.25rem;
+    border-radius: 10px;
+  }
+  
+  .loginHeading {
+    font-size: 1.4rem;
+  }
+  
+  .formGroup input {
+    padding: 11px 13px;
+  }
+  
+  .cardButton {
+    padding: 13px 18px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .cardButton,
+  .signupTrigger {
+    min-height: 44px; /* iOS minimum touch target */
+    min-width: 44px;
+  }
+  
+  .formGroup input {
+    min-height: 44px;
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+}
+
+/* High DPI Displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .modalContent {
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* Print Styles */
+@media print {
+  .modalOverlay {
+    position: static;
+    background: none;
+  }
+  
+  .modalContent {
+    box-shadow: none;
+    border: 1px solid #ddd;
+    background: var(--glass-bg) !important;
+    color: black;
+  }
+  
+  .cardButton {
+    display: none;
+  }
+}
+
+/* Ensure modal is always on top */
+.modalOverlay,
+.modalContent {
+  isolation: isolate;
+}
+
+.modalContent {
+  position: relative;
+  z-index: 10000 !important;
+}
+  

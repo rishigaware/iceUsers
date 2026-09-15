@@ -1,0 +1,1109 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85); /* Reduced transparency */
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.popup {
+  background: #111111 !important;
+  border: 1px solid rgba(255, 204, 0, 0.3); /* Premium gold border */
+  border-radius: 20px;
+  width: 90%;
+  max-width: 480px;
+  position: relative;
+  margin: 0;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  animation: modalPop 0.3s ease-out;
+  z-index: 10000;
+  transform: translateZ(0);
+  overflow: hidden; /* To keep close button sticky */
+}
+
+.scrollContent {
+  padding: 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+@keyframes modalPop {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.closeButton {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: var(--primary-color); /* Solid Yellow */
+  color: #000 !important; /* Black icon */
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 101; /* Higher than content */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  padding: 0;
+}
+
+.closeButton svg {
+  width: 18px !important;
+  height: 18px !important;
+  stroke: #000 !important;
+  stroke-width: 2.5px !important;
+}
+
+.closeButton:hover {
+  background: #ffffff;
+  transform: scale(1.1);
+}
+
+.depositName {
+  text-align: center;
+  margin: 30px 20px 20px;
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--primary-color);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  background: linear-gradient(135deg, var(--primary-color) 0%, #ffffff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 2px 10px rgba(255, 204, 0, 0.3);
+}
+
+/* Balance Container */
+.balanceContainer {
+  width: 90%;
+  margin: 25px auto;
+  padding: 30px 25px;
+  text-align: center;
+  background: var(--main-gradient);
+  border: 1px solid rgba(255, 204, 0, 0.4);
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+  color: var(--text-white);
+  position: relative;
+  overflow: hidden;
+}
+
+.balanceContainer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border-radius: 16px;
+}
+
+.amount {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--text-white);
+  margin-bottom: 15px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 1;
+}
+
+.wallet {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+}
+
+/* Input Section */
+.inputSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 30px 20px;
+  padding: 0 10px;
+}
+
+.inputLabel {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #2c3e50;
+  text-align: center;
+}
+
+.input {
+  width: 100%;
+  max-width: 300px;
+  padding: 15px 20px;
+  font-size: 1rem;
+  text-align: center;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  outline: none;
+  transition: all 0.3s ease;
+  background: var(--glass-bg);
+  color: #2c3e50;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.input:focus {
+  border-color: var(--link-color);
+  box-shadow: 0 0 0 4px rgba(255, 204, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.input::placeholder {
+  color: #adb5bd;
+  font-size: 14px;
+}
+
+/* Error Message */
+.errorMessage {
+  color: #dc3545;
+  font-size: 14px;
+  margin: 15px 20px;
+  text-align: center;
+  background: rgba(220, 53, 69, 0.1);
+  padding: 10px 15px;
+  border-radius: 8px;
+  border-left: 4px solid #dc3545;
+}
+
+/* Submit Button */
+.submitButton {
+  width: 90%;
+  max-width: 300px;
+  margin: 25px auto;
+  padding: 18px 30px;
+  background: var(--primary-color);
+  color: #000;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 800;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(255, 204, 0, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: block;
+  position: relative;
+  overflow: hidden;
+}
+
+.submitButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(40, 167, 69, 0.5);
+  background: linear-gradient(135deg, #20c997 0%, #28a745 100%);
+}
+
+.submitButton:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+}
+
+/* Button container for better positioning */
+.buttonContainer {
+  margin-top: 30px;
+  padding: 0 20px 20px;
+  text-align: center;
+}
+
+/* Main action button styling */
+.mainActionButton {
+  width: 90%;
+  max-width: 300px;
+  margin: 25px auto;
+  padding: 18px 30px;
+  background: var(--primary-color);
+  color: #000;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 800;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(255, 204, 0, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: block;
+  position: relative;
+  overflow: hidden;
+}
+
+.mainActionButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(40, 167, 69, 0.5);
+  background: linear-gradient(135deg, #20c997 0%, #28a745 100%);
+}
+
+.mainActionButton:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+}
+
+/* Tab Buttons */
+.tabButtons {
+  display: flex;
+  justify-content: space-between;
+  margin: 25px 20px 20px;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.tabButton {
+  flex: 1;
+  min-width: 120px;
+  padding: 12px 16px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.05); /* Darker tab */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+  color: var(--text-primary);
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.tabButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.activeTab {
+  background: var(--primary-color);
+  color: #000;
+  border-color: var(--primary-color);
+  box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+}
+
+/* Tab Content */
+.tabContent {
+  margin-top: 20px;
+  color: var(--text-primary);
+  font-size: 15px;
+}
+
+.depositFunds h2,
+.withdrawFunds h2,
+.bankDetails h2,
+.upiDetails h2 {
+  color: var(--primary-color);
+  font-size: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.depositFunds p,
+.withdrawFunds p,
+.bankDetails p,
+.upiDetails p {
+  text-align: center;
+  line-height: 1.6;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+
+.tabContent strong {
+  color: var(--primary-color);
+}
+
+/* Copy Container */
+.copyContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 15px 20px;
+  margin: 15px 0;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.copyContainer:hover {
+  background: #e9ecef;
+  border-color: var(--link-color);
+  transform: translateX(5px);
+}
+
+.copyContainer strong {
+  color: #2c3e50;
+  margin-right: 10px;
+}
+
+.copyIcon {
+  cursor: pointer;
+  color: var(--link-color);
+  font-size: 18px;
+  padding: 8px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  background: rgba(255, 204, 0, 0.1);
+}
+
+.copyIcon:hover {
+  color: var(--text-white);
+  background: var(--primary-color);
+  transform: scale(1.1);
+}
+
+/* Amount Display */
+.amountDisplay {
+  color: var(--primary-color);
+  font-size: 20px;
+  font-weight: 800;
+  margin: 20px 0;
+  text-align: center;
+  text-shadow: 0 2px 8px rgba(255, 204, 0, 0.3);
+}
+
+/* Upload Section */
+.uploadSection {
+  margin: 25px 0;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  border: 2px dashed rgba(255, 255, 255, 0.1);
+  text-align: center;
+}
+
+/* Dropdown Section */
+.dropdownSection {
+  margin: 20px 0;
+}
+
+.dropdownLabel {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.dropdown {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.dropdown:focus {
+  border-color: var(--link-color);
+  box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.1);
+}
+
+.dropdown option {
+  padding: 10px;
+  font-size: 14px;
+}
+
+/* ===== COMPREHENSIVE RESPONSIVE DESIGN ===== */
+
+/* PrimeReact Overrides */
+.uploadSection :global(.p-fileupload-basic) {
+  display: flex !important;
+  justify-content: center !important;
+  background: transparent !important;
+}
+
+.uploadSection :global(.p-button) {
+  background: var(--primary-color) !important;
+  color: #000 !important;
+  border: none !important;
+  font-weight: 700 !important;
+  border-radius: 8px !important;
+}
+
+.uploadSection :global(.p-fileupload-choose) {
+  background: var(--primary-color) !important;
+  color: #000 !important;
+  border: none !important;
+}
+
+/* Hide the default primeicons etc if they look white */
+.uploadSection :global(.p-button-icon) {
+  color: #000 !important;
+}
+
+/* Large Desktop (1200px and above) */
+@media (min-width: 1200px) {
+  .popup {
+    max-width: 600px;
+  }
+
+  .balanceContainer {
+    padding: 35px 30px;
+  }
+
+  .amount {
+    font-size: 3rem;
+  }
+
+  .wallet {
+    font-size: 1.2rem;
+  }
+
+  .input {
+    max-width: 350px;
+    padding: 18px 24px;
+    font-size: 18px;
+  }
+
+  .submitButton,
+  .mainActionButton {
+    max-width: 350px;
+    padding: 20px 35px;
+    font-size: 18px;
+  }
+}
+
+/* Medium Desktop (992px to 1199px) */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .popup {
+    max-width: 550px;
+  }
+
+  .balanceContainer {
+    padding: 30px 25px;
+  }
+
+  .amount {
+    font-size: 2.8rem;
+  }
+
+  .input {
+    max-width: 320px;
+  }
+
+  .submitButton,
+  .mainActionButton {
+    max-width: 320px;
+  }
+}
+
+/* Small Desktop (768px to 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+  .overlay {
+    padding: 20px;
+  }
+
+  .popup {
+    max-width: 500px;
+  }
+
+  .balanceContainer {
+    padding: 28px 25px;
+  }
+
+  .amount {
+    font-size: 2.5rem;
+  }
+
+  .input {
+    max-width: 300px;
+  }
+
+  .submitButton,
+  .mainActionButton {
+    max-width: 300px;
+  }
+}
+
+/* Tablet (600px to 767px) */
+@media (min-width: 600px) and (max-width: 767px) {
+  .overlay {
+    padding: 15px;
+  }
+
+  .popup {
+    max-width: 100%;
+    margin: 0;
+    border-radius: 16px;
+  }
+
+  .heading {
+    font-size: 22px;
+    margin: 25px 20px 20px;
+  }
+
+  .balanceContainer {
+    width: 95%;
+    padding: 25px 20px;
+  }
+
+  .amount {
+    font-size: 2.3rem;
+  }
+
+  .wallet {
+    font-size: 1.1rem;
+  }
+
+  .inputSection {
+    margin: 25px 20px;
+  }
+
+  .input {
+    max-width: 100%;
+    padding: 16px 20px;
+  }
+
+  .tabButtons {
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .tabButton {
+    min-width: 120px;
+    padding: 14px 18px;
+    font-size: 14px;
+  }
+
+  .submitButton,
+  .mainActionButton {
+    width: 95%;
+    max-width: 100%;
+    padding: 16px 28px;
+  }
+}
+
+/* Mobile Large (480px to 599px) */
+@media (max-width: 599px) and (min-width: 480px) {
+  .overlay {
+    padding: 12px;
+  }
+
+  .popup {
+    border-radius: 14px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .heading {
+    font-size: 20px;
+    margin: 20px 15px 15px;
+  }
+
+  .balanceContainer {
+    width: 96%;
+    padding: 20px 18px;
+  }
+
+  .amount {
+    font-size: 2rem;
+  }
+
+  .wallet {
+    font-size: 1.05rem;
+  }
+
+  .inputSection {
+    margin: 22px 15px;
+  }
+
+  .input {
+    padding: 14px 18px;
+    font-size: 16px;
+  }
+
+  .tabButtons {
+    flex-direction: column;
+    gap: 8px;
+    margin: 20px 15px 15px;
+  }
+
+  .tabButton {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 13px;
+  }
+
+  .tabContent {
+    margin: 18px 15px;
+  }
+
+  .copyContainer {
+    padding: 12px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .copyContainer:hover {
+    transform: none;
+  }
+
+  .submitButton,
+  .mainActionButton {
+    width: 96%;
+    padding: 16px 22px;
+    font-size: 15px;
+    margin: 22px auto;
+  }
+}
+
+/* Mobile Medium (400px to 479px) */
+@media (max-width: 479px) and (min-width: 400px) {
+  .overlay {
+    padding: 10px;
+  }
+
+  .popup {
+    border-radius: 12px;
+    max-height: 85vh;
+  }
+
+  .heading {
+    font-size: 18px;
+    margin: 18px 12px 12px;
+  }
+
+  .balanceContainer {
+    width: 98%;
+    padding: 18px 15px;
+  }
+
+  .amount {
+    font-size: 1.8rem;
+  }
+
+  .wallet {
+    font-size: 1rem;
+  }
+
+  .inputSection {
+    margin: 20px 12px;
+  }
+
+  .input {
+    padding: 13px 16px;
+    font-size: 16px;
+  }
+
+  .tabButtons {
+    flex-direction: column;
+    gap: 6px;
+    margin: 18px 12px 12px;
+  }
+
+  .tabButton {
+    width: 100%;
+    padding: 11px 14px;
+    font-size: 12px;
+  }
+
+  .tabContent {
+    margin: 16px 12px;
+  }
+
+  .copyContainer {
+    padding: 11px 14px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .submitButton,
+  .mainActionButton {
+    width: 98%;
+    padding: 15px 20px;
+    font-size: 14px;
+    margin: 20px auto;
+  }
+}
+
+/* Mobile Small (360px to 399px) */
+@media (max-width: 399px) and (min-width: 360px) {
+  .overlay {
+    padding: 8px;
+  }
+
+  .popup {
+    border-radius: 10px;
+    max-height: 80vh;
+  }
+
+  .heading {
+    font-size: 17px;
+    margin: 15px 10px 10px;
+  }
+
+  .balanceContainer {
+    width: 99%;
+    padding: 15px 12px;
+  }
+
+  .amount {
+    font-size: 1.6rem;
+  }
+
+  .wallet {
+    font-size: 0.95rem;
+  }
+
+  .inputSection {
+    margin: 18px 10px;
+  }
+
+  .input {
+    padding: 12px 14px;
+    font-size: 15px;
+  }
+
+  .tabButtons {
+    flex-direction: column;
+    gap: 5px;
+    margin: 15px 10px 10px;
+  }
+
+  .tabButton {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 11px;
+  }
+
+  .tabContent {
+    margin: 15px 10px;
+  }
+
+  .copyContainer {
+    padding: 10px 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .submitButton,
+  .mainActionButton {
+    width: 99%;
+    padding: 14px 18px;
+    font-size: 13px;
+    margin: 18px auto;
+  }
+}
+
+/* Mobile Extra Small (320px to 359px) */
+@media (max-width: 359px) and (min-width: 320px) {
+  .overlay {
+    padding: 6px;
+  }
+
+  .popup {
+    border-radius: 8px;
+    max-height: 75vh;
+  }
+
+  .heading {
+    font-size: 16px;
+    margin: 12px 8px 8px;
+  }
+
+  .balanceContainer {
+    width: 100%;
+    padding: 12px 10px;
+  }
+
+  .amount {
+    font-size: 1.4rem;
+  }
+
+  .wallet {
+    font-size: 0.9rem;
+  }
+
+  .inputSection {
+    margin: 15px 8px;
+  }
+
+  .input {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  .tabButtons {
+    flex-direction: column;
+    gap: 4px;
+    margin: 12px 8px 8px;
+  }
+
+  .tabButton {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 10px;
+  }
+
+  .tabContent {
+    margin: 12px 8px;
+  }
+
+  .copyContainer {
+    padding: 8px 10px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .submitButton,
+  .mainActionButton {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 12px;
+    margin: 15px auto;
+  }
+}
+
+/* Mobile Ultra Small (below 320px) */
+@media (max-width: 319px) {
+  .overlay {
+    padding: 4px;
+  }
+
+  .popup {
+    border-radius: 6px;
+    max-height: 70vh;
+  }
+
+  .heading {
+    font-size: 15px;
+    margin: 10px 6px 6px;
+  }
+
+  .balanceContainer {
+    width: 100%;
+    padding: 10px 8px;
+  }
+
+  .amount {
+    font-size: 1.2rem;
+  }
+
+  .wallet {
+    font-size: 0.85rem;
+  }
+
+  .inputSection {
+    margin: 12px 6px;
+  }
+
+  .input {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+
+  .tabButtons {
+    flex-direction: column;
+    gap: 3px;
+    margin: 10px 6px 6px;
+  }
+
+  .tabButton {
+    width: 100%;
+    padding: 6px 8px;
+    font-size: 9px;
+  }
+
+  .tabContent {
+    margin: 10px 6px;
+  }
+
+  .copyContainer {
+    padding: 6px 8px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+  }
+
+  .submitButton,
+  .mainActionButton {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 11px;
+    margin: 12px auto;
+  }
+}
+
+/* High DPI Displays */
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+  .popup {
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  .balanceContainer {
+    box-shadow: 0 4px 15px rgba(255, 204, 0, 0.2);
+  }
+}
+
+/* Landscape Mobile */
+/* ===== SPECIAL ORIENTATIONS & TOUCH OPTIMIZATIONS ===== */
+
+/* Landscape Mobile Orientation */
+@media (max-height: 500px) and (orientation: landscape) {
+  .overlay {
+    padding: 8px;
+  }
+
+  .popup {
+    max-height: 90vh;
+    overflow-y: auto;
+    max-width: 80vw;
+  }
+
+  .balanceContainer {
+    padding: 15px 20px;
+    margin: 15px auto;
+  }
+
+  .amount {
+    font-size: 1.6rem;
+  }
+
+  .wallet {
+    font-size: 0.9rem;
+  }
+
+  .inputSection {
+    margin: 15px 20px;
+  }
+
+  .input {
+    padding: 12px 16px;
+    font-size: 15px;
+  }
+
+  .tabButtons {
+    flex-direction: row;
+    gap: 8px;
+    margin: 15px 20px 12px;
+  }
+
+  .tabButton {
+    padding: 10px 14px;
+    font-size: 12px;
+  }
+
+  .submitButton,
+  .mainActionButton {
+    padding: 12px 20px;
+    font-size: 14px;
+    margin: 15px auto;
+  }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+
+  .submitButton,
+  .mainActionButton,
+  .tabButton,
+  .closeButton {
+    min-height: 44px;
+    /* iOS minimum touch target */
+    min-width: 44px;
+  }
+
+  .input {
+    min-height: 44px;
+    font-size: 16px;
+    /* Prevent zoom on iOS */
+  }
+
+  .copyIcon {
+    min-height: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .overlay {
+    position: static;
+    background: none;
+  }
+
+  .popup {
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+
+  .closeButton,
+  .submitButton {
+    display: none;
+  }
+}
+
+/* Ensure popup is always on top */
+.overlay,
+.popup {
+  isolation: isolate;
+}
+
+.popup {
+  position: relative;
+  z-index: 10000 !important;
+}
+
+/* Popup content spacing */
+.popupContent {
+  padding: 20px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Bottom section for buttons */
+.bottomSection {
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid #e9ecef;
+}

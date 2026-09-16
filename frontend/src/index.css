@@ -12,9 +12,9 @@ body {
      ================================ */
 
   /* Primary */
-  --primary-color: #ef233c !important;
-  --primary-color-rgb: 239, 35, 60 !important;
-  --primary-hover: #ff4d5f !important;
+  --primary-color: #ff4757 !important;
+  --primary-color-rgb: 255, 71, 87 !important;
+  --primary-hover: #ff6b7a !important;
 
   /* ================================
    BACKGROUNDS - DEEP NAVY THEME
@@ -22,11 +22,11 @@ body {
    ================================ */
 
   --secondary-color: #0b1424 !important;
-  --accent-color: #ef233c !important;
+  --accent-color: #ff4757 !important;
 
   /* Status Colors */
   --success-color: #22c55e !important;
-  --error-color: #ef233c !important;
+  --error-color: #ff4757 !important;
   --warning-color: #f59e0b !important;
 
   /* ================================
@@ -47,7 +47,7 @@ body {
     ),
     radial-gradient(
       circle at 50% 50%,
-      rgba(239, 35, 60, 0.12),
+      rgba(255, 71, 87, 0.12),
       transparent 60%
     ),
     linear-gradient(135deg, #090d16 0%, #0f172a 45%, #130e24 100%);
@@ -55,25 +55,25 @@ body {
   /* Primary Button Gradient */
   --primary-gradient: linear-gradient(
     135deg,
-    #b91c32 0%,
-    #ef233c 50%,
-    #ff4d5f 100%
+    #d9253d 0%,
+    #ff4757 50%,
+    #ff6b7a 100%
   );
 
   /* Red Gradient */
-  --gradient-primary-red: linear-gradient(90deg, #b91c32, #ef233c);
+  --gradient-primary-red: linear-gradient(90deg, #d9253d, #ff4757);
 
   /* Dark Red → Red */
-  --gradient-orange-red: linear-gradient(135deg, #991b2e 0%, #ef233c 100%);
+  --gradient-orange-red: linear-gradient(135deg, #b91c32 0%, #ff4757 100%);
 
   /* Red → Light Red */
-  --gradient-red-orange: linear-gradient(135deg, #ef233c 0%, #ff5a67 100%);
+  --gradient-red-orange: linear-gradient(135deg, #ff4757 0%, #ff6b7a 100%);
 
   /* Green */
   --success-gradient: linear-gradient(135deg, #16a34a 0%, #22c55e 100%);
 
   /* Red */
-  --error-gradient: linear-gradient(135deg, #dc1f35 0%, #991b2e 100%);
+  --error-gradient: linear-gradient(135deg, #dc1f35 0%, #b91c32 100%);
 
   /* Gold */
   --gold-gradient: linear-gradient(
@@ -86,8 +86,8 @@ body {
   /* Glass */
   --glass-gradient: linear-gradient(
     135deg,
-    rgba(239, 35, 60, 0.1),
-    rgba(239, 35, 60, 0.02)
+    rgba(255, 71, 87, 0.1),
+    rgba(255, 71, 87, 0.02)
   );
 
   /* ================================

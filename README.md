@@ -1,28 +1,28 @@
 <p align="center">
-  <img src="./frontend/public/logo.png" width="380" alt="IcePanels Logo" />
+  <img src="./frontend/public/logo.png" width="380" alt="IceUsers Logo" />
 </p>
 
-# 🪩 IcePanels - Premium Self-Admin Panel Provision Platform 🚀
+# 🪩 IceUsers - Premium Self-Admin Panel Provision Platform 🚀
 
 🌐 **Official Link:** [https://the247panel.shop/](https://the247panel.shop/) & [https://icepanels.info/](https://icepanels.info/)
 
-Welcome to **Ice Panels** (The247Panel), India's premier, fully automated, self-admin & master panel creation platform! Built on a modern full-stack architecture with a stunning dark-glassmorphic aesthetic, Ice Panels allows users to easily manage, create, and top-up administrative credentials for premium exchange platforms securely—without any fraud, risk, or middleman interference.
+Welcome to **Ice Users** (The247Panel), India's premier, fully automated, self-admin & master panel creation platform! Built on a modern full-stack architecture with a stunning dark-glassmorphic aesthetic, Ice Users allows users to easily manage, create, and top-up administrative credentials for premium exchange platforms securely—without any fraud, risk, or middleman interference.
 
 ---
 
 ## 🎨 Home Page UI Mockup
 
-Below is a visual representation of the highly polished, gold-accented, dark-glassmorphic user interface of the IcePanels landing page and dashboard. 
+Below is a visual representation of the highly polished, magenta-accented, dark-glassmorphic user interface of the IceUsers landing page and dashboard. 
 
-![IcePanels UI Mockup](./readme_homepage.png)
+![IceUsers UI Mockup](./readme_homepage.png)
 
-*Design language features deep black canvas gradients (`#000000` to `#1a1a1a`), glowing gold neon accents (`#ffcc00`), glassmorphic panels, and animated feedback.*
+*Design language features deep navy-indigo canvas ambient gradients (`#090d16` to `#130e24`), flashy magenta neon accents (`#DB2777`), glassmorphic panels, and animated feedback.*
 
 ---
 
 ## 🌐 Supported Exchange Websites & Platforms
 
-IcePanels provides automated, instant panel provisioning, rate conversion, and balance top-ups across 16+ top-tier exchange platforms:
+IceUsers provides automated, instant panel provisioning, rate conversion, and balance top-ups across 16+ top-tier exchange platforms:
 
 | | | | |
 |:---:|:---:|:---:|:---:|
@@ -37,14 +37,14 @@ IcePanels provides automated, instant panel provisioning, rate conversion, and b
 
 - **Zero Intermediaries**: Eliminates risky middlemen. Users interact directly with automated systems to create their self-admin panels.
 - **24/7 Availability**: Automated instant panel refills, secure deposits, and swift withdrawals available round-the-clock.
-- **Next-Gen Aesthetics**: Clean glassmorphism overlays, fluid slide-in and hover transitions, responsive card designs, and vibrant status badges.
+- **Next-Gen Aesthetics**: Clean glassmorphism overlays, fluid slide-in and hover transitions, responsive card designs, and vibrant status badges powered by a flashy Magenta (`#DB2777`) theme.
 - **Multi-Tenant Isolation**: Complete isolation between Admin Masters (sub-admins) with private user assignments, custom exchange catalogs, and isolated banking gateways.
 
 ---
 
 ## 🛠️ Technology Stack
 
-IcePanels utilizes a powerful and scalable full-stack ecosystem:
+IceUsers utilizes a powerful and scalable full-stack ecosystem:
 
 ### 💻 Client Side (Frontend)
 - **Framework**: `React 18` + `Vite` (for ultra-fast Hot Module Replacement)
@@ -121,7 +121,7 @@ graph TD
 ## 📂 Project Structure
 
 ```text
-icePanels/
+iceUsers/
 ├── backend/
 │   ├── config/            # DB connection & Superadmin auto-seeder
 │   ├── controller/        # API Controller logics (Auth, Users, SubAdmins, Support, ID Requests)
@@ -207,7 +207,7 @@ Follow these instructions to run the entire system locally.
 
 ## 🏅 Certifications & Responsible Gaming
 
-IcePanels is committed to providing a secure and authenticated environment for its partners and users. The platform integrates certified standards for security and player protection:
+IceUsers is committed to providing a secure and authenticated environment for its partners and users. The platform integrates certified standards for security and player protection:
 
 <p align="center">
   <img src="./frontend/src/assets/certification_rng_verified.png" width="90" alt="RNG Verified" />

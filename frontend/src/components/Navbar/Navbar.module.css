@@ -23,7 +23,7 @@
 
 /* Global Styles for Material-UI components */
 :global(.MuiBottomNavigationAction-root) {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--primary-color) !important;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   min-width: 70px;
   padding: 10px 6px;
@@ -36,13 +36,13 @@
 }
 
 :global(.MuiBottomNavigationAction-root:hover) {
-  color: var(--text-white);
+  color: var(--primary-hover) !important;
   transform: scale(1.05);
   background: transparent !important;
 }
 
 :global(.Mui-selected) {
-  color: #ffffff !important;
+  color: var(--primary-color) !important;
   font-weight: 700;
   background: transparent !important;
   border: none !important;
@@ -66,7 +66,7 @@
 
 :global(.Mui-selected .MuiBottomNavigationAction-label) {
   font-weight: 700 !important;
-  color: #ffffff !important;
+  color: var(--primary-color) !important;
   background: transparent !important;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
   opacity: 1 !important;

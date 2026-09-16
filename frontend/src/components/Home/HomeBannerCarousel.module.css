@@ -27,15 +27,15 @@
 
 .uploadBtn {
   padding: 8px 18px;
-  background: linear-gradient(135deg, #4592ef, var(--primary-color));
-  color: #fff;
+  background: var(--primary-gradient);
+  color: var(--secondary-color);
   border: none;
   border-radius: 8px;
   font-size: 0.875rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   transition: transform 0.15s, box-shadow 0.15s;
-  box-shadow: 0 2px 8px rgba(69, 146, 239, 0.4);
+  box-shadow: 0 2px 8px rgba(var(--primary-color-rgb), 0.4);
 }
 .uploadBtn:hover:not(:disabled) {
   transform: translateY(-1px);

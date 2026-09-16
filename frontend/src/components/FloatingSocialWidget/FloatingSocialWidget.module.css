@@ -43,13 +43,15 @@
   height: 58px;
   border-radius: 50%;
   background: linear-gradient(135deg, #222222 0%, #111111 100%);
-  border: 2px solid var(--primary-color);
-  color: var(--primary-color);
+  border: 2px solid var(--primary-color) !important;
+  color: var(--primary-color) !important;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 8px 25px rgba(var(--primary-color-rgb), 0.3), 0 4px 12px rgba(0, 0, 0, 0.6);
+  box-shadow:
+    0 8px 25px rgba(var(--primary-color-rgb), 0.3),
+    0 4px 12px rgba(0, 0, 0, 0.6);
   transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
   padding: 0;
   outline: none;
@@ -58,8 +60,10 @@
 
 .triggerButton:hover {
   transform: scale(1.08) translateY(-2px);
-  box-shadow: 0 12px 30px rgba(var(--primary-color-rgb), 0.45), 0 6px 16px rgba(0, 0, 0, 0.8);
-  border-color: #ffe066;
+  box-shadow:
+    0 12px 30px rgba(var(--primary-color-rgb), 0.45),
+    0 6px 16px rgba(0, 0, 0, 0.8);
+  border-color: var(--primary-color);
 }
 
 .triggerButton:active {
@@ -70,14 +74,18 @@
   background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
   border-color: #ff6b6b;
   color: #ffffff;
-  box-shadow: 0 8px 25px rgba(255, 68, 68, 0.4), 0 4px 12px rgba(0, 0, 0, 0.7);
+  box-shadow:
+    0 8px 25px rgba(255, 68, 68, 0.4),
+    0 4px 12px rgba(0, 0, 0, 0.7);
   transform: rotate(0deg);
 }
 
 .triggerButtonOpen:hover {
   background: linear-gradient(135deg, #ff5555 0%, #dd0000 100%);
   border-color: #ffffff;
-  box-shadow: 0 12px 30px rgba(255, 68, 68, 0.6), 0 6px 16px rgba(0, 0, 0, 0.8);
+  box-shadow:
+    0 12px 30px rgba(68, 255, 77, 0.6),
+    0 6px 16px rgba(0, 0, 0, 0.8);
 }
 
 /* Pulsing rings around the closed launcher button */
@@ -145,6 +153,7 @@
 
 .launcherIcon {
   font-size: 24px;
+  color: var(--primary-color);
 }
 
 .closeIcon {
@@ -242,7 +251,9 @@
   margin-bottom: 8px;
   align-self: flex-end;
   max-width: 250px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), 0 0 15px rgba(var(--primary-color-rgb), 0.1);
+  box-shadow:
+    0 4px 15px rgba(0, 0, 0, 0.6),
+    0 0 15px rgba(var(--primary-color-rgb), 0.1);
 }
 
 .adminSelectorLabel {
@@ -322,9 +333,10 @@
   text-decoration: none;
   opacity: 0;
   transform: translateY(20px) scale(0.7);
-  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
-              opacity 0.25s ease-out,
-              box-shadow 0.25s ease;
+  transition:
+    transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.25s ease-out,
+    box-shadow 0.25s ease;
 }
 
 .menuListOpen .menuItem {
@@ -386,7 +398,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4), 0 0 10px var(--item-bg);
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.4),
+    0 0 10px var(--item-bg);
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
@@ -394,7 +408,9 @@
   transform: scale(1.15) rotate(8deg);
   background: var(--item-bg);
   border-color: var(--item-color);
-  box-shadow: 0 8px 25px var(--item-glow), 0 0 15px var(--item-color);
+  box-shadow:
+    0 8px 25px var(--item-glow),
+    0 0 15px var(--item-color);
 }
 
 /* Edit Row below each social link */
@@ -453,14 +469,20 @@
 }
 
 @keyframes fadeInModal {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .modalCard {
   background: linear-gradient(145deg, #1e1e26 0%, #121217 100%);
   border: 1px solid rgba(var(--primary-color-rgb), 0.3);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(var(--primary-color-rgb), 0.12);
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.8),
+    0 0 30px rgba(var(--primary-color-rgb), 0.12);
   border-radius: 16px;
   padding: 22px;
   width: min(440px, 92vw);
@@ -627,8 +649,12 @@
 }
 
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Toast */
@@ -638,7 +664,7 @@
   right: 24px;
   z-index: 1250;
   background: #181820;
-  border: 1px solid #25D366;
+  border: 1px solid #25d366;
   color: #ffffff;
   padding: 10px 16px;
   border-radius: 10px;
@@ -652,7 +678,7 @@
 }
 
 .toastIcon {
-  color: #25D366;
+  color: #25d366;
   font-size: 1rem;
 }
 
@@ -808,7 +834,8 @@
     gap: 8px;
   }
 
-  .cancelBtn, .saveBtn {
+  .cancelBtn,
+  .saveBtn {
     padding: 8px 14px;
     font-size: 0.8rem;
   }

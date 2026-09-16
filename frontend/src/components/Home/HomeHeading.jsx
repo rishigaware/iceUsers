@@ -162,14 +162,14 @@ const HomeHeading = () => {
         <FaBell
           style={{
             fontSize: "24px",
-            color: "#FF3B30", // alert red
+            color: "var(--secondary-color, #111)", // Theme secondary color
             marginRight: "10px",
-            backgroundColor: "var(--primary-color)", // yellow background
+            backgroundColor: "var(--primary-color)", // Theme primary background
             borderRadius: "50%",
             padding: "6px",
             display: "inline-block",
             animation: "bellZoom 1.1s ease-in-out infinite",
-            boxShadow: "0 0 12px rgba(255,59,48,0.9)",
+            boxShadow: "0 0 12px rgba(var(--primary-color-rgb), 0.9)",
           }}
         />
 

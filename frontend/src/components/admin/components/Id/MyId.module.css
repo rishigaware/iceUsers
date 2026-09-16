@@ -490,7 +490,7 @@
 
 .statusRequested {
   background: rgba(251, 191, 36, 0.2);
-  color: #fbbf24;
+  color: var(--primary-color);
   border: 1px solid rgba(251, 191, 36, 0.3);
 }
 
@@ -514,7 +514,7 @@
 
 .statusPending {
   background: rgba(251, 191, 36, 0.2);
-  color: #fbbf24;
+  color: var(--primary-color);
   border: 1px solid rgba(251, 191, 36, 0.3);
 }
 
@@ -1753,7 +1753,7 @@
 }
 
 .statusRequested {
-  color: orange;
+  color: var(--primary-color);
   /* Color for 'Requested' status */
 }
 

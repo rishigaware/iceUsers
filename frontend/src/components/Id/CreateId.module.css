@@ -142,7 +142,7 @@
 
 .adminUrlLink {
   font-size: 0.82rem;
-  color: #fbbf24;
+  color: var(--primary-color);
   text-decoration: none;
   padding: 3px 8px;
   background: rgba(251, 191, 36, 0.12);
@@ -424,7 +424,7 @@
 }
 
 .adminModalLink {
-  color: #fbbf24;
+  color: var(--primary-color);
   font-size: 0.82rem;
   word-break: break-all;
   text-decoration: none;

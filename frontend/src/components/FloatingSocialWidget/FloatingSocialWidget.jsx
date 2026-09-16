@@ -180,6 +180,11 @@ const FloatingSocialWidget = () => {
     setEditingItem(null);
   }, [location.pathname]);
 
+  useEffect(() => {
+    const computedPrimary = getComputedStyle(document.documentElement).getPropertyValue('--primary-color');
+    console.log('[THEME DEBUG] Current computed --primary-color on root:', computedPrimary);
+  }, []);
+
   if (isHidden) {
     return null;
   }

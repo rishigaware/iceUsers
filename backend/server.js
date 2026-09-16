@@ -47,7 +47,7 @@ const allowedOrigins = [
   'https://icepanels.pro',
   'https://www.icepanels.info',
   'https://icepanels.info',
-  'https://saipuntinfo.vercel.app'
+  'https://iceusers.vercel.app'
 
 ];
 

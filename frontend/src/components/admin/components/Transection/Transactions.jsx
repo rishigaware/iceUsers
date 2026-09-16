@@ -285,7 +285,7 @@ const Transactions = () => {
       {/* Superadmin Sub-admin Filter */}
       {isSuperAdmin && (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem', flexWrap: 'wrap', padding: '0 1rem', width: '100%', boxSizing: 'border-box' }}>
-          <span style={{ color: '#ffcc00', fontWeight: '600', fontSize: '0.95rem', textAlign: 'center' }}>Filter by Admin Master:</span>
+          <span style={{ color: 'var(--primary-color)', fontWeight: '600', fontSize: '0.95rem', textAlign: 'center' }}>Filter by Admin Master:</span>
           <select
             value={selectedSubAdminFilter}
             onChange={(e) => {
@@ -297,7 +297,7 @@ const Transactions = () => {
               borderRadius: '20px',
               background: 'rgba(30, 30, 45, 0.95)',
               color: '#fff',
-              border: '1.5px solid rgba(255, 204, 0, 0.5)',
+              border: '1.5px solid rgba(var(--primary-color-rgb), 0.5)',
               outline: 'none',
               cursor: 'pointer',
               fontSize: '0.95rem',

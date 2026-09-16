@@ -10,26 +10,32 @@
 
 
 :root {
-  /* Color Theme Variables (Yellow, Black, White) */
-  --primary-color: #ffcc00;
-  --secondary-color: #000000;
-  --accent-color: #ffcc00;
+  /* Color Theme Variables (Neon Cyan, Midnight Blue, White) */
+  --primary-color: #00f2fe;
+  --primary-color-rgb: 0, 242, 254;
+  --primary-hover: #4facfe;
+  --secondary-color: #0f172a;
+  --accent-color: #00f2fe;
   --success-color: #2ecc71;
   --error-color: #ef4444;
-  --warning-color: #ffcc00;
+  --warning-color: #00f2fe;
   
   /* Gradients */
-  --main-gradient: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+  --main-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  --primary-gradient: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+  --gradient-primary-red: linear-gradient(90deg, var(--primary-color), #764ba2);
+  --gradient-orange-red: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-red-orange: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
   --success-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
   --error-gradient: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
   --glass-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
   
   /* Text Colors */
   --text-primary: #ffffff;
-  --text-secondary: #ffcc00;
+  --text-secondary: var(--primary-color);
   --text-white: #ffffff;
-  --heading-color: #ffcc00;
-  --link-color: #ffcc00;
+  --heading-color: var(--primary-color);
+  --link-color: var(--primary-color);
   --whatsapp-color: #25D366;
   --telegram-color: #0088cc;
   --instagram-color: #E1306C;

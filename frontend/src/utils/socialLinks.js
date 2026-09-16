@@ -7,5 +7,5 @@ export const SOCIAL_LINKS = {
   telegram: "https://t.me/Icepanelsinfo",
   instagram: "https://www.instagram.com/ice_panels?igsh=MTM3ZGc3NDhsZDYzMw==",
   facebook: "https://www.facebook.com",
-  officialWebsite: "https://icepanels.info",
+  officialWebsite: "https://iceusers.info",
 };

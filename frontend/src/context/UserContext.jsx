@@ -1,44 +1,56 @@
-import React, { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+} from "react";
 
 // Create the context
 const UserContext = createContext();
 
 // UserProvider component to wrap the app and provide user data
 export const UserProvider = ({ children }) => {
-  const defaultUrl = (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'))
-    ? "http://localhost:3000"
-    : "https://betting-accounts-manager.onrender.com";
+  //   const defaultUrl = (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'))
+  //     ? "http://localhost:3000"
+  //     : "https://betting-accounts-manager.onrender.com";
+  const defaultUrl = "https://betting-accounts-manager.onrender.com";
+
   const [url, setUrl] = useState(defaultUrl);
   const [user, setUser] = useState(() => {
-    const storedUser = localStorage.getItem('user');
+    const storedUser = localStorage.getItem("user");
     try {
-        return storedUser ? JSON.parse(storedUser) : null;
+      return storedUser ? JSON.parse(storedUser) : null;
     } catch (error) {
-        console.error("Error parsing user from localStorage:", error);
-        return null;
+      console.error("Error parsing user from localStorage:", error);
+      return null;
     }
-});
+  });
 
-  const fetchUserBalance = useCallback(async (userId) => {
-    if (!userId) return null;
-    try {
-      const response = await fetch(`${url}/api/user/get-balance/${userId}`);
-      if (response.ok) {
-        const data = await response.json();
-        return data.balance;
+  const fetchUserBalance = useCallback(
+    async (userId) => {
+      if (!userId) return null;
+      try {
+        const response = await fetch(`${url}/api/user/get-balance/${userId}`);
+        if (response.ok) {
+          const data = await response.json();
+          return data.balance;
+        }
+        return null;
+      } catch (error) {
+        console.error("Error fetching user balance:", error);
+        return null;
       }
-      return null;
-    } catch (error) {
-      console.error("Error fetching user balance:", error);
-      return null;
-    }
-  }, [url]);
+    },
+    [url],
+  );
 
   const refreshUserBalance = useCallback(async () => {
     if (user?.id) {
       const balance = await fetchUserBalance(user.id);
       if (balance !== null) {
-        setUser(prev => ({ ...prev, balance }));
+        setUser((prev) => ({ ...prev, balance }));
       }
     }
   }, [user?.id, fetchUserBalance]);
@@ -47,27 +59,37 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     if (user) {
       // Store user object in localStorage whenever it changes
-      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem("user", JSON.stringify(user));
     } else {
       // If user is null, remove from localStorage
-      localStorage.removeItem('user');
+      localStorage.removeItem("user");
     }
   }, [user]);
 
   // Memoize the context value to prevent unnecessary re-renders
-  const contextValue = useMemo(() => ({
-    user,
-    setUser,
-    url,
-    setUrl,
-    fetchUserBalance,
-    refreshUserBalance
-  }), [user?.id, user?.name, user?.email, user?.phoneNumber, user?.balance, url, fetchUserBalance, refreshUserBalance]);
+  const contextValue = useMemo(
+    () => ({
+      user,
+      setUser,
+      url,
+      setUrl,
+      fetchUserBalance,
+      refreshUserBalance,
+    }),
+    [
+      user?.id,
+      user?.name,
+      user?.email,
+      user?.phoneNumber,
+      user?.balance,
+      url,
+      fetchUserBalance,
+      refreshUserBalance,
+    ],
+  );
 
   return (
-    <UserContext.Provider value={contextValue}>
-      {children}
-    </UserContext.Provider>
+    <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>
   );
 };
 

@@ -14,7 +14,7 @@
   
   .popup {
     background: #111111 !important;
-  border: 1px solid rgba(255, 204, 0, 0.3) !important;
+  border: 1px solid rgba(var(--primary-color-rgb), 0.3) !important;
     padding: 20px;
     border-radius: 15px;
     width: 400px;

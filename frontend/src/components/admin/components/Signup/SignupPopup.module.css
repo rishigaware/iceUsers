@@ -25,7 +25,7 @@
   max-width: 500px;
   position: relative;
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(255, 204, 0, 0.3);
+  border: 1px solid rgba(var(--primary-color-rgb), 0.3);
   max-height: 90vh;
   overflow-y: auto;
 }
@@ -48,7 +48,7 @@
   text-align: center;
   margin-bottom: 2rem;
   color: var(--link-color);
-  text-shadow: 0 2px 4px rgba(255, 204, 0, 0.3);
+  text-shadow: 0 2px 4px rgba(var(--primary-color-rgb), 0.3);
 }
 
 /* Modern Form Group */
@@ -82,7 +82,7 @@
 
 .input:focus {
   border-color: var(--link-color);
-  box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.1);
+  box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.1);
   transform: translateY(-1px);
 }
 
@@ -122,7 +122,7 @@
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 25px rgba(255, 204, 0, 0.3);
+  box-shadow: 0 8px 25px rgba(var(--primary-color-rgb), 0.3);
   position: relative;
   overflow: hidden;
 }

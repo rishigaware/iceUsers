@@ -18,7 +18,6 @@ body {
 
 .navbar {
   height: 75px;
-  overflow: hidden;
   width: 100%;
   background: var(--main-gradient);
   position: fixed;
@@ -101,8 +100,8 @@ body {
   width: 70px;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
-  background: linear-gradient(135deg, rgba(255, 204, 0, 0.15) 0%, rgba(0, 0, 0, 0.85) 100%) !important;
-  border: 1px solid rgba(255, 204, 0, 0.3) !important;
+  background: linear-gradient(135deg, rgba(var(--primary-color-rgb), 0.15) 0%, rgba(0, 0, 0, 0.85) 100%) !important;
+  border: 1px solid rgba(var(--primary-color-rgb), 0.3) !important;
   color: #fff;
   display: flex;
   align-items: center;
@@ -151,7 +150,7 @@ body {
   font-size: 45px;
   color: var(--primary-color) !important;
   margin-top: auto;
-  filter: drop-shadow(0 0 8px rgba(255, 204, 0, 0.4)) !important;
+  filter: drop-shadow(0 0 8px rgba(var(--primary-color-rgb), 0.4)) !important;
 }
 
 /* .second {
@@ -184,7 +183,7 @@ body {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   animation: pulse 2s ease-in-out infinite 0.8s;
-  box-shadow: 0 0 25px rgba(255, 204, 0, 0.2) !important;
+  box-shadow: 0 0 25px rgba(var(--primary-color-rgb), 0.2) !important;
 }
 
 .second:hover {
@@ -220,19 +219,17 @@ body {
 }
 
 .navbarLogo {
-  float: left;
-  height: 100%;
-  margin-top: 0px;
-  margin-left: 4px;
+  height: 80%;
+  max-width: 250px;
   object-fit: contain;
 }
 
 .centerLogo {
-  height: 85px;
-  /* Reduced from 130px to prevent overlap */
-  max-width: 100%;
-  margin-top: 2px;
-  margin-left: 0;
+  width: 100%;
+  height: auto;
+  max-height: 85px;
+  max-width: 140px;
+  margin: 0 auto 5px auto;
   object-fit: contain;
   z-index: 1000;
   position: relative;
@@ -244,8 +241,7 @@ body {
   }
 
   .centerLogo {
-    height: 100px;
-    /* Reduced from 120px */
+    max-height: 70px;
   }
 }
 
@@ -255,8 +251,7 @@ body {
   }
 
   .centerLogo {
-    height: 50px;
-    /* Reduced from 55px */
+    max-height: 50px;
   }
 }
 
@@ -279,7 +274,7 @@ body {
   font-size: 16px !important;
   font-weight: 800 !important;
   color: var(--primary-color) !important;
-  text-shadow: 0 0 10px rgba(255, 204, 0, 0.3) !important;
+  text-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.3) !important;
 }
 
 
@@ -290,8 +285,8 @@ body {
   width: 70px;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
-  background: linear-gradient(135deg, rgba(255, 204, 0, 0.15) 0%, rgba(0, 0, 0, 0.85) 100%) !important;
-  border: 1px solid rgba(255, 204, 0, 0.3) !important;
+  background: linear-gradient(135deg, rgba(var(--primary-color-rgb), 0.15) 0%, rgba(0, 0, 0, 0.85) 100%) !important;
+  border: 1px solid rgba(var(--primary-color-rgb), 0.3) !important;
   color: var(--primary-color);
   display: flex;
   align-items: center;
@@ -340,7 +335,7 @@ body {
   font-size: 40px;
   color: var(--primary-color) !important;
   margin-top: auto;
-  filter: drop-shadow(0 0 8px rgba(255, 204, 0, 0.4)) !important;
+  filter: drop-shadow(0 0 8px rgba(var(--primary-color-rgb), 0.4)) !important;
 }
 
 /* Sliding Text Section */
@@ -351,7 +346,7 @@ body {
   border-radius: 20px;
   position: static;
   margin: 20px auto;
-  box-shadow: 0 4px 20px rgba(255, 204, 0, 0.15) !important;
+  box-shadow: 0 4px 20px rgba(var(--primary-color-rgb), 0.15) !important;
   backdrop-filter: blur(10px);
   border: 1px solid var(--primary-color) !important;
   animation: slideInUp 1s ease-out 0.8s both;
@@ -376,7 +371,7 @@ body {
   font-size: 16px;
   font-weight: 600;
   color: var(--primary-color) !important;
-  text-shadow: 0 0 8px rgba(255, 204, 0, 0.2) !important;
+  text-shadow: 0 0 8px rgba(var(--primary-color-rgb), 0.2) !important;
   animation: slideText 60s linear infinite;
   display: flex;
   align-items: center;
@@ -692,12 +687,12 @@ body {
 
 /* Logout button specific styling */
 .buttonlogout {
-  background: linear-gradient(135deg, #ff6b6b 0%, #ffa500 100%);
+  background: var(--gradient-orange-red);
   box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
 }
 
 .buttonlogout:hover {
-  background: linear-gradient(135deg, #ffa500 0%, #ff6b6b 100%);
+  background: var(--gradient-red-orange);
   box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
 }
 
@@ -743,7 +738,7 @@ body {
 
   .top {
     height: 20vh;
-    margin-top: 45px;
+    margin-top: 55px;
   }
 
   .topSquare {
@@ -778,13 +773,16 @@ body {
 /* Tablets */
 @media screen and (max-width: 768px) {
   .navbar {
-    height: 50px;
+    height: 60px;
     padding: 0 15px;
+  }
+  .navbarLogo {
+    max-width: 180px;
   }
 
   .top {
     height: 18vh;
-    margin-top: 50px;
+    margin-top: 60px;
   }
 
   .topSquare {
@@ -825,7 +823,7 @@ body {
 
   .top {
     height: 16vh;
-    margin-top: 45px;
+    margin-top: 48px;
   }
 
   .topSquare {
@@ -865,7 +863,7 @@ body {
 
   .top {
     height: 14vh;
-    margin-top: 40px;
+    margin-top: 45px;
   }
 
   .topSquare {
@@ -910,7 +908,7 @@ body {
 
   .top {
     height: 12vh;
-    margin-top: 35px;
+    margin-top: 42px;
   }
 
   .topSquare {
@@ -950,7 +948,7 @@ body {
 
   .top {
     height: 10vh;
-    margin-top: 30px;
+    margin-top: 40px;
   }
 
   .topSquare {
@@ -1026,7 +1024,7 @@ body {
 @media screen and (max-width: 768px) and (orientation: landscape) {
   .top {
     height: 12vh;
-    margin-top: 35px;
+    margin-top: 60px;
   }
 
   .topSquare {
@@ -1067,7 +1065,7 @@ body {
   transform: translateX(-50%);
   width: 80px;
   height: 4px;
-  background: linear-gradient(90deg, #ffd700, #ff6b6b);
+  background: var(--gradient-primary-red);
   border-radius: 2px;
 }
 
@@ -1091,8 +1089,8 @@ body {
 }
 
 .platformCard {
-  background: linear-gradient(135deg, rgba(255, 204, 0, 0.05) 0%, rgba(0, 0, 0, 0.8) 100%) !important;
-  border: 1px solid rgba(255, 204, 0, 0.2) !important;
+  background: linear-gradient(135deg, rgba(var(--primary-color-rgb), 0.05) 0%, rgba(0, 0, 0, 0.8) 100%) !important;
+  border: 1px solid rgba(var(--primary-color-rgb), 0.2) !important;
   border-radius: 24px !important;
   padding: 40px 30px !important;
   text-align: center !important;
@@ -1180,8 +1178,8 @@ body {
 }
 
 .testimonialCard {
-  background: linear-gradient(135deg, rgba(255, 204, 0, 0.05) 0%, rgba(0, 0, 0, 0.8) 100%) !important;
-  border: 1px solid rgba(255, 204, 0, 0.2) !important;
+  background: linear-gradient(135deg, rgba(var(--primary-color-rgb), 0.05) 0%, rgba(0, 0, 0, 0.8) 100%) !important;
+  border: 1px solid rgba(var(--primary-color-rgb), 0.2) !important;
   border-radius: 24px !important;
   padding: 35px !important;
   transition: all 0.3s ease !important;
@@ -1195,7 +1193,7 @@ body {
 
 .quoteIcon {
   font-size: 3rem;
-  color: #ffd700;
+  color: var(--primary-color);
   position: absolute;
   top: 10px;
   left: 20px;
@@ -1219,7 +1217,7 @@ body {
 .authorAvatar {
   width: 50px;
   height: 50px;
-  background: linear-gradient(135deg, #ffd700, #ff6b6b);
+  background: linear-gradient(135deg, var(--primary-color), #ff6b6b);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -1263,8 +1261,8 @@ body {
 }
 
 .stepItem {
-  background: linear-gradient(135deg, rgba(255, 204, 0, 0.05) 0%, rgba(0, 0, 0, 0.8) 100%) !important;
-  border: 1px solid rgba(255, 204, 0, 0.2) !important;
+  background: linear-gradient(135deg, rgba(var(--primary-color-rgb), 0.05) 0%, rgba(0, 0, 0, 0.8) 100%) !important;
+  border: 1px solid rgba(var(--primary-color-rgb), 0.2) !important;
   border-radius: 24px !important;
   padding: 30px 25px !important;
   text-align: center !important;
@@ -1287,7 +1285,7 @@ body {
   transform: translateX(-50%);
   width: 30px;
   height: 30px;
-  background: linear-gradient(135deg, #ffd700, #ff6b6b);
+  background: linear-gradient(135deg, var(--primary-color), #ff6b6b);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -1321,7 +1319,7 @@ body {
 
 .stepArrow {
   font-size: 2rem;
-  color: #ffd700;
+  color: var(--primary-color);
   font-weight: 700;
   animation: bounce 2s infinite;
 }
@@ -1333,7 +1331,7 @@ body {
 }
 
 .bannerContent {
-  background: linear-gradient(135deg, #ff6b6b 0%, #ffd700 50%, #4ecdc4 100%);
+  background: linear-gradient(135deg, #ff6b6b 0%, var(--primary-color) 50%, #4ecdc4 100%);
   border-radius: 25px;
   padding: 40px;
   display: flex;
@@ -2105,6 +2103,13 @@ body {
 
 /* Extra Small Mobile Devices (320px and below) */
 @media screen and (max-width: 360px) {
+  .top {
+    height: auto;
+    min-height: 120px;
+    margin-top: 42px;
+    padding: 10px 0;
+  }
+
   .slidingTextSection {
     width: 96vw;
     height: 32px;
@@ -2197,8 +2202,8 @@ body {
 }
 
 .featureCard {
-  background: linear-gradient(135deg, rgba(255, 204, 0, 0.05) 0%, rgba(0, 0, 0, 0.8) 100%) !important;
-  border: 1px solid rgba(255, 204, 0, 0.2) !important;
+  background: linear-gradient(135deg, rgba(var(--primary-color-rgb), 0.05) 0%, rgba(0, 0, 0, 0.8) 100%) !important;
+  border: 1px solid rgba(var(--primary-color-rgb), 0.2) !important;
   border-radius: 20px !important;
   padding: 30px !important;
   text-align: center !important;
@@ -2225,14 +2230,14 @@ body {
 .featureCard:hover {
   transform: translateY(-10px) !important;
   border-color: var(--primary-color) !important;
-  box-shadow: 0 15px 35px rgba(255, 204, 0, 0.15) !important;
+  box-shadow: 0 15px 35px rgba(var(--primary-color-rgb), 0.15) !important;
 }
 
 .featureIcon {
   font-size: 40px !important;
   color: var(--primary-color) !important;
   margin-bottom: 20px !important;
-  filter: drop-shadow(0 0 10px rgba(255, 204, 0, 0.3)) !important;
+  filter: drop-shadow(0 0 10px rgba(var(--primary-color-rgb), 0.3)) !important;
 }
 
 .featureCard h4 {
@@ -2306,7 +2311,7 @@ body {
 
 .statIcon {
   font-size: 2rem;
-  color: #ffd700;
+  color: var(--primary-color);
   margin-bottom: 15px;
   animation: pulse 2s infinite;
 }

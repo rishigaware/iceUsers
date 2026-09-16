@@ -40,7 +40,7 @@
 }
 
 .headerTitleIcon {
-  color: var(--primary-color, #ffcc00);
+  color: var(--primary-color);
   font-size: 1.6rem;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
 }
@@ -48,7 +48,7 @@
 .heading {
   font-size: 1.6rem;
   font-weight: 700;
-  color: var(--primary-color, #ffcc00);
+  color: var(--primary-color);
   margin: 0;
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
   letter-spacing: 0.5px;
@@ -145,8 +145,8 @@
 
 .searchInput:focus {
   outline: none;
-  border-color: var(--primary-color, #ffcc00);
-  box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.2);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.2);
   background: rgba(0, 0, 0, 0.6) !important;
 }
 
@@ -186,8 +186,8 @@
 }
 
 .categorySelect:focus {
-  border-color: var(--primary-color, #ffcc00);
-  box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.2);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.2);
 }
 
 .categorySelect option {
@@ -200,7 +200,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: var(--primary-color, #ffcc00);
+  color: var(--primary-color);
   font-size: 0.85rem;
 }
 
@@ -228,7 +228,7 @@
 }
 
 .websiteCard:hover {
-  border-color: rgba(255, 204, 0, 0.35);
+  border-color: rgba(var(--primary-color-rgb), 0.35);
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
@@ -283,9 +283,9 @@
 .categoryTag {
   display: inline-block;
   padding: 4px 10px;
-  background: rgba(255, 204, 0, 0.15);
-  color: var(--primary-color, #ffcc00);
-  border: 1px solid rgba(255, 204, 0, 0.3);
+  background: rgba(var(--primary-color-rgb), 0.15);
+  color: var(--primary-color);
+  border: 1px solid rgba(var(--primary-color-rgb), 0.3);
   border-radius: 20px;
   font-size: 0.75rem;
   font-weight: 600;
@@ -346,26 +346,26 @@
 }
 
 .editButton {
-  background: rgba(255, 204, 0, 0.18) !important;
-  color: #ffcc00 !important;
-  border: 1px solid rgba(255, 204, 0, 0.45) !important;
+  background: rgba(var(--primary-color-rgb), 0.18) !important;
+  color: var(--primary-color) !important;
+  border: 1px solid rgba(var(--primary-color-rgb), 0.45) !important;
 }
 
 .editButton svg {
   width: 18px !important;
   height: 18px !important;
-  fill: #ffcc00 !important;
-  color: #ffcc00 !important;
+  fill: var(--primary-color) !important;
+  color: var(--primary-color) !important;
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
 }
 
 .editButton:hover {
-  background: #ffcc00 !important;
+  background: var(--primary-color) !important;
   color: #000000 !important;
   transform: scale(1.08);
-  box-shadow: 0 4px 12px rgba(255, 204, 0, 0.4);
+  box-shadow: 0 4px 12px rgba(var(--primary-color-rgb), 0.4);
 }
 
 .editButton:hover svg {
@@ -442,9 +442,9 @@
 
 .paginationButton:hover:not(:disabled),
 .pageButton:hover {
-  background: rgba(255, 204, 0, 0.2);
-  border-color: var(--primary-color, #ffcc00);
-  color: var(--primary-color, #ffcc00);
+  background: rgba(var(--primary-color-rgb), 0.2);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
 }
 
 .paginationButton:disabled {
@@ -459,9 +459,9 @@
 }
 
 .activePage {
-  background: var(--primary-color, #ffcc00) !important;
+  background: var(--primary-color) !important;
   color: #000000 !important;
-  border-color: var(--primary-color, #ffcc00) !important;
+  border-color: var(--primary-color) !important;
   font-weight: 700;
 }
 
@@ -490,7 +490,7 @@
 
 .modalContent {
   background: #14141e;
-  border: 1px solid rgba(255, 204, 0, 0.25);
+  border: 1px solid rgba(var(--primary-color-rgb), 0.25);
   border-radius: 18px;
   width: 100%;
   max-width: 600px;
@@ -509,7 +509,7 @@
 }
 
 .modalHeader h2 {
-  color: var(--primary-color, #ffcc00);
+  color: var(--primary-color);
   font-size: 1.3rem;
   font-weight: 700;
 }
@@ -575,8 +575,8 @@
 .inputField:focus,
 .selectField:focus {
   outline: none;
-  border-color: var(--primary-color, #ffcc00);
-  box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.2);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.2);
 }
 
 .selectField option {
@@ -596,7 +596,7 @@
 
 .currentLogo {
   font-size: 0.8rem;
-  color: var(--primary-color, #ffcc00);
+  color: var(--primary-color);
   margin: 2px 0 0 0;
 }
 
@@ -616,7 +616,7 @@
 
 .submitButton {
   padding: 10px 22px;
-  background: linear-gradient(135deg, var(--primary-color, #ffcc00) 0%, #ff9900 100%);
+  background: linear-gradient(135deg, var(--primary-color) 0%, #ff9900 100%);
   color: #000000;
   border: none;
   border-radius: 8px;
@@ -628,7 +628,7 @@
 
 .submitButton:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(255, 204, 0, 0.4);
+  box-shadow: 0 4px 15px rgba(var(--primary-color-rgb), 0.4);
 }
 
 .submitButton:disabled {
@@ -661,7 +661,7 @@
 
 .categorySection h3,
 .addCategorySection h3 {
-  color: var(--primary-color, #ffcc00);
+  color: var(--primary-color);
   font-size: 1.1rem;
   margin: 0 0 10px 0;
 }
@@ -719,7 +719,7 @@
 
 .addCategoryButton {
   padding: 10px 16px;
-  background: var(--primary-color, #ffcc00);
+  background: var(--primary-color);
   color: #000000;
   border: none;
   border-radius: 8px;
@@ -731,7 +731,7 @@
 
 .addCategoryButton:hover:not(:disabled) {
   background: #ffbb00;
-  box-shadow: 0 4px 12px rgba(255, 204, 0, 0.35);
+  box-shadow: 0 4px 12px rgba(var(--primary-color-rgb), 0.35);
 }
 
 .addCategoryButton:disabled {

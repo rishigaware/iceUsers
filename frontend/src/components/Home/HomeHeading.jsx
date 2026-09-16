@@ -86,7 +86,7 @@ const HomeHeading = () => {
   };
 
   const [slidingText] = useState(
-    "#INDIA'S FIRST SELF ADMIN &  MASTER PANEL'S CREATE WEBSITE ( NO FRAUD / NO🎢RISK / NO MIDDLEMAN ) 🏁START IT'S MIN AVAILABLE 🏪24/7🧑‍💻TEAM IcePanels.info🪩",
+    "#INDIA'S FIRST SELF ADMIN &  MASTER PANEL'S CREATE WEBSITE ( NO FRAUD / NO🎢RISK / NO MIDDLEMAN ) 🏁START IT'S MIN AVAILABLE 🏪24/7🧑‍💻TEAM IceUsers.info🪩",
   );
 
   // Fetch balance on component mount and whenever the user changessss
@@ -104,7 +104,7 @@ const HomeHeading = () => {
           alt="Logo"
           className={styles.navbarLogo}
         />
-        <div style={{ float: "right" }}>
+        <div className={styles.navbarActions}>
           {user ? (
             <button className={styles.buttonlogout} onClick={handleLogout}>
               Logout
@@ -395,7 +395,7 @@ const HomeHeading = () => {
             <div className={styles.stepContent}>
               <h3>Open Google</h3>
               <p>
-                Search "the best panel provider" using link <b>IcePanels.info</b>
+                Search "the best panel provider" using link <b>IceUsers.info</b>
               </p>
             </div>
             <div className={styles.stepIcon}>🔍</div>
@@ -458,7 +458,7 @@ const HomeHeading = () => {
               <h3>Payment & Submit</h3>
               <p>
                 Make payment, Upload Screenshot and Click on Submit. You will
-                get your Panel detail on icepanels.info home page
+                get your Panel detail on iceusers.info home page
               </p>
             </div>
             <div className={styles.stepIcon}>✅</div>
@@ -468,7 +468,7 @@ const HomeHeading = () => {
 
       {/* Copyright Section */}
       <div className={styles.copyrightSection}>
-        <p>© 2024 icepanels.info. All rights reserved.</p>
+        <p>© 2024 iceusers.info. All rights reserved.</p>
       </div>
 
       {/* Certifications Section */}

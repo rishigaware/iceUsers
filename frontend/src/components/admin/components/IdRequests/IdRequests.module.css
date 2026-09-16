@@ -25,7 +25,7 @@
   padding: 1.5rem 1rem;
   background: rgba(255, 255, 255, 0.03);
   border-radius: 16px;
-  border: 1px solid rgba(255, 204, 0, 0.2);
+  border: 1px solid rgba(var(--primary-color-rgb), 0.2);
   color: var(--text-white, #fff);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   max-width: 1400px;
@@ -38,8 +38,8 @@
   font-size: 1.8rem;
   font-weight: 700;
   margin: 0 0 8px 0;
-  color: var(--primary-color, #ffcc00);
-  text-shadow: 0 2px 8px rgba(255, 204, 0, 0.25);
+  color: var(--primary-color);
+  text-shadow: 0 2px 8px rgba(var(--primary-color-rgb), 0.25);
   letter-spacing: -0.5px;
 }
 
@@ -67,7 +67,7 @@
 }
 
 .filterLabel {
-  color: var(--primary-color, #ffcc00);
+  color: var(--primary-color);
   font-weight: 600;
   font-size: 0.95rem;
   text-align: center;
@@ -78,7 +78,7 @@
   border-radius: 20px;
   background: rgba(30, 30, 45, 0.95);
   color: #fff;
-  border: 1.5px solid rgba(255, 204, 0, 0.5);
+  border: 1.5px solid rgba(var(--primary-color-rgb), 0.5);
   outline: none;
   cursor: pointer;
   font-size: 0.9rem;
@@ -88,8 +88,8 @@
 }
 
 .filterSelect:focus {
-  border-color: var(--primary-color, #ffcc00);
-  box-shadow: 0 0 10px rgba(255, 204, 0, 0.3);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.3);
 }
 
 /* Loading & Empty States */
@@ -110,7 +110,7 @@
   padding: 3rem 1.5rem;
   background: rgba(255, 255, 255, 0.03);
   border-radius: 16px;
-  border: 1px solid rgba(255, 204, 0, 0.15);
+  border: 1px solid rgba(var(--primary-color-rgb), 0.15);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   max-width: 500px;
   margin: 2rem auto;
@@ -119,7 +119,7 @@
 
 .emptyIcon {
   font-size: 3.5rem;
-  color: var(--primary-color, #ffcc00);
+  color: var(--primary-color);
   opacity: 0.7;
   margin-bottom: 1rem;
 }
@@ -147,7 +147,7 @@
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 204, 0, 0.12);
+  border: 1px solid rgba(var(--primary-color-rgb), 0.12);
   border-radius: 16px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
 }
@@ -175,7 +175,7 @@
   font-size: 0.82rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  border-bottom: 1px solid rgba(255, 204, 0, 0.2);
+  border-bottom: 1px solid rgba(var(--primary-color-rgb), 0.2);
 }
 
 .requestsTable tbody tr {
@@ -184,7 +184,7 @@
 }
 
 .requestsTable tbody tr:hover {
-  background-color: rgba(255, 204, 0, 0.03);
+  background-color: rgba(var(--primary-color-rgb), 0.03);
 }
 
 .requestsTable tbody tr:last-child {
@@ -204,9 +204,9 @@
 
 .serialNumber {
   display: inline-block;
-  background: rgba(255, 204, 0, 0.15);
-  border: 1px solid rgba(255, 204, 0, 0.35);
-  color: var(--primary-color, #ffcc00);
+  background: rgba(var(--primary-color-rgb), 0.15);
+  border: 1px solid rgba(var(--primary-color-rgb), 0.35);
+  color: var(--primary-color);
   padding: 3px 8px;
   border-radius: 10px;
   font-weight: 700;
@@ -228,7 +228,7 @@
   height: 36px;
   border-radius: 8px;
   object-fit: cover;
-  border: 1px solid rgba(255, 204, 0, 0.25);
+  border: 1px solid rgba(var(--primary-color-rgb), 0.25);
   flex-shrink: 0;
 }
 
@@ -240,7 +240,7 @@
 }
 
 .tableSiteUrl {
-  color: var(--primary-color, #ffcc00);
+  color: var(--primary-color);
   font-size: 0.72rem;
   text-decoration: none;
   display: block;
@@ -261,7 +261,7 @@
 }
 
 .tableUserInfo strong {
-  color: var(--primary-color, #ffcc00);
+  color: var(--primary-color);
 }
 
 .tableSubtext {
@@ -328,13 +328,13 @@
 }
 
 .tableAcceptBtn {
-  background: var(--primary-color, #ffcc00);
+  background: var(--primary-color);
   color: #000;
 }
 
 .tableAcceptBtn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 2px 8px rgba(255, 204, 0, 0.4);
+  box-shadow: 0 2px 8px rgba(var(--primary-color-rgb), 0.4);
 }
 
 .tableRejectBtn {
@@ -369,7 +369,7 @@
 
 .requestCard {
   background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 204, 0, 0.18);
+  border: 1px solid rgba(var(--primary-color-rgb), 0.18);
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
@@ -381,7 +381,7 @@
 }
 
 .requestCard:hover {
-  border-color: rgba(255, 204, 0, 0.35);
+  border-color: rgba(var(--primary-color-rgb), 0.35);
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
 }
 
@@ -409,7 +409,7 @@
   height: 40px;
   border-radius: 8px;
   object-fit: cover;
-  border: 1px solid rgba(255, 204, 0, 0.3);
+  border: 1px solid rgba(var(--primary-color-rgb), 0.3);
   flex-shrink: 0;
 }
 
@@ -430,7 +430,7 @@
 
 .websiteUrl {
   font-size: 0.72rem;
-  color: var(--primary-color, #ffcc00);
+  color: var(--primary-color);
   text-decoration: none;
   display: block;
   white-space: nowrap;
@@ -453,9 +453,9 @@
 }
 
 .serialBadge {
-  background: rgba(255, 204, 0, 0.12);
-  border: 1px solid rgba(255, 204, 0, 0.35);
-  color: var(--primary-color, #ffcc00);
+  background: rgba(var(--primary-color-rgb), 0.12);
+  border: 1px solid rgba(var(--primary-color-rgb), 0.35);
+  color: var(--primary-color);
   padding: 2px 8px;
   border-radius: 12px;
   font-size: 0.72rem;
@@ -500,7 +500,7 @@
 
 .infoIcon {
   font-size: 0.9rem;
-  color: var(--primary-color, #ffcc00);
+  color: var(--primary-color);
   flex-shrink: 0;
 }
 
@@ -580,13 +580,13 @@
 }
 
 .acceptButton {
-  background: var(--primary-color, #ffcc00);
+  background: var(--primary-color);
   color: #000;
   font-weight: 700;
 }
 
 .acceptButton:hover:not(:disabled) {
-  box-shadow: 0 3px 10px rgba(255, 204, 0, 0.4);
+  box-shadow: 0 3px 10px rgba(var(--primary-color-rgb), 0.4);
   transform: translateY(-1px);
 }
 
@@ -618,7 +618,7 @@
   gap: 12px;
   padding: 14px 16px;
   background: rgba(20, 20, 30, 0.85);
-  border: 1px solid rgba(255, 204, 0, 0.18);
+  border: 1px solid rgba(var(--primary-color-rgb), 0.18);
   border-radius: 14px;
   margin-top: 24px;
   margin-bottom: 20px;
@@ -650,7 +650,7 @@
   font-size: 0.78rem;
   font-weight: 600;
   background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 204, 0, 0.3);
+  border: 1px solid rgba(var(--primary-color-rgb), 0.3);
   color: #fff;
   border-radius: 8px;
   cursor: pointer;
@@ -659,7 +659,7 @@
 }
 
 .paginationButton:hover:not(:disabled) {
-  background: var(--primary-color, #ffcc00);
+  background: var(--primary-color);
   color: #000;
 }
 
@@ -672,7 +672,7 @@
 .pageInfo {
   font-size: 0.82rem;
   font-weight: 600;
-  color: var(--primary-color, #ffcc00);
+  color: var(--primary-color);
   padding: 0 4px;
   white-space: nowrap;
 }
@@ -690,7 +690,7 @@
   padding: 5px 10px;
   border-radius: 8px;
   background: rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(255, 204, 0, 0.4);
+  border: 1px solid rgba(var(--primary-color-rgb), 0.4);
   color: #fff;
   font-size: 0.82rem;
   outline: none;
@@ -698,7 +698,7 @@
 }
 
 .rowsPerPageSelect:focus {
-  border-color: var(--primary-color, #ffcc00);
+  border-color: var(--primary-color);
 }
 
 /* ==========================================================================
@@ -728,7 +728,7 @@
 
 .modalContent {
   background: #14141e !important;
-  border: 1.5px solid rgba(255, 204, 0, 0.35);
+  border: 1.5px solid rgba(var(--primary-color-rgb), 0.35);
   border-radius: 16px;
   max-width: 520px;
   width: 100%;
@@ -758,7 +758,7 @@
   align-items: center;
   padding: 14px 18px;
   background: var(--main-gradient);
-  border-bottom: 1px solid rgba(255, 204, 0, 0.2);
+  border-bottom: 1px solid rgba(var(--primary-color-rgb), 0.2);
   flex-shrink: 0;
 }
 
@@ -771,8 +771,8 @@
 
 .closeButton {
   background: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 204, 0, 0.4);
-  color: var(--primary-color, #ffcc00);
+  border: 1px solid rgba(var(--primary-color-rgb), 0.4);
+  color: var(--primary-color);
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -787,7 +787,7 @@
 }
 
 .closeButton:hover {
-  background: var(--primary-color, #ffcc00);
+  background: var(--primary-color);
   color: #000;
   transform: scale(1.05);
 }
@@ -805,7 +805,7 @@
 .detailSection {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.06);
-  border-left: 3.5px solid var(--primary-color, #ffcc00);
+  border-left: 3.5px solid var(--primary-color);
   border-radius: 10px;
   padding: 12px 14px;
 }
@@ -813,7 +813,7 @@
 .detailSection h3 {
   font-size: 0.95rem;
   font-weight: 700;
-  color: var(--primary-color, #ffcc00);
+  color: var(--primary-color);
   margin: 0 0 10px 0;
 }
 
@@ -834,7 +834,7 @@
   padding: 10px;
   border-radius: 8px;
   background: rgba(0, 0, 0, 0.35);
-  border: 1px solid rgba(255, 204, 0, 0.3);
+  border: 1px solid rgba(var(--primary-color-rgb), 0.3);
   color: #fff;
   font-family: inherit;
   font-size: 0.85rem;
@@ -844,8 +844,8 @@
 
 .notesTextarea:focus {
   outline: none;
-  border-color: var(--primary-color, #ffcc00);
-  box-shadow: 0 0 8px rgba(255, 204, 0, 0.25);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 8px rgba(var(--primary-color-rgb), 0.25);
 }
 
 .modalActions {

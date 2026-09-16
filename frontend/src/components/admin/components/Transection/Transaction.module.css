@@ -17,7 +17,7 @@
   color: var(--primary-color);
   margin: 0 0 1.25rem 0;
   padding: 0.5rem;
-  text-shadow: 0 2px 4px rgba(255, 204, 0, 0.1);
+  text-shadow: 0 2px 4px rgba(var(--primary-color-rgb), 0.1);
 }
 
 /* Transactions Container */
@@ -58,7 +58,7 @@
 
 .transactionItem:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(255, 204, 0, 0.12);
+  box-shadow: 0 4px 12px rgba(var(--primary-color-rgb), 0.12);
 }
 
 /* Column Styles */
@@ -178,7 +178,7 @@
 .transactionImage:hover {
   transform: scale(1.1);
   border-color: var(--primary-color);
-  box-shadow: 0 2px 8px rgba(255, 204, 0, 0.15);
+  box-shadow: 0 2px 8px rgba(var(--primary-color-rgb), 0.15);
 }
 
 /* Action Buttons Container */
@@ -663,7 +663,7 @@
   }
   
   .transactionItem:hover {
-    box-shadow: 0 2px 8px rgba(255, 204, 0, 0.06);
+    box-shadow: 0 2px 8px rgba(var(--primary-color-rgb), 0.06);
   }
   
   .transactionImage {

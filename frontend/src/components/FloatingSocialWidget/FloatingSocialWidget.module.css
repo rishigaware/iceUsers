@@ -43,13 +43,13 @@
   height: 58px;
   border-radius: 50%;
   background: linear-gradient(135deg, #222222 0%, #111111 100%);
-  border: 2px solid var(--primary-color, #ffcc00);
-  color: var(--primary-color, #ffcc00);
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 8px 25px rgba(255, 204, 0, 0.3), 0 4px 12px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 8px 25px rgba(var(--primary-color-rgb), 0.3), 0 4px 12px rgba(0, 0, 0, 0.6);
   transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
   padding: 0;
   outline: none;
@@ -58,7 +58,7 @@
 
 .triggerButton:hover {
   transform: scale(1.08) translateY(-2px);
-  box-shadow: 0 12px 30px rgba(255, 204, 0, 0.45), 0 6px 16px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 12px 30px rgba(var(--primary-color-rgb), 0.45), 0 6px 16px rgba(0, 0, 0, 0.8);
   border-color: #ffe066;
 }
 
@@ -89,7 +89,7 @@
   right: -4px;
   bottom: -4px;
   border-radius: 50%;
-  border: 2px solid var(--primary-color, #ffcc00);
+  border: 2px solid var(--primary-color);
   opacity: 0;
   pointer-events: none;
 }
@@ -222,10 +222,10 @@
 }
 
 .tabBtnActive {
-  background: linear-gradient(135deg, #ffcc00 0%, #e6b800 100%);
+  background: var(--primary-gradient);
   color: #111111;
   font-weight: 700;
-  box-shadow: 0 2px 8px rgba(255, 204, 0, 0.35);
+  box-shadow: 0 2px 8px rgba(var(--primary-color-rgb), 0.35);
 }
 
 /* Superadmin Admin Selector */
@@ -236,13 +236,13 @@
   background: rgba(18, 18, 24, 0.95);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 204, 0, 0.35);
+  border: 1px solid rgba(var(--primary-color-rgb), 0.35);
   border-radius: 14px;
   padding: 8px 12px;
   margin-bottom: 8px;
   align-self: flex-end;
   max-width: 250px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 204, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), 0 0 15px rgba(var(--primary-color-rgb), 0.1);
 }
 
 .adminSelectorLabel {
@@ -251,7 +251,7 @@
   gap: 6px;
   font-size: 0.72rem;
   font-weight: 700;
-  color: #ffcc00;
+  color: var(--primary-color);
   letter-spacing: 0.3px;
   text-transform: uppercase;
 }
@@ -275,8 +275,8 @@
 }
 
 .adminSelect:focus {
-  border-color: #ffcc00;
-  box-shadow: 0 0 8px rgba(255, 204, 0, 0.3);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 8px rgba(var(--primary-color-rgb), 0.3);
 }
 
 .adminSelect option {
@@ -411,9 +411,9 @@
   gap: 5px;
   background: rgba(18, 18, 24, 0.85);
   backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 204, 0, 0.35);
+  border: 1px solid rgba(var(--primary-color-rgb), 0.35);
   border-radius: 12px;
-  color: #ffcc00;
+  color: var(--primary-color);
   font-size: 0.7rem;
   font-weight: 600;
   padding: 3px 10px;
@@ -424,10 +424,10 @@
 }
 
 .editBtn:hover {
-  background: #ffcc00;
+  background: var(--primary-color);
   color: #111111;
-  border-color: #ffcc00;
-  box-shadow: 0 0 12px rgba(255, 204, 0, 0.5);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 12px rgba(var(--primary-color-rgb), 0.5);
   transform: translateY(-1px);
 }
 
@@ -459,8 +459,8 @@
 
 .modalCard {
   background: linear-gradient(145deg, #1e1e26 0%, #121217 100%);
-  border: 1px solid rgba(255, 204, 0, 0.3);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 204, 0, 0.12);
+  border: 1px solid rgba(var(--primary-color-rgb), 0.3);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(var(--primary-color-rgb), 0.12);
   border-radius: 16px;
   padding: 22px;
   width: min(440px, 92vw);
@@ -566,8 +566,8 @@
 }
 
 .urlInput:focus {
-  border-color: #ffcc00;
-  box-shadow: 0 0 12px rgba(255, 204, 0, 0.25);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 12px rgba(var(--primary-color-rgb), 0.25);
   outline: none;
 }
 
@@ -596,7 +596,7 @@
 }
 
 .saveBtn {
-  background: linear-gradient(135deg, #ffcc00 0%, #e6b800 100%);
+  background: var(--primary-gradient);
   border: none;
   color: #111111;
   padding: 9px 20px;
@@ -607,12 +607,12 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+  box-shadow: 0 4px 15px rgba(var(--primary-color-rgb), 0.3);
   transition: all 0.2s ease;
 }
 
 .saveBtn:hover:not(:disabled) {
-  box-shadow: 0 6px 20px rgba(255, 204, 0, 0.5);
+  box-shadow: 0 6px 20px rgba(var(--primary-color-rgb), 0.5);
   transform: translateY(-1px);
 }
 

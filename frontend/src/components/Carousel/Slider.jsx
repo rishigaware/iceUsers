@@ -80,14 +80,14 @@ const Slider = () => {
                             aria-label={`Blog item: ${item.name}`}
                         >
                             <div className="flex flex-col items-center justify-center">
-                                <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105 focus-within:ring-2 focus-within:ring-yellow-500">
+                                <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105 focus-within:ring-2 focus-within:ring-primary">
                                     <img
                                         src={`${url}${item.picture}`}
                                         alt={item.name}
                                         className="w-full h-48 object-cover"
                                     />
                                     <div className="p-4 text-center">
-                                        <span className="inline-block px-2 py-1 text-xs font-semibold text-white bg-yellow-500 rounded-full mb-2">
+                                        <span className="inline-block px-2 py-1 text-xs font-semibold text-white bg-primary rounded-full mb-2">
                                             {item.name}
                                         </span>
                                         <p className="text-gray-600 text-sm">Age: {item.age || "Unknown"}</p>
@@ -102,14 +102,14 @@ const Slider = () => {
                 </div>
                 <button
                     onClick={prevSlide}
-                    className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-75 rounded-full p-2 ml-2 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                    className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-75 rounded-full p-2 ml-2 focus:outline-none focus:ring-2 focus:ring-primary"
                     aria-label="Previous slide"
                 >
                     <FaChevronLeft className="text-gray-800" />
                 </button>
                 <button
                     onClick={nextSlide}
-                    className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-75 rounded-full p-2 mr-2 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                    className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-75 rounded-full p-2 mr-2 focus:outline-none focus:ring-2 focus:ring-primary"
                     aria-label="Next slide"
                 >
                     <FaChevronRight className="text-gray-800" />

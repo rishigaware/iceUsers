@@ -29,10 +29,10 @@
 .heading {
   font-size: 1.8rem;
   font-weight: 700;
-  color: var(--primary-color, #ffcc00);
+  color: var(--primary-color);
   margin: 0;
   padding: 0.5rem;
-  text-shadow: 0 2px 4px rgba(255, 204, 0, 0.1);
+  text-shadow: 0 2px 4px rgba(var(--primary-color-rgb), 0.1);
   flex: 1;
   text-align: center;
 }
@@ -85,7 +85,7 @@
   gap: 0.45rem;
   background: rgba(30, 30, 45, 0.85);
   color: #fff;
-  border: 1.5px solid rgba(255, 204, 0, 0.4);
+  border: 1.5px solid rgba(var(--primary-color-rgb), 0.4);
   padding: 0.7rem 1.25rem;
   border-radius: 12px;
   font-size: 0.9rem;
@@ -96,7 +96,7 @@
 }
 
 .secondaryBtn:hover {
-  border-color: var(--primary-color, #ffcc00);
+  border-color: var(--primary-color);
   background: rgba(45, 45, 65, 0.9);
   color: #fff;
 }
@@ -130,7 +130,7 @@
 }
 
 .statCard:hover {
-  border-color: rgba(255, 204, 0, 0.35);
+  border-color: rgba(var(--primary-color-rgb), 0.35);
   transform: translateY(-2px);
 }
 
@@ -142,9 +142,9 @@
   align-items: center;
   justify-content: center;
   font-size: 1.35rem;
-  background: rgba(255, 204, 0, 0.15);
-  color: var(--primary-color, #ffcc00);
-  border: 1px solid rgba(255, 204, 0, 0.3);
+  background: rgba(var(--primary-color-rgb), 0.15);
+  color: var(--primary-color);
+  border: 1px solid rgba(var(--primary-color-rgb), 0.3);
   flex-shrink: 0;
 }
 
@@ -186,13 +186,13 @@
 }
 
 .adminCard:hover {
-  border-color: rgba(255, 204, 0, 0.35);
+  border-color: rgba(var(--primary-color-rgb), 0.35);
 }
 
 .adminCardExpanded {
-  border-color: var(--primary-color, #ffcc00);
+  border-color: var(--primary-color);
   background: rgba(30, 30, 45, 0.7) !important;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35), 0 0 20px rgba(255, 204, 0, 0.08);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35), 0 0 20px rgba(var(--primary-color-rgb), 0.08);
 }
 
 .adminCardCollapsed {
@@ -225,13 +225,13 @@
 }
 
 .cardHeader:active {
-  background: rgba(255, 204, 0, 0.09) !important;
+  background: rgba(var(--primary-color-rgb), 0.09) !important;
 }
 
 .cardHeader:active .expandBtn {
-  background: var(--primary-color, #ffcc00);
+  background: var(--primary-color);
   color: #111;
-  border-color: var(--primary-color, #ffcc00);
+  border-color: var(--primary-color);
 }
 
 .adminDetails {
@@ -244,14 +244,14 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #ffcc00 0%, #e6b800 100%);
+  background: var(--primary-gradient);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.15rem;
   font-weight: 800;
   color: #111;
-  box-shadow: 0 4px 12px rgba(255, 204, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(var(--primary-color-rgb), 0.3);
   flex-shrink: 0;
 }
 
@@ -272,9 +272,9 @@
 
 .usernameTag {
   font-size: 0.8rem;
-  background: rgba(255, 204, 0, 0.15);
-  color: var(--primary-color, #ffcc00);
-  border: 1px solid rgba(255, 204, 0, 0.35);
+  background: rgba(var(--primary-color-rgb), 0.15);
+  color: var(--primary-color);
+  border: 1px solid rgba(var(--primary-color-rgb), 0.35);
   padding: 0.15rem 0.55rem;
   border-radius: 12px;
   font-weight: 600;
@@ -302,9 +302,9 @@
 }
 
 .permCountBadge {
-  background: rgba(255, 204, 0, 0.15);
-  color: var(--primary-color, #ffcc00);
-  border: 1px solid rgba(255, 204, 0, 0.35);
+  background: rgba(var(--primary-color-rgb), 0.15);
+  color: var(--primary-color);
+  border: 1px solid rgba(var(--primary-color-rgb), 0.35);
   padding: 0.2rem 0.65rem;
   border-radius: 14px;
   font-size: 0.8rem;
@@ -330,8 +330,8 @@
   align-items: center;
   gap: 6px;
   background: rgba(30, 30, 45, 0.9);
-  color: var(--primary-color, #ffcc00);
-  border: 1.5px solid rgba(255, 204, 0, 0.4);
+  color: var(--primary-color);
+  border: 1.5px solid rgba(var(--primary-color-rgb), 0.4);
   padding: 6px 14px;
   border-radius: 10px;
   font-size: 0.85rem;
@@ -343,11 +343,11 @@
 .cardHeader:hover .expandBtn,
 .expandBtn:hover, 
 .expandBtnActive {
-  background: var(--primary-color, #ffcc00);
+  background: var(--primary-color);
   color: #111;
   font-weight: 700;
-  border-color: var(--primary-color, #ffcc00);
-  box-shadow: 0 3px 12px rgba(255, 204, 0, 0.35);
+  border-color: var(--primary-color);
+  box-shadow: 0 3px 12px rgba(var(--primary-color-rgb), 0.35);
 }
 
 .expandBtnText {
@@ -425,7 +425,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--primary-color, #ffcc00);
+  color: var(--primary-color);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -464,8 +464,8 @@
 }
 
 .permissionItemChecked {
-  border-color: rgba(255, 204, 0, 0.4);
-  background: rgba(255, 204, 0, 0.08);
+  border-color: rgba(var(--primary-color-rgb), 0.4);
+  background: rgba(var(--primary-color-rgb), 0.08);
 }
 
 .permLabel {
@@ -514,7 +514,7 @@
 }
 
 .switch input:checked + .slider {
-  background-color: var(--primary-color, #ffcc00);
+  background-color: var(--primary-color);
 }
 
 .switch input:checked + .slider:before {
@@ -540,14 +540,14 @@
 
 .modalContent {
   background: #18181f;
-  border: 1px solid rgba(255, 204, 0, 0.3);
+  border: 1px solid rgba(var(--primary-color-rgb), 0.3);
   border-radius: 20px;
   width: 100%;
   max-width: 580px;
   max-height: 90vh;
   overflow-y: auto;
   padding: 24px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(255, 204, 0, 0.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(var(--primary-color-rgb), 0.1);
   box-sizing: border-box;
 }
 
@@ -562,7 +562,7 @@
   margin: 0;
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--primary-color, #ffcc00);
+  color: var(--primary-color);
 }
 
 .closeBtn {
@@ -604,8 +604,8 @@
 }
 
 .formGroup input:focus {
-  border-color: var(--primary-color, #ffcc00);
-  box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.15);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.15);
 }
 
 .formRow {
@@ -639,7 +639,7 @@
 }
 
 .emptyState h3 {
-  color: var(--primary-color, #ffcc00);
+  color: var(--primary-color);
   margin-bottom: 6px;
   font-size: 1.25rem;
 }

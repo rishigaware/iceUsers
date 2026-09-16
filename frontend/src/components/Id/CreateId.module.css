@@ -47,8 +47,8 @@
 }
 
 .searchInput:focus {
-  border-color: var(--primary-color, #ffcc00);
-  box-shadow: 0 0 0 2px rgba(255, 204, 0, 0.15);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(var(--primary-color-rgb), 0.15);
 }
 
 .categoryDropdown {
@@ -65,7 +65,7 @@
 }
 
 .categoryDropdown:focus {
-  border-color: var(--primary-color, #ffcc00);
+  border-color: var(--primary-color);
 }
 
 .websitesCount {
@@ -91,7 +91,7 @@
 
 .websiteCard:hover {
   background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 204, 0, 0.2);
+  border-color: rgba(var(--primary-color-rgb), 0.2);
 }
 
 .websiteInfo {
@@ -108,7 +108,7 @@
   border-radius: 10px;
   object-fit: contain;
   background: #000;
-  border: 1px solid rgba(255, 204, 0, 0.25);
+  border: 1px solid rgba(var(--primary-color-rgb), 0.25);
   flex-shrink: 0;
 }
 
@@ -167,9 +167,9 @@
   font-weight: 700;
   padding: 3px 8px;
   border-radius: 6px;
-  background: rgba(255, 204, 0, 0.12);
-  color: var(--primary-color, #ffcc00);
-  border: 1px solid rgba(255, 204, 0, 0.25);
+  background: rgba(var(--primary-color-rgb), 0.12);
+  color: var(--primary-color);
+  border: 1px solid rgba(var(--primary-color-rgb), 0.25);
   text-transform: uppercase;
   letter-spacing: 0.3px;
 }
@@ -210,7 +210,7 @@
 
 .actionButton {
   padding: 8px 18px;
-  background: var(--primary-color, #ffcc00);
+  background: var(--primary-color);
   color: #000;
   font-weight: 700;
   border: none;
@@ -222,9 +222,9 @@
 }
 
 .actionButton:hover {
-  background: #e6b800;
+  background: var(--primary-hover);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(255, 204, 0, 0.35);
+  box-shadow: 0 4px 12px rgba(var(--primary-color-rgb), 0.35);
 }
 
 /* Pagination */
@@ -259,10 +259,10 @@
 }
 
 .paginationButton.active {
-  background: var(--primary-color, #ffcc00);
+  background: var(--primary-color);
   color: #000;
   font-weight: 700;
-  border-color: var(--primary-color, #ffcc00);
+  border-color: var(--primary-color);
 }
 
 .paginationInfo {
@@ -311,8 +311,8 @@
   border-radius: 16px;
   padding: 24px;
   margin: auto;
-  border: 1px solid rgba(255, 204, 0, 0.25);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 204, 0, 0.15);
+  border: 1px solid rgba(var(--primary-color-rgb), 0.25);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(var(--primary-color-rgb), 0.15);
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -383,13 +383,13 @@
   border-radius: 12px;
   object-fit: contain;
   background: #000;
-  border: 1px solid rgba(255, 204, 0, 0.3);
+  border: 1px solid rgba(var(--primary-color-rgb), 0.3);
 }
 
 .modalHeader h2 {
   font-size: 1.4rem;
   font-weight: 700;
-  color: var(--primary-color, #ffcc00);
+  color: var(--primary-color);
   margin: 0;
   letter-spacing: 0.3px;
 }
@@ -532,8 +532,8 @@
 }
 
 .inputField:focus {
-  border-color: var(--primary-color, #ffcc00);
-  box-shadow: 0 0 0 2px rgba(255, 204, 0, 0.18);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(var(--primary-color-rgb), 0.18);
 }
 
 .inputField::placeholder {
@@ -542,8 +542,8 @@
 
 /* Coin Conversion Result Box */
 .coinConversionResult {
-  background: rgba(255, 204, 0, 0.1);
-  border: 1px solid rgba(255, 204, 0, 0.25);
+  background: rgba(var(--primary-color-rgb), 0.1);
+  border: 1px solid rgba(var(--primary-color-rgb), 0.25);
   border-radius: 8px;
   padding: 10px 12px;
   width: 100%;
@@ -567,13 +567,13 @@
 
 .checkboxLabel:hover {
   background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 204, 0, 0.3);
+  border-color: rgba(var(--primary-color-rgb), 0.3);
 }
 
 .checkbox {
   width: 17px;
   height: 17px;
-  accent-color: var(--primary-color, #ffcc00);
+  accent-color: var(--primary-color);
   margin-top: 2px;
   flex-shrink: 0;
   cursor: pointer;
@@ -613,7 +613,7 @@
 .submitButton {
   flex: 2;
   padding: 11px 16px;
-  background: var(--primary-color, #ffcc00);
+  background: var(--primary-color);
   color: #000000;
   font-weight: 700;
   border-radius: 8px;
@@ -626,9 +626,9 @@
 }
 
 .submitButton:hover:not(:disabled) {
-  background: #e6b800;
+  background: var(--primary-hover);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(255, 204, 0, 0.35);
+  box-shadow: 0 4px 12px rgba(var(--primary-color-rgb), 0.35);
 }
 
 .submitButton:disabled {

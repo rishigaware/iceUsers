@@ -59,8 +59,8 @@
 
 /* Hover and focus effect */
 .navButton:hover {
-  background-color: rgba(255, 204, 0, 0.15);
-  color: var(--primary-color, #ffcc00);
+  background-color: rgba(var(--primary-color-rgb), 0.15);
+  color: var(--primary-color);
 }
 
 /* Selected Button (Active) Styling */
@@ -70,7 +70,7 @@
   color: var(--secondary-color, #000000) !important;
   font-weight: 800;
   opacity: 1 !important;
-  box-shadow: 0 4px 15px rgba(255, 204, 0, 0.5);
+  box-shadow: 0 4px 15px rgba(var(--primary-color-rgb), 0.5);
   border: none !important;
 }
 

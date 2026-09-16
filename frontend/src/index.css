@@ -16,8 +16,12 @@ body {
   --primary-color-rgb: 239, 35, 60 !important;
   --primary-hover: #ff4d5f !important;
 
-  /* Secondary / Background */
-  --secondary-color: #120708 !important;
+  /* ================================
+   BACKGROUNDS - DEEP NAVY THEME
+   Red remains the primary accent
+   ================================ */
+
+  --secondary-color: #0b1424 !important;
   --accent-color: #ef233c !important;
 
   /* Status Colors */
@@ -26,21 +30,27 @@ body {
   --warning-color: #f59e0b !important;
 
   /* ================================
-     BACKGROUNDS
+     BACKGROUNDS (Fancy Multi-Tone Ambient Light)
+     Electric Purple & Deep Cyan-Indigo Glow with Crimson Red Primary
      ================================ */
 
   --main-gradient:
     radial-gradient(
-      circle at top right,
-      rgba(239, 35, 60, 0.16),
-      transparent 35%
+      circle at 85% 15%,
+      rgba(124, 58, 237, 0.22),
+      transparent 45%
     ),
     radial-gradient(
-      circle at bottom left,
-      rgba(185, 28, 50, 0.1),
-      transparent 35%
+      circle at 15% 85%,
+      rgba(6, 182, 212, 0.18),
+      transparent 45%
     ),
-    linear-gradient(135deg, #080304 0%, #160708 55%, #24090c 100%);
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(239, 35, 60, 0.12),
+      transparent 60%
+    ),
+    linear-gradient(135deg, #090d16 0%, #0f172a 45%, #130e24 100%);
 
   /* Primary Button Gradient */
   --primary-gradient: linear-gradient(
@@ -125,16 +135,16 @@ body {
   --bet-orange: #ff5a67;
 
   /* Odds */
-  --odds-bg: #1c080b;
-  --odds-hover: #2b0b10;
+  --odds-bg: #111827;
+  --odds-hover: #1f2937;
 
   /* Cards */
-  --card-bg: rgba(18, 7, 8, 0.88);
-  --card-border: rgba(239, 35, 60, 0.16);
+  --card-bg: rgba(17, 24, 39, 0.88);
+  --card-border: rgba(239, 35, 60, 0.2);
 
   /* Input */
-  --input-bg: rgba(239, 35, 60, 0.05);
-  --input-border: rgba(239, 35, 60, 0.18);
+  --input-bg: rgba(255, 255, 255, 0.05);
+  --input-border: rgba(239, 35, 60, 0.2);
 }
 
 /* =================================

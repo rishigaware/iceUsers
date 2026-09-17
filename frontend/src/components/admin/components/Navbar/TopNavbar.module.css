@@ -164,36 +164,45 @@
 
 @media (max-width: 480px) {
   .navbar {
-    padding: 8px 16px;
-    height: 65px;
-    background: rgba(0, 0, 0, 0.6);
+    padding: 6px 10px;
+    height: 55px;
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+  .hamburgerBtn {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+    border-radius: 6px;
   }
   
   .logo {
-    height: 45px; /* Reduced from 55px */
+    height: 38px;
   }
   
   .navLinks {
-    gap: 12px;
+    gap: 6px;
   }
   
   .walletContainer {
-    padding: 5px 10px;
+    padding: 4px 8px;
+    border-radius: 8px;
   }
   
   .walletBalance {
-    font-size: 9px;
-    margin-bottom: 3px;
+    font-size: 8px;
+    margin-bottom: 2px;
   }
   
   .balanceAmount {
-    font-size: 12px;
+    font-size: 11px;
   }
   
   .navButton {
-    padding: 7px 14px;
-    font-size: 11px;
-    min-width: 80px;
+    padding: 5px 10px;
+    font-size: 10px;
+    min-width: 60px;
+    border-radius: 12px;
   }
 }
 

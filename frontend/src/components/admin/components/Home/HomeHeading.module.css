@@ -671,11 +671,11 @@ body {
 .buttonlogout {
   background: var(--main-gradient);
   color: var(--text-white);
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  padding: 10px 20px;
-  font-size: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 5px 14px;
+  font-size: 0.78rem;
   font-weight: 600;
-  border-radius: 25px;
+  border-radius: 16px;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
@@ -706,7 +706,8 @@ body {
 /* Hover Effects */
 .buttonlogin:hover,
 .buttonlogout:hover {
-  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  background: var(--main-gradient);
+  filter: hue-rotate(15deg);
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
   border-color: rgba(255, 255, 255, 0.4);
@@ -727,6 +728,25 @@ body {
 .buttonlogout:hover {
   background: var(--gradient-red-orange);
   box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+}
+
+@media screen and (max-width: 768px) {
+  .buttonlogin,
+  .buttonlogout {
+    padding: 4px 10px !important;
+    font-size: 0.7rem !important;
+    border-radius: 12px !important;
+    letter-spacing: 0 !important;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .buttonlogin,
+  .buttonlogout {
+    padding: 3px 8px !important;
+    font-size: 0.65rem !important;
+    border-radius: 10px !important;
+  }
 }
 
 /* Responsive Styles for Medium Screens */

@@ -1,18 +1,25 @@
-/* Admin Bottom Navbar - Modern Glass Morphism Design */
+/* Admin Bottom Navbar - Mobile Responsive Transparent */
 .navbar {
   width: 100%;
-  overflow: hidden;
   position: fixed;
   bottom: 0;
   left: 0;
   background: var(--main-gradient);
-  backdrop-filter: blur(20px);
-  border-top: 1px solid rgba(var(--primary-color-rgb), 0.2);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 -2px 15px rgba(var(--primary-color-rgb), 0.2);
   z-index: 1000;
   display: flex;
-  justify-content: center;
-  padding: 15px 0;
-  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.3);
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px;
+  height: 64px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+@media (min-width: 1024px) {
+  .navbar {
+    display: none !important;
+  }
 }
 
 /* Icon styling */

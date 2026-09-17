@@ -9,6 +9,7 @@ const router = express.Router();
 // Admin routes
 router.get('/', adminController.getAllAdmins); // Fetch all admins
 router.get("/get-all-users", adminController.getAllUsers);//get all users
+router.get('/get-all-accounts', adminController.getAllAccountsList); // Get unified accounts list overview
 router.get('/get-all-ids', adminController.getAllIds);
 router.get('/get-balance/:adminId', adminController.getAdminBalance);
 

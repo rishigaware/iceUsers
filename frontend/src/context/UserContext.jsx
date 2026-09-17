@@ -10,6 +10,9 @@ import React, {
 // Create the context
 const UserContext = createContext();
 
+// Global Logo Asset Constant
+export const LOGO_PATH = "/logo.png";
+
 // UserProvider component to wrap the app and provide user data
 export const UserProvider = ({ children }) => {
   //   const defaultUrl = (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'))
@@ -73,6 +76,7 @@ export const UserProvider = ({ children }) => {
       setUser,
       url,
       setUrl,
+      logoPath: LOGO_PATH,
       fetchUserBalance,
       refreshUserBalance,
     }),

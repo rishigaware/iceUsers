@@ -16,7 +16,34 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-/* Logo Section */
+/* Logo & Sidebar Group */
+.logoGroup {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hamburgerBtn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #f8fafc;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.hamburgerBtn:hover {
+  background: rgba(99, 102, 241, 0.25);
+  border-color: #6366f1;
+  color: #818cf8;
+}
+
 .logo {
   display: flex;
   align-items: center;

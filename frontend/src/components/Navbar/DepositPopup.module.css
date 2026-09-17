@@ -89,29 +89,24 @@
 
 .depositName {
   text-align: center;
-  margin: 30px 20px 20px;
-  font-size: 24px;
-  font-weight: 800;
-  color: var(--primary-color);
+  margin: 15px 15px 10px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--primary-color, #eab308);
   text-transform: uppercase;
-  letter-spacing: 2px;
-  background: linear-gradient(135deg, var(--primary-color) 0%, #ffffff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-shadow: 0 2px 10px rgba(var(--primary-color-rgb), 0.3);
+  letter-spacing: 1px;
 }
 
 /* Balance Container */
 .balanceContainer {
-  width: 90%;
-  margin: 25px auto;
-  padding: 30px 25px;
+  width: 92%;
+  margin: 15px auto;
+  padding: 16px;
   text-align: center;
   background: var(--main-gradient);
   border: 1px solid rgba(var(--primary-color-rgb), 0.4);
-  border-radius: 16px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+  border-radius: 14px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
   color: var(--text-white);
   position: relative;
   overflow: hidden;
@@ -125,14 +120,14 @@
   right: 0;
   bottom: 0;
   background: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
-  border-radius: 16px;
+  border-radius: 14px;
 }
 
 .amount {
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   font-weight: 800;
   color: var(--text-white);
-  margin-bottom: 15px;
+  margin-bottom: 6px;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   position: relative;
   z-index: 1;
@@ -159,7 +154,7 @@
   font-size: 1.1rem;
   font-weight: 600;
   margin-bottom: 12px;
-  color: #2c3e50;
+  color: #f8fafc !important;
   text-align: center;
 }
 
@@ -169,36 +164,36 @@
   padding: 15px 20px;
   font-size: 1rem;
   text-align: center;
-  border: 2px solid #e9ecef;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 12px;
   outline: none;
   transition: all 0.3s ease;
-  background: var(--glass-bg);
-  color: #2c3e50;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: #1e293b !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .input:focus {
-  border-color: var(--link-color);
-  box-shadow: 0 0 0 4px rgba(var(--primary-color-rgb), 0.1);
+  border-color: var(--primary-color, #eab308);
+  box-shadow: 0 0 0 4px rgba(234, 179, 8, 0.2);
   transform: translateY(-2px);
 }
 
 .input::placeholder {
-  color: #adb5bd;
+  color: #94a3b8;
   font-size: 14px;
 }
 
 /* Error Message */
 .errorMessage {
-  color: #dc3545;
+  color: #fca5a5;
   font-size: 14px;
   margin: 15px 20px;
   text-align: center;
-  background: rgba(220, 53, 69, 0.1);
+  background: rgba(239, 68, 68, 0.15);
   padding: 10px 15px;
   border-radius: 8px;
-  border-left: 4px solid #dc3545;
+  border-left: 4px solid #ef4444;
 }
 
 /* Submit Button */
@@ -207,8 +202,8 @@
   max-width: 300px;
   margin: 25px auto;
   padding: 18px 30px;
-  background: var(--primary-color);
-  color: #000;
+  background: var(--primary-color, #eab308);
+  color: #000 !important;
   border: none;
   border-radius: 15px;
   cursor: pointer;
@@ -225,13 +220,12 @@
 
 .submitButton:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(40, 167, 69, 0.5);
-  background: linear-gradient(135deg, #20c997 0%, #28a745 100%);
+  box-shadow: 0 8px 25px rgba(234, 179, 8, 0.5);
+  opacity: 0.95;
 }
 
 .submitButton:active {
   transform: translateY(-1px);
-  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
 }
 
 /* Button container for better positioning */
@@ -247,8 +241,8 @@
   max-width: 300px;
   margin: 25px auto;
   padding: 18px 30px;
-  background: var(--primary-color);
-  color: #000;
+  background: var(--primary-color, #eab308);
+  color: #000 !important;
   border: none;
   border-radius: 15px;
   cursor: pointer;
@@ -265,13 +259,8 @@
 
 .mainActionButton:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(40, 167, 69, 0.5);
-  background: linear-gradient(135deg, #20c997 0%, #28a745 100%);
-}
-
-.mainActionButton:active {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+  box-shadow: 0 8px 25px rgba(234, 179, 8, 0.5);
+  opacity: 0.95;
 }
 
 /* Tab Buttons */
@@ -288,10 +277,10 @@
   min-width: 120px;
   padding: 12px 16px;
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.05); /* Darker tab */
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.15);
   text-align: center;
-  color: var(--text-primary);
+  color: #cbd5e1;
   border-radius: 10px;
   font-size: 14px;
   font-weight: 600;
@@ -300,22 +289,23 @@
 }
 
 .tabButton:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: var(--primary-color);
-  color: var(--primary-color);
+  background: #334155;
+  border-color: var(--primary-color, #eab308);
+  color: #ffffff;
 }
 
 .activeTab {
-  background: var(--primary-color);
-  color: #000;
-  border-color: var(--primary-color);
-  box-shadow: 0 4px 15px rgba(var(--primary-color-rgb), 0.3);
+  background: var(--primary-color, #eab308) !important;
+  color: #000000 !important;
+  border-color: var(--primary-color, #eab308) !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 15px rgba(234, 179, 8, 0.3);
 }
 
 /* Tab Content */
 .tabContent {
   margin-top: 20px;
-  color: var(--text-primary);
+  color: #f8fafc;
   font-size: 15px;
 }
 
@@ -323,7 +313,7 @@
 .withdrawFunds h2,
 .bankDetails h2,
 .upiDetails h2 {
-  color: var(--primary-color);
+  color: var(--primary-color, #eab308);
   font-size: 20px;
   margin-bottom: 20px;
   text-align: center;
@@ -338,13 +328,13 @@
 .upiDetails p {
   text-align: center;
   line-height: 1.6;
-  color: var(--text-muted);
+  color: #94a3b8;
   font-size: 0.9rem;
   margin-bottom: 20px;
 }
 
 .tabContent strong {
-  color: var(--primary-color);
+  color: var(--primary-color, #eab308);
 }
 
 /* Copy Container */
@@ -352,22 +342,21 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(255, 255, 255, 0.05);
+  background: #1e293b !important;
   padding: 15px 20px;
   margin: 15px 0;
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   transition: all 0.3s ease;
 }
 
 .copyContainer:hover {
-  background: #e9ecef;
-  border-color: var(--link-color);
-  transform: translateX(5px);
+  background: #334155 !important;
+  border-color: var(--primary-color, #eab308);
 }
 
 .copyContainer strong {
-  color: #2c3e50;
+  color: #f8fafc !important;
   margin-right: 10px;
 }
 

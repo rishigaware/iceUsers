@@ -16,6 +16,12 @@
   box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.3);
 }
 
+@media (min-width: 1024px) {
+  .navbar {
+    display: none !important;
+  }
+}
+
 /* Icon styling */
 .whatsappIcon {
   font-size: 18px;

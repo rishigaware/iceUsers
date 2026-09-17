@@ -42,11 +42,15 @@ import WalletWithdrawalPopup from "./WalletWithdrawalPopup"; // Import the Walle
 import HomeBannerCarousel from "./HomeBannerCarousel";
 import SquareBannerCarousel from "./SquareBannerCarousel";
 
+import { FaBars } from "react-icons/fa";
+import Sidebar from "../Sidebar/Sidebar";
+
 const HomeHeading = () => {
   const navigate = useNavigate(); // Initialize the navigate function
-  const { user, setUser, refreshUserBalance } = useUser();
+  const { user, setUser, refreshUserBalance, logoPath } = useUser();
   const [showDepositPopup, setShowDepositPopup] = useState(false); // State to toggle deposit popup
   const [showWithdrawalPopup, setShowWithdrawalPopup] = useState(false); // State to toggle withdrawal popup
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Sidebar drawer state
 
   const handleLogin = () => {
     navigate("/login");
@@ -99,11 +103,22 @@ const HomeHeading = () => {
   return (
     <div className={styles.mainContainer}>
       <div className={styles.navbar}>
-        <img
-          src="/logo.png"
-          alt="Logo"
-          className={styles.navbarLogo}
-        />
+        <div className={styles.logoGroup}>
+          {user && (
+            <button
+              className={styles.hamburgerBtn}
+              onClick={() => setIsSidebarOpen(true)}
+              aria-label="Open sidebar navigation"
+            >
+              <FaBars />
+            </button>
+          )}
+          <img
+            src={logoPath}
+            alt="Logo"
+            className={styles.navbarLogo}
+          />
+        </div>
         <div className={styles.navbarActions}>
           {user ? (
             <button className={styles.buttonlogout} onClick={handleLogout}>
@@ -116,6 +131,9 @@ const HomeHeading = () => {
           )}
         </div>
       </div>
+
+      {/* Sidebar Component */}
+      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
       <div className={styles.top}>
         <div className={styles.topSquare}>
@@ -131,7 +149,7 @@ const HomeHeading = () => {
           <div className={styles.second}>
             <div className={styles.logo}>
               <img
-                src="/logo.png"
+                src={logoPath}
                 alt="Logo"
                 className={styles.centerLogo}
               />

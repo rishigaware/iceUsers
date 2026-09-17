@@ -37,8 +37,8 @@ exports.getAllAdmins = async (req, res) => {
 exports.getAllSubAdmins = async (req, res) => {
   try {
     const admin = await getAdminFromReq(req);
-    if (admin && admin.role !== 'superadmin') {
-      return res.status(403).json({ message: 'Access denied. Superadmin only.' });
+    if (admin && admin.role !== 'superadmin' && admin.role !== 'master') {
+      return res.status(403).json({ message: 'Access denied. Superadmin or Master only.' });
     }
 
     const subAdmins = await Admin.find({ role: { $ne: 'superadmin' } }).sort({ createdAt: -1 });
@@ -2838,4 +2838,29 @@ exports.deleteSquareBannerImage = async (req, res) => {
     res.status(500).json({ message: 'Error deleting square banner image', error: error.message });
   }
 };
+
+// Get unified accounts list overview (Admins, Sub-Admins, Users, and Betting Account IDs)
+exports.getAllAccountsList = async (req, res) => {
+  try {
+    const admins = await Admin.find().select('-password').sort({ createdAt: -1 });
+    const users = await User.find().select('-password').sort({ createdAt: -1 });
+    const websiteIds = await WebsiteId.find().sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      summary: {
+        totalAdmins: admins.length,
+        totalUsers: users.length,
+        totalBettingIds: websiteIds.length,
+      },
+      admins,
+      users,
+      websiteIds,
+    });
+  } catch (error) {
+    console.error('Error fetching all accounts list:', error);
+    res.status(500).json({ message: 'Error retrieving accounts list', error: error.message });
+  }
+};
+
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import DashboardIcon from '@mui/icons-material/Dashboard';
 import MapsHomeWorkIcon from '@mui/icons-material/MapsHomeWork';
 import RecentActorsIcon from '@mui/icons-material/RecentActors';
 import PaymentsTwoToneIcon from '@mui/icons-material/PaymentsTwoTone';
@@ -10,6 +11,7 @@ import styles from "./Navbar.module.css";
 
 // Memoized route mapping to prevent recreation on every render
 const ROUTE_MAP = {
+  "/dashboard": "dashboard",
   "/": "recents",
   "/id": "favorites", 
   "/transactions": "nearby",

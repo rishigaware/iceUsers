@@ -4,30 +4,19 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./TopNavbar.module.css";
 import DepositPopup from "./DepositPopup"; // Import the DepositPopup component
-// import logo from '../../../../assets/logo.png'
-import newlogo from '../../../../assets/logo.png'
+import { FaBars } from "react-icons/fa";
+import Sidebar from "../../../Sidebar/Sidebar";
+import { useUser } from "../../../../context/UserContext";
 
 export default function TopNavbar() {
+  const { logoPath } = useUser();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [walletBalance, setWalletBalance] = useState(100000);
   const [showDepositPopup, setShowDepositPopup] = useState(false); // State to toggle popup
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Sidebar drawer state
   const navigate = useNavigate();
 
-  const handleLoginClick = () => {
-    navigate("/login");
-  };
-
-  const handleSignupClick = () => {
-    navigate("/signup");
-  };
-
-  const handleLogoutClick = () => {
-    setIsLoggedIn(false);
-    navigate("/");
-  };
-
   const handleDepositClick = () => {
-    // setShowDepositPopup(true); // Show deposit popup
     navigate("/admin/users");
   };
 
@@ -37,26 +26,38 @@ export default function TopNavbar() {
 
   return (
     <div className={styles.navbar}>
-      {/* Logo Section */}
-      <div className={styles.logo}>
-        <img
-          src="/logo.png"
-          alt="Logo"
-          className={styles.logoImage}
+      {/* Sidebar Icon & Logo Section */}
+      <div className={styles.logoGroup}>
+        <button
+          className={styles.hamburgerBtn}
+          onClick={() => setIsSidebarOpen(true)}
+          aria-label="Open left navigation menu"
+        >
+          <FaBars />
+        </button>
+        <div className={styles.logo} onClick={() => navigate("/dashboard")} style={{ cursor: "pointer" }}>
+          <img
+            src={logoPath}
+            alt="Logo"
+            className={styles.logoImage}
           />
+        </div>
       </div>
 
       {/* Buttons Section */}
       <div className={styles.navLinks}>
-          <div className={styles.walletContainer}>
-            <span className={styles.walletBalance}>Wallet : </span>
-            <span className={styles.balanceAmount}>₹{walletBalance}</span>
+        <div className={styles.walletContainer}>
+          <span className={styles.walletBalance}>Wallet : </span>
+          <span className={styles.balanceAmount}>₹{walletBalance}</span>
         </div>
 
         <button className={styles.navButton} onClick={handleDepositClick}>
-          Deposit
+          Users
         </button>
       </div>
+
+      {/* Sidebar Drawer Component */}
+      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
       {/* Deposit Popup */}
       {showDepositPopup && (

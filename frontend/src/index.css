@@ -170,3 +170,31 @@ body {
 .p-button:hover {
   opacity: 0.9 !important;
 }
+
+/* DESKTOP PERSISTENT SIDEBAR LAYOUT SHIFT (>= 1024px) */
+@media (min-width: 1024px) {
+  body.has-desktop-sidebar.sidebar-expanded {
+    padding-left: 280px !important;
+    transition: padding-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  body.has-desktop-sidebar.sidebar-collapsed {
+    padding-left: 70px !important;
+    transition: padding-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  body.has-desktop-sidebar.sidebar-expanded [class*="TopNavbar_navbar"],
+  body.has-desktop-sidebar.sidebar-expanded [class*="HomeHeading_navbar"] {
+    left: 280px !important;
+    width: calc(100% - 280px) !important;
+    transition: left 0.3s ease, width 0.3s ease;
+  }
+
+  body.has-desktop-sidebar.sidebar-collapsed [class*="TopNavbar_navbar"],
+  body.has-desktop-sidebar.sidebar-collapsed [class*="HomeHeading_navbar"] {
+    left: 70px !important;
+    width: calc(100% - 70px) !important;
+    transition: left 0.3s ease, width 0.3s ease;
+  }
+}
+

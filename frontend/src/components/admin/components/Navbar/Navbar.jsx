@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 import GroupsIcon from "@mui/icons-material/Groups";
 import MapsHomeWorkIcon from "@mui/icons-material/MapsHomeWork";
 import PaymentsTwoToneIcon from "@mui/icons-material/PaymentsTwoTone";
@@ -16,6 +17,8 @@ import styles from "./Navbar.module.css";
 
 // Memoized route mapping to prevent recreation on every render
 const ADMIN_ROUTE_MAP = {
+  "/admin/dashboard": "dashboard",
+  "/dashboard": "dashboard",
   "/admin/home": "recents",
   "/admin/subadmins": "subadmins",
   "/admin/users": "users",
@@ -57,24 +60,6 @@ export default function Navbar() {
         icon: <MapsHomeWorkIcon />,
         to: "/admin/home",
       },
-    ];
-
-    if (user?.role === "superadmin") {
-      items.push({
-        label: "Admin Master",
-        value: "subadmins",
-        icon: <SupervisorAccountIcon />,
-        to: "/admin/subadmins",
-      });
-    }
-
-    items.push(
-      {
-        label: "Users",
-        value: "users",
-        icon: <GroupsIcon />,
-        to: "/admin/users",
-      },
       {
         label: "Agents",
         value: "favorites",
@@ -99,7 +84,7 @@ export default function Navbar() {
         icon: <AccountCircleIcon />,
         to: "/admin/profile",
       },
-    );
+    ];
 
     return items.map((item) => (
       <BottomNavigationAction

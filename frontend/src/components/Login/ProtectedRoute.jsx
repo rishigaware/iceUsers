@@ -11,19 +11,14 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
   }
 
   // Redirect guests trying to access admin routes
-  if (!user && (allowedRoles?.includes('admin') || allowedRoles?.includes('superadmin'))) {
+  if (!user && (allowedRoles?.includes('admin') || allowedRoles?.includes('master') || allowedRoles?.includes('superadmin'))) {
     return <Navigate to="/login" replace />;
   }
 
-  // Redirect admin/superadmin users from user routes to admin home
-  if ((user?.role === 'admin' || user?.role === 'superadmin') && allowedRoles?.includes('user')) {
-    return <Navigate to="/admin/home" replace />;
-  }
-
-  // Restrict access if the user's role is not in allowedRoles (superadmin can access admin routes)
+  // Restrict access if the user's role is not in allowedRoles (superadmin & master can access admin routes)
   const isAuthorized = allowedRoles && (
     allowedRoles.includes(user?.role) ||
-    (user?.role === 'superadmin' && allowedRoles.includes('admin'))
+    ((user?.role === 'superadmin' || user?.role === 'master') && (allowedRoles.includes('admin') || allowedRoles.includes('subadmin')))
   );
 
   if (allowedRoles && !isAuthorized) {

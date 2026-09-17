@@ -1,0 +1,455 @@
+/* Backdrop overlay */
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(6px);
+  z-index: 9998;
+  opacity: 0;
+  visibility: hidden;
+  touch-action: none;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.backdropOpen {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Left-to-Right Sidebar Drawer */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 290px;
+  max-width: 85vw;
+  height: 100vh;
+  background: #0f172a;
+  border-right: 1px solid #334155;
+  box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(-100%);
+  transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(99, 102, 241, 0.4) transparent;
+}
+
+/* Custom Thin & Stylish Webkit Scrollbar */
+.sidebar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(99, 102, 241, 0.4);
+  border-radius: 10px;
+  transition: background 0.2s ease;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 102, 241, 0.8);
+}
+
+.sidebarOpen {
+  transform: translateX(0);
+}
+
+/* Header */
+.sidebarHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid #1e293b;
+  gap: 0.5rem;
+}
+
+.logoSection {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.logoImage {
+  width: 100%;
+  height: 48px;
+  max-height: 54px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.logoImageCollapsed {
+  height: 32px;
+  width: 32px;
+  object-fit: contain;
+  margin: 0 auto;
+}
+
+.brandTitle {
+  display: flex;
+  flex-direction: column;
+}
+
+.brandMain {
+  color: #38bdf8;
+  font-weight: 800;
+  font-size: 1.1rem;
+  line-height: 1;
+  letter-spacing: 0.5px;
+}
+
+.brandSub {
+  color: #94a3b8;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.headerControls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.collapseToggleBtn {
+  display: none !important;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #94a3b8;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.collapseToggleBtn:hover {
+  background: rgba(99, 102, 241, 0.2);
+  color: #818cf8;
+  border-color: #6366f1;
+}
+
+.closeBtn {
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  color: #94a3b8;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.closeBtn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+}
+
+/* User Card Snippet */
+.userSection {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  background: rgba(30, 41, 59, 0.6);
+  border-bottom: 1px solid #1e293b;
+}
+
+.userAvatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  overflow: hidden;
+}
+
+.userName {
+  color: #f8fafc;
+  font-weight: 700;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.roleBadge {
+  background: rgba(99, 102, 241, 0.2);
+  color: #818cf8;
+  border: 1px solid rgba(99, 102, 241, 0.4);
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 12px;
+  width: fit-content;
+  letter-spacing: 0.5px;
+}
+
+/* Wallet Bar */
+.walletBar {
+  padding: 0.85rem 1.25rem;
+  background: #1e293b;
+  margin: 0.75rem 1rem;
+  border-radius: 10px;
+  border: 1px solid #334155;
+}
+
+.walletLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.walletIcon {
+  color: #38bdf8;
+  font-size: 1.2rem;
+}
+
+.walletLabel {
+  color: #94a3b8;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: block;
+}
+
+.walletValue {
+  color: #4ade80;
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+/* Navigation Menu */
+.navMenu {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.menuGroupTitle {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 1px;
+  padding: 0.6rem 0.75rem 0.2rem 0.75rem;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.7rem 0.85rem;
+  color: #cbd5e1;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.navItem:hover {
+  background: rgba(99, 102, 241, 0.15);
+  color: #818cf8;
+}
+
+.navItemDummy {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.7rem 0.85rem;
+  color: #cbd5e1;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.navItemDummy:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #f8fafc;
+}
+
+.itemIcon {
+  font-size: 1.1rem;
+  color: #818cf8;
+  width: 20px;
+  text-align: center;
+}
+
+.badge {
+  margin-left: auto;
+  background: #ef4444;
+  color: #ffffff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 10px;
+}
+
+/* Sidebar Footer */
+.sidebarFooter {
+  padding: 1rem 1.25rem;
+  border-top: 1px solid #1e293b;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: #0f172a;
+}
+
+.logoutBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: rgba(239, 68, 68, 0.12);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  padding: 0.65rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.logoutBtn:hover {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+.loginLinkBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #6366f1;
+  color: #ffffff;
+  padding: 0.65rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  text-decoration: none;
+}
+
+.versionTag {
+  text-align: center;
+  font-size: 0.7rem;
+  color: #64748b;
+}
+
+/* DESKTOP PERSISTENT SIDEBAR (>= 1024px) */
+@media (min-width: 1024px) {
+  .backdrop {
+    display: none !important;
+  }
+
+  .sidebar {
+    transform: none !important;
+    width: 280px;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.4);
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .closeBtn {
+    display: none !important;
+  }
+
+  .collapseToggleBtn {
+    display: flex !important;
+  }
+
+  /* COLLAPSED STATE FOR TABLET/DESKTOP */
+  .sidebar.collapsed {
+    width: 70px;
+  }
+
+  .sidebar.collapsed .brandTitle,
+  .sidebar.collapsed .userInfo,
+  .sidebar.collapsed .walletBar,
+  .sidebar.collapsed .menuGroupTitle,
+  .sidebar.collapsed .navItem span,
+  .sidebar.collapsed .versionTag {
+    display: none !important;
+  }
+
+  .sidebar.collapsed .sidebarHeader {
+    justify-content: center;
+    padding: 1rem 0.5rem;
+  }
+
+  .sidebar.collapsed .logoSection {
+    justify-content: center;
+  }
+
+  .sidebar.collapsed .userSection {
+    justify-content: center;
+    padding: 0.75rem 0.5rem;
+  }
+
+  .sidebar.collapsed .userAvatar {
+    margin: 0 auto;
+    width: 36px;
+    height: 36px;
+    font-size: 0.95rem;
+  }
+
+  .sidebar.collapsed .navItem {
+    justify-content: center;
+    padding: 0.8rem 0;
+  }
+
+  .sidebar.collapsed .itemIcon {
+    margin: 0;
+    font-size: 1.25rem;
+  }
+
+  .sidebar.collapsed .logoutBtn,
+  .sidebar.collapsed .loginLinkBtn {
+    justify-content: center;
+    padding: 0.65rem 0;
+    gap: 0;
+  }
+
+  .sidebar.collapsed .logoutBtn span,
+  .sidebar.collapsed .loginLinkBtn span {
+    display: none !important;
+  }
+}

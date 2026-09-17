@@ -32,6 +32,37 @@ body {
   padding: 0 20px;
 }
 
+.logoGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 100%;
+  max-width: 70%;
+  overflow: hidden;
+}
+
+.hamburgerBtn {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #f8fafc;
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.hamburgerBtn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
 @keyframes slideInDown {
   from {
     transform: translateY(-100%);
@@ -219,8 +250,10 @@ body {
 }
 
 .navbarLogo {
-  height: 80%;
-  max-width: 250px;
+  height: 48px;
+  max-height: 80%;
+  max-width: 180px;
+  width: auto;
   object-fit: contain;
 }
 
@@ -237,7 +270,8 @@ body {
 
 @media screen and (max-width: 768px) {
   .navbarLogo {
-    height: 80%;
+    height: 38px;
+    max-width: 140px;
   }
 
   .centerLogo {
@@ -247,7 +281,8 @@ body {
 
 @media screen and (max-width: 480px) {
   .navbarLogo {
-    height: 70%;
+    height: 32px;
+    max-width: 110px;
   }
 
   .centerLogo {

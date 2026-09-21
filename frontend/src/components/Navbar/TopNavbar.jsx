@@ -8,6 +8,7 @@ import { useUser } from "../../context/UserContext";
 import { FaBars } from "react-icons/fa";
 import Sidebar from "../Sidebar/Sidebar";
 import { checkIsAdmin } from "../../utils/roles";
+import { getHomeRoute } from "../../utils/routes";
 
 export default function TopNavbar() {
   const { user, setUser, url, refreshUserBalance, logoPath } = useUser();
@@ -17,6 +18,12 @@ export default function TopNavbar() {
   const [showDepositPopup, setShowDepositPopup] = useState(false); // State to toggle popup
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Sidebar drawer state
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user?.balance !== undefined) {
+      setWalletBalance(user.balance);
+    }
+  }, [user]);
 
   // Fetch balance on component mount and whenever the user changes
   useEffect(() => {
@@ -34,7 +41,7 @@ export default function TopNavbar() {
   };
 
   const handleLogoClick = () => {
-    navigate(isAdmin ? "/admin/home" : "/");
+    navigate(getHomeRoute(isAdmin));
   };
 
   return (

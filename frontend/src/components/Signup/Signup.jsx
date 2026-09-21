@@ -3,6 +3,7 @@ import styles from './Signup.module.css'; // Import the CSS module
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import { useUser } from "../../context/UserContext";
 import { FaTimes } from 'react-icons/fa';
+import { ROUTES } from '../../utils/routes';
 
 
 const SignupForm = () => {
@@ -81,7 +82,7 @@ const SignupForm = () => {
                         phoneNumber: '',
                         agentCode: '',
                     });
-                    navigate('/login');
+                    navigate(ROUTES.LOGIN);
 
                 } else {
                     const errorData = await response.json();
@@ -97,7 +98,7 @@ const SignupForm = () => {
     return (
         <div className={styles.modalOverlay}>
             <div className={styles.modalContent}>
-                <FaTimes className={styles.closeIcon} onClick={() => navigate('/')} />
+                <FaTimes className={styles.closeIcon} onClick={() => navigate(ROUTES.HOME)} />
                 <h2 className={styles.heading}>Registration Notice</h2>
                 
                 <div style={{
@@ -117,7 +118,7 @@ const SignupForm = () => {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                     <button
                         type="button"
-                        onClick={() => navigate('/login')}
+                        onClick={() => navigate(ROUTES.LOGIN)}
                         className={styles.submitButton}
                         style={{ cursor: 'pointer' }}
                     >
@@ -125,7 +126,7 @@ const SignupForm = () => {
                     </button>
                     <button
                         type="button"
-                        onClick={() => navigate('/')}
+                        onClick={() => navigate(ROUTES.HOME)}
                         style={{
                             padding: '12px',
                             background: '#f8f9fa',

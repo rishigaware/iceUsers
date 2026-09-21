@@ -16,6 +16,7 @@ import {
 import { useUser } from '../../context/UserContext';
 import { SOCIAL_LINKS } from '../../utils/socialLinks';
 import { checkIsAdmin, checkIsSuperAdmin, ROLES } from '../../utils/roles';
+import { ROUTES } from '../../utils/routes';
 import styles from './FloatingSocialWidget.module.css';
 
 const SOCIAL_ITEMS_CONFIG = [
@@ -91,7 +92,7 @@ const FloatingSocialWidget = () => {
   const widgetRef = useRef(null);
 
   // Requirement: Hide if logged out (!user) or on login/signup pages
-  const hiddenRoutes = ['/login', '/signup'];
+  const hiddenRoutes = [ROUTES.LOGIN, ROUTES.SIGNUP];
   const isHidden = !user || hiddenRoutes.includes(location.pathname);
 
   // Fetch support links according to user or admin credentials

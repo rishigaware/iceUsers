@@ -186,7 +186,9 @@ const MyId = () => {
         });
         if (hostMatch?.adminUrl) return hostMatch.adminUrl.trim();
       }
-    } catch (e) {}
+    } catch (_e) {
+      // Ignore URL parsing errors
+    }
 
     // 3. Partial name match
     const partialMatch = websites.find(w => {

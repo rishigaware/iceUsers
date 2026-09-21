@@ -22,6 +22,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { useUser } from "../../context/UserContext";
 import { checkIsUser, ROLES } from "../../utils/roles";
+import { ROUTES } from "../../utils/routes";
 import styles from "./Sidebar.module.css";
 
 export default function Sidebar({ isOpen, onClose }) {
@@ -78,7 +79,7 @@ export default function Sidebar({ isOpen, onClose }) {
     setUser(null);
     localStorage.removeItem("user");
     onClose();
-    navigate("/login");
+    navigate(ROUTES.LOGIN);
   };
 
   const roleLabel = user?.role ? user.role.toUpperCase() : "USER";
@@ -167,7 +168,7 @@ export default function Sidebar({ isOpen, onClose }) {
             <>
               {/* Bottom Navbar Sequence */}
               <Link
-                to="/"
+                to={ROUTES.HOME}
                 className={styles.navItem}
                 onClick={onClose}
                 title="Home"
@@ -176,7 +177,7 @@ export default function Sidebar({ isOpen, onClose }) {
                 <span>Home</span>
               </Link>
               <Link
-                to="/id"
+                to={ROUTES.ID}
                 className={styles.navItem}
                 onClick={onClose}
                 title="ID"
@@ -185,7 +186,7 @@ export default function Sidebar({ isOpen, onClose }) {
                 <span>ID / Betting Accounts</span>
               </Link>
               <Link
-                to="/transactions"
+                to={ROUTES.TRANSACTIONS}
                 className={styles.navItem}
                 onClick={onClose}
                 title="Transactions"
@@ -194,7 +195,7 @@ export default function Sidebar({ isOpen, onClose }) {
                 <span>Transactions</span>
               </Link>
               <Link
-                to="/profile"
+                to={ROUTES.PROFILE}
                 className={styles.navItem}
                 onClick={onClose}
                 title="Profile"
@@ -206,7 +207,7 @@ export default function Sidebar({ isOpen, onClose }) {
               {/* Rest Menu Below */}
               <div className={styles.menuGroupTitle}>MANAGEMENT & SERVICES</div>
               <Link
-                to="/dashboard"
+                to={ROUTES.DASHBOARD}
                 className={styles.navItem}
                 onClick={onClose}
                 title="Dashboard"
@@ -222,7 +223,7 @@ export default function Sidebar({ isOpen, onClose }) {
             <>
               {/* Bottom Navbar Sequence */}
               <Link
-                to="/admin/home"
+                to={ROUTES.ADMIN_HOME}
                 className={styles.navItem}
                 onClick={onClose}
                 title="Home"
@@ -231,7 +232,7 @@ export default function Sidebar({ isOpen, onClose }) {
                 <span>Home</span>
               </Link>
               <Link
-                to="/admin/all-ids"
+                to={ROUTES.ADMIN_ALL_IDS}
                 className={styles.navItem}
                 onClick={onClose}
                 title="All IDs"
@@ -240,7 +241,7 @@ export default function Sidebar({ isOpen, onClose }) {
                 <span>All IDs</span>
               </Link>
               <Link
-                to="/admin/websites"
+                to={ROUTES.ADMIN_WEBSITES}
                 className={styles.navItem}
                 onClick={onClose}
                 title="Websites"
@@ -249,7 +250,7 @@ export default function Sidebar({ isOpen, onClose }) {
                 <span>Websites</span>
               </Link>
               <Link
-                to="/admin/id-requests"
+                to={ROUTES.ADMIN_ID_REQUESTS}
                 className={styles.navItem}
                 onClick={onClose}
                 title="Requests"
@@ -258,7 +259,7 @@ export default function Sidebar({ isOpen, onClose }) {
                 <span>Requests</span>
               </Link>
               <Link
-                to="/admin/transactions"
+                to={ROUTES.ADMIN_TRANSACTIONS}
                 className={styles.navItem}
                 onClick={onClose}
                 title="Transactions"
@@ -267,7 +268,7 @@ export default function Sidebar({ isOpen, onClose }) {
                 <span>Transactions</span>
               </Link>
               <Link
-                to="/admin/profile"
+                to={ROUTES.ADMIN_PROFILE}
                 className={styles.navItem}
                 onClick={onClose}
                 title="Profile"
@@ -279,7 +280,7 @@ export default function Sidebar({ isOpen, onClose }) {
               {/* Rest Menu Below */}
               <div className={styles.menuGroupTitle}>MANAGEMENT & CONTROL</div>
               <Link
-                to="/dashboard"
+                to={ROUTES.ADMIN_DASHBOARD}
                 className={styles.navItem}
                 onClick={onClose}
                 title="Dashboard"
@@ -288,7 +289,7 @@ export default function Sidebar({ isOpen, onClose }) {
                 <span>Admin Dashboard</span>
               </Link>
               <Link
-                to="/admin/users"
+                to={ROUTES.ADMIN_USERS}
                 className={styles.navItem}
                 onClick={onClose}
                 title="Users"
@@ -304,7 +305,7 @@ export default function Sidebar({ isOpen, onClose }) {
             <>
               {/* Bottom Navbar Sequence */}
               <Link
-                to="/admin/home"
+                to={ROUTES.ADMIN_HOME}
                 className={styles.navItem}
                 onClick={onClose}
                 title="Home"
@@ -313,7 +314,7 @@ export default function Sidebar({ isOpen, onClose }) {
                 <span>Home</span>
               </Link>
               <Link
-                to="/admin/all-ids"
+                to={ROUTES.ADMIN_ALL_IDS}
                 className={styles.navItem}
                 onClick={onClose}
                 title="All IDs"
@@ -322,7 +323,7 @@ export default function Sidebar({ isOpen, onClose }) {
                 <span>All IDs</span>
               </Link>
               <Link
-                to="/admin/websites"
+                to={ROUTES.ADMIN_WEBSITES}
                 className={styles.navItem}
                 onClick={onClose}
                 title="Websites"
@@ -331,7 +332,7 @@ export default function Sidebar({ isOpen, onClose }) {
                 <span>Websites</span>
               </Link>
               <Link
-                to="/admin/id-requests"
+                to={ROUTES.ADMIN_ID_REQUESTS}
                 className={styles.navItem}
                 onClick={onClose}
                 title="Requests"
@@ -340,7 +341,7 @@ export default function Sidebar({ isOpen, onClose }) {
                 <span>Requests</span>
               </Link>
               <Link
-                to="/admin/transactions"
+                to={ROUTES.ADMIN_TRANSACTIONS}
                 className={styles.navItem}
                 onClick={onClose}
                 title="Transactions"
@@ -349,7 +350,7 @@ export default function Sidebar({ isOpen, onClose }) {
                 <span>Transactions</span>
               </Link>
               <Link
-                to="/admin/profile"
+                to={ROUTES.ADMIN_PROFILE}
                 className={styles.navItem}
                 onClick={onClose}
                 title="Profile"
@@ -361,7 +362,7 @@ export default function Sidebar({ isOpen, onClose }) {
               {/* Rest Menu Below */}
               <div className={styles.menuGroupTitle}>MANAGEMENT & CONTROL</div>
               <Link
-                to="/dashboard"
+                to={ROUTES.ADMIN_DASHBOARD}
                 className={styles.navItem}
                 onClick={onClose}
                 title="Dashboard"
@@ -370,7 +371,7 @@ export default function Sidebar({ isOpen, onClose }) {
                 <span>Admin Master Dashboard</span>
               </Link>
               <Link
-                to="/admin/subadmins"
+                to={ROUTES.ADMIN_SUBADMINS}
                 className={styles.navItem}
                 onClick={onClose}
                 title="Sub-Admins"
@@ -379,7 +380,7 @@ export default function Sidebar({ isOpen, onClose }) {
                 <span>Sub-Admin Masters</span>
               </Link>
               <Link
-                to="/admin/accounts-details"
+                to={ROUTES.ADMIN_ACCOUNTS_DETAILS}
                 className={styles.navItem}
                 onClick={onClose}
                 title="Master Accounts"
@@ -388,7 +389,7 @@ export default function Sidebar({ isOpen, onClose }) {
                 <span>Admin Masters Details</span>
               </Link>
               <Link
-                to="/admin/users"
+                to={ROUTES.ADMIN_USERS}
                 className={styles.navItem}
                 onClick={onClose}
                 title="Users"
@@ -404,7 +405,7 @@ export default function Sidebar({ isOpen, onClose }) {
             <>
               {/* Bottom Navbar Sequence */}
               <Link
-                to="/admin/home"
+                to={ROUTES.ADMIN_HOME}
                 className={styles.navItem}
                 onClick={onClose}
                 title="Home"
@@ -413,7 +414,7 @@ export default function Sidebar({ isOpen, onClose }) {
                 <span>Home</span>
               </Link>
               <Link
-                to="/admin/subadmins"
+                to={ROUTES.ADMIN_SUBADMINS}
                 className={styles.navItem}
                 onClick={onClose}
                 title="Admin Master"
@@ -422,7 +423,7 @@ export default function Sidebar({ isOpen, onClose }) {
                 <span>Admin Master</span>
               </Link>
               <Link
-                to="/admin/users"
+                to={ROUTES.ADMIN_USERS}
                 className={styles.navItem}
                 onClick={onClose}
                 title="User Accounts"
@@ -431,7 +432,7 @@ export default function Sidebar({ isOpen, onClose }) {
                 <span>User Accounts</span>
               </Link>
               <Link
-                to="/admin/all-ids"
+                to={ROUTES.ADMIN_ALL_IDS}
                 className={styles.navItem}
                 onClick={onClose}
                 title="All IDs"
@@ -440,7 +441,7 @@ export default function Sidebar({ isOpen, onClose }) {
                 <span>All IDs</span>
               </Link>
               <Link
-                to="/admin/websites"
+                to={ROUTES.ADMIN_WEBSITES}
                 className={styles.navItem}
                 onClick={onClose}
                 title="Websites"
@@ -449,7 +450,7 @@ export default function Sidebar({ isOpen, onClose }) {
                 <span>Websites</span>
               </Link>
               <Link
-                to="/admin/id-requests"
+                to={ROUTES.ADMIN_ID_REQUESTS}
                 className={styles.navItem}
                 onClick={onClose}
                 title="Requests"
@@ -458,7 +459,7 @@ export default function Sidebar({ isOpen, onClose }) {
                 <span>Requests</span>
               </Link>
               <Link
-                to="/admin/transactions"
+                to={ROUTES.ADMIN_TRANSACTIONS}
                 className={styles.navItem}
                 onClick={onClose}
                 title="Transactions"
@@ -467,7 +468,7 @@ export default function Sidebar({ isOpen, onClose }) {
                 <span>Transactions</span>
               </Link>
               <Link
-                to="/admin/profile"
+                to={ROUTES.ADMIN_PROFILE}
                 className={styles.navItem}
                 onClick={onClose}
                 title="Profile"
@@ -479,7 +480,7 @@ export default function Sidebar({ isOpen, onClose }) {
               {/* Rest Menu Below */}
               <div className={styles.menuGroupTitle}>SUPER ADMIN CONTROL</div>
               <Link
-                to="/dashboard"
+                to={ROUTES.ADMIN_DASHBOARD}
                 className={styles.navItem}
                 onClick={onClose}
                 title="Dashboard"
@@ -488,7 +489,7 @@ export default function Sidebar({ isOpen, onClose }) {
                 <span>Super Admin Dashboard</span>
               </Link>
               <Link
-                to="/admin/accounts-details"
+                to={ROUTES.ADMIN_ACCOUNTS_DETAILS}
                 className={styles.navItem}
                 onClick={onClose}
                 title="Master Accounts"
@@ -507,7 +508,7 @@ export default function Sidebar({ isOpen, onClose }) {
               <FaSignOutAlt /> <span>Sign Out</span>
             </button>
           ) : (
-            <Link to="/login" className={styles.loginLinkBtn} onClick={onClose} title="Login / Sign Up">
+            <Link to={ROUTES.LOGIN} className={styles.loginLinkBtn} onClick={onClose} title="Login / Sign Up">
               <FaSignInAlt /> <span>Login / Sign Up</span>
             </Link>
           )}

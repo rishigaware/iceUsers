@@ -798,9 +798,9 @@
   .addWebsiteButton,
   .categoryManageButton {
     flex: 1;
-    padding: 10px 14px;
-    font-size: 0.88rem;
-    min-height: 42px;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    min-height: 38px;
   }
 
   .searchSection {
@@ -871,11 +871,11 @@
   }
 
   .heading {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
   }
 
   .headerTitleIcon {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
   }
 
   .headerActions {
@@ -886,9 +886,19 @@
   .addWebsiteButton,
   .categoryManageButton {
     width: 100%;
-    padding: 10px 12px;
-    font-size: 0.85rem;
-    min-height: 40px;
+    padding: 8px 10px;
+    font-size: 0.75rem;
+    min-height: 36px;
+  }
+
+  .searchInput,
+  .categorySelect {
+    font-size: 0.75rem;
+    padding: 8px 12px;
+  }
+
+  .filterSection label {
+    font-size: 0.75rem;
   }
 
   .websiteLogo {
@@ -923,13 +933,13 @@
 
 @media (max-width: 360px) {
   .heading {
-    font-size: 1.15rem;
+    font-size: 1.05rem;
   }
 
   .addWebsiteButton,
   .categoryManageButton {
-    font-size: 0.8rem;
-    padding: 8px 10px;
+    font-size: 0.7rem;
+    padding: 6px 8px;
   }
 
   .paginationControls {

@@ -12,28 +12,29 @@ import { Link, useLocation } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import styles from "./Navbar.module.css";
 import { checkIsAdmin } from "../../utils/roles";
+import { ROUTES } from "../../utils/routes";
 
 // Memoized route mappings
 const USER_ROUTE_MAP = {
-  "/dashboard": "dashboard",
-  "/": "recents",
-  "/id": "favorites",
-  "/transactions": "nearby",
-  "/profile": "folder",
+  [ROUTES.DASHBOARD]: "dashboard",
+  [ROUTES.HOME]: "recents",
+  [ROUTES.ID]: "favorites",
+  [ROUTES.TRANSACTIONS]: "nearby",
+  [ROUTES.PROFILE]: "folder",
 };
 
 const ADMIN_ROUTE_MAP = {
-  "/admin/dashboard": "dashboard",
-  "/dashboard": "dashboard",
-  "/admin/home": "recents",
-  "/admin/subadmins": "subadmins",
-  "/admin/users": "users",
-  "/admin/all-ids": "all-ids",
-  "/admin/id": "all-ids",
-  "/admin/websites": "websites",
-  "/admin/id-requests": "requests",
-  "/admin/transactions": "nearby",
-  "/admin/profile": "folder",
+  [ROUTES.ADMIN_DASHBOARD]: "dashboard",
+  [ROUTES.DASHBOARD]: "dashboard",
+  [ROUTES.ADMIN_HOME]: "recents",
+  [ROUTES.ADMIN_SUBADMINS]: "subadmins",
+  [ROUTES.ADMIN_USERS]: "users",
+  [ROUTES.ADMIN_ALL_IDS]: "all-ids",
+  [ROUTES.ADMIN_ID]: "all-ids",
+  [ROUTES.ADMIN_WEBSITES]: "websites",
+  [ROUTES.ADMIN_ID_REQUESTS]: "requests",
+  [ROUTES.ADMIN_TRANSACTIONS]: "nearby",
+  [ROUTES.ADMIN_PROFILE]: "folder",
 };
 
 // User bottom navigation items
@@ -42,25 +43,25 @@ const USER_NAV_ITEMS = [
     label: "Home",
     value: "recents",
     icon: <MapsHomeWorkIcon />,
-    to: "/",
+    to: ROUTES.HOME,
   },
   {
     label: "ID",
     value: "favorites",
     icon: <RecentActorsIcon />,
-    to: "/id",
+    to: ROUTES.ID,
   },
   {
     label: "Transactions",
     value: "nearby",
     icon: <PaymentsTwoToneIcon />,
-    to: "/transactions",
+    to: ROUTES.TRANSACTIONS,
   },
   {
     label: "Profile",
     value: "folder",
     icon: <AccountCircleIcon />,
-    to: "/profile",
+    to: ROUTES.PROFILE,
   },
 ];
 
@@ -70,37 +71,37 @@ const ADMIN_NAV_ITEMS = [
     label: "Home",
     value: "recents",
     icon: <MapsHomeWorkIcon />,
-    to: "/admin/home",
+    to: ROUTES.ADMIN_HOME,
   },
   {
     label: "All IDs",
     value: "all-ids",
     icon: <RecentActorsIcon />,
-    to: "/admin/all-ids",
+    to: ROUTES.ADMIN_ALL_IDS,
   },
   {
     label: "Websites",
     value: "websites",
     icon: <LanguageIcon />,
-    to: "/admin/websites",
+    to: ROUTES.ADMIN_WEBSITES,
   },
   {
     label: "Requests",
     value: "requests",
     icon: <RequestPageIcon />,
-    to: "/admin/id-requests",
+    to: ROUTES.ADMIN_ID_REQUESTS,
   },
   {
     label: "Transactions",
     value: "nearby",
     icon: <PaymentsTwoToneIcon />,
-    to: "/admin/transactions",
+    to: ROUTES.ADMIN_TRANSACTIONS,
   },
   {
     label: "Profile",
     value: "folder",
     icon: <AccountCircleIcon />,
-    to: "/admin/profile",
+    to: ROUTES.ADMIN_PROFILE,
   },
 ];
 

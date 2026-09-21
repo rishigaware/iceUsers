@@ -22,6 +22,7 @@ import FloatingSocialWidget from "./components/FloatingSocialWidget/FloatingSoci
 import ProtectedRoute from "./components/Login/ProtectedRoute"; // Import ProtectedRoute
 import Dashboard from "./components/Dashboard/Dashboard";
 import { ADMIN_ROLES, ALL_AUTHENTICATED_ROLES } from "./utils/roles";
+import { ROUTES } from "./utils/routes";
 
 function App() {
   return (
@@ -38,13 +39,13 @@ function App() {
 
           <Routes>
             {/* Public Routes */}
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
+            <Route path={ROUTES.HOME} element={<Home />} />
+            <Route path={ROUTES.LOGIN} element={<Login />} />
+            <Route path={ROUTES.SIGNUP} element={<Signup />} />
 
             {/* Unified Dashboard Routes */}
             <Route
-              path="/dashboard"
+              path={ROUTES.DASHBOARD}
               element={
                 <ProtectedRoute allowedRoles={ALL_AUTHENTICATED_ROLES}>
                   <Dashboard />
@@ -52,7 +53,7 @@ function App() {
               }
             />
             <Route
-              path="/admin/dashboard"
+              path={ROUTES.ADMIN_DASHBOARD}
               element={
                 <ProtectedRoute allowedRoles={ADMIN_ROLES}>
                   <Dashboard />
@@ -62,7 +63,7 @@ function App() {
 
             {/* Protected User Routes */}
             <Route
-              path="/profile"
+              path={ROUTES.PROFILE}
               element={
                 <ProtectedRoute allowedRoles={ALL_AUTHENTICATED_ROLES}>
                   <ProfilePage />
@@ -70,7 +71,7 @@ function App() {
               }
             />
             <Route
-              path="/transactions"
+              path={ROUTES.TRANSACTIONS}
               element={
                 <ProtectedRoute allowedRoles={ALL_AUTHENTICATED_ROLES}>
                   <Transactions />
@@ -78,7 +79,7 @@ function App() {
               }
             />
             <Route
-              path="/id"
+              path={ROUTES.ID}
               element={
                 <ProtectedRoute allowedRoles={ALL_AUTHENTICATED_ROLES}>
                   <IdManager />
@@ -88,7 +89,7 @@ function App() {
 
             {/* Admin Routes */}
             <Route
-              path="/admin/home"
+              path={ROUTES.ADMIN_HOME}
               element={
                 <ProtectedRoute allowedRoles={ADMIN_ROLES}>
                   <Home />
@@ -96,7 +97,7 @@ function App() {
               }
             />
             <Route
-              path="/admin/subadmins"
+              path={ROUTES.ADMIN_SUBADMINS}
               element={
                 <ProtectedRoute allowedRoles={ADMIN_ROLES}>
                   <SubAdmins />
@@ -104,7 +105,7 @@ function App() {
               }
             />
             <Route
-              path="/admin/accounts-details"
+              path={ROUTES.ADMIN_ACCOUNTS_DETAILS}
               element={
                 <ProtectedRoute allowedRoles={ADMIN_ROLES}>
                   <AdminAccountsDetails />
@@ -112,7 +113,7 @@ function App() {
               }
             />
             <Route
-              path="/admin/profile"
+              path={ROUTES.ADMIN_PROFILE}
               element={
                 <ProtectedRoute allowedRoles={ADMIN_ROLES}>
                   <ProfilePage />
@@ -120,7 +121,7 @@ function App() {
               }
             />
             <Route
-              path="/admin/transactions"
+              path={ROUTES.ADMIN_TRANSACTIONS}
               element={
                 <ProtectedRoute allowedRoles={ADMIN_ROLES}>
                   <Transactions />
@@ -128,7 +129,7 @@ function App() {
               }
             />
             <Route
-              path="/admin/id"
+              path={ROUTES.ADMIN_ID}
               element={
                 <ProtectedRoute allowedRoles={ADMIN_ROLES}>
                   <AllIds />
@@ -136,7 +137,7 @@ function App() {
               }
             />
             <Route
-              path="/admin/all-ids"
+              path={ROUTES.ADMIN_ALL_IDS}
               element={
                 <ProtectedRoute allowedRoles={ADMIN_ROLES}>
                   <AllIds />
@@ -144,7 +145,7 @@ function App() {
               }
             />
             <Route
-              path="/admin/websites"
+              path={ROUTES.ADMIN_WEBSITES}
               element={
                 <ProtectedRoute allowedRoles={ADMIN_ROLES}>
                   <Websites />
@@ -152,7 +153,7 @@ function App() {
               }
             />
             <Route
-              path="/admin/users"
+              path={ROUTES.ADMIN_USERS}
               element={
                 <ProtectedRoute allowedRoles={ADMIN_ROLES}>
                   <Users />
@@ -160,7 +161,7 @@ function App() {
               }
             />
             <Route
-              path="/admin/id-requests"
+              path={ROUTES.ADMIN_ID_REQUESTS}
               element={
                 <ProtectedRoute allowedRoles={ADMIN_ROLES}>
                   <IdRequests />

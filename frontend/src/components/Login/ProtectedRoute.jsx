@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
 
 import { ROLES, checkIsAdmin, hasAdminRole } from '../../utils/roles';
+import { ROUTES } from '../../utils/routes';
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const { user } = useUser();
@@ -17,7 +18,7 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
 
   // Redirect guests trying to access admin routes
   if (!user && hasAdminRole(normalizedAllowedRoles)) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to={ROUTES.LOGIN} replace />;
   }
 
   // Restrict access if the user's role is not in allowedRoles (superadmin & master can access admin routes)
@@ -29,7 +30,7 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
           normalizedAllowedRoles.includes('subadmin'))));
 
   if (normalizedAllowedRoles && !isAuthorized) {
-    return <Navigate to="/" replace />;
+    return <Navigate to={ROUTES.HOME} replace />;
   }
 
   return children; // Render the children if all checks pass

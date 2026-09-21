@@ -41,6 +41,7 @@ import respPlaySafe from "../../assets/responsible_gaming_play_safe.png";
 import newlogo from "../../assets/logo.png";
 import { useUser } from "../../context/UserContext";
 import { checkIsAdmin } from "../../utils/roles";
+import { ROUTES } from "../../utils/routes";
 import LoginPopup from "../Login/LoginPopup";
 import DepositPopup from "../Navbar/DepositPopup";
 import styles from "./HomeHeading.module.css";
@@ -82,14 +83,14 @@ const HomeHeading = () => {
   const closeModal = () => setIsModalOpen(false);
 
   const handleLogin = () => {
-    navigate("/login");
+    navigate(ROUTES.LOGIN);
   };
 
   const handleClick = () => {
     if (isAdmin) {
-      navigate("/admin/all-ids");
+      navigate(ROUTES.ADMIN_ALL_IDS);
     } else {
-      navigate("/id");
+      navigate(ROUTES.ID);
     }
   };
 
@@ -100,11 +101,11 @@ const HomeHeading = () => {
 
   const handleDepositClick = () => {
     if (isAdmin) {
-      navigate("/admin/users");
+      navigate(ROUTES.ADMIN_USERS);
       return;
     }
     if (!user) {
-      navigate("/login");
+      navigate(ROUTES.LOGIN);
       return;
     }
     setShowDepositPopup(true);
@@ -116,11 +117,11 @@ const HomeHeading = () => {
 
   const handleWithdrawalClick = () => {
     if (isAdmin) {
-      navigate("/admin/users");
+      navigate(ROUTES.ADMIN_USERS);
       return;
     }
     if (!user) {
-      navigate("/login");
+      navigate(ROUTES.LOGIN);
       return;
     }
     setShowWithdrawalPopup(true);

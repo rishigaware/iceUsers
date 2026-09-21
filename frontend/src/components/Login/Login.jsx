@@ -4,6 +4,7 @@ import { useUser } from '../../context/UserContext'; // Import the useUser hook 
 import styles from './Login.module.css'; // Import CSS module for styling
 import { FaTimes } from 'react-icons/fa';
 import { checkIsAdmin } from '../../utils/roles';
+import { ROUTES, getHomeRoute } from '../../utils/routes';
 
 
 const Login = () => {
@@ -33,11 +34,7 @@ const Login = () => {
         if (data && data.user) {
           setUser(data.user); // Set user in context
           localStorage.setItem('user', JSON.stringify(data.user)); // Store user in localStorage
-          if (checkIsAdmin(data.user)) {
-            navigate('/admin/home');
-          } else {
-            navigate('/');
-          }
+          navigate(getHomeRoute(checkIsAdmin(data.user)));
         } else {
           window.alert('User data is missing from the response');
         }
@@ -60,7 +57,7 @@ const Login = () => {
   return (
     <div className={styles.loginContainer}>
       <div className={styles.loginForm}>
-        <FaTimes className={styles.closeIcon} onClick={() => navigate('/')} />
+        <FaTimes className={styles.closeIcon} onClick={() => navigate(ROUTES.HOME)} />
         <h2 className={styles.loginHeading}>Login</h2>
         <form onSubmit={handleSubmit}>
           <div className={styles.formGroup}>
@@ -90,7 +87,7 @@ const Login = () => {
           <button type="submit" className={styles.loginButton}>Login</button>
         </form>
           <p className={styles.signupLink}>
-            Don&apos;t have an account? <span onClick={() => navigate('/signup')} className={styles.linkText}>Sign up here</span>
+            Don&apos;t have an account? <span onClick={() => navigate(ROUTES.SIGNUP)} className={styles.linkText}>Sign up here</span>
           </p>
       </div>
     </div>

@@ -1,23 +1,26 @@
-import React from 'react';
 import {
   FaCoins,
   FaLock,
   FaExternalLinkAlt,
   FaCheckCircle,
   FaGlobe,
-} from 'react-icons/fa';
-import { getImageUrl } from '../../../utils/imageUrl';
-import styles from './ExchangeCard.module.css';
+} from "react-icons/fa";
+import React from "react";
 
-const ExchangeCard = ({ site, index, isActive = true, baseUrl = '' }) => {
+import { getImageUrl } from "../../../utils/imageUrl";
+import styles from "./ExchangeCard.module.css";
+
+const ExchangeCard = ({ site, index, isActive = true, baseUrl = "" }) => {
   const handleCardClick = (e) => {
     if (site.url) {
-      window.open(site.url, '_blank', 'noopener,noreferrer');
+      window.open(site.url, "_blank", "noopener,noreferrer");
     }
   };
 
-  const displayName = site.name || site.website || 'Premium Exchange';
-  const displayUrl = site.url ? site.url.replace(/^https?:\/\//, '').replace(/\/$/, '') : '';
+  const displayName = site.name || site.website || "Premium Exchange";
+  const displayUrl = site.url
+    ? site.url.replace(/^https?:\/\//, "").replace(/\/$/, "")
+    : "";
 
   return (
     <div
@@ -26,13 +29,15 @@ const ExchangeCard = ({ site, index, isActive = true, baseUrl = '' }) => {
       title={`Open ${displayName}`}
       role="button"
       tabIndex={0}
-      onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && handleCardClick(e)}
+      onKeyDown={(e) =>
+        (e.key === "Enter" || e.key === " ") && handleCardClick(e)
+      }
     >
       {/* Row 1: Identity Header - Rank, Logo, Full Title (Never Wrapped) & Category Badge */}
       <div className={styles.headerRow}>
         <div className={styles.identityGroup}>
           <span className={styles.rankBadge}>
-            #{String(index + 1).padStart(2, '0')}
+            {String(index + 1).padStart(2, "0")}
           </span>
 
           <div className={styles.logoFrame}>
@@ -42,16 +47,16 @@ const ExchangeCard = ({ site, index, isActive = true, baseUrl = '' }) => {
                 alt={displayName}
                 className={styles.logoImg}
                 onError={(e) => {
-                  e.target.style.display = 'none';
+                  e.target.style.display = "none";
                   if (e.target.nextSibling) {
-                    e.target.nextSibling.style.display = 'flex';
+                    e.target.nextSibling.style.display = "flex";
                   }
                 }}
               />
             ) : null}
             <div
               className={styles.logoFallback}
-              style={{ display: site.logo ? 'none' : 'flex' }}
+              style={{ display: site.logo ? "none" : "flex" }}
             >
               {displayName.substring(0, 2).toUpperCase()}
             </div>
@@ -61,13 +66,14 @@ const ExchangeCard = ({ site, index, isActive = true, baseUrl = '' }) => {
           <div className={styles.nameBlock}>
             <div className={styles.titleLine}>
               <h3 className={styles.websiteTitle}>{displayName}</h3>
-              <FaCheckCircle className={styles.verifiedIcon} title="Verified Exchange" />
+              <FaCheckCircle
+                className={styles.verifiedIcon}
+                title="Verified Exchange"
+              />
             </div>
 
             {site.category && (
-              <span className={styles.categoryBadge}>
-                {site.category}
-              </span>
+              <span className={styles.categoryBadge}>{site.category}</span>
             )}
           </div>
         </div>
@@ -97,7 +103,9 @@ const ExchangeCard = ({ site, index, isActive = true, baseUrl = '' }) => {
           <FaCoins className={styles.coinIcon} />
           <div className={styles.chipText}>
             <span className={styles.chipLabel}>COIN RATE</span>
-            <span className={styles.coinValue}>1 = ₹{site.coinRate ?? '1'}</span>
+            <span className={styles.coinValue}>
+              1 = ₹{site.coinRate ?? "1"}
+            </span>
           </div>
         </div>
 

@@ -4,6 +4,7 @@ import { useUser } from '../../context/UserContext'; // Import the useUser hook 
 import styles from './LoginPopup.module.css'; // Import CSS module for styling
 import SignupPopup from '../Signup/SignupPopup';
 import { checkIsAdmin } from '../../utils/roles';
+import { getHomeRoute } from '../../utils/routes';
 
 const Login = ({ isOpen, isClose }) => {
   const [username, setUsername] = useState('');
@@ -44,11 +45,7 @@ const Login = ({ isOpen, isClose }) => {
           setUser(data.user); // Set user in context
           localStorage.setItem('user', JSON.stringify(data.user)); // Store user in localStorage
           isClose();
-          if (checkIsAdmin(data.user)) {
-            navigate('/admin/home');
-          } else {
-            navigate('/');
-          }
+          navigate(getHomeRoute(checkIsAdmin(data.user)));
         } else {
           window.alert('User data is missing from the response');
         }

@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import TopNavbar from "../Navbar/TopNavbar";
 import { checkIsAdmin, checkIsSuperAdmin, checkIsSuperOrMaster, ROLES } from "../../utils/roles";
+import { ROUTES } from "../../utils/routes";
 import styles from "./Dashboard.module.css";
 import DepositPopup from "../Navbar/DepositPopup";
 import WalletWithdrawalPopup from "../Home/WalletWithdrawalPopup";
@@ -28,12 +29,10 @@ import AssessmentIcon from "@mui/icons-material/Assessment";
 
 export default function Dashboard() {
   const { user, url, refreshUserBalance } = useUser();
-  const navigate = useNavigate();
 
   // Popup state handlers
   const [showDepositPopup, setShowDepositPopup] = useState(false);
   const [showWithdrawalPopup, setShowWithdrawalPopup] = useState(false);
-  const [showAdminDepositPopup, setShowAdminDepositPopup] = useState(false);
 
   // Allow superadmin (or any user for demo testing) to toggle active role view
   const [activeRoleView, setActiveRoleView] = useState(() => {
@@ -276,7 +275,7 @@ export default function Dashboard() {
 
             {/* Quick Metrics & Navigation Shortcuts */}
             <div className={styles.metricsGrid}>
-              <Link to="/transactions" className={styles.metricCard}>
+              <Link to={ROUTES.TRANSACTIONS} className={styles.metricCard}>
                 <div
                   className={`${styles.metricIconWrapper} ${styles.iconBlue}`}
                 >
@@ -290,7 +289,7 @@ export default function Dashboard() {
                 </div>
               </Link>
 
-              <Link to="/transactions" className={styles.metricCard}>
+              <Link to={ROUTES.TRANSACTIONS} className={styles.metricCard}>
                 <div
                   className={`${styles.metricIconWrapper} ${styles.iconAmber}`}
                 >
@@ -304,7 +303,7 @@ export default function Dashboard() {
                 </div>
               </Link>
 
-              <Link to="/transactions" className={styles.metricCard}>
+              <Link to={ROUTES.TRANSACTIONS} className={styles.metricCard}>
                 <div
                   className={`${styles.metricIconWrapper} ${styles.iconGreen}`}
                 >
@@ -318,7 +317,7 @@ export default function Dashboard() {
                 </div>
               </Link>
 
-              <Link to="/id" className={styles.metricCard}>
+              <Link to={ROUTES.ID} className={styles.metricCard}>
                 <div
                   className={`${styles.metricIconWrapper} ${styles.iconPurple}`}
                 >
@@ -366,7 +365,7 @@ export default function Dashboard() {
                 <h2 className={styles.sectionTitle}>Quick Shortcuts</h2>
               </div>
               <div className={styles.quickActionsGrid}>
-                <Link to="/id" className={styles.actionTile}>
+                <Link to={ROUTES.ID} className={styles.actionTile}>
                   <RecentActorsIcon className={styles.actionIcon} />
                   <span className={styles.actionTitle}>Request Betting ID</span>
                 </Link>
@@ -378,11 +377,11 @@ export default function Dashboard() {
                   <PaymentsIcon className={styles.actionIcon} />
                   <span className={styles.actionTitle}>Deposit / Withdraw</span>
                 </div>
-                <Link to="/profile" className={styles.actionTile}>
+                <Link to={ROUTES.PROFILE} className={styles.actionTile}>
                   <ListAltIcon className={styles.actionIcon} />
                   <span className={styles.actionTitle}>Account Profile</span>
                 </Link>
-                <Link to="/" className={styles.actionTile}>
+                <Link to={ROUTES.HOME} className={styles.actionTile}>
                   <AssessmentIcon className={styles.actionIcon} />
                   <span className={styles.actionTitle}>Browse Games</span>
                 </Link>
@@ -395,7 +394,7 @@ export default function Dashboard() {
                 <h2 className={styles.sectionTitle}>
                   <RecentActorsIcon /> My Betting Accounts List
                 </h2>
-                <Link to="/id" className={styles.sectionActionLink}>
+                <Link to={ROUTES.ID} className={styles.sectionActionLink}>
                   Manage Accounts <ArrowForwardIcon style={{ fontSize: "0.9rem" }} />
                 </Link>
               </div>
@@ -441,7 +440,7 @@ export default function Dashboard() {
                 <h2 className={styles.sectionTitle}>
                   <PaymentsIcon /> Recent Activity
                 </h2>
-                <Link to="/transactions" className={styles.sectionActionLink}>
+                <Link to={ROUTES.TRANSACTIONS} className={styles.sectionActionLink}>
                   View All <ArrowForwardIcon style={{ fontSize: "0.9rem" }} />
                 </Link>
               </div>
@@ -508,7 +507,7 @@ export default function Dashboard() {
           <>
             {/* Admin Metrics Grid */}
             <div className={styles.metricsGrid}>
-              <Link to="/admin/users" className={styles.metricCard}>
+              <Link to={ROUTES.ADMIN_USERS} className={styles.metricCard}>
                 <div
                   className={`${styles.metricIconWrapper} ${styles.iconBlue}`}
                 >
@@ -522,7 +521,7 @@ export default function Dashboard() {
                 </div>
               </Link>
 
-              <Link to="/admin/id-requests" className={styles.metricCard}>
+              <Link to={ROUTES.ADMIN_ID_REQUESTS} className={styles.metricCard}>
                 <div
                   className={`${styles.metricIconWrapper} ${styles.iconAmber}`}
                 >
@@ -536,7 +535,7 @@ export default function Dashboard() {
                 </div>
               </Link>
 
-              <Link to="/admin/transactions" className={styles.metricCard}>
+              <Link to={ROUTES.ADMIN_TRANSACTIONS} className={styles.metricCard}>
                 <div
                   className={`${styles.metricIconWrapper} ${styles.iconGreen}`}
                 >
@@ -550,7 +549,7 @@ export default function Dashboard() {
                 </div>
               </Link>
 
-              <Link to="/admin/id" className={styles.metricCard}>
+              <Link to={ROUTES.ADMIN_ALL_IDS} className={styles.metricCard}>
                 <div
                   className={`${styles.metricIconWrapper} ${styles.iconPurple}`}
                 >
@@ -598,26 +597,22 @@ export default function Dashboard() {
                 </h2>
               </div>
               <div className={styles.quickActionsGrid}>
-                <Link to="/admin/users" className={styles.actionTile}>
+                <Link to={ROUTES.ADMIN_USERS} className={styles.actionTile}>
                   <GroupsIcon className={styles.actionIcon} />
                   <span className={styles.actionTitle}>Manage Users</span>
                 </Link>
-                <Link to="/admin/id-requests" className={styles.actionTile}>
+                <Link to={ROUTES.ADMIN_ID_REQUESTS} className={styles.actionTile}>
                   <HourglassTopIcon className={styles.actionIcon} />
                   <span className={styles.actionTitle}>Review ID Requests</span>
                 </Link>
-                <Link to="/admin/id" className={styles.actionTile}>
+                <Link to={ROUTES.ADMIN_ALL_IDS} className={styles.actionTile}>
                   <RecentActorsIcon className={styles.actionIcon} />
                   <span className={styles.actionTitle}>Betting Sites & IDs</span>
                 </Link>
-                <div
-                  onClick={() => setShowAdminDepositPopup(true)}
-                  className={styles.actionTile}
-                  style={{ cursor: "pointer" }}
-                >
+                <Link to={ROUTES.ADMIN_TRANSACTIONS} className={styles.actionTile}>
                   <PaymentsIcon className={styles.actionIcon} />
                   <span className={styles.actionTitle}>Approve / Add Deposit</span>
-                </div>
+                </Link>
               </div>
             </div>
 
@@ -653,7 +648,7 @@ export default function Dashboard() {
                 <h2 className={styles.sectionTitle}>
                   <GroupsIcon /> Managed Users List
                 </h2>
-                <Link to="/admin/users" className={styles.sectionActionLink}>
+                <Link to={ROUTES.ADMIN_USERS} className={styles.sectionActionLink}>
                   Manage Accounts <ArrowForwardIcon style={{ fontSize: "0.9rem" }} />
                 </Link>
               </div>
@@ -695,7 +690,7 @@ export default function Dashboard() {
             <div className={styles.dashboardSection}>
               <div className={styles.sectionHeader}>
                 <h2 className={styles.sectionTitle}>Pending ID Requests</h2>
-                <Link to="/admin/id-requests" className={styles.sectionActionLink}>
+                <Link to={ROUTES.ADMIN_ID_REQUESTS} className={styles.sectionActionLink}>
                   View All Requests <ArrowForwardIcon style={{ fontSize: "0.9rem" }} />
                 </Link>
               </div>
@@ -750,7 +745,7 @@ export default function Dashboard() {
           <>
             {/* Master Metrics Grid */}
             <div className={styles.metricsGrid}>
-              <Link to="/admin/subadmins" className={styles.metricCard}>
+              <Link to={ROUTES.ADMIN_SUBADMINS} className={styles.metricCard}>
                 <div
                   className={`${styles.metricIconWrapper} ${styles.iconPurple}`}
                 >
@@ -764,7 +759,7 @@ export default function Dashboard() {
                 </div>
               </Link>
 
-              <Link to="/admin/users" className={styles.metricCard}>
+              <Link to={ROUTES.ADMIN_USERS} className={styles.metricCard}>
                 <div
                   className={`${styles.metricIconWrapper} ${styles.iconBlue}`}
                 >
@@ -778,7 +773,7 @@ export default function Dashboard() {
                 </div>
               </Link>
 
-              <Link to="/admin/transactions" className={styles.metricCard}>
+              <Link to={ROUTES.ADMIN_TRANSACTIONS} className={styles.metricCard}>
                 <div
                   className={`${styles.metricIconWrapper} ${styles.iconGreen}`}
                 >
@@ -790,7 +785,7 @@ export default function Dashboard() {
                 </div>
               </Link>
 
-              <Link to="/admin/id-requests" className={styles.metricCard}>
+              <Link to={ROUTES.ADMIN_ID_REQUESTS} className={styles.metricCard}>
                 <div
                   className={`${styles.metricIconWrapper} ${styles.iconAmber}`}
                 >
@@ -840,15 +835,15 @@ export default function Dashboard() {
                 </h2>
               </div>
               <div className={styles.quickActionsGrid}>
-                <Link to="/admin/subadmins" className={styles.actionTile}>
+                <Link to={ROUTES.ADMIN_SUBADMINS} className={styles.actionTile}>
                   <SupervisorAccountIcon className={styles.actionIcon} />
                   <span className={styles.actionTitle}>Sub-Admin Directory</span>
                 </Link>
-                <Link to="/admin/users" className={styles.actionTile}>
+                <Link to={ROUTES.ADMIN_USERS} className={styles.actionTile}>
                   <GroupsIcon className={styles.actionIcon} />
                   <span className={styles.actionTitle}>All System Users</span>
                 </Link>
-                <Link to="/admin/transactions" className={styles.actionTile}>
+                <Link to={ROUTES.ADMIN_TRANSACTIONS} className={styles.actionTile}>
                   <PaymentsIcon className={styles.actionIcon} />
                   <span className={styles.actionTitle}>Network Financials</span>
                 </Link>
@@ -859,7 +854,7 @@ export default function Dashboard() {
             <div className={styles.dashboardSection}>
               <div className={styles.sectionHeader}>
                 <h2 className={styles.sectionTitle}>Sub-Admin Network Overview</h2>
-                <Link to="/admin/subadmins" className={styles.sectionActionLink}>
+                <Link to={ROUTES.ADMIN_SUBADMINS} className={styles.sectionActionLink}>
                   Manage Accounts <ArrowForwardIcon style={{ fontSize: "0.9rem" }} />
                 </Link>
               </div>
@@ -918,7 +913,7 @@ export default function Dashboard() {
           <>
             {/* Superadmin Platform KPIs */}
             <div className={styles.metricsGrid}>
-              <Link to="/admin/id-requests" className={styles.metricCard}>
+              <Link to={ROUTES.ADMIN_ID_REQUESTS} className={styles.metricCard}>
                 <div
                   className={`${styles.metricIconWrapper} ${styles.iconRed}`}
                 >
@@ -932,7 +927,7 @@ export default function Dashboard() {
                 </div>
               </Link>
 
-              <Link to="/admin/subadmins" className={styles.metricCard}>
+              <Link to={ROUTES.ADMIN_SUBADMINS} className={styles.metricCard}>
                 <div
                   className={`${styles.metricIconWrapper} ${styles.iconPurple}`}
                 >
@@ -946,7 +941,7 @@ export default function Dashboard() {
                 </div>
               </Link>
 
-              <Link to="/admin/users" className={styles.metricCard}>
+              <Link to={ROUTES.ADMIN_USERS} className={styles.metricCard}>
                 <div
                   className={`${styles.metricIconWrapper} ${styles.iconBlue}`}
                 >
@@ -960,7 +955,7 @@ export default function Dashboard() {
                 </div>
               </Link>
 
-              <Link to="/admin/transactions" className={styles.metricCard}>
+              <Link to={ROUTES.ADMIN_TRANSACTIONS} className={styles.metricCard}>
                 <div
                   className={`${styles.metricIconWrapper} ${styles.iconGreen}`}
                 >
@@ -1010,23 +1005,23 @@ export default function Dashboard() {
                 </h2>
               </div>
               <div className={styles.quickActionsGrid}>
-                <Link to="/admin/accounts-details" className={styles.actionTile}>
+                <Link to={ROUTES.ADMIN_ACCOUNTS_DETAILS} className={styles.actionTile}>
                   <SupervisorAccountIcon className={styles.actionIcon} />
                   <span className={styles.actionTitle}>Admin Master Accounts Details</span>
                 </Link>
-                <Link to="/admin/subadmins" className={styles.actionTile}>
+                <Link to={ROUTES.ADMIN_SUBADMINS} className={styles.actionTile}>
                   <ShieldIcon className={styles.actionIcon} />
                   <span className={styles.actionTitle}>Sub-Admin Control</span>
                 </Link>
-                <Link to="/admin/users" className={styles.actionTile}>
+                <Link to={ROUTES.ADMIN_USERS} className={styles.actionTile}>
                   <GroupsIcon className={styles.actionIcon} />
                   <span className={styles.actionTitle}>User Management</span>
                 </Link>
-                <Link to="/admin/id-requests" className={styles.actionTile}>
+                <Link to={ROUTES.ADMIN_ID_REQUESTS} className={styles.actionTile}>
                   <HourglassTopIcon className={styles.actionIcon} />
                   <span className={styles.actionTitle}>Global ID Requests</span>
                 </Link>
-                <Link to="/admin/transactions" className={styles.actionTile}>
+                <Link to={ROUTES.ADMIN_TRANSACTIONS} className={styles.actionTile}>
                   <PaymentsIcon className={styles.actionIcon} />
                   <span className={styles.actionTitle}>Global Financials</span>
                 </Link>
@@ -1037,7 +1032,7 @@ export default function Dashboard() {
             <div className={styles.dashboardSection}>
               <div className={styles.sectionHeader}>
                 <h2 className={styles.sectionTitle}>Superadmin Admin Accounts Overview</h2>
-                <Link to="/admin/accounts-details" className={styles.sectionActionLink}>
+                <Link to={ROUTES.ADMIN_ACCOUNTS_DETAILS} className={styles.sectionActionLink}>
                   Manage Accounts <ArrowForwardIcon style={{ fontSize: "0.9rem" }} />
                 </Link>
               </div>
@@ -1092,9 +1087,6 @@ export default function Dashboard() {
       )}
       {showWithdrawalPopup && (
         <WalletWithdrawalPopup onClose={() => setShowWithdrawalPopup(false)} />
-      )}
-      {showAdminDepositPopup && (
-        <AdminDepositPopup onClose={() => setShowAdminDepositPopup(false)} />
       )}
     </div>
   );

@@ -196,21 +196,24 @@
 
 .amountInput {
   width: 100%;
-  padding: 12px 16px;
-  border: 2px solid #e2e8f0;
-  border-radius: 10px;
+  padding: 15px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
   font-size: 1rem;
   font-weight: 600;
-  color: var(--text-primary);
-  background: var(--glass-bg);
+  text-align: center;
   transition: all 0.3s ease;
+  background: #1e293b !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   box-sizing: border-box;
+  outline: none;
 }
 
 .amountInput:focus {
-  outline: none;
-  border-color: var(--link-color);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  border-color: var(--primary-color, #eab308);
+  box-shadow: 0 0 0 3px rgba(234, 179, 8, 0.2);
+  transform: translateY(-1px);
 }
 
 .conversionInfo {
@@ -292,20 +295,23 @@
 
 .detailInput {
   width: 100%;
-  padding: 12px 16px;
-  border: 2px solid #e2e8f0;
-  border-radius: 10px;
+  padding: 15px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
   font-size: 0.9rem;
-  color: var(--text-primary);
-  background: var(--glass-bg);
+  text-align: center;
   transition: all 0.3s ease;
+  background: #1e293b !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   box-sizing: border-box;
+  outline: none;
 }
 
 .detailInput:focus {
-  outline: none;
-  border-color: var(--link-color);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  border-color: var(--primary-color, #eab308);
+  box-shadow: 0 0 0 3px rgba(234, 179, 8, 0.2);
+  transform: translateY(-1px);
 }
 
 /* Error Message */
@@ -413,8 +419,15 @@
     padding: 12px 20px;
   }
   
-  .errorMessage {
-    margin: 12px 20px;
+  .amountInput,
+  .detailInput {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+  
+  .detailsSection label,
+  .amountSection label {
+    font-size: 0.85rem;
   }
 }
 
@@ -428,51 +441,59 @@
   }
   
   .header {
-    padding: 12px 16px;
+    padding: 10px 12px;
+    gap: 8px;
   }
   
   .websiteImage {
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
   }
   
   .websiteInfo h3 {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
   }
   
   .username,
   .coinBalance,
   .coinRate {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
   }
   
   .amountSection,
   .methodSection,
   .detailsSection {
-    padding: 12px 16px;
+    padding: 10px 12px;
   }
   
   .amountSection h3,
   .methodSection h3,
   .detailsSection h3 {
-    font-size: 1rem;
+    font-size: 0.85rem;
+    margin-bottom: 8px;
   }
   
   .amountInput,
   .detailInput {
-    padding: 10px 12px;
-    font-size: 0.9rem;
+    padding: 8px 10px;
+    font-size: 0.8rem;
+  }
+  
+  .detailsSection label,
+  .amountSection label {
+    font-size: 0.75rem;
+    margin-bottom: 4px;
   }
   
   .methodButton {
-    padding: 10px 16px;
-    font-size: 0.85rem;
+    padding: 8px 12px;
+    font-size: 0.8rem;
   }
   
   .submitButton {
-    margin: 12px 16px 20px;
-    padding: 10px 16px;
-    font-size: 0.9rem;
+    margin: 10px 12px 16px;
+    padding: 10px 12px;
+    font-size: 0.85rem;
   }
   
   .errorMessage {

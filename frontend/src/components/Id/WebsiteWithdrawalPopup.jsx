@@ -199,9 +199,6 @@ export default function WebsiteWithdrawalPopup({ onClose, selectedId }) {
             <p className={styles.coinBalance}>
               Available Coins: <strong>{availableCoins} coins</strong>
             </p>
-            {/* <p className={styles.coinRate}>
-              Coin Rate: <strong>1 coin = ₹{coinRate}</strong>
-            </p> */}
           </div>
         </div>
         {/* Scrollable Content */}
@@ -223,20 +220,6 @@ export default function WebsiteWithdrawalPopup({ onClose, selectedId }) {
               />
             </div>
 
-            {withdrawalAmount && (
-              <div className={styles.conversionInfo}>
-                <p>
-                  Coins Required:{" "}
-                  <strong>
-                    {calculateCoinsNeeded(parseFloat(withdrawalAmount))} coins
-                  </strong>
-                </p>
-                <p>
-                  Maximum Withdrawal:{" "}
-                  <strong>₹{maxWithdrawalRupees.toFixed(2)}</strong>
-                </p>
-              </div>
-            )}
           </div>
 
           {/* Withdrawal Method */}

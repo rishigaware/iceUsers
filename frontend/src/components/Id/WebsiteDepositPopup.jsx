@@ -204,10 +204,7 @@ export default function WebsiteDepositPopup({ onClose, selectedId }) {
               <span className={styles.label}>Username:</span>
               <span className={styles.value}>{selectedId?.username}</span>
             </div>
-            <div className={styles.detailRow}>
-              <span className={styles.label}>Base Coin Rate:</span>
-              <span className={styles.value}>1 coin = ₹{actualWebsiteRate || selectedId?.coinRate || 1}</span>
-            </div>
+
             <div className={styles.detailRow}>
               <span className={styles.label}>Minimum Coins:</span>
               <span className={styles.value}>{minimumCoins} coins</span>
@@ -246,43 +243,7 @@ export default function WebsiteDepositPopup({ onClose, selectedId }) {
             </div>
           </div>
 
-          {/* Coin Conversion Info (Same Display as CreateId) */}
-          {isAmountValid && (
-             <div className={styles.conversionSection}>
-                <h3>Conversion Details</h3>
-                <div className={styles.conversionDisplay}>
-                    
-                    {/* Rate Breakdown */}
-                    <div className={styles.conversionItem}>
-                        <span className={styles.conversionLabel}>Applicable Rate:</span>
-                        <span className={styles.conversionValue}>
-                            {coins < 50000 ? (
-                                <span style={{ fontSize: '0.9em' }}>
-                                    {actualWebsiteRate || selectedId?.coinRate} + 0.03 = <b>₹{displayedRate}</b> <span style={{ color: 'var(--success-color)', fontSize: '0.8em' }}>(Rate increased for &lt; 50k coins)</span>
-                                </span>
-                            ) : coins < 100000 ? (
-                                <span style={{ fontSize: '0.9em' }}>
-                                    {actualWebsiteRate || selectedId?.coinRate} + 0.01 = <b>₹{displayedRate}</b> <span style={{ color: 'var(--success-color)', fontSize: '0.8em' }}>(Rate increased for &lt; 100k coins)</span>
-                                </span>
-                            ) : (
-                                <span>1 coin = ₹{displayedRate}</span>
-                            )}
-                        </span>
-                    </div>
 
-                    {/* Calculation */}
-                    <div className={styles.conversionItem}>
-                        <span className={styles.conversionLabel}>Total Cost:</span>
-                        <span className={styles.conversionValue}>
-                            {coins} x {displayedRate}
-                            {coins < 50000 && <span style={{fontSize: '0.8em', color: 'var(--success-color)', margin: '0 5px'}}>(+0.03 rate applied)</span>}
-                            {coins >= 50000 && coins < 100000 && <span style={{fontSize: '0.8em', color: 'var(--success-color)', margin: '0 5px'}}>(+0.01 rate applied)</span>}
-                            = <b>₹{convertedRupees.toFixed(2)}</b>
-                        </span>
-                    </div>
-                </div>
-            </div>
-          )}
 
           {/* Validation Messages */}
           {isAmountValid && (

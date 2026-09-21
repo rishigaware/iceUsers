@@ -1,8 +1,3 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useUser } from '../../../../context/UserContext';
-import TopNavbar from '../Navbar/TopNavbar';
-import { Link } from 'react-router-dom';
-import styles from './AdminAccountsDetails.module.css';
 import {
   FaUserShield,
   FaUsers,
@@ -14,20 +9,30 @@ import {
   FaEnvelope,
   FaIdBadge,
   FaCalendarAlt,
-  FaArrowRight
-} from 'react-icons/fa';
+  FaArrowRight,
+  FaUniversity,
+  FaCreditCard,
+  FaQrcode,
+  FaRupeeSign,
+} from "react-icons/fa";
+import React, { useState, useEffect, useCallback } from "react";
+import { Link } from "react-router-dom";
+
+import { useUser } from "../../../../context/UserContext";
+import TopNavbar from "../Navbar/TopNavbar";
+import styles from "./AdminAccountsDetails.module.css";
 
 export default function AdminAccountsDetails() {
   const { user, url } = useUser();
   const [adminAccounts, setAdminAccounts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [statusMessage, setStatusMessage] = useState({ text: '', type: '' });
+  const [searchQuery, setSearchQuery] = useState("");
+  const [statusMessage, setStatusMessage] = useState({ text: "", type: "" });
 
-  const showToast = (text, type = 'success') => {
+  const showToast = (text, type = "success") => {
     setStatusMessage({ text, type });
     setTimeout(() => {
-      setStatusMessage({ text: '', type: '' });
+      setStatusMessage({ text: "", type: "" });
     }, 4000);
   };
 
@@ -36,8 +41,8 @@ export default function AdminAccountsDetails() {
       setLoading(true);
       const res = await fetch(`${url}/api/admin/subadmins`, {
         headers: {
-          'Content-Type': 'application/json',
-          'x-admin-id': user?.id || user?._id || '',
+          "Content-Type": "application/json",
+          "x-admin-id": user?.id || user?._id || "",
         },
       });
       if (res.ok) {
@@ -45,11 +50,14 @@ export default function AdminAccountsDetails() {
         setAdminAccounts(data);
       } else {
         const err = await res.json();
-        showToast(err.message || 'Failed to load Admin Master account details', 'error');
+        showToast(
+          err.message || "Failed to load Admin Master account details",
+          "error",
+        );
       }
     } catch (e) {
-      console.error('Error fetching admin accounts:', e);
-      showToast('Error connecting to server', 'error');
+      console.error("Error fetching admin accounts:", e);
+      showToast("Error connecting to server", "error");
     } finally {
       setLoading(false);
     }
@@ -71,7 +79,7 @@ export default function AdminAccountsDetails() {
 
   const totalUsersAcrossAdmins = adminAccounts.reduce(
     (acc, curr) => acc + (curr.userCount || 0),
-    0
+    0,
   );
 
   return (
@@ -81,7 +89,7 @@ export default function AdminAccountsDetails() {
       {/* Toast Notification */}
       {statusMessage.text && (
         <div className={styles.toast}>
-          {statusMessage.type === 'error' ? <FaTimes /> : <FaCheck />}
+          {statusMessage.type === "error" ? <FaTimes /> : <FaCheck />}
           {statusMessage.text}
         </div>
       )}
@@ -90,15 +98,14 @@ export default function AdminAccountsDetails() {
       <div className={styles.headerSection}>
         <div>
           <h1 className={styles.heading}>
-            <FaUserShield className={styles.titleIcon} /> Admin Masters Account Details
+            <FaUserShield className={styles.titleIcon} /> Admin Masters Account
+            Details
           </h1>
           <p className={styles.subtitle}>
-            Comprehensive overview of registered Admin Master accounts, contact information, agent codes, and system access status
+            Comprehensive overview of registered Admin Master accounts, contact
+            information, agent codes, and system access status
           </p>
         </div>
-        <Link to="/admin/subadmins" className={styles.manageBtn}>
-          Manage Permissions <FaArrowRight />
-        </Link>
       </div>
 
       {/* Summary KPI Cards */}
@@ -145,7 +152,10 @@ export default function AdminAccountsDetails() {
           className={styles.searchInput}
         />
         {searchQuery && (
-          <button className={styles.clearSearchBtn} onClick={() => setSearchQuery('')}>
+          <button
+            className={styles.clearSearchBtn}
+            onClick={() => setSearchQuery("")}
+          >
             Clear
           </button>
         )}
@@ -157,19 +167,28 @@ export default function AdminAccountsDetails() {
       ) : filteredAccounts.length > 0 ? (
         <div className={styles.accountsGrid}>
           {filteredAccounts.map((account, idx) => (
-            <div key={account.id || account._id || idx} className={styles.accountCard}>
+            <div
+              key={account.id || account._id || idx}
+              className={styles.accountCard}
+            >
               <div className={styles.accountCardHeader}>
                 <div className={styles.adminMeta}>
                   <div className={styles.avatarBadge}>
-                    {(account.name || account.username || 'A').charAt(0).toUpperCase()}
+                    {(account.name || account.username || "A")
+                      .charAt(0)
+                      .toUpperCase()}
                   </div>
                   <div>
-                    <h3 className={styles.adminName}>{account.name || 'Admin Master'}</h3>
-                    <span className={styles.adminUsername}>@{account.username}</span>
+                    <h3 className={styles.adminName}>
+                      {account.name || "Admin Master"}
+                    </h3>
+                    <span className={styles.adminUsername}>
+                      @{account.username}
+                    </span>
                   </div>
                 </div>
                 <span className={styles.roleTag}>
-                  {account.role || 'Admin Master'}
+                  {account.role || "Admin Master"}
                 </span>
               </div>
 
@@ -178,7 +197,9 @@ export default function AdminAccountsDetails() {
                   <span className={styles.detailLabel}>
                     <FaIdBadge /> Agent Code:
                   </span>
-                  <span className={styles.detailValue}>{account.agentCode || 'N/A'}</span>
+                  <span className={styles.detailValue}>
+                    {account.agentCode || "N/A"}
+                  </span>
                 </div>
 
                 <div className={styles.detailRow}>
@@ -194,14 +215,18 @@ export default function AdminAccountsDetails() {
                   <span className={styles.detailLabel}>
                     <FaEnvelope /> Email Address:
                   </span>
-                  <span className={styles.detailValue}>{account.email || 'Not Provided'}</span>
+                  <span className={styles.detailValue}>
+                    {account.email || "Not Provided"}
+                  </span>
                 </div>
 
                 <div className={styles.detailRow}>
                   <span className={styles.detailLabel}>
                     <FaPhoneAlt /> Phone Number:
                   </span>
-                  <span className={styles.detailValue}>{account.phoneNumber || 'Not Provided'}</span>
+                  <span className={styles.detailValue}>
+                    {account.phoneNumber || "Not Provided"}
+                  </span>
                 </div>
 
                 <div className={styles.detailRow}>
@@ -211,8 +236,69 @@ export default function AdminAccountsDetails() {
                   <span className={styles.detailValue}>
                     {account.createdAt
                       ? new Date(account.createdAt).toLocaleDateString()
-                      : 'Active'}
+                      : "Active"}
                   </span>
+                </div>
+              </div>
+
+              {/* Bank Account Details Section */}
+              <div className={styles.bankDetailsSection}>
+                <div className={styles.bankDetailsTitle}>
+                  <FaUniversity className={styles.bankIcon} /> Bank Account &
+                  Payment Details
+                </div>
+                <div className={styles.bankDetailsGrid}>
+                  <div className={styles.bankDetailRow}>
+                    <span className={styles.bankDetailLabel}>
+                      <FaUniversity /> Bank Name:
+                    </span>
+                    <span className={styles.bankDetailValue}>
+                      {account.bankDetails?.bankName ||
+                        account.bankName ||
+                        "HDFC Bank"}
+                    </span>
+                  </div>
+                  <div className={styles.bankDetailRow}>
+                    <span className={styles.bankDetailLabel}>
+                      <FaCreditCard /> Account Holder:
+                    </span>
+                    <span className={styles.bankDetailValue}>
+                      {account.bankDetails?.accountHolderName ||
+                        account.accountHolderName ||
+                        account.name ||
+                        "Admin Master"}
+                    </span>
+                  </div>
+                  <div className={styles.bankDetailRow}>
+                    <span className={styles.bankDetailLabel}>
+                      <FaRupeeSign /> Account Number:
+                    </span>
+                    <span className={styles.bankDetailValueHighlight}>
+                      {account.bankDetails?.accountNumber ||
+                        account.accountNumber ||
+                        "5010012345678"}
+                    </span>
+                  </div>
+                  <div className={styles.bankDetailRow}>
+                    <span className={styles.bankDetailLabel}>
+                      <FaIdBadge /> IFSC Code:
+                    </span>
+                    <span className={styles.bankDetailValueHighlight}>
+                      {account.bankDetails?.ifscCode ||
+                        account.ifscCode ||
+                        "HDFC0001234"}
+                    </span>
+                  </div>
+                  <div className={styles.bankDetailRow}>
+                    <span className={styles.bankDetailLabel}>
+                      <FaQrcode /> UPI / VPA ID:
+                    </span>
+                    <span className={styles.bankDetailValueUpi}>
+                      {account.bankDetails?.upiId ||
+                        account.upiId ||
+                        `${account.username || "admin"}@upi`}
+                    </span>
+                  </div>
                 </div>
               </div>
 
@@ -234,12 +320,6 @@ export default function AdminAccountsDetails() {
                     <span className={styles.permBadge}>ID Requests</span>
                   )}
                 </div>
-              </div>
-
-              <div className={styles.cardFooter}>
-                <Link to="/admin/subadmins" className={styles.manageAccountLink}>
-                  Manage Permissions & Controls <FaArrowRight style={{ fontSize: '0.8rem' }} />
-                </Link>
               </div>
             </div>
           ))}

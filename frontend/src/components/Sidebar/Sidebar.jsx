@@ -342,7 +342,7 @@ export default function Sidebar({ isOpen, onClose }) {
                 title="Dashboard"
               >
                 <FaTachometerAlt className={styles.itemIcon} />
-                <span>Master Dashboard</span>
+                <span>Admin Master Dashboard</span>
               </Link>
               <Link
                 to="/admin/subadmins"
@@ -443,7 +443,7 @@ export default function Sidebar({ isOpen, onClose }) {
               </Link>
 
               {/* Rest Menu Below */}
-              <div className={styles.menuGroupTitle}>ROOT SYSTEM CONTROL</div>
+              <div className={styles.menuGroupTitle}>SUPER ADMIN CONTROL</div>
               <Link
                 to="/dashboard"
                 className={styles.navItem}
@@ -451,7 +451,7 @@ export default function Sidebar({ isOpen, onClose }) {
                 title="Dashboard"
               >
                 <FaTachometerAlt className={styles.itemIcon} />
-                <span>Root Dashboard</span>
+                <span>Super Admin Dashboard</span>
               </Link>
               <Link
                 to="/admin/accounts-details"

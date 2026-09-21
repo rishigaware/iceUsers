@@ -1,3 +1,8 @@
+/* ==========================================================================
+   Sidebar.module.css
+   Modern, Ultra-Premium Left Sidebar Drawer Following Primary Color Theme
+   ========================================================================== */
+
 /* Backdrop overlay */
 .backdrop {
   position: fixed;
@@ -5,8 +10,9 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(15, 23, 42, 0.7);
-  backdrop-filter: blur(6px);
+  background: rgba(11, 18, 34, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   z-index: 9998;
   opacity: 0;
   visibility: hidden;
@@ -27,9 +33,9 @@
   width: 290px;
   max-width: 85vw;
   height: 100vh;
-  background: #0f172a;
-  border-right: 1px solid #334155;
-  box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(180deg, #0b1424 0%, #0f172a 100%);
+  border-right: 1px solid rgba(219, 39, 119, 0.28);
+  box-shadow: 12px 0 36px rgba(0, 0, 0, 0.65), 3px 0 18px rgba(219, 39, 119, 0.15);
   z-index: 9999;
   display: flex;
   flex-direction: column;
@@ -38,9 +44,9 @@
   overflow-y: auto;
   overscroll-behavior: contain;
   touch-action: pan-y;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: inherit;
   scrollbar-width: thin;
-  scrollbar-color: rgba(99, 102, 241, 0.4) transparent;
+  scrollbar-color: rgba(219, 39, 119, 0.45) transparent;
 }
 
 /* Custom Thin & Stylish Webkit Scrollbar */
@@ -53,13 +59,14 @@
 }
 
 .sidebar::-webkit-scrollbar-thumb {
-  background: rgba(99, 102, 241, 0.4);
+  background: rgba(219, 39, 119, 0.45);
   border-radius: 10px;
   transition: background 0.2s ease;
 }
 
 .sidebar::-webkit-scrollbar-thumb:hover {
-  background: rgba(99, 102, 241, 0.8);
+  background: var(--primary-color, #db2777);
+  box-shadow: 0 0 8px rgba(219, 39, 119, 0.8);
 }
 
 .sidebarOpen {
@@ -71,9 +78,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.85rem 1rem;
-  border-bottom: 1px solid #1e293b;
+  padding: 0.9rem 1.1rem;
+  border-bottom: 1px solid rgba(219, 39, 119, 0.2);
   gap: 0.5rem;
+  background: rgba(15, 23, 42, 0.6);
 }
 
 .logoSection {
@@ -105,16 +113,17 @@
 }
 
 .brandMain {
-  color: #38bdf8;
+  color: var(--primary-color, #db2777);
   font-weight: 800;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   line-height: 1;
   letter-spacing: 0.5px;
+  text-shadow: 0 0 12px rgba(219, 39, 119, 0.35);
 }
 
 .brandSub {
-  color: #94a3b8;
-  font-size: 0.65rem;
+  color: #f472b6;
+  font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 1.5px;
 }
@@ -128,8 +137,8 @@
 .collapseToggleBtn {
   display: none !important;
   background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #94a3b8;
+  border: 1px solid rgba(219, 39, 119, 0.3);
+  color: #f472b6;
   width: 32px;
   height: 32px;
   border-radius: 6px;
@@ -141,15 +150,16 @@
 }
 
 .collapseToggleBtn:hover {
-  background: rgba(99, 102, 241, 0.2);
-  color: #818cf8;
-  border-color: #6366f1;
+  background: rgba(219, 39, 119, 0.25);
+  color: #ffffff;
+  border-color: var(--primary-color, #db2777);
+  box-shadow: 0 0 10px rgba(219, 39, 119, 0.4);
 }
 
 .closeBtn {
   background: rgba(255, 255, 255, 0.08);
-  border: none;
-  color: #94a3b8;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #cbd5e1;
   width: 34px;
   height: 34px;
   border-radius: 50%;
@@ -162,175 +172,210 @@
 }
 
 .closeBtn:hover {
-  background: rgba(239, 68, 68, 0.2);
-  color: #f87171;
+  background: rgba(219, 39, 119, 0.25);
+  color: #f472b6;
+  border-color: rgba(219, 39, 119, 0.5);
+  box-shadow: 0 0 10px rgba(219, 39, 119, 0.4);
 }
 
 /* User Card Snippet */
 .userSection {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 1rem 1.25rem;
-  background: rgba(30, 41, 59, 0.6);
-  border-bottom: 1px solid #1e293b;
+  gap: 0.85rem;
+  padding: 1.1rem 1.25rem;
+  background: linear-gradient(
+    135deg,
+    rgba(219, 39, 119, 0.12) 0%,
+    rgba(30, 41, 59, 0.6) 100%
+  );
+  border-bottom: 1px solid rgba(219, 39, 119, 0.2);
 }
 
 .userAvatar {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+  background: var(--primary-gradient, linear-gradient(135deg, #be185d 0%, #db2777 50%, #f472b6 100%));
   color: #ffffff;
-  font-weight: 700;
-  font-size: 1.1rem;
+  font-weight: 800;
+  font-size: 1.15rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+  box-shadow: 0 4px 16px rgba(219, 39, 119, 0.5);
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  flex-shrink: 0;
 }
 
 .userInfo {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: 0.25rem;
   overflow: hidden;
 }
 
 .userName {
-  color: #f8fafc;
+  color: #ffffff;
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 0.98rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .roleBadge {
-  background: rgba(99, 102, 241, 0.2);
-  color: #818cf8;
-  border: 1px solid rgba(99, 102, 241, 0.4);
-  font-size: 0.68rem;
+  background: rgba(219, 39, 119, 0.2);
+  color: #f472b6;
+  border: 1px solid rgba(219, 39, 119, 0.45);
+  font-size: 0.7rem;
   font-weight: 700;
-  padding: 2px 8px;
+  padding: 2px 10px;
   border-radius: 12px;
   width: fit-content;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
 }
 
 /* Wallet Bar */
 .walletBar {
-  padding: 0.85rem 1.25rem;
-  background: #1e293b;
-  margin: 0.75rem 1rem;
-  border-radius: 10px;
-  border: 1px solid #334155;
+  padding: 0.95rem 1.25rem;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.95) 100%);
+  margin: 0.85rem 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(219, 39, 119, 0.35);
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.35),
+    inset 0 0 16px rgba(219, 39, 119, 0.1);
 }
 
 .walletLeft {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.85rem;
 }
 
 .walletIcon {
-  color: #38bdf8;
-  font-size: 1.2rem;
+  color: var(--primary-color, #db2777);
+  font-size: 1.35rem;
+  filter: drop-shadow(0 0 8px rgba(219, 39, 119, 0.5));
 }
 
 .walletLabel {
-  color: #94a3b8;
+  color: #cbd5e1;
   font-size: 0.72rem;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.6px;
+  font-weight: 600;
   display: block;
 }
 
 .walletValue {
-  color: #4ade80;
+  color: #ffffff;
   font-weight: 800;
-  font-size: 1rem;
+  font-size: 1.08rem;
+  margin-top: 1px;
 }
 
 /* Navigation Menu */
 .navMenu {
   flex: 1;
-  padding: 0.5rem 0.75rem;
+  padding: 0.6rem 0.75rem;
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
+  gap: 0.35rem;
 }
 
 .menuGroupTitle {
-  font-size: 0.68rem;
-  font-weight: 700;
-  color: #64748b;
-  letter-spacing: 1px;
-  padding: 0.6rem 0.75rem 0.2rem 0.75rem;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #f472b6;
+  letter-spacing: 1.2px;
+  padding: 0.75rem 0.85rem 0.25rem 0.85rem;
+  text-transform: uppercase;
 }
 
 .navItem {
   display: flex;
   align-items: center;
-  gap: 0.85rem;
-  padding: 0.7rem 0.85rem;
-  color: #cbd5e1;
+  gap: 0.9rem;
+  padding: 0.75rem 0.9rem;
+  color: #e2e8f0;
   text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 500;
-  border-radius: 8px;
-  transition: all 0.2s ease;
+  font-size: 0.92rem;
+  font-weight: 600;
+  border-radius: 10px;
+  border-left: 3px solid transparent;
+  transition: all 0.22s ease;
 }
 
 .navItem:hover {
-  background: rgba(99, 102, 241, 0.15);
-  color: #818cf8;
+  background: linear-gradient(
+    90deg,
+    rgba(219, 39, 119, 0.22) 0%,
+    rgba(219, 39, 119, 0.06) 100%
+  );
+  color: #ffffff;
+  border-left-color: var(--primary-color, #db2777);
+  box-shadow: 0 2px 12px rgba(219, 39, 119, 0.18);
+  transform: translateX(3px);
+}
+
+.navItem:hover .itemIcon {
+  color: #f472b6;
+  filter: drop-shadow(0 0 8px rgba(219, 39, 119, 0.8));
+  transform: scale(1.1);
 }
 
 .navItemDummy {
   display: flex;
   align-items: center;
-  gap: 0.85rem;
-  padding: 0.7rem 0.85rem;
+  gap: 0.9rem;
+  padding: 0.75rem 0.9rem;
   color: #cbd5e1;
-  font-size: 0.9rem;
-  font-weight: 500;
-  border-radius: 8px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  border-radius: 10px;
+  border-left: 3px solid transparent;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.22s ease;
   position: relative;
 }
 
 .navItemDummy:hover {
-  background: rgba(255, 255, 255, 0.05);
-  color: #f8fafc;
+  background: rgba(219, 39, 119, 0.12);
+  color: #ffffff;
+  border-left-color: var(--primary-color, #db2777);
 }
 
 .itemIcon {
-  font-size: 1.1rem;
-  color: #818cf8;
-  width: 20px;
+  font-size: 1.15rem;
+  color: var(--primary-color, #db2777);
+  width: 22px;
   text-align: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
 }
 
 .badge {
   margin-left: auto;
-  background: #ef4444;
+  background: var(--primary-gradient, linear-gradient(135deg, #be185d, #db2777));
   color: #ffffff;
-  font-size: 0.68rem;
-  font-weight: 700;
-  padding: 2px 7px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 3px 8px;
   border-radius: 10px;
+  box-shadow: 0 0 8px rgba(219, 39, 119, 0.6);
 }
 
 /* Sidebar Footer */
 .sidebarFooter {
-  padding: 1rem 1.25rem;
-  border-top: 1px solid #1e293b;
+  padding: 1.1rem 1.25rem;
+  border-top: 1px solid rgba(219, 39, 119, 0.2);
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  background: #0f172a;
+  gap: 0.85rem;
+  background: rgba(11, 18, 34, 0.95);
 }
 
 .logoutBtn {
@@ -341,11 +386,11 @@
   gap: 0.5rem;
   background: rgba(239, 68, 68, 0.12);
   color: #f87171;
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  padding: 0.65rem;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.88rem;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  padding: 0.7rem;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -353,6 +398,7 @@
 .logoutBtn:hover {
   background: #ef4444;
   color: #ffffff;
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4);
 }
 
 .loginLinkBtn {
@@ -360,19 +406,29 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #6366f1;
+  gap: 0.5rem;
+  background: var(--primary-gradient, linear-gradient(135deg, #be185d 0%, #db2777 50%, #f472b6 100%));
   color: #ffffff;
-  padding: 0.65rem;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.88rem;
+  padding: 0.7rem;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.9rem;
   text-decoration: none;
+  box-shadow: 0 4px 16px rgba(219, 39, 119, 0.4);
+  transition: all 0.2s ease;
+}
+
+.loginLinkBtn:hover {
+  background: linear-gradient(135deg, #9d174d 0%, #db2777 50%, #ec4899 100%);
+  box-shadow: 0 6px 20px rgba(219, 39, 119, 0.6);
+  transform: translateY(-1px);
 }
 
 .versionTag {
   text-align: center;
-  font-size: 0.7rem;
-  color: #64748b;
+  font-size: 0.72rem;
+  color: #94a3b8;
+  font-weight: 500;
 }
 
 /* DESKTOP PERSISTENT SIDEBAR (>= 1024px) */
@@ -384,7 +440,7 @@
   .sidebar {
     transform: none !important;
     width: 280px;
-    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.4);
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.45);
     transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
@@ -426,8 +482,8 @@
 
   .sidebar.collapsed .userAvatar {
     margin: 0 auto;
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     font-size: 0.95rem;
   }
 
@@ -438,7 +494,7 @@
 
   .sidebar.collapsed .itemIcon {
     margin: 0;
-    font-size: 1.25rem;
+    font-size: 1.3rem;
   }
 
   .sidebar.collapsed .logoutBtn,

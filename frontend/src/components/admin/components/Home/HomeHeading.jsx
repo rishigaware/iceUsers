@@ -40,6 +40,7 @@ import LoginPopup from "../Login/LoginPopup";
 import WithdrawalPopup from "./WithdrawalPopup";
 import HomeBannerCarousel from "../../../Home/HomeBannerCarousel";
 import SquareBannerCarousel from "../../../Home/SquareBannerCarousel";
+import WebsitesVerticalSlider from "../../../Home/WebsitesVerticalSlider";
 
 import { FaBars } from "react-icons/fa";
 import Sidebar from "../../../Sidebar/Sidebar";
@@ -302,6 +303,9 @@ const HomeHeading = () => {
 
        {/* Home Banner Carousel - admin can manage */}
       <HomeBannerCarousel canManage={true} />
+
+      {/* Top 10 Live Exchange Websites Vertical Upper-Scroll Showcase */}
+      <WebsitesVerticalSlider isAdmin={true} />
 
       {/* Animated Features Section */}
       <div className={styles.featuresSection}>

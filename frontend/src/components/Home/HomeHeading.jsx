@@ -41,6 +41,7 @@ import styles from "./HomeHeading.module.css"; // Import the CSS module
 import WalletWithdrawalPopup from "./WalletWithdrawalPopup"; // Import the WalletWithdrawalPopup component
 import HomeBannerCarousel from "./HomeBannerCarousel";
 import SquareBannerCarousel from "./SquareBannerCarousel";
+import WebsitesVerticalSlider from "./WebsitesVerticalSlider";
 
 import { FaBars } from "react-icons/fa";
 import Sidebar from "../Sidebar/Sidebar";
@@ -250,6 +251,9 @@ const HomeHeading = () => {
 
       {/* Home Banner Carousel - before Our Premium Services */}
       <HomeBannerCarousel canManage={false} />
+
+      {/* Top 10 Live Exchange Websites Vertical Upper-Scroll Showcase */}
+      <WebsitesVerticalSlider isAdmin={false} />
 
 
       {/* Animated Features Section */}

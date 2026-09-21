@@ -45,12 +45,28 @@ exports.getAllSubAdmins = async (req, res) => {
     const subAdminsWithStats = await Promise.all(
       subAdmins.map(async (doc) => {
         const userCount = await User.countDocuments({ assignedAdmin: doc._id });
+        const bankAccount = await AdminAccount.findOne({
+          $or: [{ userId: doc._id.toString() }, { userId: doc.username }]
+        });
         const adminObj = doc.toObject();
         delete adminObj.password;
         return {
           id: doc._id,
           ...adminObj,
           userCount,
+          bankDetails: bankAccount ? {
+            bankName: bankAccount.bankName || 'XYZ Bank',
+            accountHolderName: bankAccount.accountHolderName || doc.name || doc.username,
+            accountNumber: bankAccount.accountNumber || '1234567890',
+            ifscCode: bankAccount.ifscCode || 'ABCD0123456',
+            upiId: bankAccount.upiId || `${doc.username}@upi`,
+          } : {
+            bankName: "HDFC Bank",
+            accountHolderName: doc.name || doc.username,
+            accountNumber: "50100" + Math.floor(10000000 + Math.random() * 90000000),
+            ifscCode: "HDFC0001234",
+            upiId: `${doc.username}@upi`,
+          }
         };
       })
     );

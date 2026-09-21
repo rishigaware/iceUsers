@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useUser } from '../context/UserContext';
+import { formatCurrency } from '../utils/currency';
 
 /**
  * Custom hook for managing user balance
@@ -41,14 +42,9 @@ export const useBalance = () => {
   }, [user?.balance]);
 
   // Function to format balance for display
-  const formatBalance = useCallback((amount = null) => {
+  const formatBalance = useCallback((amount = null, includeSymbol = true) => {
     const balanceAmount = amount !== null ? amount : balance;
-    return new Intl.NumberFormat('en-IN', {
-      style: 'currency',
-      currency: 'INR',
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }).format(balanceAmount);
+    return formatCurrency(balanceAmount, includeSymbol);
   }, [balance]);
 
   return {

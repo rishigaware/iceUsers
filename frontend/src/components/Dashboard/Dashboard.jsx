@@ -4,6 +4,7 @@ import { useUser } from "../../context/UserContext";
 import TopNavbar from "../Navbar/TopNavbar";
 import { checkIsAdmin, checkIsSuperAdmin, checkIsSuperOrMaster, ROLES } from "../../utils/roles";
 import { ROUTES } from "../../utils/routes";
+import { formatCurrency } from "../../utils/currency";
 import styles from "./Dashboard.module.css";
 import DepositPopup from "../Navbar/DepositPopup";
 import WalletWithdrawalPopup from "../Home/WalletWithdrawalPopup";
@@ -252,7 +253,7 @@ export default function Dashboard() {
                   Available Wallet Balance
                 </span>
                 <div className={styles.walletAmount}>
-                  ₹{(user?.balance || 0).toLocaleString("en-IN")}
+                  {formatCurrency(user?.balance)}
                 </div>
               </div>
               <div className={styles.walletActions}>
@@ -311,7 +312,7 @@ export default function Dashboard() {
                 </div>
                 <div className={styles.metricContent}>
                   <div className={styles.metricValue}>
-                    ₹{(user?.balance || 0).toLocaleString("en-IN")}
+                    {formatCurrency(user?.balance)}
                   </div>
                   <div className={styles.metricLabel}>Total Deposits</div>
                 </div>
@@ -415,7 +416,7 @@ export default function Dashboard() {
                           <tr key={item._id || idx}>
                             <td style={{ fontWeight: 600 }}>{item.websiteName || item.site || "Exchange"}</td>
                             <td>{item.username || item.idUsername || "Active ID"}</td>
-                            <td style={{ color: "#10b981", fontWeight: 700 }}>₹{(item.balance || 0).toLocaleString("en-IN")}</td>
+                            <td style={{ color: "#10b981", fontWeight: 700 }}>{formatCurrency(item.balance)}</td>
                             <td>
                               <span className={`${styles.statusBadge} ${styles.statusApproved}`}>Active</span>
                             </td>
@@ -462,8 +463,10 @@ export default function Dashboard() {
                             <td style={{ textTransform: "capitalize" }}>
                               {tx.type || "Deposit"}
                             </td>
-                            <td style={{ fontWeight: 700 }}>
-                              ₹{(tx.amount || 0).toLocaleString("en-IN")}
+                            <td>
+                              <span className={tx.type === "deposit" ? styles.txAmountDeposit : styles.txAmountWithdraw}>
+                                {tx.type === "deposit" ? "+" : "-"} {formatCurrency(tx.amount)}
+                              </span>
                             </td>
                             <td>
                               <span
@@ -670,7 +673,7 @@ export default function Dashboard() {
                             <td style={{ fontWeight: 600 }}>{u.name || "Registered User"}</td>
                             <td>{u.username || "user"}</td>
                             <td>{u.phoneNumber || "N/A"}</td>
-                            <td style={{ color: "#10b981", fontWeight: 700 }}>₹{(u.balance || 0).toLocaleString("en-IN")}</td>
+                            <td style={{ color: "#10b981", fontWeight: 700 }}>{formatCurrency(u.balance)}</td>
                           </tr>
                         ))
                       ) : (

@@ -46,6 +46,7 @@ import LoginPopup from "../Login/LoginPopup";
 import DepositPopup from "../Navbar/DepositPopup";
 import styles from "./HomeHeading.module.css";
 import WalletWithdrawalPopup from "./WalletWithdrawalPopup";
+import { formatCurrency } from "../../utils/currency";
 import HomeBannerCarousel from "./HomeBannerCarousel";
 import SquareBannerCarousel from "./SquareBannerCarousel";
 import WebsitesVerticalSlider from "./WebsitesVerticalSlider";
@@ -193,11 +194,15 @@ const HomeHeading = () => {
               />
             </div>
 
-            <div className={styles.balanceContainer}>
-              {isAdmin ? <BiMoneyWithdraw size={20} /> : <FaBalanceScale size={20} />}
-              <p className={styles.balanceAmount}>₹{(parseFloat(user?.balance) || 0).toFixed(2)}</p>
-            </div>
-            <h3 className={styles.balance}>Wallet Balance</h3>
+            {!isAdmin && (
+              <>
+                <div className={styles.balanceContainer}>
+                  <FaBalanceScale size={20} />
+                  <p className={styles.balanceAmount}>{formatCurrency(user?.balance)}</p>
+                </div>
+                <h3 className={styles.balance}>Wallet Balance</h3>
+              </>
+            )}
           </div>
 
           <div

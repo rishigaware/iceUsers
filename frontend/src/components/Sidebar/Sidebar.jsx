@@ -23,12 +23,34 @@ import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import { checkIsUser, ROLES } from "../../utils/roles";
 import { ROUTES } from "../../utils/routes";
+import { formatCurrency } from "../../utils/currency";
 import styles from "./Sidebar.module.css";
 
 export default function Sidebar({ isOpen, onClose }) {
   const { user, setUser, logoPath } = useUser();
   const [isCollapsed, setIsCollapsed] = React.useState(false);
   const navigate = useNavigate();
+  const sidebarRef = React.useRef(null);
+
+  // Click outside listener for mobile
+  React.useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        isOpen &&
+        window.innerWidth < 1024 &&
+        sidebarRef.current &&
+        !sidebarRef.current.contains(event.target)
+      ) {
+        onClose();
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, [isOpen, onClose]);
 
   // Handle body scroll locking on mobile & body padding on desktop/tablet
   React.useEffect(() => {
@@ -88,10 +110,7 @@ export default function Sidebar({ isOpen, onClose }) {
   const isAdmin = userRole === ROLES.ADMIN;
   const isMaster = userRole === ROLES.MASTER;
   const isSuperAdmin = userRole === ROLES.SUPERADMIN;
-  const balance = (parseFloat(user?.balance) || 0).toLocaleString("en-IN", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
+  const balance = formatCurrency(user?.balance);
 
   return (
     <>
@@ -103,6 +122,7 @@ export default function Sidebar({ isOpen, onClose }) {
 
       {/* Left Sidebar Drawer / Desktop Panel */}
       <aside
+        ref={sidebarRef}
         className={`${styles.sidebar} ${isOpen ? styles.sidebarOpen : ""} ${isCollapsed ? styles.collapsed : ""}`}
       >
         {/* Sidebar Header */}
@@ -149,15 +169,17 @@ export default function Sidebar({ isOpen, onClose }) {
         </div>
 
         {/* Quick Wallet Bar */}
-        <div className={styles.walletBar}>
-          <div className={styles.walletLeft}>
-            <FaWallet className={styles.walletIcon} />
-            <div>
-              <span className={styles.walletLabel}>Wallet Balance</span>
-              <div className={styles.walletValue}>₹{balance}</div>
+        {!isAdmin && (
+          <div className={styles.walletBar}>
+            <div className={styles.walletLeft}>
+              <FaWallet className={styles.walletIcon} />
+              <div>
+                <span className={styles.walletLabel}>Wallet Balance</span>
+                <div className={styles.walletValue}>{balance}</div>
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         {/* Menu Navigation Items (Bottom Navbar Sequence First, Then Rest Menu Below) */}
         <nav className={styles.navMenu}>

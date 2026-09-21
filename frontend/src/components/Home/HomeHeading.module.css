@@ -3167,6 +3167,10 @@ body {
     padding: 18px 0 25px 0;
   }
 
+  .logosSection:last-of-type {
+    margin-bottom: 75px;
+  }
+
   .sectionHeader {
     width: 180px;
     padding: 0 15px;
@@ -3201,6 +3205,10 @@ body {
   .logosSection {
     padding: 15px 0 20px 0;
     margin-bottom: 20px;
+  }
+
+  .logosSection:last-of-type {
+    margin-bottom: 80px;
   }
 
   .sectionHeader {
@@ -3239,6 +3247,10 @@ body {
   .logosSection {
     padding: 12px 0 18px 0;
     margin-bottom: 15px;
+  }
+
+  .logosSection:last-of-type {
+    margin-bottom: 80px;
   }
 
   .sectionHeader {
@@ -3460,6 +3472,10 @@ body {
 @media (max-width: 360px) {
   .logosSection {
     padding: 10px 0 15px 0;
+  }
+
+  .logosSection:last-of-type {
+    margin-bottom: 80px;
   }
 
   .sectionHeader {

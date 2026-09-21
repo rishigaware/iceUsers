@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./TopNavbar.module.css";
-import DepositPopup from "./DepositPopup"; // Import the DepositPopup component
+import DepositPopup from "./DepositPopup";
+import { formatCurrency } from "../../utils/currency"; // Import the DepositPopup component
 import { useUser } from "../../context/UserContext";
 import { FaBars } from "react-icons/fa";
 import Sidebar from "../Sidebar/Sidebar";
@@ -14,16 +15,9 @@ export default function TopNavbar() {
   const { user, setUser, url, refreshUserBalance, logoPath } = useUser();
   const isAdmin = checkIsAdmin(user);
 
-  const [walletBalance, setWalletBalance] = useState(100000);
   const [showDepositPopup, setShowDepositPopup] = useState(false); // State to toggle popup
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Sidebar drawer state
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (user?.balance !== undefined) {
-      setWalletBalance(user.balance);
-    }
-  }, [user]);
 
   // Fetch balance on component mount and whenever the user changes
   useEffect(() => {
@@ -66,10 +60,12 @@ export default function TopNavbar() {
 
       {/* Buttons Section */}
       <div className={styles.navLinks}>
-        <div className={styles.walletContainer}>
-          <span className={styles.walletBalance}>Wallet : </span>
-          <span className={styles.balanceAmount}>₹{(parseFloat(user?.balance) || 0).toFixed(2)}</span>
-        </div>
+        {!isAdmin && (
+          <div className={styles.walletContainer}>
+            <span className={styles.walletBalance}>Wallet : </span>
+            <span className={styles.balanceAmount}>{formatCurrency(user?.balance)}</span>
+          </div>
+        )}
 
         {!isAdmin && (
           <button className={styles.navButton} onClick={handleDepositClick}>
@@ -83,7 +79,7 @@ export default function TopNavbar() {
 
       {/* Deposit Popup */}
       {showDepositPopup && !isAdmin && (
-        <DepositPopup onClose={closeDepositPopup} setWalletBalance={setWalletBalance} />
+        <DepositPopup onClose={closeDepositPopup} />
       )}
     </div>
   );

@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import LoginPopup from '../Login/LoginPopup';
 import { Toast } from "primereact/toast";
 import { checkIsAdmin } from "../../utils/roles";
+import { formatCurrency } from "../../utils/currency";
 
 const ProfilePage = () => {
   const { user, setUser, url, refreshUserBalance } = useUser();  // Get user and setUser from context
@@ -308,16 +309,20 @@ const ProfilePage = () => {
         
         {/* Enhanced Wallet Balance Card */}
         <div className={styles.balanceCard}>
-          <div className={styles.balanceIcon}>
-            <WalletIcon sx={{ fontSize: 40, color: '#ffffff' }} />
-          </div>
-          <div className={styles.balanceContent}>
-            <div className={styles.balanceAmount}>
-              <span className={styles.currency}>₹</span>
-              <span className={styles.amount}>{(parseFloat(user?.balance) || 0).toFixed(2)}</span>
-            </div>
-            <p className={styles.balanceLabel}>Wallet Balance</p>
-          </div>
+          {!isAdmin && (
+            <>
+              <div className={styles.balanceIcon}>
+                <WalletIcon sx={{ fontSize: 40, color: '#ffffff' }} />
+              </div>
+              <div className={styles.balanceContent}>
+                <div className={styles.balanceAmount}>
+                  <span className={styles.currency}></span>
+                  <span className={styles.amount}>{formatCurrency(user?.balance)}</span>
+                </div>
+                <p className={styles.balanceLabel}>Wallet Balance</p>
+              </div>
+            </>
+          )}
           <button className={styles.logoutButton} onClick={handleLogout}>
             <LogoutIcon sx={{ fontSize: 20 }} />
             <span>Logout</span>

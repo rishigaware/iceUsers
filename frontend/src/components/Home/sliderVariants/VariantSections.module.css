@@ -12,7 +12,9 @@
   border: 1.5px solid rgba(219, 39, 119, 0.35);
   border-radius: 20px;
   padding: 20px 22px 24px 22px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65), 0 0 20px rgba(219, 39, 119, 0.15);
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.65),
+    0 0 20px rgba(219, 39, 119, 0.15);
   overflow: hidden;
   box-sizing: border-box;
 }
@@ -100,9 +102,9 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 14px;
+  padding: 22px 14px;
   box-sizing: border-box;
-  gap: 12px;
+  gap: 30px;
 }
 
 .springCardTop {
@@ -113,6 +115,7 @@
   transition: all 0.3s ease;
   cursor: pointer;
   z-index: 2;
+  margin-bottom: 30px;
 }
 
 .springCardTop:hover {
@@ -125,6 +128,7 @@
   width: 100%;
   flex-shrink: 0;
   z-index: 5;
+  margin: 4px 0;
 }
 
 .motionCardWrapper {
@@ -139,6 +143,7 @@
   transition: all 0.3s ease;
   cursor: pointer;
   z-index: 2;
+  margin-top: 6px;
 }
 
 .springCardBottom:hover {
@@ -409,32 +414,35 @@
     white-space: nowrap;
   }
 
-  /* Substantial Mobile Height: ~560px to 600px (Spans ~75% of phone screen) */
+  /* Substantial Mobile Height: ~580px (Spans ~75% of phone screen) */
   .framerViewport {
-    height: 560px;
+    height: 580px;
     min-height: 70vh;
     max-height: 720px;
   }
 
   .springStackStage {
-    padding: 10px 4px;
-    gap: 8px;
+    padding: 18px 6px;
+    gap: 16px;
   }
 
   .springCardTop {
     width: 96%;
     opacity: 0.48;
     transform: scale(0.94);
+    margin-bottom: 4px;
   }
 
   .springCardCenter {
     width: 100%;
+    margin: 4px 0;
   }
 
   .springCardBottom {
     width: 96%;
     opacity: 0.48;
     transform: scale(0.94);
+    margin-top: 4px;
   }
 
   .slickWrapper {
@@ -500,8 +508,13 @@
   .marqueeViewport,
   .perspectiveViewport,
   .fullFeedViewport {
-    height: 520px;
-    min-height: 65vh;
+    height: 540px;
+    min-height: 68vh;
+  }
+
+  .springStackStage {
+    padding: 14px 4px;
+    gap: 14px;
   }
 
   .slickWrapper {

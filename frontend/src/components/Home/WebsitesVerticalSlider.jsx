@@ -1,10 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useUser } from '../../context/UserContext';
 import FramerSpringSection from './sliderVariants/FramerSpringSection';
-import ReactSlickSection from './sliderVariants/ReactSlickSection';
 import FramerMarqueeSection from './sliderVariants/FramerMarqueeSection';
-import Perspective3DSection from './sliderVariants/Perspective3DSection';
-import FramerScrollSection from './sliderVariants/FramerScrollSection';
 import styles from './WebsitesVerticalSlider.module.css';
 
 // 10 Fallback websites strictly matching backend schema if backend API is offline
@@ -134,7 +131,7 @@ export const STATIC_WEBSITES = [
 const WebsitesVerticalSlider = () => {
   const { user, url } = useUser();
   const [websites, setWebsites] = useState(STATIC_WEBSITES);
-  const [activeTab, setActiveTab] = useState('all'); // 'all', 'framer-spring', 'react-slick', 'framer-marquee', 'perspective-3d'
+  const [activeTab, setActiveTab] = useState('framer-spring'); // Default to Style 1 (User Favorite)
 
   // Fetch Websites dynamically from backend API (live data, keep exactly 10)
   const fetchWebsites = useCallback(async () => {
@@ -159,7 +156,7 @@ const WebsitesVerticalSlider = () => {
   return (
     <section className={styles.section} aria-label="Top 10 Live Exchange Websites Showcase">
       <div className={styles.wrapper}>
-        {/* Section Header with reduced mobile font sizes and NO swipe badge */}
+        {/* Section Header */}
         <div className={styles.header}>
           <div className={styles.tagLine}>
             <span className={styles.livePill}>
@@ -179,28 +176,14 @@ const WebsitesVerticalSlider = () => {
             Live dynamic feed of verified exchange platforms • Official links, coin rates & minimums
           </p>
 
-          {/* Quick Style Switcher Tabs */}
+          {/* Quick Style Switcher Tabs (Only 1 & 3 remaining) */}
           <div className={styles.tabBar}>
-            <button
-              type="button"
-              className={`${styles.tabBtn} ${activeTab === 'all' ? styles.tabBtnActive : ''}`}
-              onClick={() => setActiveTab('all')}
-            >
-              All Styles
-            </button>
             <button
               type="button"
               className={`${styles.tabBtn} ${activeTab === 'framer-spring' ? styles.tabBtnActive : ''}`}
               onClick={() => setActiveTab('framer-spring')}
             >
-              1. Framer Spring
-            </button>
-            <button
-              type="button"
-              className={`${styles.tabBtn} ${activeTab === 'react-slick' ? styles.tabBtnActive : ''}`}
-              onClick={() => setActiveTab('react-slick')}
-            >
-              2. React-Slick
+              1. Framer Spring (Featured)
             </button>
             <button
               type="button"
@@ -209,48 +192,19 @@ const WebsitesVerticalSlider = () => {
             >
               3. Framer Marquee
             </button>
-            <button
-              type="button"
-              className={`${styles.tabBtn} ${activeTab === 'perspective-3d' ? styles.tabBtnActive : ''}`}
-              onClick={() => setActiveTab('perspective-3d')}
-            >
-              4. 3D Perspective
-            </button>
-            <button
-              type="button"
-              className={`${styles.tabBtn} ${activeTab === 'scroll-spring' ? styles.tabBtnActive : ''}`}
-              onClick={() => setActiveTab('scroll-spring')}
-            >
-              5. Scroll Spring (1-10)
-            </button>
           </div>
         </div>
 
-        {/* 5 Different Animation Implementations */}
+        {/* Selected Animation Section */}
         <div className={styles.sectionsContainer}>
-          {/* Style 1: Framer Motion Spring Slider */}
-          {(activeTab === 'all' || activeTab === 'framer-spring') && (
+          {/* Style 1: Framer Motion Spring Slider (User Favorite) */}
+          {activeTab === 'framer-spring' && (
             <FramerSpringSection websites={websites} baseUrl={url} />
           )}
 
-          {/* Style 2: React-Slick Vertical Engine */}
-          {(activeTab === 'all' || activeTab === 'react-slick') && (
-            <ReactSlickSection websites={websites} baseUrl={url} />
-          )}
-
-          {/* Style 3: Framer Motion Continuous Marquee / Stream */}
-          {(activeTab === 'all' || activeTab === 'framer-marquee') && (
+          {/* Style 3: Framer Motion Continuous Marquee */}
+          {activeTab === 'framer-marquee' && (
             <FramerMarqueeSection websites={websites} baseUrl={url} />
-          )}
-
-          {/* Style 4: 3D Depth Perspective Reel */}
-          {(activeTab === 'all' || activeTab === 'perspective-3d') && (
-            <Perspective3DSection websites={websites} baseUrl={url} />
-          )}
-
-          {/* Style 5: Scroll-Driven Framer Spring Sequence (releases to next section at #10) */}
-          {(activeTab === 'all' || activeTab === 'scroll-spring') && (
-            <FramerScrollSection websites={websites} baseUrl={url} />
           )}
         </div>
       </div>

@@ -3,9 +3,9 @@ import React, { useState, useRef, useEffect } from "react";
 
 import { useUser } from "../../context/UserContext";
 import { getImageUrl } from "../../utils/imageUrl";
-import styles from "./NewWithdrawalPopup.module.css";
+import styles from "./WebsiteWithdrawalPopup.module.css";
 
-export default function NewWithdrawalPopup({ onClose, selectedId }) {
+export default function WebsiteWithdrawalPopup({ onClose, selectedId }) {
   const [withdrawalAmount, setWithdrawalAmount] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [coinRate, setCoinRate] = useState(1);

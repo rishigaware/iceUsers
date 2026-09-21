@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
-import styles from "./NewDepositPopup.module.css";
+import styles from "./WebsiteDepositPopup.module.css";
 import { Toast } from "primereact/toast";
 import { useUser } from "../../context/UserContext";
 
-export default function NewDepositPopup({ onClose, selectedId }) {
+export default function WebsiteDepositPopup({ onClose, selectedId }) {
   const [coinAmount, setCoinAmount] = useState("");
   const [refundable, setRefundable] = useState("refundable");
   const [errorMessage, setErrorMessage] = useState("");

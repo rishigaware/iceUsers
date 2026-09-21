@@ -10,8 +10,8 @@ import { useUser } from "../../context/UserContext";
 import { getImageUrl } from "../../utils/imageUrl";
 import ChangePasswordModal from "./ChangePasswordModal";
 import styles from "./MyId.module.css";
-import NewDepositPopup from "./NewDepositPopup";
-import NewWithdrawalPopup from "./NewWithdrawalPopup";
+import WebsiteDepositPopup from "./WebsiteDepositPopup";
+import WebsiteWithdrawalPopup from "./WebsiteWithdrawalPopup";
 import ViewTransactionModal from "./ViewTransactionModal";
 
 const MyId = () => {
@@ -760,13 +760,13 @@ const MyId = () => {
       )}
 
       {showNewDepositPopup && (
-        <NewDepositPopup
+        <WebsiteDepositPopup
           onClose={closeNewDepositPopup}
           selectedId={selectedId}
         />
       )}
       {isWithdrawalPopupVisible && (
-        <NewWithdrawalPopup
+        <WebsiteWithdrawalPopup
           onClose={closeWithdrawalPopup}
           selectedId={selectedId}
         />

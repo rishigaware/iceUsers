@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate for routin
 import { useUser } from '../../context/UserContext'; // Import the useUser hook for context
 import styles from './Login.module.css'; // Import CSS module for styling
 import { FaTimes } from 'react-icons/fa';
+import { checkIsAdmin } from '../../utils/roles';
 
 
 const Login = () => {
@@ -32,9 +33,7 @@ const Login = () => {
         if (data && data.user) {
           setUser(data.user); // Set user in context
           localStorage.setItem('user', JSON.stringify(data.user)); // Store user in localStorage
-          // Redirect to the homepage ("/") after successful login
-          // Redirect based on user role
-          if (data.user.role === 'admin' || data.user.role === 'superadmin') {
+          if (checkIsAdmin(data.user)) {
             navigate('/admin/home');
           } else {
             navigate('/');

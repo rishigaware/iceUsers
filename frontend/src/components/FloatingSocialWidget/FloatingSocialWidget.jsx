@@ -15,6 +15,7 @@ import {
 } from 'react-icons/fa';
 import { useUser } from '../../context/UserContext';
 import { SOCIAL_LINKS } from '../../utils/socialLinks';
+import { checkIsAdmin, checkIsSuperAdmin, ROLES } from '../../utils/roles';
 import styles from './FloatingSocialWidget.module.css';
 
 const SOCIAL_ITEMS_CONFIG = [
@@ -98,19 +99,20 @@ const FloatingSocialWidget = () => {
     if (!user) return;
     try {
       const headers = {};
-      const isAdmin = user.role === 'admin' || user.role === 'superadmin';
+      const isAdmin = checkIsAdmin(user);
+      const isSuper = checkIsSuperAdmin(user);
       const identifier = user.id || user._id || user.username;
 
       if (isAdmin) {
         headers['x-admin-id'] = identifier;
-        if (user.role === 'superadmin' && targetAdmin) {
+        if (isSuper && targetAdmin) {
           headers['x-target-admin-id'] = targetAdmin;
         }
       } else {
         headers['x-user-id'] = identifier;
       }
 
-      const queryParam = user.role === 'superadmin' && targetAdmin ? `?targetAdminId=${targetAdmin}` : '';
+      const queryParam = isSuper && targetAdmin ? `?targetAdminId=${targetAdmin}` : '';
       const res = await fetch(`${url}/api/support/links${queryParam}`, { headers });
       if (res.ok) {
         const data = await res.json();
@@ -132,9 +134,9 @@ const FloatingSocialWidget = () => {
 
   // Set default active tab depending on role
   useEffect(() => {
-    if (supportData?.role === 'superadmin') {
+    if (checkIsSuperAdmin(supportData?.role)) {
       setActiveTab('myLinks');
-    } else if (supportData?.role === 'admin') {
+    } else if (checkIsAdmin(supportData?.role)) {
       setActiveTab('superadmin');
     }
   }, [supportData?.role]);
@@ -195,8 +197,8 @@ const FloatingSocialWidget = () => {
   };
 
   // Determine current links to display
-  const isSuperAdmin = supportData?.role === 'superadmin';
-  const isSubAdmin = supportData?.role === 'admin';
+  const isSuperAdmin = checkIsSuperAdmin(supportData?.role);
+  const isSubAdmin = supportData?.role?.toLowerCase() === ROLES.ADMIN;
   const hasSubAdminEditPermission = Boolean(supportData?.canEdit);
 
   let currentLinksMap = {};

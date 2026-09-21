@@ -18,12 +18,17 @@ import {
   FaLaptop,
   FaBriefcase,
   FaBell,
+  FaPlus,
+  FaArrowRight,
+  FaEdit,
+  FaSave,
+  FaTimes,
+  FaBars,
 } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { BiMoneyWithdraw } from "react-icons/bi";
-import { FaPlus, FaArrowRight } from "react-icons/fa";
 import { PiHandDepositDuotone } from "react-icons/pi";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 
 import rg1 from "../../assets/images/responsibleGaming/PHOTO-2026-02-15-10-30-06.jpg";
 import rg2 from "../../assets/images/responsibleGaming/PHOTO-2026-02-15-10-30-37.jpg";
@@ -31,75 +36,106 @@ import rg3 from "../../assets/images/responsibleGaming/PHOTO-2026-02-15-10-32-08
 import rg4 from "../../assets/images/responsibleGaming/PHOTO-2026-02-15-10-32-54.jpg";
 import certRng from "../../assets/certification_rng_verified.png";
 import certSsl from "../../assets/certification_ssl_secure.png";
-// import logo from '../../assets/logo.png';
 import resp18 from "../../assets/responsible_gaming_18_plus.png";
 import respPlaySafe from "../../assets/responsible_gaming_play_safe.png";
 import newlogo from "../../assets/logo.png";
 import { useUser } from "../../context/UserContext";
-import DepositPopup from "../Navbar/DepositPopup"; // Import the DepositPopup component
-import styles from "./HomeHeading.module.css"; // Import the CSS module
-import WalletWithdrawalPopup from "./WalletWithdrawalPopup"; // Import the WalletWithdrawalPopup component
+import { checkIsAdmin } from "../../utils/roles";
+import LoginPopup from "../Login/LoginPopup";
+import DepositPopup from "../Navbar/DepositPopup";
+import styles from "./HomeHeading.module.css";
+import WalletWithdrawalPopup from "./WalletWithdrawalPopup";
 import HomeBannerCarousel from "./HomeBannerCarousel";
 import SquareBannerCarousel from "./SquareBannerCarousel";
 import WebsitesVerticalSlider from "./WebsitesVerticalSlider";
-
-import { FaBars } from "react-icons/fa";
 import Sidebar from "../Sidebar/Sidebar";
 
 const HomeHeading = () => {
-  const navigate = useNavigate(); // Initialize the navigate function
+  const navigate = useNavigate();
   const { user, setUser, refreshUserBalance, logoPath } = useUser();
-  const [showDepositPopup, setShowDepositPopup] = useState(false); // State to toggle deposit popup
-  const [showWithdrawalPopup, setShowWithdrawalPopup] = useState(false); // State to toggle withdrawal popup
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Sidebar drawer state
+  const isAdmin = checkIsAdmin(user);
+
+  const [showDepositPopup, setShowDepositPopup] = useState(false);
+  const [showWithdrawalPopup, setShowWithdrawalPopup] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  // Sliding Text State with Admin Inline Editing
+  const [slidingText, setSlidingText] = useState(
+    "#INDIA'S FIRST SELF ADMIN &  MASTER PANEL'S CREATE WEBSITE ( NO FRAUD / NO🎢RISK / NO MIDDLEMAN ) 🏁START IT'S MIN AVAILABLE 🏪24/7🧑‍💻TEAM IceUsers.info🪩",
+  );
+  const [isEditingText, setIsEditingText] = useState(false);
+  const [tempText, setTempText] = useState("");
+
+  const handleEditText = () => {
+    setTempText(slidingText);
+    setIsEditingText(true);
+  };
+
+  const handleSaveText = () => {
+    if (tempText.trim()) {
+      setSlidingText(tempText.trim());
+    }
+    setIsEditingText(false);
+  };
+
+  const closeModal = () => setIsModalOpen(false);
 
   const handleLogin = () => {
     navigate("/login");
   };
 
   const handleClick = () => {
-    navigate("/id"); // Redirect to the /id route
+    if (isAdmin) {
+      navigate("/admin/all-ids");
+    } else {
+      navigate("/id");
+    }
   };
 
   const handleLogout = () => {
-    setUser(null); // Clear user context
-    localStorage.removeItem("user"); // Remove user from localStorage
+    setUser(null);
+    localStorage.removeItem("user");
   };
 
   const handleDepositClick = () => {
-    if (!user) {
-      navigate("/login"); // Redirect to login if not logged in
+    if (isAdmin) {
+      navigate("/admin/users");
       return;
     }
-    setShowDepositPopup(true); // Show deposit popup only if logged in
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+    setShowDepositPopup(true);
   };
 
   const closeDepositPopup = () => {
-    setShowDepositPopup(false); // Close deposit popup
+    setShowDepositPopup(false);
   };
 
   const handleWithdrawalClick = () => {
-    if (!user) {
-      navigate("/login"); // Redirect to login if not logged in
+    if (isAdmin) {
+      navigate("/admin/users");
       return;
     }
-    setShowWithdrawalPopup(true); // Show withdrawal popup
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+    setShowWithdrawalPopup(true);
   };
 
   const closeWithdrawalPopup = () => {
-    setShowWithdrawalPopup(false); // Close withdrawal popup
+    setShowWithdrawalPopup(false);
   };
 
-  const [slidingText] = useState(
-    "#INDIA'S FIRST SELF ADMIN &  MASTER PANEL'S CREATE WEBSITE ( NO FRAUD / NO🎢RISK / NO MIDDLEMAN ) 🏁START IT'S MIN AVAILABLE 🏪24/7🧑‍💻TEAM IceUsers.info🪩",
-  );
-
-  // Fetch balance on component mount and whenever the user changessss
+  // Fetch balance on component mount and whenever the user changes
   useEffect(() => {
     if (user?.id) {
       refreshUserBalance();
     }
-  }, [user?.id, refreshUserBalance]); // Refetch balance whenever the user changes
+  }, [user?.id, refreshUserBalance]);
 
   return (
     <div className={styles.mainContainer}>
@@ -157,7 +193,7 @@ const HomeHeading = () => {
             </div>
 
             <div className={styles.balanceContainer}>
-              <FaBalanceScale size={20} />
+              {isAdmin ? <BiMoneyWithdraw size={20} /> : <FaBalanceScale size={20} />}
               <p className={styles.balanceAmount}>₹{(parseFloat(user?.balance) || 0).toFixed(2)}</p>
             </div>
             <h3 className={styles.balance}>Wallet Balance</h3>
@@ -214,16 +250,54 @@ const HomeHeading = () => {
           className={styles.slidingTextContainer}
           style={{ flex: 1, overflow: "hidden" }}
         >
-          <div className={styles.slidingText}>
-            <span>
-              {slidingText}{" "}
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            </span>
-            <span>
-              {slidingText}{" "}
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            </span>
-          </div>
+          {isEditingText ? (
+            <div className={styles.tickerEditWrapper}>
+              <input
+                type="text"
+                value={tempText}
+                onChange={(e) => setTempText(e.target.value)}
+                className={styles.tickerEditInput}
+                autoFocus
+              />
+              <button
+                onClick={handleSaveText}
+                className={styles.tickerActionBtn}
+                title="Save announcement"
+              >
+                <FaSave size={18} />
+              </button>
+              <button
+                onClick={() => setIsEditingText(false)}
+                className={styles.tickerActionBtn}
+                title="Cancel"
+              >
+                <FaTimes size={18} />
+              </button>
+            </div>
+          ) : (
+            <>
+              <div className={styles.slidingText}>
+                <span>
+                  {slidingText}{" "}
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+                <span>
+                  {slidingText}{" "}
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+              </div>
+              {isAdmin && (
+                <button
+                  onClick={handleEditText}
+                  className={styles.tickerEditBtn}
+                  title="Edit sliding announcement"
+                >
+                  <span style={{ fontSize: "10px", marginRight: "4px" }}>Edit</span>
+                  <FaEdit />
+                </button>
+              )}
+            </>
+          )}
         </div>
       </div>
       {/* Create Admin Panel Section */}
@@ -250,10 +324,10 @@ const HomeHeading = () => {
       </div>
 
       {/* Home Banner Carousel - before Our Premium Services */}
-      <HomeBannerCarousel canManage={false} />
+      <HomeBannerCarousel canManage={isAdmin} />
 
       {/* Top 10 Live Exchange Websites Vertical Upper-Scroll Showcase */}
-      <WebsitesVerticalSlider isAdmin={false} />
+      <WebsitesVerticalSlider isAdmin={isAdmin} />
 
 
       {/* Animated Features Section */}
@@ -296,7 +370,7 @@ const HomeHeading = () => {
       </div>
 
        {/* Square Banner Carousel - before How It Works */}
-      <SquareBannerCarousel canManage={false} />
+      <SquareBannerCarousel canManage={isAdmin} />
 
 
       {/* Animated Stats Section */}
@@ -646,6 +720,9 @@ const HomeHeading = () => {
           </div>
         </div>
       </div>
+
+      {/* Login Popup */}
+      {isModalOpen && <LoginPopup isOpen={isModalOpen} isClose={closeModal} />}
 
       {/* Deposit Popup */}
       {showDepositPopup && <DepositPopup onClose={closeDepositPopup} />}

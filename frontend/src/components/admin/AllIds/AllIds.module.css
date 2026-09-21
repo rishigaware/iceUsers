@@ -1,0 +1,2037 @@
+.pageContainer {
+  min-height: 100vh;
+  width: 100%;
+  background: var(--main-gradient);
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  padding-top: 85px; /* Clear the 75px fixed TopNavbar */
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .pageContainer {
+    padding-top: 80px;
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding: 10px 1rem 60px 1rem;
+}
+
+/* Tabs Container */
+.tabsContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 0 10px;
+}
+
+.tab {
+  padding: 10px 16px;
+  border: 1px solid rgba(var(--primary-color-rgb), 0.3);
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: var(--primary-color);
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  font-size: 0.85rem;
+  min-width: 130px;
+  text-align: center;
+}
+
+.tab:hover {
+  border-color: var(--primary-color);
+  background: var(--glass-bg) !important;
+  transform: translateY(-2px);
+}
+
+.tab.activeTab {
+  background: var(--primary-color);
+  color: var(--text-white);
+  border-color: var(--primary-color);
+  box-shadow: 0 4px 12px rgba(var(--primary-color-rgb), 0.3);
+}
+
+.title {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: var(--text-primary);
+}
+
+.idCard {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 15px;
+  border: 1px solid rgba(var(--primary-color-rgb), 0.15) !important;
+  border-radius: 15px;
+  margin-bottom: 12px;
+  background: rgba(255, 255, 255, 0.03) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  position: relative;
+  min-height: 60px;
+  gap: 12px;
+}
+
+.idCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--main-gradient);
+}
+
+.idCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  border-color: rgba(var(--primary-color-rgb), 0.3);
+}
+
+.logo img {
+  height: 36px;
+  width: 36px;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.logo img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.details {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.websiteName {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin: 0 !important;
+  white-space: nowrap;
+}
+
+.websiteLink {
+  font-size: 0.75rem;
+  color: var(--link-color);
+  text-decoration: none;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 120px;
+}
+
+.websiteLink:hover {
+  text-decoration: underline;
+  color: var(--link-color);
+}
+
+.userId {
+  font-size: 0.8rem;
+  color: var(--text-primary);
+  margin: 0 !important;
+  line-height: 1.4;
+}
+
+.userId strong {
+  color: var(--primary-color);
+  margin-right: 4px;
+}
+
+.iconWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.acceptIcon {
+  color: #22c55e;
+  font-size: 24px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  min-width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.acceptIcon:hover {
+  color: #16a34a;
+  background: rgba(34, 197, 94, 0.1);
+  transform: scale(1.1);
+}
+
+.acceptIcon:active {
+  transform: scale(0.95);
+}
+
+.rejectIcon {
+  color: #ef4444;
+  font-size: 24px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  min-width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rejectIcon:hover {
+  color: #dc2626;
+  background: rgba(239, 68, 68, 0.1);
+  transform: scale(1.1);
+}
+
+.rejectIcon:active {
+  transform: scale(0.95);
+}
+
+.editIcon {
+  background: none;
+  color: var(--link-color);
+  border: none;
+  border-radius: 50%;
+  padding: 8px;
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  position: relative;
+}
+
+.editIcon:hover {
+  color: var(--link-color);
+  background: rgba(96, 165, 250, 0.1);
+  transform: scale(1.1);
+}
+
+.editIcon:active {
+  transform: scale(0.95);
+}
+
+/* ===== PAGINATION STYLES ===== */
+.paginationContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin: 25px 0;
+  padding: 20px;
+}
+
+.paginationInfo {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.paginationControls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.paginationButton {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color) 100%);
+  color: var(--text-white);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(var(--primary-color-rgb), 0.3);
+  font-size: 0.9rem;
+}
+
+.paginationButton:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(96, 165, 250, 0.4);
+}
+
+.paginationButton:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.pageNumbers {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.pageButton {
+  background: var(--glass-bg) !important;
+  color: var(--primary-color);
+  border: 2px solid var(--glass-border);
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  min-width: 35px;
+  text-align: center;
+  font-size: 0.85rem;
+}
+
+.pageButton:hover {
+  border-color: var(--primary-color);
+  background: var(--primary-color);
+  color: var(--text-white);
+  transform: translateY(-1px);
+}
+
+.pageButton.activePage {
+  background: var(--primary-color);
+  color: var(--text-white);
+  border-color: var(--primary-color);
+}
+
+.pageEllipsis {
+  color: var(--text-secondary);
+  font-weight: 600;
+  padding: 0 5px;
+}
+
+/* ===== IMPROVED POPUP STYLES ===== */
+.popupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(12px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.popup {
+  background: linear-gradient(135deg, rgba(30, 30, 30, 0.95) 0%, rgba(40, 40, 40, 0.9) 100%);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  width: 100%;
+  max-width: 520px;
+  position: relative;
+  margin: 0;
+  box-shadow:
+    0 32px 64px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+  animation: slideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 10000;
+  transform: translateZ(0);
+  color: var(--text-white);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.popupHeader {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, rgba(96, 165, 250, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
+  position: relative;
+}
+
+.popupHeader::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color) 100%);
+}
+
+.popupLogo {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  object-fit: cover;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.headerInfo h2 {
+  margin: 0;
+  font-size: 1.6rem;
+  color: var(--link-color);
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(var(--primary-color-rgb), 0.3);
+  letter-spacing: -0.5px;
+}
+
+.websiteUrl {
+  margin: 6px 0 0 0;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.popupBody {
+  padding: 24px;
+  max-height: 450px;
+  overflow-y: auto;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.01) 100%);
+}
+
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  margin: 0 -8px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.infoRow:hover {
+  background: rgba(255, 255, 255, 0.03);
+  transform: translateX(4px);
+}
+
+.infoRow:last-child {
+  border-bottom: none;
+}
+
+.infoRow label {
+  font-weight: 600;
+  color: var(--text-white);
+  min-width: 110px;
+  font-size: 0.95rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.infoValue {
+  color: rgba(255, 255, 255, 0.95);
+  text-align: right;
+  flex: 1;
+  margin-left: 16px;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.passwordContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.eyeButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 5px;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.eyeButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.mobilePopupItem:hover {
+  background-color: rgba(var(--primary-color-rgb), 0.1) !important;
+}
+
+.statusBadge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.statusRequested {
+  background: rgba(251, 191, 36, 0.2);
+  color: var(--primary-color);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.statusCreated {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.statusAccepted {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.statusRejected {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.statusPending {
+  background: rgba(251, 191, 36, 0.2);
+  color: var(--primary-color);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.statusUsernameExist {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.statusActive {
+  background: rgba(59, 130, 246, 0.2);
+  color: var(--link-color);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+/* ===== EDIT FORM STYLES ===== */
+.editForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.formGroup label {
+  font-weight: 600;
+  color: var(--text-white);
+  font-size: 0.9rem;
+}
+
+.editInput,
+.editTextarea {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  background: rgba(40, 40, 40, 0.6);
+  color: var(--text-white);
+  transition: all 0.3s ease;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.editInput:focus,
+.editTextarea:focus {
+  border-color: var(--link-color);
+  box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.1);
+  background: rgba(40, 40, 40, 0.8);
+}
+
+.editInput::placeholder,
+.editTextarea::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.inputError {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+}
+
+.editTextarea {
+  resize: vertical;
+  min-height: 80px;
+  font-family: inherit;
+  line-height: 1.5;
+}
+
+.passwordInputContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.passwordInputContainer .editInput {
+  padding-right: 50px;
+}
+
+.passwordInputContainer .eyeButton {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.errorText {
+  color: #ef4444;
+  font-size: 0.8rem;
+  margin-top: 4px;
+}
+
+/* ===== POPUP ACTIONS ===== */
+.popupActions {
+  display: flex;
+  gap: 15px;
+  padding: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  justify-content: flex-end;
+}
+
+.editButton,
+.saveButton,
+.cancelButton {
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+  outline: none;
+  min-width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.editButton {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color) 100%);
+  color: var(--text-white);
+  box-shadow: 0 6px 20px rgba(96, 165, 250, 0.4);
+  border: 1px solid rgba(var(--primary-color-rgb), 0.3);
+}
+
+.editButton:hover {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color) 100%);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(96, 165, 250, 0.5);
+}
+
+.editButton:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(96, 165, 250, 0.4);
+}
+
+.saveButton {
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  color: var(--text-white);
+  box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.saveButton:hover {
+  background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(34, 197, 94, 0.5);
+}
+
+.saveButton:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+}
+
+.cancelButton {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-white);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.cancelButton:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+/* Large Desktop (1200px and above) */
+@media (min-width: 1200px) {
+  .popup {
+    max-width: 600px;
+  }
+
+  .popupHeader {
+    padding: 25px;
+  }
+
+  .popupBody {
+    padding: 25px;
+  }
+
+  .popupActions {
+    padding: 25px;
+  }
+}
+
+/* Medium Desktop (992px to 1199px) */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .popup {
+    max-width: 550px;
+  }
+}
+
+/* Small Desktop (768px to 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+  .popupOverlay {
+    padding: 20px;
+  }
+
+  .popup {
+    max-width: 500px;
+  }
+}
+
+/* Tablet (600px to 767px) */
+@media (min-width: 600px) and (max-width: 767px) {
+  .popupOverlay {
+    padding: 15px;
+  }
+
+  .popup {
+    max-width: 100%;
+    margin: 0;
+    border-radius: 16px;
+  }
+
+  .popupHeader {
+    padding: 20px;
+  }
+
+  .popupBody {
+    padding: 20px;
+  }
+
+  .popupActions {
+    flex-direction: row;
+    gap: 12px;
+    padding: 20px;
+  }
+
+  .editButton,
+  .saveButton,
+  .cancelButton {
+    flex: 1;
+    padding: 12px 20px;
+  }
+}
+
+/* Mobile Large (480px to 599px) */
+@media (max-width: 599px) and (min-width: 480px) {
+  .popupOverlay {
+    padding: 12px;
+  }
+
+  .popup {
+    border-radius: 14px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .popupHeader {
+    padding: 18px;
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .popupBody {
+    padding: 18px;
+  }
+
+  .infoRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .infoRow label {
+    min-width: auto;
+  }
+
+  .infoValue {
+    text-align: left;
+    margin-left: 0;
+  }
+
+  .passwordContainer {
+    justify-content: flex-start;
+  }
+
+  .popupActions {
+    flex-direction: column;
+    gap: 10px;
+    padding: 18px;
+  }
+
+  .editButton,
+  .saveButton,
+  .cancelButton {
+    width: 100%;
+    padding: 14px 20px;
+  }
+
+  .pagination {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .paginationInfo {
+    order: -1;
+    text-align: center;
+  }
+}
+
+/* Mobile Medium (400px to 479px) */
+@media (max-width: 479px) and (min-width: 400px) {
+  .popupOverlay {
+    padding: 10px;
+  }
+
+  .popup {
+    border-radius: 12px;
+    max-height: 85vh;
+  }
+
+  .popupHeader {
+    padding: 15px;
+  }
+
+  .popupBody {
+    padding: 15px;
+  }
+
+  .popupActions {
+    padding: 15px;
+  }
+
+  .editInput,
+  .editTextarea {
+    padding: 11px 13px;
+    font-size: 16px;
+    /* Prevent zoom on iOS */
+  }
+
+  .editTextarea {
+    min-height: 70px;
+  }
+}
+
+/* Mobile Small (360px to 399px) */
+@media (max-width: 399px) and (min-width: 360px) {
+  .popupOverlay {
+    padding: 8px;
+  }
+
+  .popup {
+    border-radius: 10px;
+    max-height: 80vh;
+  }
+
+  .popupHeader {
+    padding: 12px;
+  }
+
+  .popupBody {
+    padding: 12px;
+  }
+
+  .popupActions {
+    padding: 12px;
+  }
+
+  .editInput,
+  .editTextarea {
+    padding: 10px 12px;
+    font-size: 16px;
+  }
+
+  .editTextarea {
+    min-height: 60px;
+  }
+}
+
+/* Mobile Extra Small (320px to 359px) */
+@media (max-width: 359px) and (min-width: 320px) {
+  .popupOverlay {
+    padding: 6px;
+  }
+
+  .popup {
+    border-radius: 8px;
+    max-height: 75vh;
+  }
+
+  .popupHeader {
+    padding: 10px;
+  }
+
+  .popupBody {
+    padding: 10px;
+  }
+
+  .popupActions {
+    padding: 10px;
+  }
+
+  .editInput,
+  .editTextarea {
+    padding: 9px 11px;
+    font-size: 16px;
+  }
+
+  .editTextarea {
+    min-height: 50px;
+  }
+}
+
+/* Mobile Ultra Small (below 320px) */
+@media (max-width: 319px) {
+  .popupOverlay {
+    padding: 4px;
+  }
+
+  .popup {
+    border-radius: 6px;
+    max-height: 70vh;
+  }
+
+  .popupHeader {
+    padding: 8px;
+  }
+
+  .popupBody {
+    padding: 8px;
+  }
+
+  .popupActions {
+    padding: 8px;
+  }
+
+  .editInput,
+  .editTextarea {
+    padding: 8px 10px;
+    font-size: 16px;
+  }
+
+  .editTextarea {
+    min-height: 40px;
+  }
+}
+
+/* ===== RESPONSIVE DESIGN FOR ID CARDS ===== */
+
+/* Large Desktop (1200px and above) */
+@media (min-width: 1200px) {
+  .container {
+    padding: 30px 40px 100px 40px;
+  }
+
+  .idCard {
+    padding: 20px;
+    margin-bottom: 20px;
+    min-height: 80px;
+  }
+
+  .logo img {
+    height: 56px;
+    width: 56px;
+  }
+
+  .websiteName {
+    font-size: 1.1rem;
+  }
+
+  .websiteLink {
+    font-size: 0.8rem;
+  }
+
+  .userId {
+    font-size: 0.85rem;
+  }
+
+  .editIcon,
+  .acceptIcon,
+  .rejectIcon {
+    min-width: 44px;
+    height: 44px;
+    padding: 10px;
+    font-size: 26px;
+  }
+}
+
+/* ===== ENHANCED RESPONSIVE DESIGN FOR TABS ===== */
+
+/* Large Desktop (1200px and above) */
+@media (min-width: 1200px) {
+  .tabsContainer {
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .tab {
+    padding: 16px 32px;
+    font-size: 1.1rem;
+    min-width: 220px;
+  }
+}
+
+/* Medium Desktop (992px to 1199px) */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .tabsContainer {
+    gap: 0.75rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .tab {
+    padding: 14px 28px;
+    font-size: 1rem;
+    min-width: 200px;
+  }
+}
+
+/* Small Desktop (768px to 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+  .tabsContainer {
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .tab {
+    padding: 12px 24px;
+    font-size: 0.95rem;
+    min-width: 180px;
+  }
+}
+
+/* Mobile Specific Improvements (Under 768px) */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px 10px 60px 10px;
+  }
+
+  .tabsContainer {
+    gap: 8px;
+    margin-bottom: 1rem;
+    padding: 0 5px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .tab {
+    flex: 1 1 calc(50% - 10px);
+    max-width: calc(50% - 10px);
+    min-width: 120px;
+    padding: 10px 8px;
+    font-size: 12px;
+    border-radius: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  @media (max-width: 400px) {
+    .tab {
+      flex: 1 1 100%;
+      max-width: 100%;
+      font-size: 13px;
+    }
+  }
+
+  .idCard {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px;
+    gap: 8px;
+  }
+
+  .details {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    width: 100%;
+  }
+
+  .websiteName {
+    font-size: 14px;
+    margin-bottom: 2px !important;
+  }
+
+  .websiteLink {
+    font-size: 10px;
+    margin-bottom: 4px !important;
+  }
+
+  .userId {
+    font-size: 11px;
+    margin-bottom: 1px !important;
+  }
+
+  .iconContainer {
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 8px;
+    margin-top: 4px;
+  }
+
+  .actionIcons {
+    gap: 5px;
+  }
+
+  .editIcon,
+  .acceptIcon,
+  .rejectIcon {
+    min-width: 32px;
+    height: 32px;
+    padding: 5px;
+    font-size: 18px;
+  }
+
+  .logo img {
+    height: 32px;
+    width: 32px;
+  }
+}
+
+/* Extra Small Mobile (Under 400px) */
+@media (max-width: 400px) {
+  .tab {
+    flex: 1 1 100%;
+    font-size: 10px;
+  }
+}
+
+
+/* Pagination for Desktop */
+@media (min-width: 769px) {
+  .paginationContainer {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+
+/* Mobile Extra Small (320px to 359px) */
+@media (max-width: 359px) and (min-width: 320px) {
+  .container {
+    padding: 8px 10px 30px 10px;
+  }
+
+  .tabsContainer {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .tab {
+    width: 100%;
+    max-width: 220px;
+    min-width: auto;
+    padding: 6px 14px;
+    font-size: 0.75rem;
+    border-radius: 4px;
+  }
+
+  .searchInput {
+    padding: 8px 10px;
+    font-size: 16px;
+    margin-bottom: 12px;
+    border-radius: 4px;
+  }
+
+  .idCard {
+    padding: 6px;
+    gap: 4px;
+    border-radius: 3px;
+    flex-direction: column;
+    align-items: flex-start;
+    min-height: auto;
+  }
+
+  .logo {
+    align-self: flex-start;
+  }
+
+  .logo img {
+    height: 28px;
+    width: 28px;
+  }
+
+  .details {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .websiteName {
+    font-size: 0.8rem;
+    margin-bottom: 1px;
+    line-height: 1.2;
+  }
+
+  .websiteLink {
+    font-size: 0.55rem;
+    margin-bottom: 1px;
+    line-height: 1.3;
+    word-break: break-all;
+  }
+
+  .userId {
+    font-size: 0.6rem;
+    margin-bottom: 1px;
+    line-height: 1.3;
+  }
+
+  .iconContainer {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    min-width: auto;
+    align-items: center;
+  }
+
+  .actionIcons {
+    gap: 4px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .editIcon,
+  .acceptIcon,
+  .rejectIcon {
+    min-width: 28px;
+    height: 28px;
+    padding: 3px;
+    font-size: 14px;
+  }
+
+  .paginationContainer {
+    gap: 4px;
+    padding: 8px;
+  }
+
+  .paginationInfo {
+    font-size: 0.65rem;
+    text-align: center;
+  }
+
+  .paginationControls {
+    flex-wrap: wrap;
+    gap: 3px;
+    justify-content: center;
+  }
+
+  .paginationButton {
+    padding: 4px 8px;
+    font-size: 0.65rem;
+    border-radius: 2px;
+  }
+
+  .pageButton {
+    padding: 2px 4px;
+    font-size: 0.6rem;
+    min-width: 20px;
+    border-radius: 1px;
+  }
+}
+
+/* Mobile Ultra Small (below 320px) */
+@media (max-width: 319px) {
+  .container {
+    padding: 6px 8px 20px 8px;
+  }
+
+  .tabsContainer {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.1rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .tab {
+    width: 100%;
+    max-width: 200px;
+    min-width: auto;
+    padding: 4px 12px;
+    font-size: 0.7rem;
+    border-radius: 3px;
+  }
+
+  .searchInput {
+    padding: 6px 8px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    border-radius: 3px;
+  }
+
+  .idCard {
+    padding: 4px;
+    gap: 2px;
+    border-radius: 2px;
+    flex-direction: column;
+    align-items: flex-start;
+    min-height: auto;
+  }
+
+  .logo {
+    align-self: flex-start;
+  }
+
+  .logo img {
+    height: 24px;
+    width: 24px;
+  }
+
+  .details {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .websiteName {
+    font-size: 0.75rem;
+    margin-bottom: 1px;
+    line-height: 1.2;
+  }
+
+  .websiteLink {
+    font-size: 0.5rem;
+    margin-bottom: 1px;
+    line-height: 1.3;
+    word-break: break-all;
+  }
+
+  .userId {
+    font-size: 0.55rem;
+    margin-bottom: 1px;
+    line-height: 1.3;
+  }
+
+  .iconContainer {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    min-width: auto;
+    align-items: center;
+  }
+
+  .actionIcons {
+    gap: 2px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .editIcon,
+  .acceptIcon,
+  .rejectIcon {
+    min-width: 24px;
+    height: 24px;
+    padding: 2px;
+    font-size: 12px;
+  }
+
+  .paginationContainer {
+    gap: 2px;
+    padding: 6px;
+  }
+
+  .paginationInfo {
+    font-size: 0.6rem;
+    text-align: center;
+  }
+
+  .paginationControls {
+    flex-wrap: wrap;
+    gap: 2px;
+    justify-content: center;
+  }
+
+  .paginationButton {
+    padding: 3px 6px;
+    font-size: 0.6rem;
+    border-radius: 1px;
+  }
+
+  .pageButton {
+    padding: 1px 3px;
+    font-size: 0.55rem;
+    min-width: 18px;
+    border-radius: 1px;
+  }
+}
+
+/* Landscape Mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+  .container {
+    padding: 10px 15px 40px 15px;
+  }
+
+  .tabsContainer {
+    flex-direction: row;
+    gap: 0.5rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .tab {
+    flex: 1;
+    max-width: none;
+    padding: 8px 16px;
+    font-size: 0.8rem;
+  }
+
+  .searchInput {
+    padding: 8px 12px;
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+
+  .idCard {
+    padding: 8px;
+    gap: 6px;
+  }
+
+  .popupOverlay {
+    padding: 8px;
+  }
+
+  .popup {
+    max-height: 90vh;
+    overflow-y: auto;
+    max-width: 80vw;
+  }
+
+  .popupHeader {
+    padding: 15px;
+  }
+
+  .popupBody {
+    padding: 15px;
+  }
+
+  .popupActions {
+    padding: 15px;
+  }
+
+  .editTextarea {
+    min-height: 50px;
+  }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+
+  .editButton,
+  .saveButton,
+  .cancelButton,
+  .eyeButton {
+    min-height: 44px;
+    /* iOS minimum touch target */
+    min-width: 44px;
+  }
+
+  .editInput,
+  .editTextarea {
+    min-height: 44px;
+    font-size: 16px;
+    /* Prevent zoom on iOS */
+  }
+
+  .tab {
+    min-height: 44px;
+  }
+
+  .editIcon,
+  .acceptIcon,
+  .rejectIcon {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .paginationButton,
+  .pageButton {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .searchInput {
+    font-size: 16px;
+    /* Prevent zoom on iOS */
+  }
+
+  .idCard {
+    min-height: 60px;
+    /* Ensure touch targets are adequate */
+  }
+}
+
+/* High DPI Displays */
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+  .popup {
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* Print Styles */
+@media print {
+  .popupOverlay {
+    position: static;
+    background: none;
+  }
+
+  .popup {
+    box-shadow: none;
+    border: 1px solid #ddd;
+    background: var(--glass-bg) !important;
+    color: black;
+  }
+
+  .popupActions {
+    display: none;
+  }
+}
+
+/* Ensure popup is always on top */
+.popupOverlay,
+.popup {
+  isolation: isolate;
+}
+
+.popup {
+  position: relative;
+  z-index: 10000 !important;
+}
+
+/* ===== ADDITIONAL RESPONSIVE IMPROVEMENTS ===== */
+
+/* Improve text readability on small screens */
+@media (max-width: 480px) {
+  .websiteName {
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .websiteLink {
+    word-break: break-all;
+    line-height: 1.3;
+  }
+
+  .userId {
+    line-height: 1.3;
+  }
+
+  .statusText {
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .details p {
+    margin-bottom: 4px;
+  }
+
+  .details span {
+    margin-bottom: 3px;
+  }
+
+  .details strong {
+    font-weight: 600;
+  }
+}
+
+/* Improve button spacing on mobile */
+@media (max-width: 599px) {
+  .actionIcons {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .editIcon,
+  .acceptIcon,
+  .rejectIcon {
+    margin: 2px;
+  }
+
+  .statusContainer {
+    margin-bottom: 8px;
+  }
+
+  .statusText {
+    font-size: 0.65rem;
+    padding: 2px 6px;
+  }
+}
+
+/* Better spacing for request items on mobile */
+@media (max-width: 599px) {
+  .idCard {
+    margin-bottom: 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .logo {
+    align-self: flex-start;
+  }
+
+  .logo img {
+    height: 40px;
+    width: 40px;
+  }
+
+  .details {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .details p {
+    margin-bottom: 3px;
+    line-height: 1.3;
+  }
+
+  .details span {
+    display: block;
+    margin-bottom: 2px;
+    line-height: 1.3;
+  }
+
+  /* Ensure proper text wrapping for request details */
+  .details {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .details strong {
+    display: inline-block;
+    min-width: 80px;
+  }
+
+  .iconContainer {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    min-width: auto;
+  }
+
+  .statusContainer {
+    margin-bottom: 0;
+  }
+
+  .actionIcons {
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .editIcon,
+  .acceptIcon,
+  .rejectIcon {
+    min-width: 36px;
+    height: 36px;
+    padding: 6px;
+    font-size: 20px;
+  }
+}
+
+/* Mobile screens */
+@media (max-width: 767px) {
+  .idCard {
+    flex-wrap: wrap;
+    padding: 8px 12px;
+  }
+
+  .details {
+    width: 100%;
+    order: 2;
+    margin: 5px 0 0 0;
+    gap: 8px;
+  }
+
+  .logo {
+    order: 1;
+  }
+
+  .iconContainer {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 100;
+  }
+
+  .threeDotsIcon {
+    background: transparent;
+    box-shadow: none;
+    padding: 8px;
+    min-width: unset;
+    min-height: unset;
+  }
+}
+/* Improve pagination on very small screens */
+@media (max-width: 360px) {
+  .paginationControls {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .pageNumbers {
+    order: -1;
+    justify-content: center;
+  }
+
+  .paginationButton {
+    width: 100%;
+    max-width: 120px;
+  }
+
+  .idCard {
+    margin-bottom: 8px;
+  }
+
+  .details {
+    padding: 4px 0;
+  }
+
+  .iconContainer {
+    padding: 4px 0;
+  }
+}
+
+.statusText {
+  font-size: 0.7rem;
+}
+
+.statusRequested {
+  color: var(--primary-color);
+  /* Color for 'Requested' status */
+}
+
+.statusCreated {
+  color: green;
+  /* Color for 'Created' status */
+}
+
+.statusUsernameExist {
+  color: red;
+  /* Color for 'Username Exist' status */
+}
+
+.statusActive {
+  color: var(--primary-color);
+  /* Default color for active status */
+}
+
+
+
+.password {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.creationTime {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.iconButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: transform 0.2s ease;
+}
+
+.iconButton:hover {
+  transform: scale(1.1);
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: var(--glass-bg);
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  padding: 5px;
+}
+
+.closeButton {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-white);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10001;
+}
+
+.closeButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  /* Center horizontally */
+  align-items: center;
+  /* Center vertically */
+  height: 100vh;
+  /* Full viewport height */
+  width: 100vw;
+}
+
+
+.error {
+  text-align: center;
+  color: rgb(98, 179, 255);
+  font-size: 1.2rem;
+  width: 100vw;
+}
+
+.noIds {
+  text-align: center;
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+}
+
+.passwordInput {
+  width: 100%;
+  height: 35px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #005f66;
+  text-align: center;
+}
+
+.passwordInput::placeholder {
+  text-align: center;
+  /* Centers the placeholder text */
+}
+
+.changePasswordButton {
+  margin-top: 10px;
+  padding: 5px 10px;
+  /* Added horizontal padding */
+  background-color: var(--link-color);
+  color: var(--text-white);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: block;
+  /* Center the button */
+  width: 200px;
+  /* Set a fixed width */
+  margin-left: auto;
+  /* Center horizontally */
+  margin-right: auto;
+  /* Center horizontally */
+}
+
+.changePasswordButton:hover {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+.changePasswordSection {
+  margin-top: 20px;
+}
+
+.iconContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  min-width: 120px;
+}
+
+.statusContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.statusText {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.actionIcons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.icon {
+  font-size: 30px;
+  /* Adjust the size as needed */
+  color: var(--link-color);
+  /* Icon color */
+  cursor: pointer;
+}
+
+
+.iconLabel {
+  font-size: 10px;
+  /* Adjust font size for labels */
+  margin-top: 5px;
+  /* Space between the icon and label */
+  color: var(--link-color);
+  /* Text color */
+  text-align: center;
+}
+
+/* Modern Search Input Styling */
+.searchInput {
+  width: 100%;
+  max-width: 600px;
+  padding: 16px 20px;
+  font-size: 16px;
+  color: var(--text-primary);
+  background: var(--glass-bg) !important;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  outline: none;
+  transition: all 0.3s ease;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.searchInput:focus {
+  border-color: var(--link-color);
+  box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.1), 0 8px 24px rgba(0, 0, 0, 0.15);
+  background: var(--glass-bg);
+  transform: translateY(-1px);
+}
+
+.searchInput::placeholder {
+  color: var(--text-secondary);
+  font-style: italic;
+  font-size: 14px;
+}
+
+
+
+
+.popStatusText {
+  font-size: 1rem;
+}
+
+.popStatusRequested {
+  color: rgb(255, 175, 28);
+  /* Color for 'Requested' status */
+}
+
+.popStatusCreated {
+  color: green;
+  /* Color for 'Created' status */
+}
+
+.popStatusUsernameExist {
+  color: red;
+  /* Color for 'Username Exist' status */
+}
+
+.popStatusActive {
+  color: rgb(255, 175, 28);
+  /* Default color for active status */
+}

@@ -10,6 +10,8 @@ import React, {
 // Create the context
 const UserContext = createContext();
 
+import { checkIsAdmin, checkIsSuperAdmin, checkIsSuperOrMaster, checkIsUser } from "../utils/roles";
+
 // Global Logo Asset Constant
 export const LOGO_PATH = "/logo.png";
 
@@ -69,11 +71,20 @@ export const UserProvider = ({ children }) => {
     }
   }, [user]);
 
+  const isAdmin = useMemo(() => checkIsAdmin(user), [user?.role]);
+  const isSuperAdmin = useMemo(() => checkIsSuperAdmin(user), [user?.role]);
+  const isSuperOrMaster = useMemo(() => checkIsSuperOrMaster(user), [user?.role]);
+  const isRegularUser = useMemo(() => checkIsUser(user), [user?.role]);
+
   // Memoize the context value to prevent unnecessary re-renders
   const contextValue = useMemo(
     () => ({
       user,
       setUser,
+      isAdmin,
+      isSuperAdmin,
+      isSuperOrMaster,
+      isRegularUser,
       url,
       setUrl,
       logoPath: LOGO_PATH,
@@ -86,6 +97,11 @@ export const UserProvider = ({ children }) => {
       user?.email,
       user?.phoneNumber,
       user?.balance,
+      user?.role,
+      isAdmin,
+      isSuperAdmin,
+      isSuperOrMaster,
+      isRegularUser,
       url,
       fetchUserBalance,
       refreshUserBalance,

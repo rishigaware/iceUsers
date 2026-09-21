@@ -12,6 +12,7 @@ import { useUser } from "../../context/UserContext";
 import { useNavigate } from 'react-router-dom';
 import LoginPopup from '../Login/LoginPopup';
 import { Toast } from "primereact/toast";
+import { checkIsAdmin } from "../../utils/roles";
 
 const ProfilePage = () => {
   const { user, setUser, url, refreshUserBalance } = useUser();  // Get user and setUser from context
@@ -19,21 +20,23 @@ const ProfilePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false); // State to control the modal visibility
   const toast = useRef(null); // Add a reference for Toast
 
+  const isAdmin = checkIsAdmin(user);
+  const userId = user?.id || user?._id || '';
+  const adminHeaderId = user?.id || user?._id || user?.username || '';
+
   // Fetch balance on component mount and whenever the user changes
   useEffect(() => {
-    if (user?.id) {
+    if (userId) {
       refreshUserBalance();
     }
-  }, [user]); // Refetch balance whenever the user changes
+  }, [userId, refreshUserBalance]);
 
-
-  // console.log(user.id)
   const [profileInfo, setProfileInfo] = useState({
-  name: user?.name || '', // ensure default empty string
-  phone: user?.phoneNumber || '', // ensure default empty string
-  email: user?.email || '', // ensure default empty string
-  password: user?.password || '', // ensure default empty string
-});
+    name: user?.name || '',
+    phone: user?.phoneNumber || '',
+    email: user?.email || '',
+    password: user?.password || '',
+  });
 
   const [paymentInfo, setPaymentInfo] = useState({
     accountNumber: '',
@@ -46,29 +49,29 @@ const ProfilePage = () => {
   const [isProfileEditing, setIsProfileEditing] = useState(false);
   const [isPaymentEditing, setIsPaymentEditing] = useState(false);
 
-
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  // Fetch user data on component load (useEffect)
-// Check if user exists on component mount
+  // Fetch user data on component load
   useEffect(() => {
-      if (!user) {
-        setIsModalOpen(true); // Open modal if no user exists
-        return
-      }
-      // console.log(user)
+    if (!user) {
+      setIsModalOpen(true);
+      return;
+    }
 
-    // Send GET request with user.id as a query parameter
-    fetch(`${url}/api/user/get-accountdetails?userId=${user.id}`)
+    const endpoint = isAdmin
+      ? `${url}/api/admin/get-accountdetails?userId=${userId}`
+      : `${url}/api/user/get-accountdetails?userId=${userId}`;
+    const headers = isAdmin ? { 'x-admin-id': adminHeaderId } : {};
+
+    fetch(endpoint, { headers })
       .then(response => {
         if (response.ok) {
           return response.json();
         }
-        throw new Error('Error fetching user data');
+        throw new Error('Error fetching account data');
       })
       .then(data => {
-        // Assuming the API returns the full profile info
         setPaymentInfo({
           accountNumber: data.accountNumber || '',
           accountHolderName: data.accountHolderName || '',
@@ -80,46 +83,85 @@ const ProfilePage = () => {
       .catch(error => {
         console.error('Error during the request:', error);
       });
-  }, [user?.id, url]);  // Effect runs only when user ID or URL changes
+  }, [user, isAdmin, userId, adminHeaderId, url]);
 
-  // Handle edit button click for Profile
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setProfileInfo((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handlePaymentInputChange = (e) => {
+    const { name, value } = e.target;
+    setPaymentInfo((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleProfileChange = (field, value) => {
+    setProfileInfo((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handlePaymentChange = (field, value) => {
+    setPaymentInfo((prev) => ({ ...prev, [field]: value }));
+  };
+
   const handleProfileEditClick = () => {
     setIsProfileEditing(true);
   };
 
-  // Handle edit button click for Payment
+  const handleProfileCancelClick = () => {
+    setIsProfileEditing(false);
+    setProfileInfo({
+      name: user?.name || '',
+      phone: user?.phoneNumber || '',
+      email: user?.email || '',
+      password: user?.password || '',
+    });
+  };
+
   const handlePaymentEditClick = () => {
     setIsPaymentEditing(true);
   };
 
-  // Handle change for profile fields
-  const handleProfileChange = (field, value) => {
-    setProfileInfo(prevState => ({ ...prevState, [field]: value }));
+  const handlePaymentCancelClick = () => {
+    setIsPaymentEditing(false);
+    setPaymentInfo({
+      accountNumber: '',
+      accountHolderName: '',
+      ifscCode: '',
+      bankName: '',
+      upiId: ''
+    });
   };
 
-  // Handle change for payment fields
-  const handlePaymentChange = (field, value) => {
-    setPaymentInfo(prevState => ({ ...prevState, [field]: value }));
+  const handleLogoutClick = () => {
+    setIsModalOpen(true);
   };
 
   const handleLogout = () => {
-    // Clear user state
     setUser(null);
-    // Remove user from localStorage
     localStorage.removeItem('user');
     setIsModalOpen(true);
-};
+  };
 
   // Handle save button click for Payment
   const handlePaymentSaveClick = async () => {
-    const userId = user.id;
-
     try {
-      const response = await fetch(`${url}/api/user/update-accountdetails`, {
+      const endpoint = isAdmin
+        ? `${url}/api/admin/update-accountdetails`
+        : `${url}/api/user/update-accountdetails`;
+      const headers = {
+        'Content-Type': 'application/json',
+        ...(isAdmin ? { 'x-admin-id': adminHeaderId } : {})
+      };
+
+      const response = await fetch(endpoint, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers,
         body: JSON.stringify({
           userId,
           accountNumber: paymentInfo.accountNumber,
@@ -131,23 +173,21 @@ const ProfilePage = () => {
       });
 
       if (response.ok) {
-        const data = await response.json();
         toast.current.show({
           severity: 'success',
           summary: 'Payment Details Updated',
           detail: 'Payment Details Updated successfully',
           life: 2000,
         });
-        setIsPaymentEditing(false);  // Disable editing after successful update
+        setIsPaymentEditing(false);
       } else {
         const errorData = await response.json();
         toast.current.show({
           severity: 'error',
           summary: 'Update Failed',
-          detail: 'Failed to update payment details',
+          detail: errorData.message || 'Failed to update payment details',
           life: 2000,
         });
-        console.error('Error updating payment details:', errorData.message);
       }
     } catch (error) {
       toast.current.show({
@@ -159,33 +199,32 @@ const ProfilePage = () => {
       console.error('Error during the request:', error);
     }
   };
+
   const handleProfileSaveClick = async () => {
-    const userId = user.id;  // Keep userId as is
-    // console.log(userId);
-  
-    // Prepare the updated profile data
     const updatedProfile = {
       userId,
       name: profileInfo.name,
       phoneNumber: profileInfo.phone,
       email: profileInfo.email,
-      password: profileInfo.password, // Only include password if necessary
+      password: profileInfo.password,
     };
-  
+
     try {
-      // Send POST request to update profile data
-      const response = await fetch(`${url}/api/user/update-profile`, {
+      const endpoint = isAdmin
+        ? `${url}/api/admin/update-profile`
+        : `${url}/api/user/update-profile`;
+      const headers = {
+        'Content-Type': 'application/json',
+        ...(isAdmin ? { 'x-admin-id': adminHeaderId } : {})
+      };
+
+      const response = await fetch(endpoint, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers,
         body: JSON.stringify(updatedProfile),
       });
-  
-      // console.log(response);
-  
+
       if (response.ok) {
-        // Successfully updated the profile
         const data = await response.json();
         toast.current.show({
           severity: 'success',

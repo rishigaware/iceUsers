@@ -2,26 +2,33 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
 
+import { ROLES, checkIsAdmin, hasAdminRole } from '../../utils/roles';
+
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const { user } = useUser();
 
+  const userRole = user?.role?.toLowerCase();
+  const normalizedAllowedRoles = allowedRoles?.map((r) => r.toLowerCase());
+
   // Allow guests to access all user routes
-  if (!user && allowedRoles?.includes('user')) {
+  if (!user && normalizedAllowedRoles?.includes(ROLES.USER)) {
     return children;
   }
 
   // Redirect guests trying to access admin routes
-  if (!user && (allowedRoles?.includes('admin') || allowedRoles?.includes('master') || allowedRoles?.includes('superadmin'))) {
+  if (!user && hasAdminRole(normalizedAllowedRoles)) {
     return <Navigate to="/login" replace />;
   }
 
   // Restrict access if the user's role is not in allowedRoles (superadmin & master can access admin routes)
-  const isAuthorized = allowedRoles && (
-    allowedRoles.includes(user?.role) ||
-    ((user?.role === 'superadmin' || user?.role === 'master') && (allowedRoles.includes('admin') || allowedRoles.includes('subadmin')))
-  );
+  const isAuthorized =
+    normalizedAllowedRoles &&
+    (normalizedAllowedRoles.includes(userRole) ||
+      (checkIsAdmin(userRole) &&
+        (normalizedAllowedRoles.includes(ROLES.ADMIN) ||
+          normalizedAllowedRoles.includes('subadmin'))));
 
-  if (allowedRoles && !isAuthorized) {
+  if (normalizedAllowedRoles && !isAuthorized) {
     return <Navigate to="/" replace />;
   }
 

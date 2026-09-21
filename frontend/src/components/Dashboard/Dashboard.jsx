@@ -2,11 +2,10 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import TopNavbar from "../Navbar/TopNavbar";
-import AdminTopNavbar from "../admin/components/Navbar/TopNavbar";
+import { checkIsAdmin, checkIsSuperAdmin, checkIsSuperOrMaster, ROLES } from "../../utils/roles";
 import styles from "./Dashboard.module.css";
 import DepositPopup from "../Navbar/DepositPopup";
 import WalletWithdrawalPopup from "../Home/WalletWithdrawalPopup";
-import AdminDepositPopup from "../admin/components/Navbar/DepositPopup";
 
 // Material UI Icons
 import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -38,7 +37,7 @@ export default function Dashboard() {
 
   // Allow superadmin (or any user for demo testing) to toggle active role view
   const [activeRoleView, setActiveRoleView] = useState(() => {
-    return user?.role || "user";
+    return user?.role || ROLES.USER;
   });
 
   // Data states
@@ -110,10 +109,7 @@ export default function Dashboard() {
       }
 
       // 3. Fetch Admin / Superadmin / Master Stats if admin role
-      const isAdminOrSuper =
-        user?.role === "admin" ||
-        user?.role === "superadmin" ||
-        user?.role === "master";
+      const isAdminOrSuper = checkIsAdmin(user);
 
       if (isAdminOrSuper) {
         const adminId = user.id || user._id || user.username;
@@ -158,7 +154,7 @@ export default function Dashboard() {
         }
 
         // Fetch SubAdmins for Superadmin/Master
-        if (user?.role === "superadmin" || user?.role === "master") {
+        if (checkIsSuperOrMaster(user)) {
           try {
             const res = await fetch(`${url}/api/admin/subadmins`, {
               headers: { "admin-id": adminId },
@@ -190,31 +186,25 @@ export default function Dashboard() {
 
   // Determine current view role badge styling
   const getRoleBadgeClass = (role) => {
-    switch (role) {
-      case "superadmin":
+    const r = (role || "").toLowerCase();
+    switch (r) {
+      case ROLES.SUPERADMIN:
         return styles.roleBadgeSuperadmin;
-      case "master":
+      case ROLES.MASTER:
         return styles.roleBadgeMaster;
-      case "admin":
+      case ROLES.ADMIN:
         return styles.roleBadgeAdmin;
       default:
         return styles.roleBadgeUser;
     }
   };
 
-  const isAdminView =
-    activeRoleView === "admin" ||
-    activeRoleView === "master" ||
-    activeRoleView === "superadmin";
+  const isAdminView = checkIsAdmin(activeRoleView);
 
   return (
     <div className={styles.container}>
       {/* Top Navbar & Left Sidebar for all roles */}
-      {user?.role === "admin" || user?.role === "superadmin" || user?.role === "master" ? (
-        <AdminTopNavbar />
-      ) : (
-        <TopNavbar />
-      )}
+      <TopNavbar />
 
       <div className={styles.innerContainer}>
         {/* Main Dashboard Header */}
@@ -248,7 +238,7 @@ export default function Dashboard() {
         {/* ------------------------------------------------------------- */}
         {/* VIEW 1: USER DASHBOARD                                       */}
         {/* ------------------------------------------------------------- */}
-        {activeRoleView === "user" && (
+        {activeRoleView === ROLES.USER && (
           <>
             {/* User Wallet Card */}
             <div className={styles.walletBanner}>
@@ -514,7 +504,7 @@ export default function Dashboard() {
         {/* ------------------------------------------------------------- */}
         {/* VIEW 2: ADMIN / SUB-ADMIN DASHBOARD                           */}
         {/* ------------------------------------------------------------- */}
-        {activeRoleView === "admin" && (
+        {activeRoleView === ROLES.ADMIN && (
           <>
             {/* Admin Metrics Grid */}
             <div className={styles.metricsGrid}>
@@ -756,7 +746,7 @@ export default function Dashboard() {
         {/* ------------------------------------------------------------- */}
         {/* VIEW 3: MASTER ADMIN DASHBOARD                                */}
         {/* ------------------------------------------------------------- */}
-        {activeRoleView === "master" && (
+        {activeRoleView === ROLES.MASTER && (
           <>
             {/* Master Metrics Grid */}
             <div className={styles.metricsGrid}>
@@ -924,7 +914,7 @@ export default function Dashboard() {
         {/* ------------------------------------------------------------- */}
         {/* VIEW 4: SUPERADMIN DASHBOARD                                  */}
         {/* ------------------------------------------------------------- */}
-        {activeRoleView === "superadmin" && (
+        {activeRoleView === ROLES.SUPERADMIN && (
           <>
             {/* Superadmin Platform KPIs */}
             <div className={styles.metricsGrid}>

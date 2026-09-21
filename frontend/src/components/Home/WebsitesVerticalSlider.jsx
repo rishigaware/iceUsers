@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useUser } from '../../context/UserContext';
-import FramerSpringSection from './sliderVariants/FramerSpringSection';
-import FramerMarqueeSection from './sliderVariants/FramerMarqueeSection';
-import styles from './WebsitesVerticalSlider.module.css';
+import React, { useState, useEffect, useCallback } from "react";
+
+import { useUser } from "../../context/UserContext";
+import FramerMarqueeSection from "./sliderVariants/FramerMarqueeSection";
+import FramerSpringSection from "./sliderVariants/FramerSpringSection";
+import styles from "./WebsitesVerticalSlider.module.css";
 
 // 10 Fallback websites strictly matching backend schema if backend API is offline
 export const STATIC_WEBSITES = [
@@ -131,13 +132,15 @@ export const STATIC_WEBSITES = [
 const WebsitesVerticalSlider = () => {
   const { user, url } = useUser();
   const [websites, setWebsites] = useState(STATIC_WEBSITES);
-  const [activeTab, setActiveTab] = useState('framer-spring'); // Default to Style 1 (User Favorite)
+  const [activeTab, setActiveTab] = useState("framer-spring"); // Default to Style 1 (User Favorite)
 
   // Fetch Websites dynamically from backend API (live data, keep exactly 10)
   const fetchWebsites = useCallback(async () => {
     try {
-      const userId = user?.id || user?._id || '';
-      const response = await fetch(`${url}/api/admin/get-websites${userId ? `?userId=${userId}` : ''}`);
+      const userId = user?.id || user?._id || "";
+      const response = await fetch(
+        `${url}/api/admin/get-websites${userId ? `?userId=${userId}` : ""}`,
+      );
       if (response.ok) {
         const data = await response.json();
         if (Array.isArray(data) && data.length > 0) {
@@ -145,7 +148,7 @@ const WebsitesVerticalSlider = () => {
         }
       }
     } catch (err) {
-      console.warn('WebsitesVerticalSlider: using fallback data', err);
+      console.warn("WebsitesVerticalSlider: using fallback data", err);
     }
   }, [url, user?.id, user?._id]);
 
@@ -154,56 +157,30 @@ const WebsitesVerticalSlider = () => {
   }, [fetchWebsites]);
 
   return (
-    <section className={styles.section} aria-label="Top 10 Live Exchange Websites Showcase">
+    <section
+      className={styles.section}
+      aria-label="Top 10 Live Exchange Websites Showcase"
+    >
       <div className={styles.wrapper}>
         {/* Section Header */}
         <div className={styles.header}>
           <div className={styles.tagLine}>
             <span className={styles.livePill}>
               <span className={styles.liveDot} />
-              LIVE EXCHANGE FEED
+              LIVE EXCHANGE
             </span>
-            <span className={styles.indexCounter}>
-              TOP 10 EXCHANGES
-            </span>
-          </div>
-
-          <h2 className={styles.title}>
-            Top <span className={styles.primaryAccent}>10 Verified</span> Exchange Panels
-          </h2>
-
-          <p className={styles.subtitle}>
-            Live dynamic feed of verified exchange platforms • Official links, coin rates & minimums
-          </p>
-
-          {/* Quick Style Switcher Tabs (Only 1 & 3 remaining) */}
-          <div className={styles.tabBar}>
-            <button
-              type="button"
-              className={`${styles.tabBtn} ${activeTab === 'framer-spring' ? styles.tabBtnActive : ''}`}
-              onClick={() => setActiveTab('framer-spring')}
-            >
-              1. Framer Spring (Featured)
-            </button>
-            <button
-              type="button"
-              className={`${styles.tabBtn} ${activeTab === 'framer-marquee' ? styles.tabBtnActive : ''}`}
-              onClick={() => setActiveTab('framer-marquee')}
-            >
-              3. Framer Marquee
-            </button>
           </div>
         </div>
 
         {/* Selected Animation Section */}
         <div className={styles.sectionsContainer}>
           {/* Style 1: Framer Motion Spring Slider (User Favorite) */}
-          {activeTab === 'framer-spring' && (
+          {activeTab === "framer-spring" && (
             <FramerSpringSection websites={websites} baseUrl={url} />
           )}
 
           {/* Style 3: Framer Motion Continuous Marquee */}
-          {activeTab === 'framer-marquee' && (
+          {activeTab === "framer-marquee" && (
             <FramerMarqueeSection websites={websites} baseUrl={url} />
           )}
         </div>

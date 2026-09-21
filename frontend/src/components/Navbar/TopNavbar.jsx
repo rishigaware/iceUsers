@@ -7,11 +7,12 @@ import DepositPopup from "./DepositPopup"; // Import the DepositPopup component
 import { useUser } from "../../context/UserContext";
 import { FaBars } from "react-icons/fa";
 import Sidebar from "../Sidebar/Sidebar";
+import { checkIsAdmin } from "../../utils/roles";
 
 export default function TopNavbar() {
   const { user, setUser, url, refreshUserBalance, logoPath } = useUser();
+  const isAdmin = checkIsAdmin(user);
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [walletBalance, setWalletBalance] = useState(100000);
   const [showDepositPopup, setShowDepositPopup] = useState(false); // State to toggle popup
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Sidebar drawer state
@@ -19,10 +20,10 @@ export default function TopNavbar() {
 
   // Fetch balance on component mount and whenever the user changes
   useEffect(() => {
-    if (user?.id) {
+    if (user?.id || user?._id) {
       refreshUserBalance();
     }
-  }, [user?.id, refreshUserBalance]); // Refetch balance whenever the user changes
+  }, [user?.id, user?._id, refreshUserBalance]);
 
   const handleDepositClick = () => {
     setShowDepositPopup(true); // Show deposit popup
@@ -30,6 +31,10 @@ export default function TopNavbar() {
 
   const closeDepositPopup = () => {
     setShowDepositPopup(false); // Close deposit popup
+  };
+
+  const handleLogoClick = () => {
+    navigate(isAdmin ? "/admin/home" : "/");
   };
 
   return (
@@ -43,7 +48,7 @@ export default function TopNavbar() {
         >
           <FaBars />
         </button>
-        <div className={styles.logo} onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
+        <div className={styles.logo} onClick={handleLogoClick} style={{ cursor: "pointer" }}>
           <img
             src={logoPath}
             alt="Logo"
@@ -59,16 +64,18 @@ export default function TopNavbar() {
           <span className={styles.balanceAmount}>₹{(parseFloat(user?.balance) || 0).toFixed(2)}</span>
         </div>
 
-        <button className={styles.navButton} onClick={handleDepositClick}>
-          Deposit
-        </button>
+        {!isAdmin && (
+          <button className={styles.navButton} onClick={handleDepositClick}>
+            Deposit
+          </button>
+        )}
       </div>
 
       {/* Sidebar Drawer Component */}
       <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
       {/* Deposit Popup */}
-      {showDepositPopup && (
+      {showDepositPopup && !isAdmin && (
         <DepositPopup onClose={closeDepositPopup} setWalletBalance={setWalletBalance} />
       )}
     </div>

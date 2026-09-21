@@ -1,11 +1,13 @@
-import React, { useEffect, useRef } from 'react';
-import { useUser } from '../../context/UserContext';
+import React, { useEffect, useRef } from "react";
+
+import { useUser } from "../../context/UserContext";
 
 /**
  * BalanceProvider component that automatically refreshes user balance
  * at regular intervals to ensure real-time balance updates
  */
-const BalanceProvider = ({ children, refreshInterval = 30000 }) => { // Default 30 seconds
+const BalanceProvider = ({ children, refreshInterval = 30000 }) => {
+  // Default 30 seconds
   const { user, refreshUserBalance } = useUser();
   const intervalRef = useRef(null);
 

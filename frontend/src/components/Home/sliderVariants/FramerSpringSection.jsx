@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import ExchangeCard from './ExchangeCard';
-import styles from './VariantSections.module.css';
+import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 
-const FramerSpringSection = ({ websites = [], baseUrl = '' }) => {
+import ExchangeCard from "./ExchangeCard";
+import styles from "./VariantSections.module.css";
+
+const FramerSpringSection = ({ websites = [], baseUrl = "" }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(1); // 1 = up (next), -1 = down (prev)
   const [isHovered, setIsHovered] = useState(false);
@@ -50,7 +51,8 @@ const FramerSpringSection = ({ websites = [], baseUrl = '' }) => {
   };
 
   const handleTouchEnd = (e) => {
-    if (!touchStartY.current || !e.changedTouches || !e.changedTouches[0]) return;
+    if (!touchStartY.current || !e.changedTouches || !e.changedTouches[0])
+      return;
     const diff = touchStartY.current - e.changedTouches[0].clientY;
     if (Math.abs(diff) > 25) {
       if (diff > 0) nextSlide();
@@ -76,7 +78,7 @@ const FramerSpringSection = ({ websites = [], baseUrl = '' }) => {
       opacity: 1,
       scale: 1,
       transition: {
-        y: { type: 'spring', stiffness: 220, damping: 24 },
+        y: { type: "spring", stiffness: 220, damping: 24 },
         opacity: { duration: 0.28 },
       },
     },
@@ -85,14 +87,14 @@ const FramerSpringSection = ({ websites = [], baseUrl = '' }) => {
       opacity: 0,
       scale: 0.96,
       transition: {
-        y: { type: 'spring', stiffness: 220, damping: 24 },
+        y: { type: "spring", stiffness: 220, damping: 24 },
         opacity: { duration: 0.24 },
       },
     }),
   };
 
   const handleMouseEnter = () => {
-    if (window.matchMedia && window.matchMedia('(hover: hover)').matches) {
+    if (window.matchMedia && window.matchMedia("(hover: hover)").matches) {
       setIsHovered(true);
     }
   };
@@ -110,13 +112,6 @@ const FramerSpringSection = ({ websites = [], baseUrl = '' }) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <div className={styles.variantBadgeRow}>
-        <span className={styles.libBadge}>1. Framer Spring</span>
-        <span className={styles.countBadge}>
-          #{String(currentIndex + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
-        </span>
-      </div>
-
       <div className={styles.framerViewport}>
         <div className={styles.fadeMaskTop} />
         <div className={styles.fadeMaskBottom} />

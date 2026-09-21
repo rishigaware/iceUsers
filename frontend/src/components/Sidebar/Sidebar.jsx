@@ -15,11 +15,13 @@ import {
   FaWallet,
   FaChevronLeft,
   FaChevronRight,
+  FaGlobe,
 } from "react-icons/fa";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { useUser } from "../../context/UserContext";
+import { checkIsUser, ROLES } from "../../utils/roles";
 import styles from "./Sidebar.module.css";
 
 export default function Sidebar({ isOpen, onClose }) {
@@ -80,6 +82,11 @@ export default function Sidebar({ isOpen, onClose }) {
   };
 
   const roleLabel = user?.role ? user.role.toUpperCase() : "USER";
+  const userRole = (user?.role || "").toLowerCase();
+  const isRegularUser = checkIsUser(user);
+  const isAdmin = userRole === ROLES.ADMIN;
+  const isMaster = userRole === ROLES.MASTER;
+  const isSuperAdmin = userRole === ROLES.SUPERADMIN;
   const balance = (parseFloat(user?.balance) || 0).toLocaleString("en-IN", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
@@ -156,7 +163,7 @@ export default function Sidebar({ isOpen, onClose }) {
           <div className={styles.menuGroupTitle}>{roleLabel} NAVIGATION</div>
 
           {/* USER MENU SEQUENCE */}
-          {(!user?.role || user?.role === "user") && (
+          {isRegularUser && (
             <>
               {/* Bottom Navbar Sequence */}
               <Link
@@ -211,7 +218,7 @@ export default function Sidebar({ isOpen, onClose }) {
           )}
 
           {/* ADMIN MENU SEQUENCE */}
-          {user?.role === "admin" && (
+          {isAdmin && (
             <>
               {/* Bottom Navbar Sequence */}
               <Link
@@ -224,13 +231,22 @@ export default function Sidebar({ isOpen, onClose }) {
                 <span>Home</span>
               </Link>
               <Link
-                to="/admin/id"
+                to="/admin/all-ids"
                 className={styles.navItem}
                 onClick={onClose}
-                title="Agents"
+                title="All IDs"
               >
                 <FaIdCard className={styles.itemIcon} />
-                <span>Agents & IDs</span>
+                <span>All IDs</span>
+              </Link>
+              <Link
+                to="/admin/websites"
+                className={styles.navItem}
+                onClick={onClose}
+                title="Websites"
+              >
+                <FaGlobe className={styles.itemIcon} />
+                <span>Websites</span>
               </Link>
               <Link
                 to="/admin/id-requests"
@@ -284,7 +300,7 @@ export default function Sidebar({ isOpen, onClose }) {
           )}
 
           {/* MASTER MENU SEQUENCE */}
-          {user?.role === "master" && (
+          {isMaster && (
             <>
               {/* Bottom Navbar Sequence */}
               <Link
@@ -297,13 +313,22 @@ export default function Sidebar({ isOpen, onClose }) {
                 <span>Home</span>
               </Link>
               <Link
-                to="/admin/id"
+                to="/admin/all-ids"
                 className={styles.navItem}
                 onClick={onClose}
-                title="Agents"
+                title="All IDs"
               >
                 <FaIdCard className={styles.itemIcon} />
-                <span>Agents & IDs</span>
+                <span>All IDs</span>
+              </Link>
+              <Link
+                to="/admin/websites"
+                className={styles.navItem}
+                onClick={onClose}
+                title="Websites"
+              >
+                <FaGlobe className={styles.itemIcon} />
+                <span>Websites</span>
               </Link>
               <Link
                 to="/admin/id-requests"
@@ -375,7 +400,7 @@ export default function Sidebar({ isOpen, onClose }) {
           )}
 
           {/* SUPERADMIN MENU SEQUENCE */}
-          {user?.role === "superadmin" && (
+          {isSuperAdmin && (
             <>
               {/* Bottom Navbar Sequence */}
               <Link
@@ -406,13 +431,22 @@ export default function Sidebar({ isOpen, onClose }) {
                 <span>User Accounts</span>
               </Link>
               <Link
-                to="/admin/id"
+                to="/admin/all-ids"
                 className={styles.navItem}
                 onClick={onClose}
-                title="Agents"
+                title="All IDs"
               >
                 <FaIdCard className={styles.itemIcon} />
-                <span>Agents & IDs</span>
+                <span>All IDs</span>
+              </Link>
+              <Link
+                to="/admin/websites"
+                className={styles.navItem}
+                onClick={onClose}
+                title="Websites"
+              >
+                <FaGlobe className={styles.itemIcon} />
+                <span>Websites</span>
               </Link>
               <Link
                 to="/admin/id-requests"

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate for routin
 import { useUser } from '../../context/UserContext'; // Import the useUser hook for context
 import styles from './LoginPopup.module.css'; // Import CSS module for styling
 import SignupPopup from '../Signup/SignupPopup';
+import { checkIsAdmin } from '../../utils/roles';
 
 const Login = ({ isOpen, isClose }) => {
   const [username, setUsername] = useState('');
@@ -42,9 +43,12 @@ const Login = ({ isOpen, isClose }) => {
           // Store the user in context and localStorage
           setUser(data.user); // Set user in context
           localStorage.setItem('user', JSON.stringify(data.user)); // Store user in localStorage
-          isClose()
-          // Redirect to the homepage ("/") after successful login
-          navigate('/');
+          isClose();
+          if (checkIsAdmin(data.user)) {
+            navigate('/admin/home');
+          } else {
+            navigate('/');
+          }
         } else {
           window.alert('User data is missing from the response');
         }

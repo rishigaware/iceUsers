@@ -51,7 +51,7 @@ const transactionSchema = new mongoose.Schema({
     transactionType: String,
     idRequestId: String,
     convertedCoins: Number,
-    refundable: Boolean,
+
     accountType: String,
     currency: String,
     adminId: {

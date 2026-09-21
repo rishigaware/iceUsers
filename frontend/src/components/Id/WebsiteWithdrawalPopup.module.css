@@ -251,27 +251,28 @@
 .methodButton {
   flex: 1;
   padding: 12px 20px;
-  border: 2px solid #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 10px;
-  background: var(--glass-bg);
-  color: var(--text-secondary);
+  background: #1e293b !important;
+  color: #94a3b8;
   font-weight: 600;
   font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .methodButton:hover {
-  border-color: var(--link-color);
-  color: var(--link-color);
+  border-color: var(--primary-color, #eab308);
+  color: #ffffff;
   transform: translateY(-1px);
 }
 
 .methodButton.active {
-  background: var(--primary-color);
-  border-color: var(--link-color);
-  color: var(--text-white);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  background: var(--primary-color, #eab308) !important;
+  border-color: var(--primary-color, #eab308);
+  color: #000000 !important;
+  box-shadow: 0 4px 12px rgba(234, 179, 8, 0.3);
 }
 
 /* Details Section */

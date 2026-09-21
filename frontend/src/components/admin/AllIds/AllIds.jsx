@@ -684,11 +684,7 @@ const handleReject = async (item) => {
               <strong>New Password:</strong> {request.newPassword}
             </p>
           )}
-          {request.refundable !== undefined && (
-            <p className={styles.userId}>
-              <strong>Refundable:</strong> {request.refundable ? 'Yes' : 'No'}
-            </p>
-          )}
+
           <p className={styles.userId}>
             <strong>Created:</strong> {new Date(request.createdAt).toLocaleString()}
           </p>

@@ -5,7 +5,7 @@ import { useUser } from "../../context/UserContext";
 
 export default function WebsiteDepositPopup({ onClose, selectedId }) {
   const [coinAmount, setCoinAmount] = useState("");
-  const [refundable, setRefundable] = useState("refundable");
+
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [coinRate, setCoinRate] = useState(1);
@@ -127,13 +127,12 @@ export default function WebsiteDepositPopup({ onClose, selectedId }) {
         headers: {
           'Content-Type': 'application/json',
         },
- body: JSON.stringify({
+        body: JSON.stringify({
           amount: convertedRupees, // Rupees to deduct
           coinsToReceive: coins, // Coins to add
           coinRate: displayedRate,
           baseCoinRate: actualWebsiteRate || (selectedId?.coinRate || 1),
           additionalRate: (displayedRate - (actualWebsiteRate || (selectedId?.coinRate || 1))),
-          refundable: refundable === "refundable",
           websiteName: selectedId.websiteName,
           websiteUrl: selectedId.websiteUrl,
           username: selectedId.username,
@@ -266,40 +265,7 @@ export default function WebsiteDepositPopup({ onClose, selectedId }) {
             </div>
           )}
 
-          {/* Refundable Option */}
-          <div className={styles.refundableSection}>
-            <h3>Deposit Type</h3>
-            <div className={styles.radioGroup}>
-              <label className={styles.radioLabel}>
-                <input
-                  type="radio"
-                  name="refundable"
-                  value="refundable"
-                  checked={refundable === "refundable"}
-                  onChange={(e) => setRefundable(e.target.value)}
-                  className={styles.radioInput}
-                />
-                <span className={styles.radioText}>
-                  <strong>Refundable</strong>
-                  <small>You can request a refund of this deposit</small>
-                </span>
-              </label>
-              <label className={styles.radioLabel}>
-                <input
-                  type="radio"
-                  name="refundable"
-                  value="non-refundable"
-                  checked={refundable === "non-refundable"}
-                  onChange={(e) => setRefundable(e.target.value)}
-                  className={styles.radioInput}
-                />
-                <span className={styles.radioText}>
-                  <strong>Non-Refundable</strong>
-                  <small>This deposit cannot be refunded</small>
-                </span>
-              </label>
-            </div>
-          </div>
+
 
           {/* Error Message */}
           {errorMessage && (

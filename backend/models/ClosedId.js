@@ -14,7 +14,7 @@ const closedIdSchema = new mongoose.Schema({
     convertedCoins: Number,
     coinRate: Number,
     minimumCoins: Number,
-    refundable: Boolean,
+
     accountType: String,
     currency: String,
     status: {

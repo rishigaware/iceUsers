@@ -350,16 +350,18 @@
   display: flex;
   align-items: flex-start;
   padding: 16px;
-  background: rgba(255, 255, 255, 0.7);
-  border: 2px solid #e5e7eb;
+  background: #1e293b !important;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .radioLabel:hover {
-  border-color: var(--primary-color);
-  background: var(--main-gradient);
+  border-color: var(--primary-color, #eab308);
+  box-shadow: 0 0 0 3px rgba(234, 179, 8, 0.2);
+  transform: translateY(-1px);
 }
 
 .radioInput {
@@ -375,13 +377,13 @@
 }
 
 .radioText strong {
-  color: var(--text-primary);
+  color: #ffffff;
   font-weight: 600;
   font-size: 0.95rem;
 }
 
 .radioText small {
-  color: var(--text-secondary);
+  color: #94a3b8;
   font-size: 0.8rem;
 }
 

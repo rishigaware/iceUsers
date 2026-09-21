@@ -137,10 +137,6 @@
   margin: 0 !important;
 }
 
-
-
-
-
 .popStatusText {
   font-size: 1rem;
 }
@@ -164,7 +160,6 @@
   color: rgb(255, 175, 28);
   /* Default color for active status */
 }
-
 
 .password {
   font-size: 0.9rem;
@@ -233,8 +228,14 @@
 }
 
 @keyframes modalPop {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .closeButton {
@@ -326,7 +327,6 @@
   /* Full viewport height */
   width: 100vw;
 }
-
 
 .error {
   text-align: center;
@@ -561,12 +561,12 @@
 
 .threeDotsIcon {
   font-size: 1.5rem;
+  border: 1px solid transparent;
   color: var(--text-secondary);
   cursor: pointer;
   padding: 12px;
   border-radius: 50%;
   transition: all 0.3s ease;
-  background: rgba(255, 255, 255, 0.9);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   min-width: 44px;
   min-height: 44px;
@@ -580,6 +580,13 @@
   color: var(--text-primary);
   transform: scale(1.1);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.activeThreeDots {
+  border-color: var(--primary-color, #eab308) !important;
+  color: var(--primary-color, #eab308) !important;
+  background: rgba(234, 179, 8, 0.1) !important;
+  transform: scale(1.05);
 }
 
 .mobilePopup {
@@ -598,8 +605,14 @@
 }
 
 @keyframes menuFadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .mobilePopupItem {
@@ -732,9 +745,11 @@
   .threeDotsIcon {
     background: transparent;
     box-shadow: none;
+    border: 1px solid transparent;
     padding: 8px;
-    min-width: unset;
-    min-height: unset;
+    font-size: 2rem;
+    min-width: 1opx;
+    min-height: 10px;
   }
 
   .desktopIcons {
@@ -848,7 +863,7 @@
 }
 
 .requestCard::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -893,7 +908,11 @@
 }
 
 .infoIcon {
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--primary-color) 0%,
+    var(--secondary-color) 100%
+  );
   color: var(--text-white);
 }
 

@@ -585,7 +585,7 @@ const MyId = () => {
 
                 <div className={styles.mobileMenu}>
                   <FiMoreVertical
-                    className={styles.threeDotsIcon}
+                    className={`${styles.threeDotsIcon} ${mobilePopupOpen === item.id ? styles.activeThreeDots : ""}`}
                     onClick={(e) => handleMobileMenuToggle(item.id, e)}
                   />
                   {mobilePopupOpen === item.id && (

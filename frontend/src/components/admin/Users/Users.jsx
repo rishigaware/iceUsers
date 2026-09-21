@@ -598,15 +598,15 @@ const Users = () => {
 
             {/* Superadmin Sub-admin Filter */}
             {isSuperAdmin && (
-                <div className={styles.filterContainer}>
-                    <span className={styles.filterLabel}>Filter by Admin Master:</span>
+                <div className="global-admin-filter-container">
+                    <span className="global-admin-filter-label">Filter by Admin Master:</span>
                     <select
                         value={selectedSubAdminFilter}
                         onChange={(e) => {
                             setSelectedSubAdminFilter(e.target.value);
                             setCurrentPage(1);
                         }}
-                        className={styles.subAdminFilterSelect}
+                        className="global-admin-filter-select"
                     >
                         <option value="all">All Admin Masters</option>
                         {subAdmins.map((sa) => (

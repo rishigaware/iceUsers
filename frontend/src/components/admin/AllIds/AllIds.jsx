@@ -791,22 +791,12 @@ const handleReject = async (item) => {
       <div className={styles.container}>
       {/* Superadmin Sub-Admin Filter */}
       {isSuperAdmin && (
-        <div style={{ marginBottom: "15px", display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap", width: "100%", boxSizing: "border-box" }}>
-          <label style={{ color: "#aaa", fontSize: "0.9rem", fontWeight: "600" }}>Filter by Admin Master:</label>
+        <div className="global-admin-filter-container">
+          <span className="global-admin-filter-label">Filter by Admin Master:</span>
           <select
             value={selectedSubAdminFilter}
             onChange={(e) => setSelectedSubAdminFilter(e.target.value)}
-            style={{
-              padding: "8px 14px",
-              background: "#1e293b",
-              color: "#fff",
-              border: "1px solid #334155",
-              borderRadius: "8px",
-              fontSize: "0.88rem",
-              cursor: "pointer",
-              maxWidth: "100%",
-              boxSizing: "border-box"
-            }}
+            className="global-admin-filter-select"
           >
             <option value="all">All Admin Masters</option>
             {subAdmins.map(sa => (
@@ -819,15 +809,16 @@ const handleReject = async (item) => {
       )}
 
       {/* Tabs */}
-      <div className={styles.tabsContainer}>
+      <div className={styles.bottomNavbar}>
         <button
-          className={`${styles.tab} ${activeTab === 'ids' ? styles.activeTab : ''}`}
+          className={`${styles.navButton} ${activeTab === 'ids' ? styles.navButtonActive : ''}`}
           onClick={() => setActiveTab('ids')}
         >
           All IDs ({myIds.length})
         </button>
+        <div className={styles.centerDivider}></div>
         <button
-          className={`${styles.tab} ${activeTab === 'requests' ? styles.activeTab : ''}`}
+          className={`${styles.navButton} ${activeTab === 'requests' ? styles.navButtonActive : ''}`}
           onClick={() => setActiveTab('requests')}
         >
           Pending Requests ({pendingRequests.length})

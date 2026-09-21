@@ -339,27 +339,8 @@ const Transactions = () => {
 
       {/* Superadmin Sub-admin Filter */}
       {isAdmin && isSuperAdmin && (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "0.75rem",
-            marginBottom: "1.25rem",
-            flexWrap: "wrap",
-            padding: "0 1rem",
-            width: "100%",
-            boxSizing: "border-box",
-          }}
-        >
-          <span
-            style={{
-              color: "var(--primary-color)",
-              fontWeight: "600",
-              fontSize: "0.95rem",
-              textAlign: "center",
-            }}
-          >
+        <div className="global-admin-filter-container" style={{ margin: "10px 1rem 20px 1rem" }}>
+          <span className="global-admin-filter-label">
             Filter by Admin Master:
           </span>
           <select
@@ -368,18 +349,7 @@ const Transactions = () => {
               setSelectedSubAdminFilter(e.target.value);
               setCurrentPage(1);
             }}
-            style={{
-              padding: "0.6rem 1.2rem",
-              borderRadius: "20px",
-              background: "rgba(30, 30, 45, 0.95)",
-              color: "#fff",
-              border: "1.5px solid rgba(var(--primary-color-rgb), 0.5)",
-              outline: "none",
-              cursor: "pointer",
-              fontSize: "0.95rem",
-              maxWidth: "100%",
-              boxSizing: "border-box",
-            }}
+            className="global-admin-filter-select"
           >
             <option value="all">All Admin Masters</option>
             {subAdmins.map((sa) => (

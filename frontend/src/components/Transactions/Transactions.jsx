@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import TransactionModal from "./TransactionModal";
 import { formatCurrency } from "../../utils/currency";
 import styles from "./Transactions.module.css";
 import TopNavbar from "../Navbar/TopNavbar";

@@ -1984,17 +1984,7 @@ exports.updateIdRequestStatus = async (req, res) => {
     if (adminNotes) requestDoc.adminNotes = adminNotes;
     await requestDoc.save();
 
-    // Update the corresponding transaction
-    const transaction = await Transaction.findOne({ idRequestId: requestId });
-
-    if (transaction) {
-      transaction.status = status === 'Accepted' ? 'Completed' : 'Rejected';
-      transaction.acceptedAt = processedAt;
-      if (adminNotes) transaction.adminNotes = adminNotes;
-      await transaction.save();
-    }
-
-    // If accepted, create the actual ID and deduct balance from user
+    // If accepted, create the actual ID
     if (status === 'Accepted') {
       let user;
       if (mongoose.Types.ObjectId.isValid(requestDoc.createdBy)) {
@@ -2003,25 +1993,8 @@ exports.updateIdRequestStatus = async (req, res) => {
         user = await User.findOne({ username: requestDoc.createdBy });
       }
 
-      if (user) {
-        const currentBalance = user.balance || 0;
-        const amountToDeduct = parseFloat(requestDoc.convertedCoins);
-
-        if (currentBalance < amountToDeduct) {
-          return res.status(400).json({
-            message: 'User has insufficient balance to complete this request.',
-            currentBalance: currentBalance,
-            requiredAmount: amountToDeduct
-          });
-        }
-
-        const newBalance = currentBalance - amountToDeduct;
-        user.balance = newBalance;
-        await user.save();
-
-        console.log(`Deducted ₹${amountToDeduct} from user ${user.username}. Old balance: ₹${currentBalance}, New balance: ₹${newBalance}`);
-      } else {
-        return res.status(404).json({ message: 'User not found for balance deduction.' });
+      if (!user) {
+        return res.status(404).json({ message: 'User not found.' });
       }
 
       // Create the actual ID
@@ -2033,17 +2006,10 @@ exports.updateIdRequestStatus = async (req, res) => {
         password: requestDoc.password || '',
         imgUrl: requestDoc.imgUrl,
         createdBy: requestDoc.createdBy,
-        coinAmount: requestDoc.coinAmount,
-        convertedCoins: requestDoc.convertedCoins,
-        coinRate: requestDoc.coinRate,
-        minimumCoins: requestDoc.minimumCoins,
-        refundable: requestDoc.refundable,
-        accountType: requestDoc.accountType,
-        currency: requestDoc.currency,
         status: 'Active',
         createdAt: processedAt,
         idRequestId: requestId,
-        balance: parseFloat(requestDoc.coinAmount),
+        balance: 0,
         adminId: requestDoc.adminId || (user?.assignedAdmin ? user.assignedAdmin.toString() : (admin?._id?.toString() || ''))
       });
 

@@ -256,7 +256,6 @@ const IdRequests = () => {
                   <th>#</th>
                   <th>Website</th>
                   <th>User Info</th>
-                  <th>Amount / Coins</th>
                   <th>Status</th>
                   <th>Created</th>
                   <th>Actions</th>
@@ -294,14 +293,6 @@ const IdRequests = () => {
                       <div className={styles.tableUserInfo}>
                         <div><strong>User:</strong> {request.username}</div>
                         <div className={styles.tableSubtext}>By: {request.createdBy}</div>
-                      </div>
-                    </td>
-                    <td>
-                      <div className={styles.tableCoinInfo}>
-                        <div className={styles.tableAmount}>₹{request.convertedCoins}</div>
-                        <div className={styles.tableCoins}>
-                          <FaCoins style={{ color: 'var(--warning-color)' }} /> {request.coinAmount}
-                        </div>
                       </div>
                     </td>
                     <td>
@@ -410,25 +401,6 @@ const IdRequests = () => {
                         <div className={styles.infoContent}>
                           <span className={styles.infoLabel}>Created By</span>
                           <span className={styles.infoValue}>{request.createdBy}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className={styles.infoRow}>
-                      <div className={styles.infoItem}>
-                        <FaRupeeSign className={styles.infoIcon} />
-                        <div className={styles.infoContent}>
-                          <span className={styles.infoLabel}>Amount</span>
-                          <span className={`${styles.infoValue} ${styles.amountValue}`}>
-                            ₹{request.convertedCoins}
-                          </span>
-                        </div>
-                      </div>
-                      <div className={styles.infoItem}>
-                        <FaCoins className={styles.infoIcon} style={{ color: 'var(--warning-color)' }} />
-                        <div className={styles.infoContent}>
-                          <span className={styles.infoLabel}>Coins</span>
-                          <span className={styles.infoValue}>{request.coinAmount}</span>
                         </div>
                       </div>
                     </div>
@@ -590,14 +562,7 @@ const IdRequests = () => {
                 <p><strong>Created By:</strong> {selectedRequest.createdBy}</p>
               </div>
 
-              <div className={styles.detailSection}>
-                <h3>Coin Conversion Details</h3>
-                <p><strong>Amount:</strong> ₹{selectedRequest.convertedCoins}</p>
-                <p><strong>Coins to Receive:</strong> {selectedRequest.coinAmount}</p>
-                <p><strong>Coin Rate:</strong> 1₹ = {selectedRequest.coinRate} coins</p>
-                <p><strong>Minimum Required:</strong> {selectedRequest.minimumCoins} coins</p>
-                <p><strong>Refundable:</strong> {selectedRequest.refundable ? 'Yes' : 'No'}</p>
-              </div>
+
 
               <div className={styles.detailSection}>
                 <h3>Admin Notes</h3>

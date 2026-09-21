@@ -606,17 +606,10 @@ exports.createIdRequest = async (req, res) => {
     username,
     imgUrl,
     createdBy,
-    coinAmount,
-    convertedCoins,
-    coinRate,
-    minimumCoins,
-    refundable,
-    accountType,
-    currency,
     status
   } = req.body;
 
-  if (!websiteName || !websiteUrl || !username || !imgUrl || !createdBy || !coinAmount || !convertedCoins) {
+  if (!websiteName || !websiteUrl || !username || !imgUrl || !createdBy) {
     return res.status(400).json({ message: 'All required fields are provided.' });
   }
 
@@ -625,24 +618,6 @@ exports.createIdRequest = async (req, res) => {
 
     if (!user) {
       return res.status(404).json({ message: 'User not found.' });
-    }
-
-    const userBalance = user.balance || 0;
-
-    if (userBalance < convertedCoins) {
-      return res.status(400).json({
-        message: 'Insufficient balance for the requested amount.',
-        currentBalance: userBalance,
-        requestedAmount: convertedCoins
-      });
-    }
-
-    if (coinAmount < minimumCoins) {
-      return res.status(400).json({
-        message: 'Insufficient coins. Minimum required coins not met.',
-        coinAmount: coinAmount,
-        minimumCoins: minimumCoins
-      });
     }
 
     // Resolve adminUrl if not provided
@@ -668,13 +643,6 @@ exports.createIdRequest = async (req, res) => {
       imgUrl,
       createdBy,
       adminId,
-      coinAmount: parseFloat(coinAmount),
-      convertedCoins: parseFloat(convertedCoins),
-      coinRate: parseFloat(coinRate),
-      minimumCoins: parseFloat(minimumCoins),
-      refundable: Boolean(refundable),
-      accountType: accountType || 'admin',
-      currency: currency || 'INR',
       status: status || 'Pending',
       createdAt: createdAt.toISOString(),
       processedAt: null,
@@ -684,38 +652,9 @@ exports.createIdRequest = async (req, res) => {
 
     await idRequest.save();
 
-    // NOTE: Balance will be deducted when admin accepts the request
-    // Do NOT deduct balance here to prevent loss if request is rejected
-
-    const transactionData = {
-      description: `ID Creation Request - ${websiteName} (${username}) - ${parseFloat(coinAmount)} coins`,
-      transactionId: `id_req_${Date.now()}`,
-      paymentMethod: "ID Creation Request",
-      createdAt: createdAt.toISOString(),
-      acceptedAt: "Not updated",
-      status: "Pending", // Transaction is pending admin approval
-      amount: parseFloat(convertedCoins), // Store the deducted amount (Rupees)
-      createdBy: createdBy,
-      adminId,
-      idRequestId: idRequest._id.toString(),
-      websiteName: websiteName,
-      websiteUrl: websiteUrl,
-      username: username,
-      convertedCoins: parseFloat(convertedCoins),
-      coinRate: parseFloat(coinRate),
-      refundable: Boolean(refundable),
-      accountType: accountType || 'admin',
-      currency: currency || 'INR',
-      transactionType: 'id_creation_request' // Mark as a request transaction, deduction happens on approval
-    };
-
-    const transaction = new Transaction(transactionData);
-    await transaction.save();
-
     res.status(201).json({
       message: 'ID creation request submitted successfully',
       requestId: idRequest._id,
-      transactionId: transaction._id,
       idRequest: idRequest.toObject()
     });
   } catch (error) {

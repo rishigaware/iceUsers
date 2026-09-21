@@ -37,14 +37,6 @@ const websiteIdSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
-    coinRate: {
-        type: Number,
-        default: 1,
-    },
-    minimumCoins: {
-        type: Number,
-        default: 0,
-    },
     comment: {
         type: String,
     },

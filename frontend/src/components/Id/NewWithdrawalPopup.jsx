@@ -1,13 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
-import styles from "./NewWithdrawalPopup.module.css";
 import { Toast } from "primereact/toast";
+import React, { useState, useRef, useEffect } from "react";
+
 import { useUser } from "../../context/UserContext";
 import { getImageUrl } from "../../utils/imageUrl";
+import styles from "./NewWithdrawalPopup.module.css";
 
-export default function NewWithdrawalPopup({
-  onClose,
-  selectedId,
-}) {
+export default function NewWithdrawalPopup({ onClose, selectedId }) {
   const [withdrawalAmount, setWithdrawalAmount] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [coinRate, setCoinRate] = useState(1);
@@ -20,7 +18,7 @@ export default function NewWithdrawalPopup({
     bankName: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   const toast = useRef(null);
   const { user, url, refreshUserBalance } = useUser();
 
@@ -34,11 +32,11 @@ export default function NewWithdrawalPopup({
   // Prevent background scrolling when popup is open
   useEffect(() => {
     // Prevent background scrolling
-    document.body.style.overflow = 'hidden';
-    
+    document.body.style.overflow = "hidden";
+
     // Cleanup function to restore scrolling when component unmounts
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     };
   }, []);
 
@@ -79,9 +77,9 @@ export default function NewWithdrawalPopup({
 
   // Withdrawal details change handler
   const handleDetailsChange = (field, value) => {
-    setWithdrawalDetails(prev => ({
+    setWithdrawalDetails((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
@@ -94,7 +92,9 @@ export default function NewWithdrawalPopup({
 
     const coinsNeeded = calculateCoinsNeeded(parseFloat(withdrawalAmount));
     if (coinsNeeded > availableCoins) {
-      setErrorMessage(`Insufficient coins. You have ${availableCoins} coins available. Maximum withdrawal: ₹${maxWithdrawalRupees.toFixed(2)}`);
+      setErrorMessage(
+        `Insufficient coins. You have ${availableCoins} coins available. Maximum withdrawal: ₹${maxWithdrawalRupees.toFixed(2)}`,
+      );
       return false;
     }
 
@@ -104,8 +104,12 @@ export default function NewWithdrawalPopup({
         return false;
       }
     } else {
-      if (!withdrawalDetails.accountNumber || !withdrawalDetails.accountHolderName || 
-          !withdrawalDetails.ifscCode || !withdrawalDetails.bankName) {
+      if (
+        !withdrawalDetails.accountNumber ||
+        !withdrawalDetails.accountHolderName ||
+        !withdrawalDetails.ifscCode ||
+        !withdrawalDetails.bankName
+      ) {
         setErrorMessage("Please fill all bank details.");
         return false;
       }
@@ -116,7 +120,7 @@ export default function NewWithdrawalPopup({
 
   const handleWithdrawal = async () => {
     setErrorMessage("");
-    
+
     if (!validateWithdrawal()) {
       return;
     }
@@ -125,7 +129,7 @@ export default function NewWithdrawalPopup({
 
     try {
       const coinsNeeded = calculateCoinsNeeded(parseFloat(withdrawalAmount));
-      
+
       const formData = new FormData();
       formData.append("amount", withdrawalAmount);
       formData.append("coinsNeeded", coinsNeeded);
@@ -145,7 +149,7 @@ export default function NewWithdrawalPopup({
         {
           method: "POST",
           body: formData,
-        }
+        },
       );
 
       if (!response.ok) {
@@ -153,7 +157,7 @@ export default function NewWithdrawalPopup({
       }
 
       await refreshUserBalance();
-      
+
       toast.current.show({
         severity: "success",
         summary: "Withdrawal Request Submitted",
@@ -179,11 +183,9 @@ export default function NewWithdrawalPopup({
     <div className={styles.overlay}>
       <div className={styles.popup}>
         <Toast ref={toast} />
-
         <button className={styles.closeButton} onClick={onClose}>
           &times;
         </button>
-
         {/* Header */}
         <div className={styles.header}>
           <img
@@ -197,130 +199,143 @@ export default function NewWithdrawalPopup({
             <p className={styles.coinBalance}>
               Available Coins: <strong>{availableCoins} coins</strong>
             </p>
-            <p className={styles.coinRate}>
+            {/* <p className={styles.coinRate}>
               Coin Rate: <strong>1 coin = ₹{coinRate}</strong>
-            </p>
+            </p> */}
           </div>
         </div>
-
         {/* Scrollable Content */}
         <div className={styles.scrollableContent}>
-
-        {/* Withdrawal Amount Section */}
-        <div className={styles.amountSection}>
-          <h3>Withdrawal Amount</h3>
-          <div className={styles.inputGroup}>
-            <label>Enter Amount (₹):</label>
-            <input
-              type="number"
-              value={withdrawalAmount}
-              onChange={handleInputChange}
-              onWheel={(e) => e.target.blur()}
-              placeholder="Enter withdrawal amount in rupees"
-              min="0"
-              step="0.01"
-              className={styles.amountInput}
-            />
-          </div>
-          
-          {withdrawalAmount && (
-            <div className={styles.conversionInfo}>
-              <p>Coins Required: <strong>{calculateCoinsNeeded(parseFloat(withdrawalAmount))} coins</strong></p>
-              <p>Maximum Withdrawal: <strong>₹{maxWithdrawalRupees.toFixed(2)}</strong></p>
-            </div>
-          )}
-        </div>
-
-        {/* Withdrawal Method */}
-        <div className={styles.methodSection}>
-          <h3>Withdrawal Method</h3>
-          <div className={styles.methodButtons}>
-            <button
-              className={`${styles.methodButton} ${withdrawalMethod === 'upi' ? styles.active : ''}`}
-              onClick={() => handleMethodChange('upi')}
-            >
-              UPI
-            </button>
-            <button
-              className={`${styles.methodButton} ${withdrawalMethod === 'bank' ? styles.active : ''}`}
-              onClick={() => handleMethodChange('bank')}
-            >
-              Bank Transfer
-            </button>
-          </div>
-        </div>
-
-        {/* Withdrawal Details */}
-        <div className={styles.detailsSection}>
-          <h3>Withdrawal Details</h3>
-          
-          {withdrawalMethod === 'upi' ? (
+          {/* Withdrawal Amount Section */}
+          <div className={styles.amountSection}>
+            <h3>Withdrawal Amount</h3>
             <div className={styles.inputGroup}>
-              <label>UPI ID:</label>
+              <label>Enter Amount (₹):</label>
               <input
-                type="text"
-                value={withdrawalDetails.upiId}
-                onChange={(e) => handleDetailsChange('upiId', e.target.value)}
-                placeholder="Enter your UPI ID (e.g., user@paytm)"
-                className={styles.detailInput}
+                type="number"
+                value={withdrawalAmount}
+                onChange={handleInputChange}
+                onWheel={(e) => e.target.blur()}
+                placeholder="Enter withdrawal amount in rupees"
+                min="0"
+                step="0.01"
+                className={styles.amountInput}
               />
             </div>
-          ) : (
-            <div className={styles.bankDetails}>
-              <div className={styles.inputGroup}>
-                <label>Account Holder Name:</label>
-                <input
-                  type="text"
-                  value={withdrawalDetails.accountHolderName}
-                  onChange={(e) => handleDetailsChange('accountHolderName', e.target.value)}
-                  placeholder="Enter account holder name"
-                  className={styles.detailInput}
-                />
+
+            {withdrawalAmount && (
+              <div className={styles.conversionInfo}>
+                <p>
+                  Coins Required:{" "}
+                  <strong>
+                    {calculateCoinsNeeded(parseFloat(withdrawalAmount))} coins
+                  </strong>
+                </p>
+                <p>
+                  Maximum Withdrawal:{" "}
+                  <strong>₹{maxWithdrawalRupees.toFixed(2)}</strong>
+                </p>
               </div>
-              <div className={styles.inputGroup}>
-                <label>Account Number:</label>
-                <input
-                  type="text"
-                  value={withdrawalDetails.accountNumber}
-                  onChange={(e) => handleDetailsChange('accountNumber', e.target.value)}
-                  placeholder="Enter account number"
-                  className={styles.detailInput}
-                />
-              </div>
-              <div className={styles.inputGroup}>
-                <label>IFSC Code:</label>
-                <input
-                  type="text"
-                  value={withdrawalDetails.ifscCode}
-                  onChange={(e) => handleDetailsChange('ifscCode', e.target.value)}
-                  placeholder="Enter IFSC code"
-                  className={styles.detailInput}
-                />
-              </div>
-              <div className={styles.inputGroup}>
-                <label>Bank Name:</label>
-                <input
-                  type="text"
-                  value={withdrawalDetails.bankName}
-                  onChange={(e) => handleDetailsChange('bankName', e.target.value)}
-                  placeholder="Enter bank name"
-                  className={styles.detailInput}
-                />
-              </div>
+            )}
+          </div>
+
+          {/* Withdrawal Method */}
+          <div className={styles.methodSection}>
+            <h3>Withdrawal Method</h3>
+            <div className={styles.methodButtons}>
+              <button
+                className={`${styles.methodButton} ${withdrawalMethod === "upi" ? styles.active : ""}`}
+                onClick={() => handleMethodChange("upi")}
+              >
+                UPI
+              </button>
+              <button
+                className={`${styles.methodButton} ${withdrawalMethod === "bank" ? styles.active : ""}`}
+                onClick={() => handleMethodChange("bank")}
+              >
+                Bank Transfer
+              </button>
             </div>
+          </div>
+
+          {/* Withdrawal Details */}
+          <div className={styles.detailsSection}>
+            <h3>Withdrawal Details</h3>
+
+            {withdrawalMethod === "upi" ? (
+              <div className={styles.inputGroup}>
+                <label>UPI ID:</label>
+                <input
+                  type="text"
+                  value={withdrawalDetails.upiId}
+                  onChange={(e) => handleDetailsChange("upiId", e.target.value)}
+                  placeholder="Enter your UPI ID (e.g., user@paytm)"
+                  className={styles.detailInput}
+                />
+              </div>
+            ) : (
+              <div className={styles.bankDetails}>
+                <div className={styles.inputGroup}>
+                  <label>Account Holder Name:</label>
+                  <input
+                    type="text"
+                    value={withdrawalDetails.accountHolderName}
+                    onChange={(e) =>
+                      handleDetailsChange("accountHolderName", e.target.value)
+                    }
+                    placeholder="Enter account holder name"
+                    className={styles.detailInput}
+                  />
+                </div>
+                <div className={styles.inputGroup}>
+                  <label>Account Number:</label>
+                  <input
+                    type="text"
+                    value={withdrawalDetails.accountNumber}
+                    onChange={(e) =>
+                      handleDetailsChange("accountNumber", e.target.value)
+                    }
+                    placeholder="Enter account number"
+                    className={styles.detailInput}
+                  />
+                </div>
+                <div className={styles.inputGroup}>
+                  <label>IFSC Code:</label>
+                  <input
+                    type="text"
+                    value={withdrawalDetails.ifscCode}
+                    onChange={(e) =>
+                      handleDetailsChange("ifscCode", e.target.value)
+                    }
+                    placeholder="Enter IFSC code"
+                    className={styles.detailInput}
+                  />
+                </div>
+                <div className={styles.inputGroup}>
+                  <label>Bank Name:</label>
+                  <input
+                    type="text"
+                    value={withdrawalDetails.bankName}
+                    onChange={(e) =>
+                      handleDetailsChange("bankName", e.target.value)
+                    }
+                    placeholder="Enter bank name"
+                    className={styles.detailInput}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Error Message */}
+          {errorMessage && (
+            <div className={styles.errorMessage}>{errorMessage}</div>
           )}
-        </div>
-
-        {/* Error Message */}
-        {errorMessage && (
-          <div className={styles.errorMessage}>{errorMessage}</div>
-        )}
-
-        </div> {/* End of scrollable content */}
-
+        </div>{" "}
+        {/* End of scrollable content */}
         {/* Submit Button */}
-        <button 
-          className={styles.submitButton} 
+        <button
+          className={styles.submitButton}
           onClick={handleWithdrawal}
           disabled={isSubmitting}
         >

@@ -29,34 +29,6 @@ const idRequestSchema = new mongoose.Schema({
         type: String, // Username of the user
         required: true,
     },
-    coinAmount: {
-        type: Number,
-        required: true,
-    },
-    convertedCoins: {
-        type: Number,
-        required: true,
-    },
-    coinRate: {
-        type: Number,
-        required: true,
-    },
-    minimumCoins: {
-        type: Number,
-        required: true,
-    },
-    refundable: {
-        type: Boolean,
-        default: false,
-    },
-    accountType: {
-        type: String,
-        default: 'admin',
-    },
-    currency: {
-        type: String,
-        default: 'INR',
-    },
     status: {
         type: String,
         default: 'Pending',

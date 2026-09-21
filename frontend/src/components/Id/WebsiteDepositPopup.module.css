@@ -328,17 +328,7 @@
   font-size: 0.9rem;
 }
 
-/* Refundable Section */
-.refundableSection {
-  margin: 20px 0;
-}
 
-.refundableSection h3 {
-  margin: 0 0 15px 0;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--text-primary);
-}
 
 .radioGroup {
   display: flex;
@@ -529,7 +519,7 @@
     padding: 10px;
   }
   
-  .websiteDetails h3, .walletBalance h3, .conversionSection h3, .amountSection h3, .refundableSection h3 {
+  .websiteDetails h3, .walletBalance h3, .conversionSection h3, .amountSection h3 {
     font-size: 0.85rem;
     margin-bottom: 8px;
   }

@@ -1,0 +1,511 @@
+/* ==========================================================================
+   VariantSections.module.css
+   Shared Styles for all Animation Library Showcase Variants
+   Optimized for Tall Mobile Viewport (2-3 Screens Scroll Experience)
+   ========================================================================== */
+
+.variantContainer {
+  position: relative;
+  width: 100%;
+  margin-bottom: 28px;
+  background: #080e1a;
+  border: 1.5px solid rgba(219, 39, 119, 0.35);
+  border-radius: 20px;
+  padding: 20px 22px 24px 22px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65), 0 0 20px rgba(219, 39, 119, 0.15);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.variantBadgeRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.libBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(219, 39, 119, 0.16);
+  border: 1px solid #db2777;
+  color: #f472b6;
+  font-size: 0.8rem;
+  font-weight: 800;
+  padding: 5px 14px;
+  border-radius: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.countBadge {
+  background: #131d31;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #cbd5e1;
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 8px;
+}
+
+/* Gradient Fade Masks */
+.fadeMaskTop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: linear-gradient(to bottom, #060a12 25%, transparent);
+  pointer-events: none;
+  z-index: 6;
+}
+
+.fadeMaskBottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: linear-gradient(to top, #060a12 25%, transparent);
+  pointer-events: none;
+  z-index: 6;
+}
+
+/* ==========================================================================
+   Variant 1: Framer Motion Spring Layout (Tall 3-Card Stack)
+   ========================================================================== */
+
+.framerViewport {
+  position: relative;
+  height: 520px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #060a12;
+  border: 1px solid #1a263e;
+  box-sizing: border-box;
+}
+
+.springStackStage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 14px;
+  box-sizing: border-box;
+  gap: 12px;
+}
+
+.springCardTop {
+  width: 94%;
+  flex-shrink: 0;
+  opacity: 0.52;
+  transform: scale(0.95);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.springCardTop:hover {
+  opacity: 0.85;
+  transform: scale(0.97);
+}
+
+.springCardCenter {
+  position: relative;
+  width: 100%;
+  flex-shrink: 0;
+  z-index: 5;
+}
+
+.motionCardWrapper {
+  width: 100%;
+}
+
+.springCardBottom {
+  width: 94%;
+  flex-shrink: 0;
+  opacity: 0.52;
+  transform: scale(0.95);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.springCardBottom:hover {
+  opacity: 0.85;
+  transform: scale(0.97);
+}
+
+/* ==========================================================================
+   Variant 2: React-Slick Vertical Engine
+   ========================================================================== */
+
+.slickWrapper {
+  position: relative;
+  width: 100%;
+  min-height: 500px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #060a12;
+  border: 1px solid #1a263e;
+  padding: 12px 14px;
+  box-sizing: border-box;
+}
+
+.slickWrapper :global(.slick-slider) {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  touch-action: pan-y;
+}
+
+.slickWrapper :global(.slick-list) {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.slickWrapper :global(.slick-slide) {
+  outline: none !important;
+}
+
+.slickWrapper :global(.slick-slide > div) {
+  outline: none !important;
+}
+
+.slickSlideInner {
+  padding: 7px 4px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   Variant 3: Framer Motion Continuous Marquee / Stream
+   ========================================================================== */
+
+.marqueeViewport {
+  position: relative;
+  height: 540px;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #060a12;
+  border: 1px solid #1a263e;
+  box-sizing: border-box;
+}
+
+.marqueeTrack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 14px 16px;
+  box-sizing: border-box;
+  will-change: transform;
+}
+
+.marqueeItem {
+  width: 100%;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   Variant 4: 3D Depth Perspective Stage
+   ========================================================================== */
+
+.perspectiveViewport {
+  position: relative;
+  height: 520px;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #060a12;
+  border: 1px solid #1a263e;
+  perspective: 1100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.perspectiveStage {
+  position: relative;
+  width: 96%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transform-style: preserve-3d;
+}
+
+.cardSlotTop {
+  position: absolute;
+  top: 18px;
+  width: 93%;
+  opacity: 0.5;
+  transform: translateY(0) rotateX(-14deg) scale(0.92);
+  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 2;
+  cursor: pointer;
+}
+
+.cardSlotTop:hover {
+  opacity: 0.8;
+  transform: translateY(2px) rotateX(-10deg) scale(0.94);
+}
+
+.cardSlotCenter {
+  position: relative;
+  width: 100%;
+  transform: translateY(0) rotateX(0deg) scale(1);
+  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 5;
+}
+
+.cardSlotBottom {
+  position: absolute;
+  bottom: 18px;
+  width: 93%;
+  opacity: 0.5;
+  transform: translateY(0) rotateX(14deg) scale(0.92);
+  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 2;
+  cursor: pointer;
+}
+
+.cardSlotBottom:hover {
+  opacity: 0.8;
+  transform: translateY(-2px) rotateX(10deg) scale(0.94);
+}
+
+/* ==========================================================================
+   Variant 5: Full Tall Feed (2-3 Screen Native Scroll Experience)
+   ========================================================================== */
+
+.fullFeedViewport {
+  position: relative;
+  height: 600px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: 16px;
+  background: #060a12;
+  border: 1px solid #1a263e;
+  padding: 14px 12px;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Custom Sleek Scrollbar for Full Feed */
+.fullFeedViewport::-webkit-scrollbar {
+  width: 6px;
+}
+
+.fullFeedViewport::-webkit-scrollbar-track {
+  background: #060a12;
+}
+
+.fullFeedViewport::-webkit-scrollbar-thumb {
+  background: rgba(219, 39, 119, 0.4);
+  border-radius: 4px;
+}
+
+.fullFeedViewport::-webkit-scrollbar-thumb:hover {
+  background: rgba(219, 39, 119, 0.7);
+}
+
+.fullFeedList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.fullFeedItem {
+  width: 100%;
+  transition: transform 0.22s ease;
+}
+
+.fullFeedItem:hover {
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   Variant 5: Scroll-Driven Framer Spring Progression
+   ========================================================================== */
+
+.scrollProgressBar {
+  position: relative;
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+  overflow: hidden;
+  margin-top: 14px;
+}
+
+.scrollProgressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #be185d 0%, #db2777 50%, #f472b6 100%);
+  border-radius: 9999px;
+  box-shadow: 0 0 10px rgba(219, 39, 119, 0.7);
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scrollHintText {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #94a3b8;
+  margin-top: 8px;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.scrollHintHighlight {
+  color: #f472b6;
+  font-weight: 800;
+}
+
+/* ==========================================================================
+   Mobile Adaptations: EXPANSIVE HEIGHT & 2-3 SCREEN SCROLL
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .variantContainer {
+    padding: 14px 8px 18px 8px;
+    border-radius: 18px;
+    margin-bottom: 22px;
+  }
+
+  .variantBadgeRow {
+    margin-bottom: 10px;
+    gap: 6px;
+    flex-wrap: nowrap;
+  }
+
+  .libBadge {
+    font-size: 0.72rem;
+    padding: 3px 9px;
+    white-space: nowrap;
+  }
+
+  .countBadge {
+    font-size: 0.7rem;
+    padding: 3px 8px;
+    white-space: nowrap;
+  }
+
+  /* Substantial Mobile Height: ~560px to 600px (Spans ~75% of phone screen) */
+  .framerViewport {
+    height: 560px;
+    min-height: 70vh;
+    max-height: 720px;
+  }
+
+  .springStackStage {
+    padding: 10px 4px;
+    gap: 8px;
+  }
+
+  .springCardTop {
+    width: 96%;
+    opacity: 0.48;
+    transform: scale(0.94);
+  }
+
+  .springCardCenter {
+    width: 100%;
+  }
+
+  .springCardBottom {
+    width: 96%;
+    opacity: 0.48;
+    transform: scale(0.94);
+  }
+
+  .slickWrapper {
+    min-height: 530px;
+    padding: 8px 4px;
+  }
+
+  .marqueeViewport {
+    height: 560px;
+    min-height: 70vh;
+    max-height: 720px;
+  }
+
+  .marqueeTrack {
+    padding: 8px 6px;
+    gap: 10px;
+  }
+
+  .perspectiveViewport {
+    height: 540px;
+    min-height: 70vh;
+    max-height: 700px;
+  }
+
+  .cardSlotTop {
+    top: 8px;
+    width: 96%;
+    transform: translateY(0) rotateX(-12deg) scale(0.92);
+  }
+
+  .cardSlotBottom {
+    bottom: 8px;
+    width: 96%;
+    transform: translateY(0) rotateX(12deg) scale(0.92);
+  }
+
+  .fullFeedViewport {
+    height: 560px;
+    min-height: 70vh;
+    max-height: 720px;
+    padding: 8px 4px;
+  }
+}
+
+@media (max-width: 440px) {
+  .variantContainer {
+    padding: 10px 5px 14px 5px;
+    border-radius: 14px;
+    margin-bottom: 16px;
+  }
+
+  .libBadge {
+    font-size: 0.67rem;
+    padding: 2px 7px;
+  }
+
+  .countBadge {
+    font-size: 0.65rem;
+    padding: 2px 6px;
+  }
+
+  .framerViewport,
+  .marqueeViewport,
+  .perspectiveViewport,
+  .fullFeedViewport {
+    height: 520px;
+    min-height: 65vh;
+  }
+
+  .slickWrapper {
+    min-height: 480px;
+    padding: 6px 2px;
+  }
+}

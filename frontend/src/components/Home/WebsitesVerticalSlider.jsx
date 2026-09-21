@@ -1,17 +1,13 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import {
-  FaCoins,
-  FaLock,
-  FaExternalLinkAlt,
-  FaCheckCircle,
-  FaMouse,
-  FaShieldAlt,
-} from 'react-icons/fa';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useUser } from '../../context/UserContext';
-import { getImageUrl } from '../../utils/imageUrl';
+import FramerSpringSection from './sliderVariants/FramerSpringSection';
+import ReactSlickSection from './sliderVariants/ReactSlickSection';
+import FramerMarqueeSection from './sliderVariants/FramerMarqueeSection';
+import Perspective3DSection from './sliderVariants/Perspective3DSection';
+import FramerScrollSection from './sliderVariants/FramerScrollSection';
 import styles from './WebsitesVerticalSlider.module.css';
 
-// 10 Static websites strictly matching backend Website schema
+// 10 Fallback websites strictly matching backend schema if backend API is offline
 export const STATIC_WEBSITES = [
   {
     id: "69c24ad2bbdca9b3f8d20751",
@@ -137,29 +133,10 @@ export const STATIC_WEBSITES = [
 
 const WebsitesVerticalSlider = () => {
   const { user, url } = useUser();
-
   const [websites, setWebsites] = useState(STATIC_WEBSITES);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [activeTab, setActiveTab] = useState('all'); // 'all', 'framer-spring', 'react-slick', 'framer-marquee', 'perspective-3d'
 
-  const timerRef = useRef(null);
-  const lastWheelTime = useRef(0);
-  const touchStartY = useRef(0);
-  const touchStartX = useRef(0);
-  const touchHandled = useRef(false);
-
-  // Responsive breakpoint tracker
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  // Fetch Websites from backend API (sliced to 10)
+  // Fetch Websites dynamically from backend API (live data, keep exactly 10)
   const fetchWebsites = useCallback(async () => {
     try {
       const userId = user?.id || user?._id || '';
@@ -171,7 +148,7 @@ const WebsitesVerticalSlider = () => {
         }
       }
     } catch (err) {
-      console.warn('WebsitesVerticalSlider: using fallback static data', err);
+      console.warn('WebsitesVerticalSlider: using fallback data', err);
     }
   }, [url, user?.id, user?._id]);
 
@@ -179,128 +156,10 @@ const WebsitesVerticalSlider = () => {
     fetchWebsites();
   }, [fetchWebsites]);
 
-  const total = websites.length || 10;
-
-  // Slide navigation
-  const nextSlide = useCallback(() => {
-    setActiveIndex((prev) => (prev + 1) % total);
-  }, [total]);
-
-  const prevSlide = useCallback(() => {
-    setActiveIndex((prev) => (prev - 1 + total) % total);
-  }, [total]);
-
-  // Auto-scroll upper animation (every 3.2 seconds)
-  // IMPORTANT: Ensure isHovered is only checked on devices that actually support hover (mouse), not touch!
-  useEffect(() => {
-    if (isHovered || total <= 1) return;
-
-    timerRef.current = setInterval(() => {
-      nextSlide();
-    }, 3200);
-
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, [isHovered, nextSlide, total]);
-
-  // Mouse hover handlers that only activate for desktop mouse pointers
-  const handleMouseEnter = () => {
-    if (window.matchMedia && window.matchMedia('(hover: hover)').matches) {
-      setIsHovered(true);
-    }
-  };
-
-  const handleMouseLeave = () => {
-    if (window.matchMedia && window.matchMedia('(hover: hover)').matches) {
-      setIsHovered(false);
-    }
-  };
-
-  // Mouse wheel scroll (throttled)
-  const handleWheel = (e) => {
-    const now = Date.now();
-    if (now - lastWheelTime.current < 260) return;
-
-    if (e.deltaY < -10) {
-      lastWheelTime.current = now;
-      prevSlide();
-    } else if (e.deltaY > 10) {
-      lastWheelTime.current = now;
-      nextSlide();
-    }
-  };
-
-  // Mobile Touch Swipe Up / Down (Immediate response on touchmove and touchend)
-  const handleTouchStart = (e) => {
-    if (e.touches && e.touches[0]) {
-      touchStartY.current = e.touches[0].clientY;
-      touchStartX.current = e.touches[0].clientX;
-      touchHandled.current = false;
-    }
-  };
-
-  const handleTouchMove = (e) => {
-    if (touchHandled.current || !e.touches || !e.touches[0]) return;
-    const diffY = touchStartY.current - e.touches[0].clientY;
-    const diffX = touchStartX.current - e.touches[0].clientX;
-
-    // Detect intentional vertical swipe (diff > 25px and predominantly vertical)
-    if (Math.abs(diffY) > 25 && Math.abs(diffY) > Math.abs(diffX) * 1.1) {
-      if (diffY > 0) {
-        nextSlide();
-      } else {
-        prevSlide();
-      }
-      touchHandled.current = true;
-    }
-  };
-
-  const handleTouchEnd = (e) => {
-    if (!touchHandled.current && e.changedTouches && e.changedTouches[0]) {
-      const diffY = touchStartY.current - e.changedTouches[0].clientY;
-      const diffX = touchStartX.current - e.changedTouches[0].clientX;
-      if (Math.abs(diffY) > 25 && Math.abs(diffY) > Math.abs(diffX)) {
-        if (diffY > 0) {
-          nextSlide();
-        } else {
-          prevSlide();
-        }
-      }
-    }
-    touchHandled.current = false;
-  };
-
-  const handleCardClick = (site) => {
-    if (site.url) {
-      window.open(site.url, '_blank', 'noopener,noreferrer');
-    }
-  };
-
-  // Exact integer pixel calculations for desktop and mobile
-  // Desktop: Card 140px, Gap 16px -> Step 156px. Viewport 330px -> Center offset: (330 - 140) / 2 = 95px
-  // Mobile: Card 146px, Gap 14px -> Step 160px. Viewport 340px -> Center offset: (340 - 146) / 2 = 97px
-  const CARD_HEIGHT = isMobile ? 146 : 140;
-  const CARD_GAP = isMobile ? 14 : 16;
-  const CARD_STEP = CARD_HEIGHT + CARD_GAP;
-  const VIEWPORT_HEIGHT = isMobile ? 340 : 330;
-  const CENTER_OFFSET = isMobile ? 97 : 95;
-  const trackTranslateY = CENTER_OFFSET - activeIndex * CARD_STEP;
-
   return (
-    <section
-      className={styles.section}
-      onWheel={handleWheel}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-      onTouchCancel={() => { touchHandled.current = false; }}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      aria-label="Top 10 Live Exchange Websites Showcase"
-    >
+    <section className={styles.section} aria-label="Top 10 Live Exchange Websites Showcase">
       <div className={styles.wrapper}>
-        {/* Section Header */}
+        {/* Section Header with reduced mobile font sizes and NO swipe badge */}
         <div className={styles.header}>
           <div className={styles.tagLine}>
             <span className={styles.livePill}>
@@ -308,7 +167,7 @@ const WebsitesVerticalSlider = () => {
               LIVE EXCHANGE FEED
             </span>
             <span className={styles.indexCounter}>
-              #{String(activeIndex + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
+              TOP 10 EXCHANGES
             </span>
           </div>
 
@@ -317,128 +176,82 @@ const WebsitesVerticalSlider = () => {
           </h2>
 
           <p className={styles.subtitle}>
-            Continuous live feed of premier exchange platforms • Real-time coin rates & minimums
+            Live dynamic feed of verified exchange platforms • Official links, coin rates & minimums
           </p>
 
-          <div className={styles.scrollBadge}>
-            <FaMouse className={styles.mouseIcon} />
-            <span>Swipe up/down or scroll mouse to browse</span>
+          {/* Quick Style Switcher Tabs */}
+          <div className={styles.tabBar}>
+            <button
+              type="button"
+              className={`${styles.tabBtn} ${activeTab === 'all' ? styles.tabBtnActive : ''}`}
+              onClick={() => setActiveTab('all')}
+            >
+              All Styles
+            </button>
+            <button
+              type="button"
+              className={`${styles.tabBtn} ${activeTab === 'framer-spring' ? styles.tabBtnActive : ''}`}
+              onClick={() => setActiveTab('framer-spring')}
+            >
+              1. Framer Spring
+            </button>
+            <button
+              type="button"
+              className={`${styles.tabBtn} ${activeTab === 'react-slick' ? styles.tabBtnActive : ''}`}
+              onClick={() => setActiveTab('react-slick')}
+            >
+              2. React-Slick
+            </button>
+            <button
+              type="button"
+              className={`${styles.tabBtn} ${activeTab === 'framer-marquee' ? styles.tabBtnActive : ''}`}
+              onClick={() => setActiveTab('framer-marquee')}
+            >
+              3. Framer Marquee
+            </button>
+            <button
+              type="button"
+              className={`${styles.tabBtn} ${activeTab === 'perspective-3d' ? styles.tabBtnActive : ''}`}
+              onClick={() => setActiveTab('perspective-3d')}
+            >
+              4. 3D Perspective
+            </button>
+            <button
+              type="button"
+              className={`${styles.tabBtn} ${activeTab === 'scroll-spring' ? styles.tabBtnActive : ''}`}
+              onClick={() => setActiveTab('scroll-spring')}
+            >
+              5. Scroll Spring (1-10)
+            </button>
           </div>
         </div>
 
-        {/* Sharp Vertical Viewport */}
-        <div className={styles.viewport} style={{ height: `${VIEWPORT_HEIGHT}px` }}>
-          {/* Top & Bottom Crisp Gradient Fade Masks */}
-          <div className={styles.fadeMaskTop} />
-          <div className={styles.fadeMaskBottom} />
+        {/* 5 Different Animation Implementations */}
+        <div className={styles.sectionsContainer}>
+          {/* Style 1: Framer Motion Spring Slider */}
+          {(activeTab === 'all' || activeTab === 'framer-spring') && (
+            <FramerSpringSection websites={websites} baseUrl={url} />
+          )}
 
-          {/* Smooth Vertical Reel Track */}
-          <div
-            className={styles.reelTrack}
-            style={{
-              transform: `translate3d(0, ${trackTranslateY}px, 0)`,
-            }}
-          >
-            {websites.map((site, index) => {
-              const isActive = index === activeIndex;
+          {/* Style 2: React-Slick Vertical Engine */}
+          {(activeTab === 'all' || activeTab === 'react-slick') && (
+            <ReactSlickSection websites={websites} baseUrl={url} />
+          )}
 
-              return (
-                <div
-                  key={site.id || site._id || index}
-                  className={`${styles.card} ${isActive ? styles.cardActive : styles.cardInactive}`}
-                  style={{ height: `${CARD_HEIGHT}px` }}
-                  onClick={() => handleCardClick(site)}
-                  title={`Open ${site.name || site.website}`}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && handleCardClick(site)}
-                >
-                  {/* Left: Rank & Logo */}
-                  <div className={styles.cardLeft}>
-                    <div className={styles.rankBadge}>
-                      #{String(index + 1).padStart(2, '0')}
-                    </div>
+          {/* Style 3: Framer Motion Continuous Marquee / Stream */}
+          {(activeTab === 'all' || activeTab === 'framer-marquee') && (
+            <FramerMarqueeSection websites={websites} baseUrl={url} />
+          )}
 
-                    <div className={styles.logoBox}>
-                      {site.logo ? (
-                        <img
-                          src={getImageUrl(site.logo, url)}
-                          alt={site.website || 'Logo'}
-                          className={styles.logoImg}
-                          onError={(e) => {
-                            e.target.style.display = 'none';
-                            e.target.nextSibling.style.display = 'flex';
-                          }}
-                        />
-                      ) : null}
-                      <div
-                        className={styles.logoFallback}
-                        style={{ display: site.logo ? 'none' : 'flex' }}
-                      >
-                        {(site.website || 'EX').substring(0, 2).toUpperCase()}
-                      </div>
-                    </div>
-                  </div>
+          {/* Style 4: 3D Depth Perspective Reel */}
+          {(activeTab === 'all' || activeTab === 'perspective-3d') && (
+            <Perspective3DSection websites={websites} baseUrl={url} />
+          )}
 
-                  {/* Center: Details & Official Link */}
-                  <div className={styles.cardCenter}>
-                    <div className={styles.titleRow}>
-                      <h3 className={styles.websiteTitle}>
-                        {site.name || site.website || 'Premium Exchange'}
-                      </h3>
-                      <FaCheckCircle className={styles.verifiedIcon} title="Verified Exchange" />
-                      <span className={styles.categoryBadge}>
-                        {site.category || 'EXCHANGE'}
-                      </span>
-                    </div>
-
-                    {site.url && (
-                      <div className={styles.linkLine}>
-                        <span className={styles.linkText}>
-                          {site.url.replace(/^https?:\/\//, '').replace(/\/$/, '')}
-                        </span>
-                        <FaExternalLinkAlt className={styles.linkIcon} />
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Right: Coin Rate, Min Coins & Verified Status */}
-                  <div className={styles.cardRight}>
-                    <div className={styles.coinStat}>
-                      <FaCoins className={styles.coinIcon} />
-                      <div className={styles.statDetail}>
-                        <span className={styles.statLabel}>Coin Rate</span>
-                        <span className={styles.coinValue}>1 = ₹{site.coinRate ?? '1'}</span>
-                      </div>
-                    </div>
-
-                    <div className={styles.minStat}>
-                      <FaLock className={styles.lockIcon} />
-                      <div className={styles.statDetail}>
-                        <span className={styles.statLabel}>Min Coins</span>
-                        <span className={styles.minValue}>
-                          {Number(site.minimumCoins || 0).toLocaleString()}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className={styles.statusPill}>
-                      <FaShieldAlt className={styles.shieldIcon} />
-                      <span>Verified</span>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Crisp Linear Progress Bar Indicator */}
-        <div className={styles.progressBarWrapper}>
-          <div
-            className={styles.progressBarFill}
-            style={{ width: `${((activeIndex + 1) / total) * 100}%` }}
-          />
+          {/* Style 5: Scroll-Driven Framer Spring Sequence (releases to next section at #10) */}
+          {(activeTab === 'all' || activeTab === 'scroll-spring') && (
+            <FramerScrollSection websites={websites} baseUrl={url} />
+          )}
         </div>
       </div>
     </section>

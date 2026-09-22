@@ -184,21 +184,31 @@ body {
   }
 
   body.has-desktop-sidebar.sidebar-expanded [class*="TopNavbar_navbar"],
-  body.has-desktop-sidebar.sidebar-expanded [class*="HomeHeading_navbar"] {
+  body.has-desktop-sidebar.sidebar-expanded [class*="HomeHeading_navbar"],
+  body.has-desktop-sidebar.sidebar-expanded .homeHeadingNavbar,
+  body.has-desktop-sidebar.sidebar-expanded .topNavbar {
     left: 280px !important;
     width: calc(100% - 280px) !important;
     transition:
-      left 0.3s ease,
-      width 0.3s ease;
+      left 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   body.has-desktop-sidebar.sidebar-collapsed [class*="TopNavbar_navbar"],
-  body.has-desktop-sidebar.sidebar-collapsed [class*="HomeHeading_navbar"] {
+  body.has-desktop-sidebar.sidebar-collapsed [class*="HomeHeading_navbar"],
+  body.has-desktop-sidebar.sidebar-collapsed .homeHeadingNavbar,
+  body.has-desktop-sidebar.sidebar-collapsed .topNavbar {
     left: 70px !important;
     width: calc(100% - 70px) !important;
     transition:
-      left 0.3s ease,
-      width 0.3s ease;
+      left 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* When desktop persistent sidebar is present, hide the hamburger button from top navbars */
+  body.has-desktop-sidebar .homeHeadingNavbar [class*="hamburgerBtn"],
+  body.has-desktop-sidebar .topNavbar [class*="hamburgerBtn"] {
+    display: none !important;
   }
 }
 

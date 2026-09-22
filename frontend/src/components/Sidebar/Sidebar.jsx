@@ -18,6 +18,7 @@ import {
   FaGlobe,
 } from "react-icons/fa";
 import React from "react";
+import { createPortal } from "react-dom";
 import { Link, useNavigate } from "react-router-dom";
 
 import { useUser } from "../../context/UserContext";
@@ -28,9 +29,19 @@ import styles from "./Sidebar.module.css";
 
 export default function Sidebar({ isOpen, onClose }) {
   const { user, setUser, logoPath } = useUser();
-  const [isCollapsed, setIsCollapsed] = React.useState(false);
+  const [isCollapsed, setIsCollapsed] = React.useState(() => {
+    return localStorage.getItem("sidebar_collapsed") === "true";
+  });
   const navigate = useNavigate();
   const sidebarRef = React.useRef(null);
+
+  const toggleCollapse = () => {
+    setIsCollapsed((prev) => {
+      const next = !prev;
+      localStorage.setItem("sidebar_collapsed", String(next));
+      return next;
+    });
+  };
 
   // Click outside listener for mobile
   React.useEffect(() => {
@@ -112,7 +123,7 @@ export default function Sidebar({ isOpen, onClose }) {
   const isSuperAdmin = userRole === ROLES.SUPERADMIN;
   const balance = formatCurrency(user?.balance);
 
-  return (
+  const sidebarContent = (
     <>
       {/* Backdrop overlay for mobile drawer */}
       <div
@@ -137,7 +148,7 @@ export default function Sidebar({ isOpen, onClose }) {
             {/* Desktop Collapse/Expand Toggle Button */}
             <button
               className={styles.collapseToggleBtn}
-              onClick={() => setIsCollapsed(!isCollapsed)}
+              onClick={toggleCollapse}
               title={isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
               aria-label="Toggle sidebar collapse state"
             >
@@ -168,8 +179,8 @@ export default function Sidebar({ isOpen, onClose }) {
           </div>
         </div>
 
-        {/* Quick Wallet Bar */}
-        {!isAdmin && (
+        {/* Quick Wallet Bar - only for regular users, hidden for admin & superadmin */}
+        {isRegularUser && user && (
           <div className={styles.walletBar}>
             <div className={styles.walletLeft}>
               <FaWallet className={styles.walletIcon} />
@@ -539,4 +550,8 @@ export default function Sidebar({ isOpen, onClose }) {
       </aside>
     </>
   );
+
+  return typeof document !== "undefined"
+    ? createPortal(sidebarContent, document.body)
+    : sidebarContent;
 }

@@ -5,7 +5,8 @@
   background: var(--main-gradient) !important;
   padding-top: 80px !important; /* Account for fixed top navbar */
   padding-bottom: 100px !important; /* Account for fixed bottom navbar */
-  width: 100vw;
+  width: 100%;
+  max-width: 100%;
   margin: 0 !important;
   display: block !important;
   justify-content: unset !important;

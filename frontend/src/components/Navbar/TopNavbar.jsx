@@ -39,7 +39,7 @@ export default function TopNavbar() {
   };
 
   return (
-    <div className={styles.navbar}>
+    <div className={`${styles.navbar} topNavbar`}>
       {/* Sidebar Icon & Logo Section */}
       <div className={styles.logoGroup}>
         <button

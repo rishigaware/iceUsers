@@ -141,7 +141,7 @@ const HomeHeading = () => {
 
   return (
     <div className={styles.mainContainer}>
-      <div className={styles.navbar}>
+      <div className={`${styles.navbar} homeHeadingNavbar`}>
         <div className={styles.logoGroup}>
           {user && (
             <button

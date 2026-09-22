@@ -1,6 +1,7 @@
 /* Responsive Users Page Styles */
 .container {
-  width: 100vw;
+  width: 100%;
+  max-width: 100%;
   min-height: 100vh;
   background: var(--main-gradient);
   padding-top: 80px;

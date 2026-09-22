@@ -1,7 +1,7 @@
 /* Main Container */
 .mainContainer {
   width: 100%;
-  max-width: 100vw;
+  max-width: 100%;
   overflow-x: hidden;
   position: relative;
   box-sizing: border-box;
@@ -32,6 +32,10 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
+  box-sizing: border-box;
+  transition:
+    left 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .logoGroup {
@@ -78,8 +82,10 @@ body {
 }
 
 .top {
-  height: 20vh;
-  width: 100vw;
+  min-height: 190px;
+  height: auto;
+  width: 100%;
+  max-width: 100%;
   background: var(--main-gradient);
   display: flex;
   align-items: center;
@@ -87,13 +93,15 @@ body {
   position: relative;
   top: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 10;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
   animation: slideInDown 0.8s ease-out 0.2s both;
   overflow: hidden;
   margin-top: 75px;
-  /* Account for fixed navbar */
+  padding: 20px 15px;
+  box-sizing: border-box;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .top::before {
@@ -110,8 +118,11 @@ body {
 }
 
 .topSquare {
-  width: 80%;
-  height: 60%;
+  width: fit-content;
+  max-width: 90%;
+  min-width: 320px;
+  min-height: 155px;
+  height: auto;
   background: var(--glass-bg);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -120,10 +131,13 @@ body {
   justify-content: center;
   align-items: center;
   gap: 0;
+  padding: 10px 24px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   animation: fadeInUp 1s ease-out 0.4s both;
   position: relative;
   z-index: 1;
+  box-sizing: border-box;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .first {
@@ -375,7 +389,8 @@ body {
 
 /* Sliding Text Section */
 .slidingTextSection {
-  width: 97vw;
+  width: 96%;
+  max-width: 1400px;
   height: 40px;
   background: linear-gradient(135deg, #000 0%, #1a1a1a 100%) !important;
   border-radius: 20px;
@@ -389,6 +404,8 @@ body {
   padding-left: 15px;
   display: flex !important;
   align-items: center;
+  box-sizing: border-box;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .slidingTextContainer {
@@ -817,7 +834,7 @@ body {
 /* Responsive Styles for Medium Screens */
 @media screen and (max-width: 1024px) {
   .slidingTextSection {
-    width: 96vw;
+    width: 96%;
     height: 38px;
     margin: 18px auto;
     border-radius: 19px;
@@ -855,13 +872,17 @@ body {
   }
 
   .top {
-    height: 20vh;
+    min-height: 175px;
+    height: auto;
     margin-top: 55px;
   }
 
   .topSquare {
-    width: 88%;
-    height: 75%;
+    width: fit-content;
+    max-width: 92%;
+    min-height: 145px;
+    height: auto;
+    padding: 8px 18px;
     border-radius: 18px;
   }
 
@@ -1192,7 +1213,7 @@ body {
   margin: 60px 0;
   padding: 0 20px;
   width: 100%;
-  max-width: 100vw;
+  max-width: 100%;
   box-sizing: border-box;
 }
 
@@ -1279,7 +1300,7 @@ body {
   margin: 60px 0;
   padding: 50px 20px;
   width: 100%;
-  max-width: 100vw;
+  max-width: 100%;
   box-sizing: border-box;
   background: linear-gradient(135deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.05) 100%);
   border-radius: 30px;
@@ -1362,7 +1383,7 @@ body {
   margin: 60px 0;
   padding: 0 20px;
   width: 100%;
-  max-width: 100vw;
+  max-width: 100%;
   box-sizing: border-box;
 }
 
@@ -2168,7 +2189,7 @@ body {
 /* Tablets - Additional Styles */
 @media screen and (max-width: 768px) {
   .slidingTextSection {
-    width: 95vw;
+    width: 95%;
     height: 35px;
     margin: 16px auto;
     border-radius: 18px;
@@ -2229,7 +2250,7 @@ body {
   }
 
   .slidingTextSection {
-    width: 96vw;
+    width: 96%;
     height: 32px;
     margin: 8px auto;
     border-radius: 12px;
@@ -2305,7 +2326,7 @@ body {
   margin: 30px 0;
   padding: 0 20px;
   width: 100%;
-  max-width: 100vw;
+  max-width: 100%;
   box-sizing: border-box;
 }
 
@@ -2378,7 +2399,7 @@ body {
   margin: 40px 0;
   padding: 0 20px;
   width: 100%;
-  max-width: 100vw;
+  max-width: 100%;
   box-sizing: border-box;
 }
 

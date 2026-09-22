@@ -439,9 +439,12 @@
 
   .sidebar {
     transform: none !important;
-    width: 280px;
+    left: 0 !important;
+    top: 0 !important;
+    width: 280px !important;
+    max-width: 280px !important;
     box-shadow: 4px 0 24px rgba(0, 0, 0, 0.45);
-    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), max-width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .closeBtn {
@@ -454,7 +457,8 @@
 
   /* COLLAPSED STATE FOR TABLET/DESKTOP */
   .sidebar.collapsed {
-    width: 70px;
+    width: 70px !important;
+    max-width: 70px !important;
   }
 
   .sidebar.collapsed .brandTitle,

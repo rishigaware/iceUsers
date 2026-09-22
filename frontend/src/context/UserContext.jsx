@@ -19,8 +19,8 @@ export const LOGO_PATH = "/logo.png";
 export const UserProvider = ({ children }) => {
   //   const defaultUrl = (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'))
   //     ? "http://localhost:3000"
-  //     : "https://betting-accounts-manager.onrender.com";
-  const defaultUrl = "https://betting-accounts-manager.onrender.com";
+  //     : "https://iceusers.onrender.com";
+  const defaultUrl = "https://iceusers.onrender.com";
 
   const [url, setUrl] = useState(defaultUrl);
   const [user, setUser] = useState(() => {

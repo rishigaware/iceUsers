@@ -43,6 +43,10 @@ const Websites = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [editingWebsite, setEditingWebsite] = useState(null);
   const [editFile, setEditFile] = useState(null);
+
+  // Image preview state
+  const [selectedImage, setSelectedImage] = useState(null);
+
   const [isEditLoading, setIsEditLoading] = useState(false);
   const [editErrorMessage, setEditErrorMessage] = useState("");
   const [file, setFile] = useState(null);
@@ -1005,6 +1009,8 @@ const Websites = () => {
                         src={getImageUrl(website.logo, url)}
                         alt={website.name || website.website || "Website Logo"}
                         className={styles.websiteLogo}
+                        onClick={() => setSelectedImage(getImageUrl(website.logo, url))}
+                        style={{ cursor: "pointer" }}
                       />
                       <h3>
                         {website.name || website.website || "Unnamed Website"}
@@ -1648,6 +1654,17 @@ const Websites = () => {
             onClose={() => setShowDepositPopup(false)}
             walletBalance={user?.balance || 0}
           />
+        )}
+
+        {/* Image Preview Modal */}
+        {selectedImage && (
+          <div className={styles.imagePreviewModal} onClick={() => setSelectedImage(null)}>
+            <img
+              src={selectedImage}
+              alt="Preview"
+              className={styles.fullImage}
+            />
+          </div>
         )}
 
         <Toast ref={toast} />

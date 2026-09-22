@@ -33,6 +33,10 @@ const CreateId = () => {
   const [websites, setWebsites] = useState([]);
   const [categories, setCategories] = useState([]); // Categories from websites
   const [menuOpen, setMenuOpen] = useState(null);
+  
+  // Image preview state
+  const [selectedImage, setSelectedImage] = useState(null);
+
   const [showModal, setShowModal] = useState(false);
   const [selectedWebsite, setSelectedWebsite] = useState(null);
   const [username, setUsername] = useState("");
@@ -412,6 +416,17 @@ const CreateId = () => {
           className={styles.searchInput}
         />
 
+        {/* Image Preview Modal */}
+        {selectedImage && (
+          <div className={styles.imagePreviewModal} onClick={() => setSelectedImage(null)}>
+            <img
+              src={selectedImage}
+              alt="Preview"
+              className={styles.fullImage}
+            />
+          </div>
+        )}
+
         {/* Category Dropdown */}
         <select
           value={selectedCategory}
@@ -452,6 +467,8 @@ const CreateId = () => {
                 src={getImageUrl(item.logo, url)}
                 alt={item.name || item.website || "Website Logo"}
                 className={styles.websiteLogo}
+                onClick={() => setSelectedImage(getImageUrl(item.logo, url))}
+                style={{ cursor: "pointer" }}
               />
               <div className={styles.websiteDetails}>
                 <h3>{item.name || item.website || "Unnamed Website"}</h3>

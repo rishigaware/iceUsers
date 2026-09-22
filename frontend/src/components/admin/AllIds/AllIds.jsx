@@ -60,6 +60,9 @@ const AllIds = () => {
   });
   const [editErrors, setEditErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
+  
+  // Image preview state
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const navigate = useNavigate();
 
@@ -854,6 +857,8 @@ const handleReject = async (item) => {
               <img
                 src={getImageUrl(item.imgUrl, safeUrl)}
                 alt={`${item.websiteName || 'Website'} logo`}
+                onClick={() => setSelectedImage(getImageUrl(item.imgUrl, safeUrl))}
+                style={{ cursor: "pointer" }}
               />
                   ) : (
                     <span style={{ fontSize: '24px' }}>🆔</span>
@@ -1237,6 +1242,17 @@ const handleReject = async (item) => {
 
       
       <Toast ref={toast} />
+
+      {/* Image Preview Modal */}
+      {selectedImage && (
+        <div className={styles.imagePreviewModal} onClick={() => setSelectedImage(null)}>
+          <img
+            src={selectedImage}
+            alt="Preview"
+            className={styles.fullImage}
+          />
+        </div>
+      )}
 
       </div>
     </div>

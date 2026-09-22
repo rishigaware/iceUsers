@@ -26,6 +26,9 @@ const MyId = () => {
   const [needRefetch, setNeedRefetch] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
+  // Image preview state
+  const [selectedImage, setSelectedImage] = useState(null);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
 
@@ -354,6 +357,16 @@ const MyId = () => {
         )}
       </div>
 
+      {/* Image Preview Modal */}
+      {selectedImage && (
+        <div
+          className={styles.imagePreviewModal}
+          onClick={() => setSelectedImage(null)}
+        >
+          <img src={selectedImage} alt="Preview" className={styles.fullImage} />
+        </div>
+      )}
+
       {currentIds.length === 0 ? (
         <p className={styles.noIds}>No IDs match your search criteria.</p>
       ) : (
@@ -366,6 +379,8 @@ const MyId = () => {
               <img
                 src={getImageUrl(item.imgUrl, safeUrl)}
                 alt={`${item.websiteName || "Website"} logo`}
+                onClick={() => setSelectedImage(getImageUrl(item.imgUrl, safeUrl))}
+                style={{ cursor: "pointer" }}
               />
               {item.type === "request" && (
                 <div className={styles.requestBadge}>

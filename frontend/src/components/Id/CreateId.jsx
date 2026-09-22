@@ -27,7 +27,6 @@ const CreateId = () => {
     url: "",
     logo: "",
     category: "",
-    coinRate: "",
     minimumCoins: "",
   });
 
@@ -62,8 +61,12 @@ const CreateId = () => {
       );
       const data = await response.json();
       if (response.ok) {
-        // console.log(data,"<<<")
-        setWebsites(data); // Assuming the API returns an object with a "websites" key
+        // Map over data to add a fallback description for older websites that don't have one yet
+        const enhancedData = data.map(site => ({
+          ...site,
+          description: site.description || "The premium exchange for live sports and casino."
+        }));
+        setWebsites(enhancedData);
       } else {
         console.error("Error fetching websites:", data);
       }
@@ -142,12 +145,11 @@ const CreateId = () => {
       !newWebsite.website ||
       !newWebsite.url ||
       !newWebsite.category ||
-      !newWebsite.coinRate ||
       !newWebsite.minimumCoins ||
       !file
     ) {
       setErrorMessage(
-        "All fields are required to add a website, including the logo, coin rate, and minimum coins.",
+        "All fields are required to add a website, including the logo and minimum coins."
       );
       return;
     }
@@ -158,7 +160,6 @@ const CreateId = () => {
       formData.append("website", newWebsite.website);
       formData.append("url", newWebsite.url);
       formData.append("category", newWebsite.category);
-      formData.append("coinRate", newWebsite.coinRate);
       formData.append("minimumCoins", newWebsite.minimumCoins);
       formData.append("logo", file);
 
@@ -182,7 +183,6 @@ const CreateId = () => {
           url: "",
           category: "",
           logo: "",
-          coinRate: "",
           minimumCoins: "",
         });
         setFile(null);
@@ -224,14 +224,12 @@ const CreateId = () => {
     setSelectedCategory(e.target.value);
   };
   const filteredWebsites = (websites || []).filter((item) => {
-    // Matches search query for website name, URL, or adminUrl
+    // Matches search query for website name or URL
     const websiteName = item.name || item.website || "";
     const matchesSearchQuery =
       websiteName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       (item.url &&
-        item.url.toLowerCase().includes(searchQuery.toLowerCase())) ||
-      (item.adminUrl &&
-        item.adminUrl.toLowerCase().includes(searchQuery.toLowerCase()));
+        item.url.toLowerCase().includes(searchQuery.toLowerCase()));
 
     // Matches the selected category
     const matchesCategory =
@@ -302,10 +300,9 @@ const CreateId = () => {
       return;
     }
 
-    const { websiteName, websiteUrl, adminUrl, imgUrl } = {
+    const { websiteName, websiteUrl, imgUrl } = {
       websiteName: selectedWebsite.website,
       websiteUrl: selectedWebsite.url,
-      adminUrl: selectedWebsite.adminUrl || "",
       imgUrl: selectedWebsite.logo,
     };
 
@@ -314,7 +311,6 @@ const CreateId = () => {
       console.log("Sending create-id-request with body:", {
         websiteName,
         websiteUrl,
-        adminUrl,
         username,
         imgUrl,
         createdBy: user.username,
@@ -329,7 +325,6 @@ const CreateId = () => {
         body: JSON.stringify({
           websiteName,
           websiteUrl,
-          adminUrl,
           username,
           imgUrl,
           createdBy: user.id,
@@ -470,16 +465,14 @@ const CreateId = () => {
                     {item.url}
                   </a>
                 )}
-                {item.adminUrl && (
-                  <a
-                    href={item.adminUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.adminUrlLink}
-                  >
-                    Admin: {item.adminUrl}
-                  </a>
+
+                {item.description && (
+                  <p className={styles.websiteDescriptionSmall}>
+                    {item.description}
+                  </p>
                 )}
+
+
                 <span className={styles.categoryTag}>
                   {item.category || "No Category"}
                 </span>
@@ -496,20 +489,15 @@ const CreateId = () => {
                   </span>
                 )}
               </div>
-              <div className={styles.websiteActions}>
-                <button
-                  onClick={() => handleCreate(item.id)}
-                  className={styles.actionButton}
-                >
-                  Create ID
-                </button>
-                {/* <button
-                    onClick={() => handleDelete(item)}
-                    className={styles.deleteButton}
-                  >
-                    <FaTrash />
-                  </button> */}
-              </div>
+            </div>
+            
+            <div className={styles.websiteActions}>
+              <button
+                onClick={() => handleCreate(item.id)}
+                className={styles.actionButton}
+              >
+                Create ID
+              </button>
             </div>
           </div>
         ))
@@ -597,16 +585,7 @@ const CreateId = () => {
                 >
                   {selectedWebsite.url}
                 </a>
-                {selectedWebsite.adminUrl && (
-                  <a
-                    href={selectedWebsite.adminUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.adminModalLink}
-                  >
-                    Admin: {selectedWebsite.adminUrl}
-                  </a>
-                )}
+
               </div>
             </div>
 

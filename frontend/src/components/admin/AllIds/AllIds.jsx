@@ -649,11 +649,7 @@ const handleReject = async (item) => {
               <strong>Coins Needed:</strong> {request.coinsNeeded}
             </p>
           )}
-          {request.coinRate && (
-            <p className={styles.userId}>
-              <strong>Coin Rate:</strong> ₹{request.coinRate} per coin
-            </p>
-          )}
+
           {request.reason && (
             <p className={styles.userId}>
               <strong>Reason:</strong> {request.reason}
@@ -886,11 +882,7 @@ const handleReject = async (item) => {
                           <strong>Last Updated Balance:</strong> {item.balance} coins
                         </p>
                       )}
-                      {item.coinRate && (
-                        <p className={styles.userId}>
-                          <strong>Coin Rate:</strong> ₹{item.coinRate} per coin
-                        </p>
-                      )}
+
                     </>
                   ) : isGenericId ? (
                     <>

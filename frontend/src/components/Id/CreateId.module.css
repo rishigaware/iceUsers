@@ -96,16 +96,17 @@
 
 .websiteInfo {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 14px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   flex: 1;
+  min-width: 0;
 }
 
 .websiteLogo {
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
+  width: 76px;
+  height: 76px;
+  border-radius: 14px;
   object-fit: contain;
   background: #000;
   border: 1px solid rgba(var(--primary-color-rgb), 0.25);
@@ -114,10 +115,11 @@
 
 .websiteDetails {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
   flex: 1;
+  min-width: 0;
 }
 
 .websiteUrlLink {
@@ -131,13 +133,29 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 220px;
+  display: block;
+  max-width: 100%;
+  box-sizing: border-box;
   transition: all 0.2s ease;
 }
 
 .websiteUrlLink:hover {
   background: rgba(96, 165, 250, 0.2);
   text-decoration: underline;
+}
+
+.websiteDescriptionSmall {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Limit to 2 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+  font-weight: 500;
+  margin-top: 4px;
 }
 
 .adminUrlLink {
@@ -670,8 +688,13 @@
   .websiteCard {
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
-    padding: 12px 14px;
+    gap: 10px;
+    padding: 10px 12px;
+  }
+
+  .websiteInfo {
+    width: 100%;
+    align-items: flex-start;
   }
 
   .websiteActions {
@@ -682,8 +705,9 @@
   }
 
   .actionButton {
-    width: 100%;
-    padding: 10px;
+    padding: 6px 14px;
+    font-size: 0.8rem;
+    border-radius: 6px;
   }
 
   .modalContent {
@@ -727,6 +751,12 @@
   .modalHeader .websiteLogo {
     width: 48px;
     height: 48px;
+  }
+
+  .websiteLogo {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
   }
 
   .coinConversionInfo {

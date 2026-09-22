@@ -8,7 +8,6 @@ import styles from "./WebsiteWithdrawalPopup.module.css";
 export default function WebsiteWithdrawalPopup({ onClose, selectedId }) {
   const [withdrawalAmount, setWithdrawalAmount] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [coinRate, setCoinRate] = useState(1);
   const [withdrawalMethod, setWithdrawalMethod] = useState("upi");
   const [withdrawalDetails, setWithdrawalDetails] = useState({
     upiId: "",
@@ -22,12 +21,7 @@ export default function WebsiteWithdrawalPopup({ onClose, selectedId }) {
   const toast = useRef(null);
   const { user, url, refreshUserBalance } = useUser();
 
-  // Set coin rate from ID data
-  useEffect(() => {
-    if (selectedId && selectedId.coinRate) {
-      setCoinRate(parseFloat(selectedId.coinRate) || 1);
-    }
-  }, [selectedId]);
+
 
   // Prevent background scrolling when popup is open
   useEffect(() => {
@@ -40,13 +34,13 @@ export default function WebsiteWithdrawalPopup({ onClose, selectedId }) {
     };
   }, []);
 
-  // Calculate conversion
+  // Calculate conversion (1:1 ratio)
   const calculateCoinsNeeded = (rupees) => {
-    return Math.ceil(rupees / coinRate);
+    return Math.ceil(rupees);
   };
 
   const calculateRupeesFromCoins = (coins) => {
-    return coins * coinRate;
+    return coins;
   };
 
   const availableCoins = selectedId?.balance || 0;
@@ -133,7 +127,6 @@ export default function WebsiteWithdrawalPopup({ onClose, selectedId }) {
       const formData = new FormData();
       formData.append("amount", withdrawalAmount);
       formData.append("coinsNeeded", coinsNeeded);
-      formData.append("coinRate", coinRate);
       formData.append("withdrawalMethod", withdrawalMethod);
       formData.append("withdrawalDetails", JSON.stringify(withdrawalDetails));
       formData.append("createdAt", new Date().toISOString());

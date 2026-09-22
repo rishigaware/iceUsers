@@ -3,16 +3,13 @@ const mongoose = require('mongoose');
 const closedIdSchema = new mongoose.Schema({
     websiteName: String,
     websiteUrl: String,
-    adminUrl: {
-        type: String,
-        default: '',
-    },
+
     username: String,
     imgUrl: String,
     createdBy: String,
     coinAmount: Number,
     convertedCoins: Number,
-    coinRate: Number,
+
     minimumCoins: Number,
 
     accountType: String,

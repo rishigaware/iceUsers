@@ -8,59 +8,21 @@ export default function WebsiteDepositPopup({ onClose, selectedId }) {
 
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [coinRate, setCoinRate] = useState(1);
+  const [convertedRupees, setConvertedRupees] = useState(0);
   const [minimumCoins, setMinimumCoins] = useState(0);
   const [availableWalletBalance, setAvailableWalletBalance] = useState(0);
-  
-  // New state from CreateId logic
-  const [displayedRate, setDisplayedRate] = useState(0);
-  const [convertedRupees, setConvertedRupees] = useState(0);
-  const [actualWebsiteRate, setActualWebsiteRate] = useState(0);
 
   const toast = useRef(null);
   const { user, refreshUserBalance, url } = useUser();
 
   useEffect(() => {
-    const fetchActualRate = async () => {
-      if (selectedId && url) {
-        try {
-          const response = await fetch(`${url}/api/admin/get-websites`);
-          const data = await response.json();
-          if (response.ok) {
-            const website = data.find(w => 
-              (w.website && w.website.toLowerCase().trim() === selectedId.websiteName.toLowerCase().trim()) || 
-              (w.name && w.name.toLowerCase().trim() === selectedId.websiteName.toLowerCase().trim())
-            );
-            if (website) {
-              const baseRate = parseFloat(website.coinRate) || 1;
-              setActualWebsiteRate(baseRate);
-              setCoinRate(baseRate);
-              // Initialize displayed rate with base rate
-              setDisplayedRate(baseRate);
-            } else {
-              setActualWebsiteRate(parseFloat(selectedId.coinRate) || 1);
-              setCoinRate(parseFloat(selectedId.coinRate) || 1);
-              setDisplayedRate(parseFloat(selectedId.coinRate) || 1);
-            }
-          }
-        } catch (error) {
-          console.error("Error fetching actual rate:", error);
-          setActualWebsiteRate(parseFloat(selectedId.coinRate) || 1);
-          setCoinRate(parseFloat(selectedId.coinRate) || 1);
-          setDisplayedRate(parseFloat(selectedId.coinRate) || 1);
-        }
-      }
-    };
-
-    fetchActualRate();
-
     if (selectedId) {
       setMinimumCoins(parseFloat(selectedId.minimumCoins) || 0);
     }
     if (user) {
       setAvailableWalletBalance(parseFloat(user.balance) || 0);
     }
-  }, [selectedId, user, url]);
+  }, [selectedId, user]);
 
   // Prevent background scrolling when popup is open
   useEffect(() => {
@@ -76,22 +38,8 @@ export default function WebsiteDepositPopup({ onClose, selectedId }) {
     setCoinAmount(value);
     setErrorMessage("");
 
-    let currentRate = actualWebsiteRate || parseFloat(selectedId?.coinRate) || 1;
-    
-    // Dynamic Rate Logic (Same as CreateId)
-    if (coins > 0) { 
-        if (coins < 50000) {
-            currentRate += 0.03;
-        } else if (coins < 100000) {
-            currentRate += 0.01;
-        }
-    }
-    
-    setDisplayedRate(parseFloat(currentRate.toFixed(2)));
-
-    // Calculate rupees based on effective rate
-    const calculatedRupees = coins * currentRate;
-    setConvertedRupees(calculatedRupees);
+    // 1:1 ratio
+    setConvertedRupees(coins);
   };
 
   const handleDeposit = async () => {
@@ -130,9 +78,6 @@ export default function WebsiteDepositPopup({ onClose, selectedId }) {
         body: JSON.stringify({
           amount: convertedRupees, // Rupees to deduct
           coinsToReceive: coins, // Coins to add
-          coinRate: displayedRate,
-          baseCoinRate: actualWebsiteRate || (selectedId?.coinRate || 1),
-          additionalRate: (displayedRate - (actualWebsiteRate || (selectedId?.coinRate || 1))),
           websiteName: selectedId.websiteName,
           websiteUrl: selectedId.websiteUrl,
           username: selectedId.username,

@@ -23,10 +23,8 @@ const Websites = () => {
     id: "",
     website: "",
     url: "",
-    adminUrl: "",
     logo: "",
     category: "",
-    coinRate: "",
     minimumCoins: "",
     targetAdminId: "",
   });
@@ -474,7 +472,6 @@ const Websites = () => {
       !newWebsite.website ||
       !newWebsite.url ||
       !newWebsite.category ||
-      !newWebsite.coinRate ||
       !newWebsite.minimumCoins ||
       !file
     ) {
@@ -489,9 +486,7 @@ const Websites = () => {
       const formData = new FormData();
       formData.append("website", newWebsite.website);
       formData.append("url", newWebsite.url);
-      formData.append("adminUrl", newWebsite.adminUrl || "");
       formData.append("category", newWebsite.category);
-      formData.append("coinRate", newWebsite.coinRate);
       formData.append("minimumCoins", newWebsite.minimumCoins);
       formData.append("logo", file);
       if (isSuperAdmin && newWebsite.targetAdminId) {
@@ -519,10 +514,8 @@ const Websites = () => {
           id: "",
           website: "",
           url: "",
-          adminUrl: "",
           category: "",
           logo: "",
-          coinRate: "",
           minimumCoins: "",
           targetAdminId: "",
         });
@@ -719,7 +712,6 @@ const Websites = () => {
       !editingWebsite.website ||
       !editingWebsite.url ||
       !editingWebsite.category ||
-      !editingWebsite.coinRate ||
       !editingWebsite.minimumCoins
     ) {
       setEditErrorMessage("All fields are required to edit a website.");
@@ -731,9 +723,7 @@ const Websites = () => {
       const formData = new FormData();
       formData.append("website", editingWebsite.website);
       formData.append("url", editingWebsite.url);
-      formData.append("adminUrl", editingWebsite.adminUrl || "");
       formData.append("category", editingWebsite.category);
-      formData.append("coinRate", editingWebsite.coinRate);
       formData.append("minimumCoins", editingWebsite.minimumCoins);
       if (editFile) {
         formData.append("logo", editFile);
@@ -783,9 +773,7 @@ const Websites = () => {
       id: website.id,
       website: website.name || website.website || "",
       url: website.url || "",
-      adminUrl: website.adminUrl || "",
       category: website.category || "",
-      coinRate: website.coinRate || "",
       minimumCoins: website.minimumCoins || "",
       logo: website.logo || "",
     });
@@ -1024,26 +1012,11 @@ const Websites = () => {
                     </div>
                     <div className={styles.websiteDetails}>
                       <p>{website.url || "No URL"}</p>
-                      {website.adminUrl && (
-                        <p
-                          style={{
-                            fontSize: "12px",
-                            color: "var(--primary-color)",
-                            margin: "2px 0",
-                            wordBreak: "break-all",
-                          }}
-                        >
-                          <strong>Admin URL:</strong> {website.adminUrl}
-                        </p>
-                      )}
+
                       <span className={styles.categoryTag}>
                         {website.category || "No Category"}
                       </span>
-                      {website.coinRate && (
-                        <p className={styles.coinInfo}>
-                          <strong>Coin Rate:</strong> {website.coinRate}
-                        </p>
-                      )}
+
                       {website.minimumCoins && (
                         <p className={styles.coinInfo}>
                           <strong>Min Coins:</strong> {website.minimumCoins}
@@ -1310,24 +1283,6 @@ const Websites = () => {
 
                   <div className={styles.formRow}>
                     <div className={styles.formGroup}>
-                      <label htmlFor="adminUrl">Admin URL</label>
-                      <input
-                        id="adminUrl"
-                        type="text"
-                        placeholder="Enter Admin URL"
-                        value={newWebsite.adminUrl || ""}
-                        onChange={(e) =>
-                          setNewWebsite({
-                            ...newWebsite,
-                            adminUrl: e.target.value,
-                          })
-                        }
-                        className={styles.inputField}
-                        onFocus={handleFocus}
-                      />
-                    </div>
-
-                    <div className={styles.formGroup}>
                       <label htmlFor="category">Category</label>
                       <select
                         id="category"
@@ -1348,26 +1303,6 @@ const Websites = () => {
                           </option>
                         ))}
                       </select>
-                    </div>
-                  </div>
-
-                  <div className={styles.formRow}>
-                    <div className={styles.formGroup}>
-                      <label htmlFor="coinRate">Coin Rate</label>
-                      <input
-                        id="coinRate"
-                        type="number"
-                        placeholder="Enter Coin Rate"
-                        value={newWebsite.coinRate}
-                        onChange={(e) =>
-                          setNewWebsite({
-                            ...newWebsite,
-                            coinRate: e.target.value,
-                          })
-                        }
-                        className={styles.inputField}
-                        onFocus={handleFocus}
-                      />
                     </div>
 
                     <div className={styles.formGroup}>
@@ -1404,6 +1339,25 @@ const Websites = () => {
                           className={styles.fileUpload}
                         />
                       </div>
+                    </div>
+
+                    <div className={styles.formGroup}>
+                      <label htmlFor="websiteDescription">Caption / Description</label>
+                      <textarea
+                        id="websiteDescription"
+                        placeholder="Enter website caption..."
+                        value={newWebsite.description}
+                        onChange={(e) =>
+                          setNewWebsite({
+                            ...newWebsite,
+                            description: e.target.value,
+                          })
+                        }
+                        className={styles.inputField}
+                        onFocus={handleFocus}
+                        rows="3"
+                        style={{ resize: "vertical" }}
+                      />
                     </div>
                   </div>
 
@@ -1482,23 +1436,6 @@ const Websites = () => {
                   </div>
                   <div className={styles.formRow}>
                     <div className={styles.formGroup}>
-                      <label htmlFor="editAdminUrl">Admin URL</label>
-                      <input
-                        id="editAdminUrl"
-                        type="text"
-                        placeholder="Enter Admin URL"
-                        value={editingWebsite.adminUrl || ""}
-                        onChange={(e) =>
-                          setEditingWebsite({
-                            ...editingWebsite,
-                            adminUrl: e.target.value,
-                          })
-                        }
-                        className={styles.inputField}
-                        onFocus={() => setEditErrorMessage("")}
-                      />
-                    </div>
-                    <div className={styles.formGroup}>
                       <label htmlFor="editCategory">Category</label>
                       <select
                         id="editCategory"
@@ -1519,25 +1456,7 @@ const Websites = () => {
                         ))}
                       </select>
                     </div>
-                  </div>
-                  <div className={styles.formRow}>
-                    <div className={styles.formGroup}>
-                      <label htmlFor="editCoinRate">Coin Rate</label>
-                      <input
-                        id="editCoinRate"
-                        type="number"
-                        placeholder="Enter Coin Rate"
-                        value={editingWebsite.coinRate}
-                        onChange={(e) =>
-                          setEditingWebsite({
-                            ...editingWebsite,
-                            coinRate: e.target.value,
-                          })
-                        }
-                        className={styles.inputField}
-                        onFocus={() => setEditErrorMessage("")}
-                      />
-                    </div>
+
                     <div className={styles.formGroup}>
                       <label htmlFor="editMinimumCoins">Minimum Coins</label>
                       <input
@@ -1575,6 +1494,24 @@ const Websites = () => {
                           </p>
                         )}
                       </div>
+                    </div>
+
+                    <div className={styles.formGroup}>
+                      <label htmlFor="editDescription">Caption / Description</label>
+                      <textarea
+                        id="editDescription"
+                        placeholder="Enter website caption..."
+                        value={editingWebsite.description || ""}
+                        onChange={(e) =>
+                          setEditingWebsite({
+                            ...editingWebsite,
+                            description: e.target.value,
+                          })
+                        }
+                        className={styles.inputField}
+                        rows="3"
+                        style={{ resize: "vertical" }}
+                      />
                     </div>
                   </div>
                   {editErrorMessage && (

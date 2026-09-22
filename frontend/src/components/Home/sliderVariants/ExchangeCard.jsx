@@ -97,14 +97,21 @@ const ExchangeCard = ({ site, index, isActive = true, baseUrl = "" }) => {
         </div>
       )}
 
-      {/* Row 3: Live Coin Rate & Minimum Required Coins */}
+      {/* Row 3: Description */}
+      {site.description && (
+        <div className={styles.descriptionRow}>
+          <p className={styles.descriptionText}>{site.description}</p>
+        </div>
+      )}
+
+      {/* Row 4: Live Coin Rates & Minimum Coins */}
       <div className={styles.statsRow}>
         <div className={styles.coinChip}>
           <FaCoins className={styles.coinIcon} />
           <div className={styles.chipText}>
             <span className={styles.chipLabel}>COIN RATE</span>
             <span className={styles.coinValue}>
-              1 = ₹{site.coinRate ?? "1"}
+              1 = ₹1
             </span>
           </div>
         </div>

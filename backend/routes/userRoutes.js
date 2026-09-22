@@ -33,8 +33,6 @@ router.get('/get-id-requests', userController.getUserIdRequests); // Get user's 
 // Route to get user balance
 router.get('/get-balance/:userId', userController.getBalanceController);
 router.get('/get-id-balance/:id', userController.getIdBalanceController);
-router.post('/migrate-ids-coin-rates', userController.migrateIdsWithCoinRates);
-router.post('/add-coin-rates-to-websites', userController.addCoinRatesToWebsites);
 router.get('/hello', userController.getHelloController);
 
 

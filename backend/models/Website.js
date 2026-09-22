@@ -9,10 +9,7 @@ const websiteSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    adminUrl: {
-        type: String,
-        default: '',
-    },
+
     category: {
         type: String,
         required: true,
@@ -21,10 +18,11 @@ const websiteSchema = new mongoose.Schema({
         type: String,
         default: '',
     },
-    coinRate: {
-        type: Number,
-        default: 1,
+    description: {
+        type: String,
+        default: '',
     },
+
     minimumCoins: {
         type: Number,
         default: 0,

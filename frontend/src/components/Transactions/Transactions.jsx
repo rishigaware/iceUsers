@@ -281,8 +281,13 @@ const Transactions = () => {
   };
 
   const handleImageClick = (imagePath) => {
-    setSelectedImage(getImageUrl(imagePath, url));
-    setIsModalOpen(false);
+    try {
+      const fullUrl = getImageUrl(imagePath, url);
+      setSelectedImage(fullUrl);
+      setIsModalOpen(false);
+    } catch (err) {
+      console.error("Error in handleImageClick:", err);
+    }
   };
 
   // Render loading state
@@ -478,16 +483,34 @@ const Transactions = () => {
               )}
 
               <div className={styles.column}>
-                {txn.imagePath && (
-                  <img
-                    src={getImageUrl(txn.imagePath, url)}
-                    alt="Transaction"
-                    className={styles.transactionImage}
-                    onClick={() => handleImageClick(txn.imagePath)}
-                    onError={(e) => {
-                      e.target.style.display = "none";
+                {txn.imagePath && txn.imagePath !== "No path" && (
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      handleImageClick(txn.imagePath);
                     }}
-                  />
+                    style={{ 
+                      background: 'none', 
+                      border: 'none', 
+                      padding: 0, 
+                      margin: 0, 
+                      cursor: 'pointer',
+                      outline: 'none',
+                      position: 'relative',
+                      zIndex: 20 
+                    }}
+                  >
+                    <img
+                      src={getImageUrl(txn.imagePath, url)}
+                      alt="Transaction Receipt"
+                      className={styles.transactionImage}
+                      onError={(e) => {
+                        e.target.style.display = "none";
+                      }}
+                      style={{ display: 'block' }}
+                    />
+                  </button>
                 )}
               </div>
             </div>
@@ -533,12 +556,43 @@ const Transactions = () => {
 
       {/* Image Modal */}
       {selectedImage && (
-        <div className={styles.modal} onClick={closeModal}>
-          <img
-            src={selectedImage}
-            alt="Transaction Receipt"
-            className={styles.fullImage}
-          />
+        <div 
+          onClick={closeModal}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            backgroundColor: 'rgba(0,0,0,0.95)',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 9999999,
+            padding: '1rem',
+            boxSizing: 'border-box'
+          }}
+        >
+          <div onClick={(e) => e.stopPropagation()} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+            <img
+              src={selectedImage}
+              alt="Transaction Receipt"
+              style={{ maxWidth: '100%', maxHeight: '75vh', objectFit: 'contain', borderRadius: '8px', boxShadow: '0 10px 25px rgba(0,0,0,0.5)' }}
+            />
+            <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
+              <a 
+                href={selectedImage} 
+                download="transaction-receipt.jpg"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.downloadButton}
+                onClick={(e) => e.stopPropagation()}
+              >
+                Download Receipt
+              </a>
+            </div>
+          </div>
         </div>
       )}
 

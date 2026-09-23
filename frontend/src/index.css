@@ -282,3 +282,21 @@ body {
     font-size: 0.9rem;
   }
 }
+
+/* GLOBAL MODAL SCROLL FIX FOR MOBILE */
+[class*="modalOverlay"], 
+[class*="popupOverlay"] {
+  overscroll-behavior: contain;
+}
+
+[class*="modalContent"], 
+[class*="popupContent"] {
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* LOCK BODY SCROLL WHEN ANY MODAL IS OPEN */
+body:has([class*="modalOverlay"]), 
+body:has([class*="popupOverlay"]) {
+  overflow: hidden;
+}

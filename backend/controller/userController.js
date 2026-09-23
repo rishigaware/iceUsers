@@ -8,6 +8,7 @@ const CloseRequest = require("../models/CloseRequest");
 const ClosedId = require("../models/ClosedId");
 const PasswordChangeRequest = require("../models/PasswordChangeRequest");
 const AdminAccount = require("../models/AdminAccount");
+const Admin = require("../models/Admin");
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 
@@ -69,12 +70,69 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
-// Add a new user (Signup) - Restricted to admin creation
+// Add a new user (Signup) - Public registration with agent code
 exports.addUser = async (req, res) => {
-  return res.status(403).json({
-    message:
-      "Public registration is restricted. Please contact an administrator to create your account.",
-  });
+  try {
+    const { name, phoneNumber, email, password, username, agentCode } = req.body;
+
+    if (!name || !phoneNumber || !email || !password || !username) {
+      return res.status(400).json({ message: 'All fields except agentCode are required.' });
+    }
+
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+      return res.status(400).json({ message: 'Username is already taken.' });
+    }
+
+    let assignedAdminId = null;
+    let assignedAdminUsername = '';
+    let finalAgentCode = '';
+
+    // Step 1: Check provided agentCode
+    if (agentCode && agentCode.trim() !== '') {
+      const targetAdmin = await Admin.findOne({ agentCode: agentCode.trim(), status: 'active' });
+      if (targetAdmin) {
+        assignedAdminId = targetAdmin._id;
+        assignedAdminUsername = targetAdmin.username;
+        finalAgentCode = targetAdmin.agentCode;
+      }
+    }
+
+    // Step 2: Fallback to superadmin if no match found
+    if (!assignedAdminId) {
+      const superAdmin = await Admin.findOne({ role: 'superadmin', status: 'active' });
+      if (superAdmin) {
+        assignedAdminId = superAdmin._id;
+        assignedAdminUsername = superAdmin.username;
+        finalAgentCode = agentCode || '';
+      } else {
+        return res.status(500).json({ message: 'System configuration error: Superadmin not found.' });
+      }
+    }
+
+    const newUser = new User({
+      name,
+      phoneNumber,
+      email: email.toLowerCase(),
+      password,
+      username,
+      agentCode: finalAgentCode,
+      balance: 0,
+      role: 'user',
+      assignedAdmin: assignedAdminId,
+      assignedAdminUsername,
+    });
+
+    await newUser.save();
+
+    res.status(201).json({
+      message: 'User created successfully',
+      user: { id: newUser._id, ...newUser.toObject() },
+    });
+  } catch (error) {
+    console.error('Error in public addUser:', error);
+    res.status(500).json({ message: 'Error creating user', error: error.message });
+  }
 };
 
 // Get Account Details

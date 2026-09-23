@@ -211,14 +211,37 @@ exports.addAdminUser = async (req, res) => {
 
     let assignedAdminId = null;
     let assignedAdminUsername = '';
+    let finalAgentCode = '';
 
-    if (admin?.role === 'superadmin' && targetAdminId) {
-      assignedAdminId = targetAdminId;
-      const targetAdmin = await Admin.findById(targetAdminId);
-      if (targetAdmin) assignedAdminUsername = targetAdmin.username;
-    } else if (admin) {
-      assignedAdminId = admin._id;
-      assignedAdminUsername = admin.username;
+    if (agentCode && agentCode.trim() !== '') {
+      const targetAdminByCode = await Admin.findOne({ agentCode: agentCode.trim(), status: 'active' });
+      if (targetAdminByCode) {
+        assignedAdminId = targetAdminByCode._id;
+        assignedAdminUsername = targetAdminByCode.username;
+        finalAgentCode = targetAdminByCode.agentCode;
+      } else {
+        // Fallback to super admin if agent code does not match
+        const superAdmin = await Admin.findOne({ role: 'superadmin', status: 'active' });
+        if (superAdmin) {
+          assignedAdminId = superAdmin._id;
+          assignedAdminUsername = superAdmin.username;
+          finalAgentCode = agentCode.trim();
+        }
+      }
+    } else {
+      // Original logic if no explicit agentCode was provided
+      if (admin?.role === 'superadmin' && targetAdminId) {
+        assignedAdminId = targetAdminId;
+        const targetAdmin = await Admin.findById(targetAdminId);
+        if (targetAdmin) {
+          assignedAdminUsername = targetAdmin.username;
+          finalAgentCode = targetAdmin.agentCode || '';
+        }
+      } else if (admin) {
+        assignedAdminId = admin._id;
+        assignedAdminUsername = admin.username;
+        finalAgentCode = admin.agentCode || '';
+      }
     }
 
     const newUser = new User({
@@ -227,7 +250,7 @@ exports.addAdminUser = async (req, res) => {
       email: email.toLowerCase(),
       password,
       username,
-      agentCode: agentCode || admin?.agentCode || '',
+      agentCode: finalAgentCode,
       balance: 0,
       role: 'user',
       assignedAdmin: assignedAdminId,

@@ -10,6 +10,7 @@ const SignupPopup = ({ isOpen, isClose }) => {
         password: '',
         confirmPassword: '',
         phoneNumber: '',
+        agentCode: '',
     });
     const { url } = useUser();  // Get user and setUser from context
 
@@ -76,6 +77,7 @@ const SignupPopup = ({ isOpen, isClose }) => {
                         password: '',
                         confirmPassword: '',
                         phoneNumber: '',
+                        agentCode: '',
                     });
                     isClose(); // Close the modal
                 } else {
@@ -94,7 +96,7 @@ const SignupPopup = ({ isOpen, isClose }) => {
                 
                 <h2 className={styles.heading}>Signup Form</h2>
                 <form onSubmit={handleSubmit}>
-                    {['name', 'username', 'email', 'password', 'confirmPassword', 'phoneNumber'].map(
+                    {['name', 'username', 'email', 'password', 'confirmPassword', 'phoneNumber', 'agentCode'].map(
                         (field, index) => (
                             <div key={index} className={styles.formGroup}>
                                 <label htmlFor={field} className={styles.label}>

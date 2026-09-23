@@ -68,8 +68,18 @@ const Login = ({ isOpen, isClose }) => {
     
   };
 
+  if (!isOpen) return null;
+
+  if (isSignupVisible) {
+    return (
+      <SignupPopup 
+        isOpen={isSignupVisible} 
+        isClose={closeSignup}
+      />
+    );
+  }
+
   return (
-    isOpen && (
       <div className={styles.modalOverlay}>
         <div className={styles.modalContent}>
           <h2 className={styles.loginHeading}>Login</h2>
@@ -113,15 +123,7 @@ const Login = ({ isOpen, isClose }) => {
                 </button>
             </p>
         </div>
-        {
-            isSignupVisible && 
-            <SignupPopup 
-                    isOpen={isSignupVisible} isClose={closeSignup}
-            />
-        }
-
       </div>
-    )
   );
 };
 

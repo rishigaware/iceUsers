@@ -99,47 +99,45 @@ const SignupForm = () => {
         <div className={styles.modalOverlay}>
             <div className={styles.modalContent}>
                 <FaTimes className={styles.closeIcon} onClick={() => navigate(ROUTES.HOME)} />
-                <h2 className={styles.heading}>Registration Notice</h2>
+                <h2 className={styles.heading}>Signup Form</h2>
                 
-                <div style={{
-                    backgroundColor: '#fff3cd',
-                    color: '#856404',
-                    border: '1px solid #ffeeba',
-                    borderRadius: '8px',
-                    padding: '16px',
-                    marginBottom: '20px',
-                    fontSize: '14px',
-                    lineHeight: '1.5'
-                }}>
-                    <strong>Public registration is restricted.</strong><br />
-                    All user accounts are assigned and created directly by administrators. Please contact your admin or customer support to obtain your login credentials.
-                </div>
+                <form onSubmit={handleSubmit}>
+                    {['name', 'username', 'email', 'password', 'confirmPassword', 'phoneNumber', 'agentCode'].map(
+                        (field, index) => (
+                            <div key={index} className={styles.formGroup}>
+                                <label htmlFor={field} className={styles.label}>
+                                    {field.charAt(0).toUpperCase() + field.slice(1).replace(/([A-Z])/g, ' $1')}:
+                                </label>
+                                <input
+                                    type={field.includes('password') ? 'password' : 'text'}
+                                    id={field}
+                                    name={field}
+                                    value={formData[field]}
+                                    onChange={handleChange}
+                                    className={styles.input}
+                                    placeholder={`Enter your ${field.charAt(0).toUpperCase() + field.slice(1)}`}
+                                />
+                                {errors[field] && (
+                                    <p className={styles.errorText}>{errors[field]}</p>
+                                )}
+                            </div>
+                        )
+                    )}
+                    <button type="submit" className={styles.submitButton}>
+                        Signup
+                    </button>
+                </form>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                <p className={styles.signupLink} style={{ textAlign: 'center', marginTop: '1rem' }}>
                     <button
                         type="button"
                         onClick={() => navigate(ROUTES.LOGIN)}
-                        className={styles.submitButton}
-                        style={{ cursor: 'pointer' }}
+                        className={styles.signupTrigger}
+                        style={{ background: 'none', border: 'none', color: 'var(--primary-color)', cursor: 'pointer', fontWeight: 'bold' }}
                     >
-                        Go to Login
+                        Login here
                     </button>
-                    <button
-                        type="button"
-                        onClick={() => navigate(ROUTES.HOME)}
-                        style={{
-                            padding: '12px',
-                            background: '#f8f9fa',
-                            border: '1px solid #dee2e6',
-                            borderRadius: '4px',
-                            cursor: 'pointer',
-                            fontWeight: 'bold',
-                            color: '#495057'
-                        }}
-                    >
-                        Back to Home
-                    </button>
-                </div>
+                </p>
             </div>
         </div>
     );

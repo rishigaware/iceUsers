@@ -1,228 +1,410 @@
 <p align="center">
-  <img src="./frontend/public/logo.png" width="380" alt="IceUsers Logo" />
+  <img src="./frontend/public/logo.png" width="380" alt="IceUsers Platform Architecture" />
 </p>
 
-# 🪩 IceUsers - Premium Self-Admin Panel Provision Platform 🚀
+<h1 align="center">IceUsers — Enterprise Multi-Tenant Credential Provisioning & Financial Ledger System</h1>
 
-🌐 **Official Link:** [https://the247panel.shop/](https://the247panel.shop/) & [https://icepanels.info/](https://icepanels.info/)
+<p align="center">
+  <strong>A full-stack, multi-tenant administrative portal engineered to automate credential management, wallet ledger transactions, and external platform provisioning with isolated sub-admin tenancy and a 13-point granular permission engine.</strong>
+</p>
 
-Welcome to **Ice Users** (The247Panel), India's premier, fully automated, self-admin & master panel creation platform! Built on a modern full-stack architecture with a stunning dark-glassmorphic aesthetic, Ice Users allows users to easily manage, create, and top-up administrative credentials for premium exchange platforms securely—without any fraud, risk, or middleman interference.
+<p align="center">
+  <img src="https://img.shields.io/badge/React-18.3-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React" />
+  <img src="https://img.shields.io/badge/Vite-6.0-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite" />
+  <img src="https://img.shields.io/badge/Node.js-18+-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js" />
+  <img src="https://img.shields.io/badge/Express-4.21-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express" />
+  <img src="https://img.shields.io/badge/MongoDB-Mongoose-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB" />
+  <img src="https://img.shields.io/badge/TailwindCSS-3.4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="TailwindCSS" />
+  <img src="https://img.shields.io/badge/Framer_Motion-13.4-FF0055?style=for-the-badge&logo=framer&logoColor=white" alt="Framer Motion" />
+  <img src="https://img.shields.io/badge/Cloudinary-Asset_Pipeline-3448C5?style=for-the-badge&logo=cloudinary&logoColor=white" alt="Cloudinary" />
+</p>
 
 ---
 
-## 🎨 Home Page UI Mockup
-
-Below is a visual representation of the highly polished, magenta-accented, dark-glassmorphic user interface of the IceUsers landing page and dashboard. 
-
-![IceUsers UI Mockup](./readme_homepage.png)
-
-*Design language features deep navy-indigo canvas ambient gradients (`#090d16` to `#130e24`), flashy magenta neon accents (`#DB2777`), glassmorphic panels, and animated feedback.*
+> [!NOTE]
+> **Engineering Portfolio Disclosure:**
+> This repository contains a production-grade full-stack platform architected and developed by me as a **commissioned client engagement**. This document outlines the project strictly from an **engineering, systems architecture, and technical implementation perspective** to showcase full-stack problem-solving, multi-tenant state isolation, security workflows, and responsive UI engineering.
 
 ---
 
-## 🌐 Supported Exchange Websites & Platforms
+## 📌 Executive Summary & System Scope
 
-IceUsers provides automated, instant panel provisioning, rate conversion, and balance top-ups across 16+ top-tier exchange platforms:
+The client required a unified, high-availability web platform capable of automating credential lifecycle operations (ID requests, password updates, account closures) and financial transactions (deposits and withdrawals) across 16+ third-party exchange platforms. 
+
+The primary architectural challenges solved during development include:
+1. **Multi-Tenant Sub-Admin Scoping:** Allowing independent master agents ("Sub-Admins") to operate within fully isolated tenant silos—managing their own user rosters, exchange catalogs, banking gateways, and support routes without cross-tenant data leakage.
+2. **13-Point Granular Permission Matrix:** An administrative authorization system giving the Superadmin fine-grained control over Sub-Admin capabilities (user creation, balance adjustments, credential edits, transaction audits, and catalog management).
+3. **Two-Way Financial Ledger & Verification Pipeline:** Automated coin-to-currency conversions (`1 INR = X Coins`), receipt upload handling via Cloudinary/Multer, and dual-state approval workflows.
+4. **Adaptive Dual-View UI Architecture:** Designing complex administrative tables that automatically transform into high-density touch-optimized cards on mobile devices ($\le 880\text{px}$ down to 320px) with zero layout overflow.
+
+---
+
+## 🎨 User Interface & Design System
+
+The application features a modern dark-glassmorphic aesthetic engineered with a custom tokenized palette (`#090d16` canvas, `#130e24` card surface, and vibrant `#DB2777` magenta neon accents), backdrop blur filters, and micro-interactions.
+
+### Desktop & Dashboard Preview
+
+![IceUsers UI Architecture](./readme_homepage.png)
+
+### Integrated Partner Exchange Matrix
+
+The platform integrates dynamic rate calculation and credential provisioning across 16+ external platforms:
 
 | | | | |
 |:---:|:---:|:---:|:---:|
-| <img src="./frontend/src/assets/websites/Radheexch.jpg" width="160" alt="Radhe Exchange" /><br/>**Radhe Exchange** | <img src="./frontend/src/assets/websites/Kingexch9.jpg" width="160" alt="King Exchange" /><br/>**King Exchange** | <img src="./frontend/src/assets/websites/Diamondexch99.jpg" width="160" alt="Diamond Exchange" /><br/>**Diamond Exchange** | <img src="./frontend/src/assets/websites/Goexch9.jpg" width="160" alt="Go Exchange" /><br/>**Go Exchange** |
-| <img src="./frontend/src/assets/websites/world777.jpg" width="160" alt="World777" /><br/>**World777** | <img src="./frontend/src/assets/websites/taj777.jpg" width="160" alt="Taj777" /><br/>**Taj777** | <img src="./frontend/src/assets/websites/mylaser247.jpg" width="160" alt="Laser247" /><br/>**Laser247** | <img src="./frontend/src/assets/websites/baazi888.jpg" width="160" alt="Baazi888" /><br/>**Baazi888** |
-| <img src="./frontend/src/assets/websites/the100exch.jpg" width="160" alt="The100 Exchange" /><br/>**The100 Exchange** | <img src="./frontend/src/assets/websites/allpanelexch.jpg" width="160" alt="All Panel Exch" /><br/>**All Panel Exch** | <img src="./frontend/src/assets/websites/Bikajiexch.jpg" width="160" alt="Bikaji Exchange" /><br/>**Bikaji Exchange** | <img src="./frontend/src/assets/websites/betonly777.jpg" width="160" alt="BetOnly777" /><br/>**BetOnly777** |
-| <img src="./frontend/src/assets/websites/jsk1.jpg" width="160" alt="JSK1" /><br/>**JSK1** | <img src="./frontend/src/assets/websites/ps777.jpg" width="160" alt="PS777" /><br/>**PS777** | <img src="./frontend/src/assets/websites/t10exchange.jpg" width="160" alt="T10 Exchange" /><br/>**T10 Exchange** | <img src="./frontend/src/assets/websites/Allowexch999.jpg" width="160" alt="Allow Exchange" /><br/>**Allow Exchange** |
+| <img src="./frontend/src/assets/websites/Radheexch.jpg" width="150" alt="Radhe Exchange" /><br/>`Radhe Exchange` | <img src="./frontend/src/assets/websites/Kingexch9.jpg" width="150" alt="King Exchange" /><br/>`King Exchange` | <img src="./frontend/src/assets/websites/Diamondexch99.jpg" width="150" alt="Diamond Exchange" /><br/>`Diamond Exchange` | <img src="./frontend/src/assets/websites/Goexch9.jpg" width="150" alt="Go Exchange`" /><br/>`Go Exchange` |
+| <img src="./frontend/src/assets/websites/world777.jpg" width="150" alt="World777" /><br/>`World777` | <img src="./frontend/src/assets/websites/taj777.jpg" width="150" alt="Taj777" /><br/>`Taj777` | <img src="./frontend/src/assets/websites/mylaser247.jpg" width="150" alt="Laser247" /><br/>`Laser247` | <img src="./frontend/src/assets/websites/baazi888.jpg" width="150" alt="Baazi888" /><br/>`Baazi888` |
+| <img src="./frontend/src/assets/websites/the100exch.jpg" width="150" alt="The100 Exchange" /><br/>`The100 Exchange` | <img src="./frontend/src/assets/websites/allpanelexch.jpg" width="150" alt="All Panel Exch" /><br/>`All Panel Exch` | <img src="./frontend/src/assets/websites/Bikajiexch.jpg" width="150" alt="Bikaji Exchange" /><br/>`Bikaji Exchange` | <img src="./frontend/src/assets/websites/betonly777.jpg" width="150" alt="BetOnly777" /><br/>`BetOnly777` |
+| <img src="./frontend/src/assets/websites/jsk1.jpg" width="150" alt="JSK1" /><br/>`JSK1` | <img src="./frontend/src/assets/websites/ps777.jpg" width="150" alt="PS777" /><br/>`PS777` | <img src="./frontend/src/assets/websites/t10exchange.jpg" width="150" alt="T10 Exchange" /><br/>`T10 Exchange` | <img src="./frontend/src/assets/websites/Allowexch999.jpg" width="150" alt="Allow Exchange" /><br/>`Allow Exchange` |
 
 ---
 
-## ⚡ Core Philosophy & Identity
+## 🛠️ Complete Technical Stack
 
-- **Zero Intermediaries**: Eliminates risky middlemen. Users interact directly with automated systems to create their self-admin panels.
-- **24/7 Availability**: Automated instant panel refills, secure deposits, and swift withdrawals available round-the-clock.
-- **Next-Gen Aesthetics**: Clean glassmorphism overlays, fluid slide-in and hover transitions, responsive card designs, and vibrant status badges powered by a flashy Magenta (`#DB2777`) theme.
-- **Multi-Tenant Isolation**: Complete isolation between Admin Masters (sub-admins) with private user assignments, custom exchange catalogs, and isolated banking gateways.
+### Client-Side (Frontend SPA)
+| Technology | Role / Purpose |
+| :--- | :--- |
+| **React 18.3** | Component-driven UI runtime utilizing concurrent rendering and transition flags |
+| **Vite 6.0** | Ultra-fast ESM module bundler with optimized Hot Module Replacement (HMR) |
+| **React Router v6** | Declarative client-side routing with role-gated `ProtectedRoute` guards and future v7 transitions |
+| **TailwindCSS 3.4** | Utility-first responsive design framework configured with custom glassmorphism utilities |
+| **CSS Modules** | Scoped, non-colliding style encapsulation for complex components (`HomeHeading`, `Navbar`, `Modals`) |
+| **Framer Motion 13.4** | Physics-based spring animations for drawer transitions, modals, and list entry states |
+| **Material UI (MUI)** | High-fidelity SVG icon library (`@mui/icons-material`), typography, and chip components |
+| **PrimeReact & Flowbite** | Data table widgets, toast notifications, status badges, and interactive popovers |
+| **React-Slick & Slick-Carousel** | Smooth multi-breakpoint banner carousels for promotional and announcement graphics |
+| **React Portals** | Modal and drawer rendering directly into the document root to bypass z-index clipping contexts |
 
----
-
-## 🛠️ Technology Stack
-
-IceUsers utilizes a powerful and scalable full-stack ecosystem:
-
-### 💻 Client Side (Frontend)
-- **Framework**: `React 18` + `Vite` (for ultra-fast Hot Module Replacement)
-- **Styling**: `TailwindCSS` + `Vanilla CSS Modules` (highly custom components with performance in mind)
-- **UI Components**: `Flowbite React` (responsive widgets), `PrimeReact` (advanced UI inputs & toast notifications), `Material UI (MUI)` (sleek SVG icons, chips, and typography elements)
-- **Slide Carousels**: `react-slick` + `slick-carousel` (for horizontal and square banner announcements)
-- **State Management**: React Context (`UserProvider` & `BalanceProvider`) for global authentication, balance updates, and API synchronizations
-- **Services**: Firebase Web SDK (Auth helper integration)
-
-### ⚙️ Server Side (Backend)
-- **Runtime**: `Node.js` + `Express`
-- **Database**: `MongoDB` via `Mongoose ODM`
-- **Authentication**: JWT & Local authentication strategies with password hashing (`bcryptjs`)
-- **Middlewares**: custom CORS policy configurations, Express file uploads (`multer`), static file routing, and role-based request verification.
-
----
-
-## ✨ Features Breakdown
-
-### 👤 User Panel Features
-- **💳 Interactive Glass Wallet**: Live-updating wallet balances with beautiful green-glowing balance badges.
-- **📥 Instant Deposit/Withdrawal Request**: Interactive modals to place transactions, upload receipt screenshots, and verify payments to their designated Admin Master's accounts.
-- **🚀 One-Click Self-Admin Creation**: Customized panels configuration where users specify coin amounts, custom transaction rates, and website of choice.
-- **📱 Live ID Manager**: Interactive portal displaying website credentials (URL, username, passwords) once approved by the admin.
-- **🔄 Account Actions**: Requests to close existing accounts or request quick password changes for security.
-- **💬 Role-Based Dynamic Support**: Auth-gated floating widget automatically routing users to their assigned Admin Master's official WhatsApp, Telegram, Instagram, and Facebook support channels.
-
-### 👑 Admin & Multi-Tenant Panel Features
-- **👑 Superadmin Oversight**:
-  - Global oversight across all users, transactions, ID requests, and exchange websites.
-  - Provisions and manages isolated **Admin Masters** (`/admin/subadmins`) with a granular 13-point permission matrix.
-  - Multi-tenant filtering to inspect or audit any Admin Master's users, transactions, and requests.
-  - Configures global platform support links and manages any Admin Master's support links on the fly.
-  - Auto-seeded on startup (`superadmin` / `Super@1234`).
-- **🛡️ Admin Master (Sub-Admin) Management**:
-  - **Isolated Tenancy**: Admin Masters only see and manage users directly assigned to them; public registration is restricted.
-  - **Custom Exchange Catalogs**: Each Admin Master registers and prices their own list of exchange websites (`WebsiteId`), setting custom coin rates and minimum coin requirements.
-  - **Dedicated Banking Gateways**: Each Admin Master manages their own bank accounts and UPI IDs (`AdminAccount`) for user deposits.
-  - **13-Point Granular Permissions**: Features are permission-gated (user creation, balance updates, password resets, deletions, catalog control, transaction moderation, and support link editing).
-  - **Modern Collapsible UI**: Default-collapsed accordion cards with user count and permission badges, styled to match the Users Management theme.
-- **📝 ID Request Pipeline**:
-  - Dual responsive view: 7-column table on desktop ($> 880\text{px}$) and ultra-compact cards on mobile ($\le 880\text{px}$) with zero horizontal overflow down to 320px.
-  - Automated coin conversion (1 INR = X coins), admin notes, and one-click accept/reject controls.
-- **💼 Transaction Moderation**: View submitted screenshots of bank transfers to quickly approve/reject wallet deposits and process payouts.
-- **🖼️ Banner & Carousel Manager**: Upload and sequence horizontal and square banner slide graphics directly to the landing page.
-- **👥 User Accounts Audits**: Access, inspect, and modify active user databases, balances, and registered exchange websites.
+### Server-Side (Backend REST API)
+| Technology | Role / Purpose |
+| :--- | :--- |
+| **Node.js** | Non-blocking, asynchronous event-driven server runtime |
+| **Express 4.21** | Enterprise RESTful API routing, error middleware, and static asset delivery |
+| **MongoDB & Mongoose 8.18** | Schema validation, compound indexing, population, and multi-tenant document queries |
+| **Bcrypt.js** | Cryptographic password hashing (salt rounds = 10) for tamper-proof credential storage |
+| **Multer & Cloudinary** | Multipart form handling and automated cloud image optimization for transaction receipts |
+| **CORS Dynamic Origin Handler** | Dynamic regex origin validation supporting multi-domain production, staging, and localhost clients |
+| **UUID (v11)** | Unique, collision-resistant transaction reference key generator |
 
 ---
 
-## 🔍 How It Works - The Step-by-Step Flow
+## 🏗️ System Architecture & Data Flow
 
-The system operates in a highly-structured 7-step automated loop:
+```mermaid
+flowchart TB
+    subgraph ClientLayer["🖥️ Frontend Client (React 18 + Vite)"]
+        UI[Glassmorphic UI / Dashboard]
+        AuthCtx[UserContext & Role Guard]
+        BalCtx[BalanceProvider State Engine]
+        Portals[React Portals / Modals]
+    end
+
+    subgraph APILayer["⚙️ Backend REST API (Node.js + Express)"]
+        Router[Express Router]
+        AuthMW[RBAC & Origin Validation Middleware]
+        TenantScoper[SubAdmin Tenant Scoping Engine]
+        
+        subgraph Controllers["Modular Controllers"]
+            AdminCtrl[adminController.js]
+            UserCtrl[userController.js]
+            SupportCtrl[supportController.js]
+            ImgCtrl[imageController.js]
+        end
+    end
+
+    subgraph StorageLayer["🗄️ Persistence & Storage Layer"]
+        MongoDB[(MongoDB Atlas / Document Store)]
+        Cloudinary[(Cloudinary CDN / Proof Receipts)]
+    end
+
+    UI -->|Authenticated API Requests| Router
+    Router --> AuthMW
+    AuthMW --> TenantScoper
+    TenantScoper --> Controllers
+    Controllers -->|Mongoose Queries| MongoDB
+    ImgCtrl -->|Multipart Upload Stream| Cloudinary
+    BalCtx <-->|Live Polling & Event Reconciliation| UserCtrl
+```
+
+---
+
+## 🛡️ Multi-Tenant Architecture & RBAC
+
+The system implements a tiered role hierarchy designed to strictly isolate operations between distinct admin tenants:
 
 ```mermaid
 graph TD
-    A[1. Search & Visit IcePanels.info] --> B[2. Register with Gmail & Phone]
-    B --> C[3. Click Create Self-Admin Panel]
-    C --> D[4. Select Exchange & Coins]
-    D --> E[5. Specify Rates & Quantities]
-    E --> F[6. Transfer Funds via Wallet Payment]
-    F --> G[7. Upload Receipt & Receive Login Details]
+    Super[👑 Superadmin] -->|Provisions & Audits| SubAdmin[🛡️ Admin Master / Sub-Admin]
+    Super -->|Configures 13-Point Permissions| SubAdmin
+    Super -->|Global View| GlobalData[All Users, Transactions & Catalogs]
+    
+    SubAdmin -->|Tenant Silo A| UserA1[User A1]
+    SubAdmin -->|Tenant Silo A| UserA2[User A2]
+    SubAdmin -->|Manages Isolated| GatewayA[Dedicated Banking Gateways]
+    SubAdmin -->|Manages Isolated| CatalogA[Custom Exchange Catalog & Coin Rates]
+    
+    SubAdminB[🛡️ Admin Master B] -->|Tenant Silo B| UserB1[User B1]
+    SubAdminB -->|Manages Isolated| GatewayB[Bank Gateways B]
+    
+    UserA1 -.x|Strictly Blocked Access| SubAdminB
 ```
 
-1. **Open Google & Visit**: Access the platform through the secure portal at `IcePanels.info` or `The247Panel.shop`.
-2. **Register/Login**: Securely register or log in using your credentials.
-3. **Select Panel**: Navigate to `Panels` -> `Create Panel`.
-4. **Choose Platform**: Choose one of the 16+ premium exchanges supported (e.g. Radhe Exchange, King Exchange, Go Exchange, world777, Diamond Exchange).
-5. **Set Configuration**: Fill in panel details, desired coins, and rates.
-6. **Wallet Payment**: Complete checkout using your pre-funded wallet balance.
-7. **Submit Receipt**: Upload payment confirmation. Once the admin verifies, the administrative credentials (URL, Username, Password) appear directly on your home dashboard page.
+### The 13-Point Granular Permission Matrix
+
+Sub-Admins are provisioned with schema-enforced boolean permissions stored on the `Admin` document:
+
+```javascript
+// models/Admin.js
+permissions: {
+    canCreateUsers:        { type: Boolean, default: true  }, // Provision new user credentials
+    canUpdateUserBalance:  { type: Boolean, default: true  }, // Direct wallet credit/debit adjustments
+    canChangeUserPassword: { type: Boolean, default: true  }, // Reset assigned user credentials
+    canDeleteUsers:        { type: Boolean, default: false }, // Destructive removal of user accounts
+    canAddWebsites:        { type: Boolean, default: true  }, // Register new exchange targets
+    canEditWebsites:       { type: Boolean, default: true  }, // Alter coin exchange rates & min coins
+    canDeleteWebsites:     { type: Boolean, default: false }, // Remove websites from catalog
+    canManageCategories:   { type: Boolean, default: true  }, // Categorize platform offerings
+    canManageIdRequests:   { type: Boolean, default: true  }, // Accept/reject user ID provisioning
+    canManageTransactions: { type: Boolean, default: true  }, // Approve/reject deposit & withdrawal proofs
+    canEditIdCredentials:  { type: Boolean, default: true  }, // Update target website login/passwords
+    canManageBanners:      { type: Boolean, default: false }, // Superadmin-restricted landing banners
+    canManageSupportLinks: { type: Boolean, default: false }, // Edit WhatsApp, Telegram, Social channels
+}
+```
+
+Every administrative mutation route checks both the requesting admin's role and the specific capability flag via the tenant resolver before allowing database mutations.
 
 ---
 
-## 📂 Project Structure
+## 🔄 Core Workflows & State Machines
+
+### 1. ID Provisioning & Credential Lifecycle
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor User
+    participant Frontend as React Client
+    participant Server as Express API
+    participant DB as MongoDB
+    actor Admin as Assigned Sub-Admin
+
+    User->>Frontend: Selects Exchange & specifies coin quantity
+    Frontend->>Frontend: Validates minCoins & calculates INR cost
+    Frontend->>Server: POST /api/user/request-id (Wallet deduction)
+    Server->>DB: Atomically deduct coins & create IdRequest (Pending)
+    Server-->>Frontend: 201 Created (Request queued)
+    
+    Admin->>Frontend: Inspects ID Requests (Filtered by Tenant ID)
+    Admin->>Server: PATCH /api/admin/id-requests/:id/accept (Supplies username & password)
+    Server->>DB: Updates status='Accepted', records processedBy & credentials
+    
+    User->>Frontend: Opens "My IDs" Portal
+    Frontend->>Server: GET /api/user/my-ids
+    Server-->>Frontend: Returns decrypted URL, username & credentials
+    Frontend->>User: Displays interactive credential card with copy-to-clipboard
+```
+
+### 2. Proof-of-Payment Verification Pipeline
+
+```mermaid
+stateDiagram-v2
+    [*] --> DepositInitiated: User selects Admin Bank/UPI Account
+    DepositInitiated --> ReceiptUploaded: User attaches payment screenshot
+    ReceiptUploaded --> CloudinaryStored: Multer streams to Cloudinary CDN
+    CloudinaryStored --> PendingVerification: Transaction logged with unique TXN ID
+    
+    state AdminModeration {
+        PendingVerification --> Accepted: Admin verifies funds in banking app
+        PendingVerification --> Rejected: Invalid transaction ID or falsified receipt
+    }
+    
+    Accepted --> BalanceCredited: Atomic increment on User.balance
+    Rejected --> LedgerLogged: Reason recorded; balance untouched
+    BalanceCredited --> [*]
+    LedgerLogged --> [*]
+```
+
+---
+
+## 💡 Key Engineering Challenges & Technical Solutions
+
+### 1. Dual-View Mobile Responsiveness ($\le 880\text{px}$)
+* **Challenge:** Administrative panels demand data-dense tabular information (7+ columns including Transaction IDs, status badges, timestamps, receipt preview triggers, and action buttons). On screens below 880px down to 320px, horizontal scrolling degrades operator efficiency.
+* **Solution:** Engineered a dual-render layout paradigm using CSS media queries and conditional markup:
+  - **Desktop ($> 880\text{px}$):** Renders high-density data tables with fixed column ratios.
+  - **Mobile ($\le 880\text{px}$):** Automatically swaps into stacked glassmorphic cards with copyable IDs, compact status chips, and accordion action panels.
+  - **Layout Overflow Fix:** Eliminated horizontal page jitter by replacing root `100vw` rules with strict `100%` bounds and zero-margin wrappers.
+
+### 2. React Portal Modals & Stacking Context Isolation
+* **Challenge:** Heavy CSS transforms, sticky navigation headers, and backdrop filters created stacking context issues where modals and dropdowns were clipped or rendered behind sibling cards.
+* **Solution:** Migrated all popups (`ChangePasswordModal`, `WebsiteDepositPopup`, `WalletWithdrawalPopup`) and dynamic drawers to React Portals (`ReactDOM.createPortal`), mounting them directly into dedicated DOM root containers (`#modal-root`). This guarantees flawless z-index layering regardless of DOM nesting depth.
+
+### 3. Real-Time Balance Synchronization
+* **Challenge:** Balance discrepancies between cached client states and backend ledger operations when users trigger multiple transactions or when admins adjust balances concurrently.
+* **Solution:** Created a unified `BalanceProvider` React Context utilizing an event-driven polling and optimistic update model. Balance modifications trigger immediate UI reconciliation and background re-fetching to maintain absolute data integrity without requiring full-page reloads.
+
+### 4. Dynamic Multi-Origin CORS Enforcement
+* **Challenge:** The application is deployed across multiple staging, production, and custom domain names (`iceusers.info`, `the247panel.shop`, Vercel previews, local development ports).
+* **Solution:** Implemented a dynamic origin validator using normalized string pattern matching and regex verification in `server.js`, securely authorizing legitimate cross-domain requests while rejecting unauthorized origins with explicit policy errors.
+
+---
+
+## 📁 Repository Directory Structure
 
 ```text
 iceUsers/
 ├── backend/
-│   ├── config/            # DB connection & Superadmin auto-seeder
-│   ├── controller/        # API Controller logics (Auth, Users, SubAdmins, Support, ID Requests)
-│   ├── models/            # Mongoose Schemas (Admin, User, SupportLinks, WebsiteId, Transaction, IdRequest)
-│   ├── routes/            # Express API Routes (User, Admin, Auth, Support, Images)
-│   ├── uploads/           # User upload directories for transaction screenshots & banners
-│   ├── server.js          # Node.js Server entrypoint
+│   ├── config/
+│   │   ├── db.js                     # MongoDB connection handler
+│   │   └── seedSuperAdmin.js         # Idempotent superadmin seeding script
+│   ├── controller/
+│   │   ├── adminController.js        # Multi-tenant admin business logic & audits (100KB+)
+│   │   ├── authController.js         # Authentication, hashing, and token dispatch
+│   │   ├── imageController.js        # Multer / Cloudinary asset upload processor
+│   │   ├── subAdminHelper.js         # Tenant scoping & admin identifier resolvers
+│   │   ├── supportController.js      # Dynamic multi-channel social links manager
+│   │   └── userController.js         # User wallet, ID requests, and balance engine (35KB+)
+│   ├── models/                       # 15 Mongoose schemas
+│   │   ├── Admin.js                  # Superadmin & SubAdmin with 13-point permissions
+│   │   ├── AdminAccount.js           # Multi-tenant banking & UPI configurations
+│   │   ├── IdRequest.js              # ID creation lifecycle records
+│   │   ├── Transaction.js            # Financial ledger entries (deposit/withdrawal)
+│   │   ├── User.js                   # User accounts scoped to assignedAdmin
+│   │   ├── WebsiteId.js              # Target exchange credentials
+│   │   └── SupportLink.js            # Social links mapped per admin tenant
+│   ├── routes/                       # Express route definitions
+│   │   ├── adminRoutes.js            # Gated administrative endpoints
+│   │   ├── authRoutes.js             # Public authentication routes
+│   │   ├── imageRoutes.js            # Asset upload routes
+│   │   ├── supportRoutes.js          # Support links API
+│   │   └── userRoutes.js             # End-user profile and transaction routes
+│   ├── server.js                     # Server entrypoint & dynamic CORS configuration
 │   └── package.json
-└── frontend/
-    ├── public/            # Static assets
-    ├── src/
-    │   ├── assets/        # Core image assets, certifications, and logo badges
-    │   │   └── websites/  # Supported exchange website graphics & logos
-    │   ├── components/    # Reusable components (SubAdmins, Users, IdRequests, FloatingSocialWidget, Navbars)
-    │   ├── context/       # UserContext & BalanceProvider React State
-    │   ├── firebase/      # Client-side Firebase configs
-    │   ├── hooks/         # Custom React hooks
-    │   ├── utils/         # Utility functions
-    │   ├── App.jsx        # App component router definition
-    │   ├── index.css      # Core Design System, Tailwinds, and custom animations
-    │   └── main.jsx       # Client bundle mount point
-    ├── tailwind.config.cjs
-    └── package.json
+│
+├── frontend/
+│   ├── public/                       # Static public assets, icons, and logos
+│   ├── src/
+│   │   ├── assets/                   # SVG vectors, certifications, and exchange logos
+│   │   │   └── websites/             # 16+ partner platform graphical assets
+│   │   ├── components/
+│   │   │   ├── admin/                # Administrative dashboard modules
+│   │   │   │   ├── AdminAccountsDetails/ # Sub-admin banking manager
+│   │   │   │   ├── AllIds/           # Global credential inspection table
+│   │   │   │   ├── IdRequests/       # Responsive ID approval queue (Desktop/Mobile)
+│   │   │   │   ├── SubAdmins/        # Superadmin sub-admin provisioner & permission toggles
+│   │   │   │   ├── Users/            # Multi-tenant user audit & balance adjustment
+│   │   │   │   └── Websites/         # Exchange catalog & coin rate configuration
+│   │   │   ├── BalanceProvider/      # Global balance synchronization provider
+│   │   │   ├── FloatingSocialWidget/ # Dynamic role-routed social support widget
+│   │   │   ├── Home/                 # Landing dashboard, carousels, and headings
+│   │   │   ├── Id/                   # User ID management & modal dialogs
+│   │   │   ├── Login/ & Signup/      # Auth forms with inline validation
+│   │   │   ├── Navbar/ & Sidebar/    # Responsive navigation with persistent collapse state
+│   │   │   └── Transactions/         # Financial transaction history with proof view
+│   │   ├── context/
+│   │   │   └── UserContext.jsx       # Global session & authentication state
+│   │   ├── utils/
+│   │   │   ├── roles.js              # Role constants (`SUPERADMIN`, `ADMIN`, `USER`)
+│   │   │   └── routes.js             # Centralized route dictionary
+│   │   ├── App.jsx                   # Master routing table & layout assembly
+│   │   ├── index.css                 # Design tokens, Tailwind directives, & glassmorphism
+│   │   └── main.jsx                  # React DOM client entrypoint
+│   ├── tailwind.config.cjs           # Custom color palette and media query definitions
+│   └── package.json
+│
+├── readme_homepage.png               # High-resolution dashboard UI preview
+└── README.md                         # Technical engineering documentation
 ```
 
 ---
 
-## 🚀 Setup & Installation
+## 🚀 Local Development & Setup Guide
 
-Follow these instructions to run the entire system locally.
-
-### 📥 Prerequisites
-- **Node.js** (v18.x or higher recommended)
-- **npm** or **yarn**
-- **MongoDB Database** (Local instance or MongoDB Atlas Cloud Cluster)
+### Prerequisites
+* **Node.js**: v18.0.0 or higher
+* **npm** or **yarn**
+* **MongoDB**: A running local instance or MongoDB Atlas URI
+* **Cloudinary Account**: (Optional, for production image hosting)
 
 ---
 
-### 1. Backend Setup ⚙️
+### 1. Backend Service Configuration
 
-1. Navigate to the backend directory:
+1. Clone the repository and navigate to `backend/`:
    ```bash
    cd backend
    ```
-2. Install server-side dependencies:
+2. Install server dependencies:
    ```bash
    npm install
    ```
-3. Create a `.env` file in the `backend` folder and add your environment variables:
+3. Create a `.env` configuration file:
    ```env
    PORT=5000
-   MONGO_URI=your_mongodb_connection_string
-   JWT_SECRET=your_jwt_secret_token
+   MONGO_URI=mongodb://localhost:27017/iceusers
+   JWT_SECRET=your_secure_development_jwt_secret_key
    CORS_ORIGINS=http://localhost:5173,http://localhost:3000
+   
+   # Optional Cloudinary Storage Configuration
+   CLOUDINARY_CLOUD_NAME=your_cloud_name
+   CLOUDINARY_API_KEY=your_api_key
+   CLOUDINARY_API_SECRET=your_api_secret
    ```
-4. Start the server in development mode:
+4. Start the backend in development mode with auto-reload:
    ```bash
    npm run dev
    ```
-   *The server will boot up and listen on `http://localhost:5000`.*
-   > 💡 **Default Superadmin:** On first boot, `seedSuperAdmin.js` automatically creates the Superadmin account if not present (`superadmin` / `Super@1234`).
+   *The server will initialize on `http://localhost:5000`. On first run, the database auto-seeder provisions the default Superadmin credentials.*
 
 ---
 
-### 2. Frontend Setup 💻
+### 2. Frontend Client Setup
 
 1. Navigate to the frontend directory:
    ```bash
    cd ../frontend
    ```
-2. Install client-side dependencies:
+2. Install client dependencies:
    ```bash
    npm install
    ```
-3. Create a `.env` file in the `frontend` folder (if needed to configure custom Firebase variables or API endpoints).
-4. Run the local development server:
+3. Start the Vite development server:
    ```bash
    npm run dev
    ```
-   *Vite will compile and host the page. Click the terminal link (usually `http://localhost:5173`) to launch it in your browser.*
+4. Launch your browser at `http://localhost:5173`.
 
 ---
 
-## 🏅 Certifications & Responsible Gaming
+## 📈 Recent Technical Updates & Engineering Changelog
 
-IceUsers is committed to providing a secure and authenticated environment for its partners and users. The platform integrates certified standards for security and player protection:
+* **Multi-Tenant Sub-Admin Architecture (`00d94b4`):**
+  - Built dedicated `adminController.js` logic and route handlers to isolate sub-admin user pools and exchange catalogs.
+  - Implemented the 13-point permission matrix with frontend switch toggles for dynamic capability control.
+* **Layout Width & Viewport Overflow Fix (`74cdd4e`):**
+  - Solved horizontal viewport jitter on mobile and desktop by replacing root `100vw` rules with `100%` and encapsulating drawer components.
+  - Migrated sidebar navigation into a persistent collapse state backed by `localStorage` and portal rendering.
+* **CORS Dynamic Origin Expansion (`7c86eb4`):**
+  - Extended backend CORS configuration with regex pattern verification to support multiple staging, preview, and production domains seamlessly.
+* **Dual-View ID Request & Transaction Redesign (`b683e2f`, `a889eb8`):**
+  - Refactored administrative table views into auto-collapsing cards on viewports $\le 880\text{px}$ to guarantee touch optimization and zero horizontal clipping.
+* **Coin Rate & Financial Math Refactor (`b53320b`, `6a5b776`):**
+  - Enhanced currency-to-coin calculation logic with dynamic minimum requirements and validation safeguards against negative or zero values.
+* **Scoped CSS Modules Migration (`6217c5c`):**
+  - Adopted CSS Modules for `HomeHeading` and `TopNavbar` components to isolate complex glassmorphic keyframes and prevent style bleeding.
+
+---
+
+## 👨‍💻 Developer Summary
+
+* **Role:** Full-Stack Software Engineer
+* **Scope of Work:** End-to-end architecture, database schema design, REST API implementation, multi-tenant RBAC engine, frontend UI/UX engineering, and responsive optimization.
+* **Key Focus Areas:** Scalable system design, component reusability, secure authentication patterns, and responsive performance.
+
+---
 
 <p align="center">
-  <img src="./frontend/src/assets/certification_rng_verified.png" width="90" alt="RNG Verified" />
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="./frontend/src/assets/certification_ssl_secure.png" width="90" alt="SSL Secure" />
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="./frontend/src/assets/responsible_gaming_play_safe.png" width="90" alt="Play Safe" />
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="./frontend/src/assets/responsible_gaming_18_plus.png" width="90" alt="18+ Responsible Gaming" />
+  <sub>Developed as a high-performance, client-commissioned web application. All technical designs and implementations presented here are for technical portfolio and engineering demonstration purposes.</sub>
 </p>
-
-- **RNG Verified Engine**: Certified Random Number Generation for fair operations.
-- **SSL Secure Protocols**: Industry-standard encryption for client-server communication.
-- **Responsible Gaming Framework**: Enforces safe parameters, age verification checks (+18 restriction), and support hotlines.
-
----
-
-*Designed and engineered with passion, premium style, and technical excellence.* 🌟

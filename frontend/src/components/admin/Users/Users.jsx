@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import styles from "./Users.module.css";
 import TopNavbar from "../../Navbar/TopNavbar";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import AddIcon from '@mui/icons-material/Add';
 import { PulseLoader } from "react-spinners";
 import { Toast } from "primereact/toast";
@@ -39,6 +40,8 @@ const Users = () => {
     });
     const [addUserErrors, setAddUserErrors] = useState({});
     const [addingUser, setAddingUser] = useState(false);
+    const [isEditingUser, setIsEditingUser] = useState(false);
+    const [editUserId, setEditUserId] = useState(null);
     const toast = useRef(null);
     const { user, url } = useUser();
 
@@ -106,11 +109,20 @@ const Users = () => {
         if (!addUserFormData.email.trim()) newErrors.email = 'Email is required.';
         else if (!validateEmail(addUserFormData.email)) newErrors.email = 'Enter a valid email.';
 
-        if (!addUserFormData.password) newErrors.password = 'Password is required.';
-        else if (addUserFormData.password.length < 6) newErrors.password = 'Password must be at least 6 characters.';
+        if (!isEditingUser) {
+            if (!addUserFormData.password) newErrors.password = 'Password is required.';
+            else if (addUserFormData.password.length < 6) newErrors.password = 'Password must be at least 6 characters.';
 
-        if (!addUserFormData.confirmPassword) newErrors.confirmPassword = 'Confirm your password.';
-        else if (addUserFormData.password !== addUserFormData.confirmPassword) newErrors.confirmPassword = 'Passwords do not match.';
+            if (!addUserFormData.confirmPassword) newErrors.confirmPassword = 'Confirm your password.';
+            else if (addUserFormData.password !== addUserFormData.confirmPassword) newErrors.confirmPassword = 'Passwords do not match.';
+        } else {
+            if (addUserFormData.password && addUserFormData.password.length < 6) {
+                newErrors.password = 'Password must be at least 6 characters.';
+            }
+            if (addUserFormData.password && addUserFormData.password !== addUserFormData.confirmPassword) {
+                newErrors.confirmPassword = 'Passwords do not match.';
+            }
+        }
 
         if (!addUserFormData.phoneNumber.trim()) newErrors.phoneNumber = 'Phone number is required.';
         else if (!validatePhoneNumber(addUserFormData.phoneNumber)) newErrors.phoneNumber = 'Phone number must be 10 digits.';
@@ -131,8 +143,13 @@ const Users = () => {
                     targetAdminId: isSuperAdmin ? addUserFormData.targetAdminId : adminHeaderId,
                 };
 
-                const response = await fetch(`${url}/api/admin/create-user`, {
-                    method: 'POST',
+                const endpoint = isEditingUser 
+                    ? `${url}/api/admin/users/${editUserId}` 
+                    : `${url}/api/admin/create-user`;
+                const method = isEditingUser ? 'PUT' : 'POST';
+
+                const response = await fetch(endpoint, {
+                    method: method,
                     headers: {
                         'Content-Type': 'application/json',
                         'x-admin-id': adminHeaderId,
@@ -143,8 +160,8 @@ const Users = () => {
                 if (response.ok) {
                     toast.current.show({
                         severity: 'success',
-                        summary: 'User Created',
-                        detail: 'New user created successfully',
+                        summary: isEditingUser ? 'User Updated' : 'User Created',
+                        detail: isEditingUser ? 'User updated successfully' : 'New user created successfully',
                         life: 2000,
                     });
                     
@@ -168,8 +185,8 @@ const Users = () => {
                     const errorData = await response.json();
                     toast.current.show({
                         severity: 'error',
-                        summary: 'Creation Failed',
-                        detail: errorData.message || 'Failed to create user',
+                        summary: isEditingUser ? 'Update Failed' : 'Creation Failed',
+                        detail: errorData.message || `Failed to ${isEditingUser ? 'update' : 'create'} user`,
                         life: 2000,
                     });
                 }
@@ -177,8 +194,8 @@ const Users = () => {
                 console.error('Error creating user:', error);
                 toast.current.show({
                     severity: 'error',
-                    summary: 'Creation Failed',
-                    detail: 'An error occurred while creating user',
+                    summary: isEditingUser ? 'Update Failed' : 'Creation Failed',
+                    detail: `An error occurred while ${isEditingUser ? 'updating' : 'creating'} user`,
                     life: 2000,
                 });
             } finally {
@@ -201,6 +218,26 @@ const Users = () => {
             targetAdminId: '',
         });
         setAddUserErrors({});
+        setIsEditingUser(false);
+        setEditUserId(null);
+    };
+
+    const openEditUserModal = (userToEdit, e) => {
+        e.stopPropagation();
+        setAddUserFormData({
+            name: userToEdit.name || '',
+            username: userToEdit.username || '',
+            email: userToEdit.email || '',
+            password: '', // Blank by default
+            confirmPassword: '',
+            phoneNumber: userToEdit.phoneNumber || '',
+            agentCode: userToEdit.agentCode || '',
+            targetAdminId: userToEdit.assignedAdmin || '',
+        });
+        setAddUserErrors({});
+        setIsEditingUser(true);
+        setEditUserId(userToEdit.id || userToEdit._id);
+        setShowAddUserModal(true);
     };
 
     const fetchUsers = async (subAdminFilter = selectedSubAdminFilter) => {
@@ -682,15 +719,27 @@ const Users = () => {
                                 </div>
 
                                 {/* Delete Icon */}
-                                {canDeleteUsers && (
-                                    <DeleteOutlineIcon
-                                        className={styles.deleteIcon}
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            handleDeleteUser(user.id, user.name || user.username);
-                                        }}
-                                    />
-                                )}
+                                <div style={{ display: 'flex', gap: '8px', position: 'absolute', top: '15px', right: '15px' }}>
+                                    {canCreateUsers && (
+                                        <EditOutlinedIcon
+                                            className={styles.deleteIcon}
+                                            style={{ color: '#ffffff', background: 'rgba(255,255,255,0.1)', padding: '4px', borderRadius: '4px', fontSize: '1.8rem' }}
+                                            onClick={(e) => openEditUserModal(user, e)}
+                                            titleAccess="Edit User"
+                                        />
+                                    )}
+                                    {canDeleteUsers && (
+                                        <DeleteOutlineIcon
+                                            className={styles.deleteIcon}
+                                            style={{ padding: '4px', borderRadius: '4px', fontSize: '1.8rem' }}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleDeleteUser(user.id, user.name || user.username);
+                                            }}
+                                            titleAccess="Delete User"
+                                        />
+                                    )}
+                                </div>
                             </div>
                         </div>
                     ))
@@ -887,7 +936,7 @@ const Users = () => {
                         </button>
                         
                         <div className={styles.addUserModalHeader}>
-                            <h2>Add New User</h2>
+                            <h2>{isEditingUser ? 'Edit User' : 'Add New User'}</h2>
                         </div>
                         
                         <form onSubmit={handleAddUserSubmit} className={styles.addUserForm}>
@@ -982,12 +1031,12 @@ const Users = () => {
                             </div>
 
                             <div className={styles.formGroup}>
-                                <label htmlFor="password" className={styles.label}>Password</label>
+                                <label htmlFor="password" className={styles.label}>Password {isEditingUser ? '(Leave blank to keep)' : ''}</label>
                                 <input
                                     type="password"
                                     id="password"
                                     name="password"
-                                    placeholder="Enter password"
+                                    placeholder={isEditingUser ? "Leave blank to keep current" : "Enter password"}
                                     value={addUserFormData.password}
                                     onChange={handleAddUserChange}
                                     className={styles.input}
@@ -1025,10 +1074,10 @@ const Users = () => {
                                     {addingUser ? (
                                         <>
                                             <PulseLoader color="#000000" size={6} />
-                                            <span style={{ marginLeft: '0.4rem', fontSize: '0.15rem' }}>Creating...</span>
+                                            <span style={{ marginLeft: '0.4rem', fontSize: '0.15rem' }}>{isEditingUser ? 'Saving...' : 'Creating...'}</span>
                                         </>
                                     ) : (
-                                        'Create User'
+                                        isEditingUser ? 'Save Changes' : 'Create User'
                                     )}
                                 </button>
                             </div>

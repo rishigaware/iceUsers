@@ -17,9 +17,13 @@ router.get('/get-balance/:adminId', adminController.getAdminBalance);
 router.get('/subadmins', adminController.getAllSubAdmins);
 router.get('/get-subadmins', adminController.getAllSubAdmins);
 router.post('/subadmins', adminController.createSubAdmin);
+router.put('/subadmins/:id', adminController.updateSubAdmin);
 router.patch('/subadmins/:id/permissions', adminController.updateSubAdminPermissions);
 router.delete('/subadmins/:id', adminController.deleteSubAdmin);
+
+// User management from admin panel
 router.post('/create-user', adminController.addAdminUser);
+router.put('/users/:id', adminController.updateUser);
 
 router.post('/signup', adminController.addAdmin);    // Add a new admin
 router.patch('/update-transaction', adminController.updateTransaction); // Update transaction

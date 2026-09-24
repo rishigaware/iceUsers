@@ -40,6 +40,8 @@ export default function SubAdmins() {
   const [subAdmins, setSubAdmins] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editAdminId, setEditAdminId] = useState(null);
   const [updatingPerms, setUpdatingPerms] = useState({});
   const [statusMessage, setStatusMessage] = useState({ text: '', type: '' });
   const [expandedAdmins, setExpandedAdmins] = useState({}); // Default collapsed (empty object)
@@ -75,6 +77,54 @@ export default function SubAdmins() {
       canManageSupportLinks: false,
     }
   });
+
+  const resetForm = () => {
+    setFormData({
+      name: '',
+      username: '',
+      password: '',
+      email: '',
+      phoneNumber: '',
+      agentCode: '',
+      permissions: {
+        canCreateUsers: true,
+        canUpdateUserBalance: true,
+        canChangeUserPassword: true,
+        canDeleteUsers: false,
+        canAddWebsites: true,
+        canEditWebsites: true,
+        canDeleteWebsites: false,
+        canManageCategories: true,
+        canManageIdRequests: true,
+        canManageTransactions: true,
+        canEditIdCredentials: true,
+        canManageBanners: false,
+        canManageSupportLinks: false,
+      }
+    });
+    setIsEditing(false);
+    setEditAdminId(null);
+  };
+
+  const openAddModal = () => {
+    resetForm();
+    setIsModalOpen(true);
+  };
+
+  const openEditModal = (admin) => {
+    setFormData({
+      name: admin.name || '',
+      username: admin.username || '',
+      password: '', // Leave blank for edit unless they want to change
+      email: admin.email || '',
+      phoneNumber: admin.phoneNumber || '',
+      agentCode: admin.agentCode || '',
+      permissions: admin.permissions || formData.permissions
+    });
+    setIsEditing(true);
+    setEditAdminId(admin.id || admin._id);
+    setIsModalOpen(true);
+  };
 
   const showToast = (text, type = 'success') => {
     setStatusMessage({ text, type });
@@ -191,14 +241,17 @@ export default function SubAdmins() {
   const handleCreateSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.name || !formData.username || !formData.password || !formData.email || !formData.phoneNumber) {
+    if (!formData.name || !formData.username || (!isEditing && !formData.password) || !formData.email || !formData.phoneNumber) {
       showToast('Please fill out all required fields', 'error');
       return;
     }
 
     try {
-      const res = await fetch(`${url}/api/admin/subadmins`, {
-        method: 'POST',
+      const endpoint = isEditing ? `${url}/api/admin/subadmins/${editAdminId}` : `${url}/api/admin/subadmins`;
+      const method = isEditing ? 'PUT' : 'POST';
+
+      const res = await fetch(endpoint, {
+        method,
         headers: {
           'Content-Type': 'application/json',
           'x-admin-id': user?.id || user?._id || '',
@@ -209,37 +262,15 @@ export default function SubAdmins() {
       const data = await res.json();
 
       if (res.ok) {
-        showToast(`Admin Master "${formData.username}" created successfully!`);
+        showToast(`Admin Master "${formData.username}" ${isEditing ? 'updated' : 'created'} successfully!`);
         setIsModalOpen(false);
-        setFormData({
-          name: '',
-          username: '',
-          password: '',
-          email: '',
-          phoneNumber: '',
-          agentCode: '',
-          permissions: {
-            canCreateUsers: true,
-            canUpdateUserBalance: true,
-            canChangeUserPassword: true,
-            canDeleteUsers: false,
-            canAddWebsites: true,
-            canEditWebsites: true,
-            canDeleteWebsites: false,
-            canManageCategories: true,
-            canManageIdRequests: true,
-            canManageTransactions: true,
-            canEditIdCredentials: true,
-            canManageBanners: false,
-            canManageSupportLinks: false,
-          }
-        });
+        resetForm();
         fetchSubAdmins();
       } else {
-        showToast(data.message || 'Failed to create Admin Master', 'error');
+        showToast(data.message || `Failed to ${isEditing ? 'update' : 'create'} Admin Master`, 'error');
       }
     } catch (e) {
-      console.error('Error creating Admin Master:', e);
+      console.error(`Error ${isEditing ? 'updating' : 'creating'} Admin Master:`, e);
       showToast('Error submitting form', 'error');
     }
   };
@@ -278,7 +309,7 @@ export default function SubAdmins() {
         <h2 className={styles.heading}>
           <strong>Admin Master Management</strong>
         </h2>
-        <button className={styles.addUserButton} onClick={() => setIsModalOpen(true)}>
+        <button className={styles.addUserButton} onClick={openAddModal}>
           <FaPlus className={styles.addIcon} />
           Create Admin Master
         </button>
@@ -319,7 +350,7 @@ export default function SubAdmins() {
         <div className={styles.emptyState}>
           <h3>No Admin Masters Found</h3>
           <p>Create your first Admin Master to delegate tenant user and exchange website management.</p>
-          <button className={styles.primaryBtn} style={{ marginTop: '16px' }} onClick={() => setIsModalOpen(true)}>
+          <button className={styles.primaryBtn} style={{ marginTop: '16px' }} onClick={openAddModal}>
             <FaPlus /> Add Admin Master
           </button>
         </div>
@@ -409,17 +440,31 @@ export default function SubAdmins() {
                         )}
                         <span><strong>Created:</strong> {new Date(subAdmin.createdAt).toLocaleDateString()}</span>
                       </div>
-                      <button 
-                        type="button"
-                        className={styles.deleteBtn}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleDeleteSubAdmin(adminId, subAdmin.username);
-                        }}
-                        title="Delete Admin Master"
-                      >
-                        <FaTrash /> Delete
-                      </button>
+                      <div style={{ display: 'flex', gap: '8px' }}>
+                        <button 
+                          type="button"
+                          className={styles.secondaryBtn}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            openEditModal(subAdmin);
+                          }}
+                          title="Edit Admin Master"
+                          style={{ background: 'rgba(255,255,255,0.1)', color: '#fff', border: 'none', padding: '6px 12px', borderRadius: '6px', fontSize: '13px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}
+                        >
+                          Edit
+                        </button>
+                        <button 
+                          type="button"
+                          className={styles.deleteBtn}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDeleteSubAdmin(adminId, subAdmin.username);
+                          }}
+                          title="Delete Admin Master"
+                        >
+                          <FaTrash /> Delete
+                        </button>
+                      </div>
                     </div>
 
                     {/* Permission Matrix Toggles */}
@@ -466,8 +511,8 @@ export default function SubAdmins() {
         <div className={styles.modalOverlay}>
           <div className={styles.modalContent}>
             <div className={styles.modalHeader}>
-              <h2>Register New Admin Master</h2>
-              <button className={styles.closeBtn} onClick={() => setIsModalOpen(false)}>
+              <h2>{isEditing ? 'Edit Admin Master' : 'Register New Admin Master'}</h2>
+              <button className={styles.closeBtn} onClick={() => { setIsModalOpen(false); resetForm(); }}>
                 <FaTimes />
               </button>
             </div>
@@ -498,13 +543,13 @@ export default function SubAdmins() {
 
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
-                  <label>Password *</label>
+                  <label>Password {isEditing ? '(Leave blank to keep)' : '*'}</label>
                   <input 
                     type="password" 
-                    placeholder="Secret password"
+                    placeholder={isEditing ? "Leave blank to keep current" : "Secret password"}
                     value={formData.password}
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                    required
+                    required={!isEditing}
                   />
                 </div>
                 <div className={styles.formGroup}>
@@ -541,10 +586,11 @@ export default function SubAdmins() {
                 </div>
               </div>
 
-              <div style={{ marginTop: '16px' }}>
-                <label style={{ fontSize: '13px', fontWeight: 600, color: 'rgba(255,255,255,0.8)', display: 'block', marginBottom: '10px' }}>
-                  Initial Feature Permissions
-                </label>
+              {!isEditing && (
+                <div style={{ marginTop: '16px' }}>
+                  <label style={{ fontSize: '13px', fontWeight: 600, color: 'rgba(255,255,255,0.8)', display: 'block', marginBottom: '10px' }}>
+                    Initial Feature Permissions
+                  </label>
                 <div className={styles.permissionGrid}>
                   {PERMISSION_CONFIG.map(({ key, label }) => (
                     <div key={key} className={styles.permissionItem}>
@@ -567,13 +613,14 @@ export default function SubAdmins() {
                   ))}
                 </div>
               </div>
+              )}
 
               <div className={styles.modalFooter}>
-                <button type="button" className={styles.cancelBtn} onClick={() => setIsModalOpen(false)}>
+                <button type="button" className={styles.cancelBtn} onClick={() => { setIsModalOpen(false); resetForm(); }}>
                   Cancel
                 </button>
                 <button type="submit" className={styles.primaryBtn}>
-                  Create Admin Master
+                  {isEditing ? 'Save Changes' : 'Create Admin Master'}
                 </button>
               </div>
             </form>

@@ -269,6 +269,119 @@ exports.addAdminUser = async (req, res) => {
   }
 };
 
+// Update Sub-Admin details
+exports.updateSubAdmin = async (req, res) => {
+  try {
+    const admin = await getAdminFromReq(req);
+    if (admin && admin.role !== 'superadmin') {
+      return res.status(403).json({ message: 'Access denied. Superadmin only.' });
+    }
+
+    const { id } = req.params;
+    const { name, phoneNumber, email, password, username, agentCode } = req.body;
+
+    const targetAdmin = await Admin.findById(id);
+    if (!targetAdmin) {
+      return res.status(404).json({ message: 'Sub-admin not found.' });
+    }
+
+    if (name) targetAdmin.name = name;
+    if (phoneNumber) targetAdmin.phoneNumber = phoneNumber;
+    if (email) targetAdmin.email = email.toLowerCase();
+    if (username) {
+      const existing = await Admin.findOne({ username, _id: { $ne: id } });
+      if (existing) return res.status(400).json({ message: 'Username is already taken.' });
+      targetAdmin.username = username;
+    }
+    if (password && password.trim() !== '') {
+      targetAdmin.password = password;
+    }
+    if (agentCode !== undefined) {
+      targetAdmin.agentCode = agentCode;
+    }
+
+    await targetAdmin.save();
+
+    const savedObj = targetAdmin.toObject();
+    delete savedObj.password;
+
+    res.status(200).json({
+      message: 'Sub-admin updated successfully',
+      admin: { id: targetAdmin._id, ...savedObj },
+    });
+  } catch (error) {
+    console.error('Error updating sub-admin:', error);
+    res.status(500).json({ message: 'Error updating sub-admin', error: error.message });
+  }
+};
+
+// Update User details
+exports.updateUser = async (req, res) => {
+  try {
+    const admin = await getAdminFromReq(req);
+    if (admin && admin.role !== 'superadmin' && admin.permissions?.canCreateUsers === false) {
+      return res.status(403).json({ message: 'Permission denied: Cannot manage users.' });
+    }
+
+    const { id } = req.params;
+    const { name, phoneNumber, email, password, username, agentCode } = req.body;
+
+    const targetUser = await User.findById(id);
+    if (!targetUser) {
+      return res.status(404).json({ message: 'User not found.' });
+    }
+
+    if (admin && admin.role !== 'superadmin') {
+       if (targetUser.assignedAdmin?.toString() !== admin._id.toString() &&
+           targetUser.assignedAdminUsername !== admin.username) {
+          return res.status(403).json({ message: 'Access denied: You do not manage this user.' });
+       }
+    }
+
+    if (name) targetUser.name = name;
+    if (phoneNumber) targetUser.phoneNumber = phoneNumber;
+    if (email) targetUser.email = email.toLowerCase();
+    if (username) {
+      const existing = await User.findOne({ username, _id: { $ne: id } });
+      if (existing) return res.status(400).json({ message: 'Username is already taken.' });
+      targetUser.username = username;
+    }
+    if (password && password.trim() !== '') {
+      targetUser.password = password;
+    }
+    if (agentCode !== undefined) {
+      targetUser.agentCode = agentCode;
+      
+      if (agentCode.trim() !== '') {
+        const targetAdminByCode = await Admin.findOne({ agentCode: agentCode.trim(), status: 'active' });
+        if (targetAdminByCode) {
+          targetUser.assignedAdmin = targetAdminByCode._id;
+          targetUser.assignedAdminUsername = targetAdminByCode.username;
+        } else {
+          const superAdmin = await Admin.findOne({ role: 'superadmin', status: 'active' });
+          if (superAdmin) {
+            targetUser.assignedAdmin = superAdmin._id;
+            targetUser.assignedAdminUsername = superAdmin.username;
+          }
+        }
+      }
+    }
+
+    await targetUser.save();
+
+    const savedObj = targetUser.toObject();
+    delete savedObj.password;
+
+    res.status(200).json({
+      message: 'User updated successfully',
+      user: { id: targetUser._id, ...savedObj },
+    });
+  } catch (error) {
+    console.error('Error updating user:', error);
+    res.status(500).json({ message: 'Error updating user', error: error.message });
+  }
+};
+
 // Fetch all users (with sub-admin tenant isolation)
 exports.getAllUsers = async (req, res) => {
   try {

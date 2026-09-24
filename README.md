@@ -1,11 +1,11 @@
 <p align="center">
-  <img src="./frontend/public/logo.png" width="380" alt="IceUsers Platform Architecture" />
+  <img src="./frontend/public/logo.png" width="380" alt="IceUsers Platform Logo" />
 </p>
 
-<h1 align="center">IceUsers — Enterprise Multi-Tenant Credential Provisioning & Financial Ledger System</h1>
+<h1 align="center">IceUsers — Automated Self-Admin & Master Exchange Panel Provisioning Platform</h1>
 
 <p align="center">
-  <strong>A full-stack, multi-tenant administrative portal engineered to automate credential management, wallet ledger transactions, and external platform provisioning with isolated sub-admin tenancy and a 13-point granular permission engine.</strong>
+  <strong>A full-stack, multi-tenant web application engineered for a client to automate Self-Admin and Master panel creation, dynamic coin conversions, and instant wallet refills across 16+ top-tier online exchange platforms.</strong>
 </p>
 
 <p align="center">
@@ -23,73 +23,102 @@
 
 > [!NOTE]
 > **Engineering Portfolio Disclosure:**
-> This repository contains a production-grade full-stack platform architected and developed by me as a **commissioned client engagement**. This document outlines the project strictly from an **engineering, systems architecture, and technical implementation perspective** to showcase full-stack problem-solving, multi-tenant state isolation, security workflows, and responsive UI engineering.
+> This repository contains a production full-stack platform architected and engineered by me on a **contract basis for a client**. This documentation is written from a **software engineering and system architecture perspective** to showcase full-stack development, multi-tenant isolation, state management, security workflows, and responsive UI craft for technical recruiters and hiring managers.
 
 ---
 
-## 📌 Executive Summary & System Scope
+## 🎯 Accurate Project Use Case & Problem Statement
 
-The client required a unified, high-availability web platform capable of automating credential lifecycle operations (ID requests, password updates, account closures) and financial transactions (deposits and withdrawals) across 16+ third-party exchange platforms. 
+### The Real-World Domain Problem
+In the online sports exchange and gaming ecosystem (featuring platforms like Radhe Exchange, Diamond Exchange, Laser247, King Exchange, etc.), agents and players traditionally acquire **"Self-Admin"** or **"Master Panels"** through manual, untrusted middlemen over messaging apps (WhatsApp/Telegram). This legacy approach introduces severe friction:
+- **Fraud & Financial Risk:** Middlemen often manipulate coin conversion rates or disappear after receiving funds.
+- **Delayed Delivery:** Provisioning credentials and topping up coins manually often takes hours.
+- **Manual Bookkeeping:** Sub-agents struggle with tracking transactions, bank details, and customer balances.
 
-The primary architectural challenges solved during development include:
-1. **Multi-Tenant Sub-Admin Scoping:** Allowing independent master agents ("Sub-Admins") to operate within fully isolated tenant silos—managing their own user rosters, exchange catalogs, banking gateways, and support routes without cross-tenant data leakage.
-2. **13-Point Granular Permission Matrix:** An administrative authorization system giving the Superadmin fine-grained control over Sub-Admin capabilities (user creation, balance adjustments, credential edits, transaction audits, and catalog management).
-3. **Two-Way Financial Ledger & Verification Pipeline:** Automated coin-to-currency conversions (`1 INR = X Coins`), receipt upload handling via Cloudinary/Multer, and dual-state approval workflows.
-4. **Adaptive Dual-View UI Architecture:** Designing complex administrative tables that automatically transform into high-density touch-optimized cards on mobile devices ($\le 880\text{px}$ down to 320px) with zero layout overflow.
+### The Client Solution Built
+To solve this, the client commissioned **IceUsers (The247Panel)**—an automated, 24/7 self-service platform that digitizes and secures the entire workflow:
+1. **Self-Admin & Master Panel Creation:** Users can select from 16+ verified exchange websites, specify coin quantities, view real-time conversion rates (`1 INR = X Coins`), and request instant administrative panel credentials.
+2. **Automated Wallet & Panel Refills:** Users deposit funds directly to their assigned Admin Master's verified banking/UPI gateway, upload proof of payment, and receive automatic wallet credits to refill their exchange panels.
+3. **Multi-Tenant Sub-Admin (Admin Master) Hierarchy:** Independent master agents operate within their own isolated tenant silos—managing their private customer cohorts, setting custom coin pricing per exchange, and moderating their own deposit/withdrawal queues.
+4. **Secure Credential Delivery:** Once approved by the assigned admin, administrative URLs, Master usernames, and passwords appear directly on the user's encrypted "My IDs" dashboard.
 
 ---
 
-## 🎨 User Interface & Design System
+## 🎨 Visual Showcase & User Interface
 
-The application features a modern dark-glassmorphic aesthetic engineered with a custom tokenized palette (`#090d16` canvas, `#130e24` card surface, and vibrant `#DB2777` magenta neon accents), backdrop blur filters, and micro-interactions.
+The frontend is styled in a custom dark-glassmorphic aesthetic (`#090d16` canvas, `#130e24` card surface, and `#DB2777` magenta neon accents) with fluid backdrop-filter blurs and micro-interactions.
 
-### Desktop & Dashboard Preview
+### 🖥️ Desktop & Landing Dashboard Preview
 
-![IceUsers UI Architecture](./readme_homepage.png)
+![IceUsers Desktop Interface](./readme_homepage.png)
 
-### Integrated Partner Exchange Matrix
+<p align="center">
+  <img src="./frontend/public/signal-2026-09-16-150605.jpeg" width="380" alt="IceUsers Brand Identity" />
+</p>
 
-The platform integrates dynamic rate calculation and credential provisioning across 16+ external platforms:
+---
+
+### 🌐 Supported Exchange Platforms (16+ Integrated Targets)
+
+The platform provides automated panel provisioning and coin rate calculations across 16+ major exchange networks:
 
 | | | | |
 |:---:|:---:|:---:|:---:|
-| <img src="./frontend/src/assets/websites/Radheexch.jpg" width="150" alt="Radhe Exchange" /><br/>`Radhe Exchange` | <img src="./frontend/src/assets/websites/Kingexch9.jpg" width="150" alt="King Exchange" /><br/>`King Exchange` | <img src="./frontend/src/assets/websites/Diamondexch99.jpg" width="150" alt="Diamond Exchange" /><br/>`Diamond Exchange` | <img src="./frontend/src/assets/websites/Goexch9.jpg" width="150" alt="Go Exchange`" /><br/>`Go Exchange` |
-| <img src="./frontend/src/assets/websites/world777.jpg" width="150" alt="World777" /><br/>`World777` | <img src="./frontend/src/assets/websites/taj777.jpg" width="150" alt="Taj777" /><br/>`Taj777` | <img src="./frontend/src/assets/websites/mylaser247.jpg" width="150" alt="Laser247" /><br/>`Laser247` | <img src="./frontend/src/assets/websites/baazi888.jpg" width="150" alt="Baazi888" /><br/>`Baazi888` |
-| <img src="./frontend/src/assets/websites/the100exch.jpg" width="150" alt="The100 Exchange" /><br/>`The100 Exchange` | <img src="./frontend/src/assets/websites/allpanelexch.jpg" width="150" alt="All Panel Exch" /><br/>`All Panel Exch` | <img src="./frontend/src/assets/websites/Bikajiexch.jpg" width="150" alt="Bikaji Exchange" /><br/>`Bikaji Exchange` | <img src="./frontend/src/assets/websites/betonly777.jpg" width="150" alt="BetOnly777" /><br/>`BetOnly777` |
-| <img src="./frontend/src/assets/websites/jsk1.jpg" width="150" alt="JSK1" /><br/>`JSK1` | <img src="./frontend/src/assets/websites/ps777.jpg" width="150" alt="PS777" /><br/>`PS777` | <img src="./frontend/src/assets/websites/t10exchange.jpg" width="150" alt="T10 Exchange" /><br/>`T10 Exchange` | <img src="./frontend/src/assets/websites/Allowexch999.jpg" width="150" alt="Allow Exchange" /><br/>`Allow Exchange` |
+| <img src="./frontend/src/assets/websites/Radheexch.jpg" width="160" alt="Radhe Exchange" /><br/>**Radhe Exchange** | <img src="./frontend/src/assets/websites/Kingexch9.jpg" width="160" alt="King Exchange" /><br/>**King Exchange** | <img src="./frontend/src/assets/websites/Diamondexch99.jpg" width="160" alt="Diamond Exchange" /><br/>**Diamond Exchange** | <img src="./frontend/src/assets/websites/Goexch9.jpg" width="160" alt="Go Exchange" /><br/>**Go Exchange** |
+| <img src="./frontend/src/assets/websites/world777.jpg" width="160" alt="World777" /><br/>**World777** | <img src="./frontend/src/assets/websites/taj777.jpg" width="160" alt="Taj777" /><br/>**Taj777** | <img src="./frontend/src/assets/websites/mylaser247.jpg" width="160" alt="Laser247" /><br/>**Laser247** | <img src="./frontend/src/assets/websites/baazi888.jpg" width="160" alt="Baazi888" /><br/>**Baazi888** |
+| <img src="./frontend/src/assets/websites/the100exch.jpg" width="160" alt="The100 Exchange" /><br/>**The100 Exchange** | <img src="./frontend/src/assets/websites/allpanelexch.jpg" width="160" alt="All Panel Exch" /><br/>**All Panel Exch** | <img src="./frontend/src/assets/websites/Bikajiexch.jpg" width="160" alt="Bikaji Exchange" /><br/>**Bikaji Exchange** | <img src="./frontend/src/assets/websites/betonly777.jpg" width="160" alt="BetOnly777" /><br/>**BetOnly777** |
+| <img src="./frontend/src/assets/websites/jsk1.jpg" width="160" alt="JSK1" /><br/>**JSK1** | <img src="./frontend/src/assets/websites/ps777.jpg" width="160" alt="PS777" /><br/>**PS777** | <img src="./frontend/src/assets/websites/t10exchange.jpg" width="160" alt="T10 Exchange" /><br/>**T10 Exchange** | <img src="./frontend/src/assets/websites/Allowexch999.jpg" width="160" alt="Allow Exchange" /><br/>**Allow Exchange** |
+
+---
+
+### 🖼️ Promotional Carousels & Dynamic Creative Modules
+
+The landing page features dynamic horizontal and square carousel modules managed via the administrative banner panel:
+
+<p align="center">
+  <img src="./frontend/src/assets/images/1.jpg" width="48%" alt="Live Gaming Creative" />
+  &nbsp;
+  <img src="./frontend/src/assets/images/2.jpg" width="48%" alt="Sports Exchange Creative" />
+</p>
+
+<p align="center">
+  <img src="./frontend/src/assets/images/3.jpg" width="48%" alt="Coin Stacks & Rates" />
+  &nbsp;
+  <img src="./frontend/src/assets/images/4.jpg" width="48%" alt="Roulette Table Creative" />
+</p>
 
 ---
 
 ## 🛠️ Complete Technical Stack
 
 ### Client-Side (Frontend SPA)
-| Technology | Role / Purpose |
+| Technology | Role / Engineering Implementation |
 | :--- | :--- |
-| **React 18.3** | Component-driven UI runtime utilizing concurrent rendering and transition flags |
-| **Vite 6.0** | Ultra-fast ESM module bundler with optimized Hot Module Replacement (HMR) |
-| **React Router v6** | Declarative client-side routing with role-gated `ProtectedRoute` guards and future v7 transitions |
-| **TailwindCSS 3.4** | Utility-first responsive design framework configured with custom glassmorphism utilities |
-| **CSS Modules** | Scoped, non-colliding style encapsulation for complex components (`HomeHeading`, `Navbar`, `Modals`) |
-| **Framer Motion 13.4** | Physics-based spring animations for drawer transitions, modals, and list entry states |
+| **React 18.3** | Functional components with concurrent rendering, custom hooks, and transition flags |
+| **Vite 6.0** | Next-generation ESM bundler providing sub-second HMR and optimized production chunks |
+| **React Router v6** | Client-side routing with role-gated routes (`ProtectedRoute`) and future v7 transition flags |
+| **TailwindCSS 3.4** | Utility-first CSS framework configured with custom glassmorphism extensions |
+| **CSS Modules** | Scoped, conflict-free component styling for complex layouts (`HomeHeading`, `Navbar`, `Popups`) |
+| **Framer Motion 13.4** | Physics-based spring animations for slide-overs, interactive modals, and ticker elements |
 | **Material UI (MUI)** | High-fidelity SVG icon library (`@mui/icons-material`), typography, and chip components |
-| **PrimeReact & Flowbite** | Data table widgets, toast notifications, status badges, and interactive popovers |
-| **React-Slick & Slick-Carousel** | Smooth multi-breakpoint banner carousels for promotional and announcement graphics |
-| **React Portals** | Modal and drawer rendering directly into the document root to bypass z-index clipping contexts |
+| **PrimeReact & Flowbite** | Enterprise data tables, interactive popovers, toasts, and status badges |
+| **React-Slick** | Touch-enabled multi-breakpoint carousels for promotional and announcement graphics |
+| **React Portals** | Modal overlays mounted to `#modal-root` to bypass CSS stacking contexts and transform clipping |
 
 ### Server-Side (Backend REST API)
-| Technology | Role / Purpose |
+| Technology | Role / Engineering Implementation |
 | :--- | :--- |
-| **Node.js** | Non-blocking, asynchronous event-driven server runtime |
-| **Express 4.21** | Enterprise RESTful API routing, error middleware, and static asset delivery |
-| **MongoDB & Mongoose 8.18** | Schema validation, compound indexing, population, and multi-tenant document queries |
-| **Bcrypt.js** | Cryptographic password hashing (salt rounds = 10) for tamper-proof credential storage |
-| **Multer & Cloudinary** | Multipart form handling and automated cloud image optimization for transaction receipts |
-| **CORS Dynamic Origin Handler** | Dynamic regex origin validation supporting multi-domain production, staging, and localhost clients |
-| **UUID (v11)** | Unique, collision-resistant transaction reference key generator |
+| **Node.js** | Asynchronous, event-driven server runtime |
+| **Express 4.21** | RESTful routing architecture, JSON body parsing, and static file delivery |
+| **MongoDB & Mongoose 8.18** | Schema validation, compound indexing, multi-tenant document isolation, and population |
+| **Bcrypt.js** | Cryptographic password hashing (10 salt rounds) for tamper-proof credentials |
+| **Multer & Cloudinary** | Multipart receipt uploads with automatic cloud CDN storage and compression |
+| **Dynamic CORS Handler** | Whitelist validator supporting multi-domain production, staging, and localhost clients |
+| **UUID (v11)** | Collision-free unique transaction reference keys for payment tracking |
 
 ---
 
-## 🏗️ System Architecture & Data Flow
+## 🏗️ System Architecture & Multi-Tenant Workflow
 
 ```mermaid
 flowchart TB
@@ -129,9 +158,9 @@ flowchart TB
 
 ---
 
-## 🛡️ Multi-Tenant Architecture & RBAC
+## 🛡️ Role-Based Access Control & 13-Point Permission Engine
 
-The system implements a tiered role hierarchy designed to strictly isolate operations between distinct admin tenants:
+The platform operates on a hierarchical multi-tenant structure:
 
 ```mermaid
 graph TD
@@ -152,7 +181,7 @@ graph TD
 
 ### The 13-Point Granular Permission Matrix
 
-Sub-Admins are provisioned with schema-enforced boolean permissions stored on the `Admin` document:
+Sub-Admins (Admin Masters) are governed by fine-grained boolean permissions stored in the `Admin` schema:
 
 ```javascript
 // models/Admin.js
@@ -173,81 +202,55 @@ permissions: {
 }
 ```
 
-Every administrative mutation route checks both the requesting admin's role and the specific capability flag via the tenant resolver before allowing database mutations.
-
 ---
 
-## 🔄 Core Workflows & State Machines
-
-### 1. ID Provisioning & Credential Lifecycle
+## 🔄 Step-by-Step Panel Creation & Refill Lifecycle
 
 ```mermaid
 sequenceDiagram
     autonumber
-    actor User
-    participant Frontend as React Client
-    participant Server as Express API
-    participant DB as MongoDB
-    actor Admin as Assigned Sub-Admin
+    actor User as Client / User
+    participant App as React Frontend
+    participant API as Express API Server
+    participant DB as MongoDB Cluster
+    actor Admin as Assigned Admin Master
 
-    User->>Frontend: Selects Exchange & specifies coin quantity
-    Frontend->>Frontend: Validates minCoins & calculates INR cost
-    Frontend->>Server: POST /api/user/request-id (Wallet deduction)
-    Server->>DB: Atomically deduct coins & create IdRequest (Pending)
-    Server-->>Frontend: 201 Created (Request queued)
+    User->>App: Navigates to "Create Self Admin Panel"
+    User->>App: Selects Exchange (e.g. Radheexch) & enters coin count
+    App->>App: Calculates cost via live rate (e.g. 1 INR = 1 Coin)
+    App->>API: POST /api/user/request-id
+    API->>DB: Validates wallet balance; deducts coins & creates IdRequest (Pending)
+    API-->>App: 201 Created (Request queued)
     
-    Admin->>Frontend: Inspects ID Requests (Filtered by Tenant ID)
-    Admin->>Server: PATCH /api/admin/id-requests/:id/accept (Supplies username & password)
-    Server->>DB: Updates status='Accepted', records processedBy & credentials
+    Admin->>App: Opens ID Request Queue (Tenant Scoped)
+    Admin->>API: PATCH /api/admin/id-requests/:id/accept (Enters Panel URL, User, Pass)
+    API->>DB: Updates status to 'Accepted'; saves credentials
     
-    User->>Frontend: Opens "My IDs" Portal
-    Frontend->>Server: GET /api/user/my-ids
-    Server-->>Frontend: Returns decrypted URL, username & credentials
-    Frontend->>User: Displays interactive credential card with copy-to-clipboard
-```
-
-### 2. Proof-of-Payment Verification Pipeline
-
-```mermaid
-stateDiagram-v2
-    [*] --> DepositInitiated: User selects Admin Bank/UPI Account
-    DepositInitiated --> ReceiptUploaded: User attaches payment screenshot
-    ReceiptUploaded --> CloudinaryStored: Multer streams to Cloudinary CDN
-    CloudinaryStored --> PendingVerification: Transaction logged with unique TXN ID
-    
-    state AdminModeration {
-        PendingVerification --> Accepted: Admin verifies funds in banking app
-        PendingVerification --> Rejected: Invalid transaction ID or falsified receipt
-    }
-    
-    Accepted --> BalanceCredited: Atomic increment on User.balance
-    Rejected --> LedgerLogged: Reason recorded; balance untouched
-    BalanceCredited --> [*]
-    LedgerLogged --> [*]
+    User->>App: Checks "My IDs" Dashboard
+    App->>API: GET /api/user/my-ids
+    API-->>App: Returns active panel list with decrypted login credentials
+    App->>User: Displays interactive panel card with one-click copy & launch
 ```
 
 ---
 
-## 💡 Key Engineering Challenges & Technical Solutions
+## 💡 Developer Perspective: Key Technical Challenges Solved
 
-### 1. Dual-View Mobile Responsiveness ($\le 880\text{px}$)
-* **Challenge:** Administrative panels demand data-dense tabular information (7+ columns including Transaction IDs, status badges, timestamps, receipt preview triggers, and action buttons). On screens below 880px down to 320px, horizontal scrolling degrades operator efficiency.
-* **Solution:** Engineered a dual-render layout paradigm using CSS media queries and conditional markup:
-  - **Desktop ($> 880\text{px}$):** Renders high-density data tables with fixed column ratios.
-  - **Mobile ($\le 880\text{px}$):** Automatically swaps into stacked glassmorphic cards with copyable IDs, compact status chips, and accordion action panels.
-  - **Layout Overflow Fix:** Eliminated horizontal page jitter by replacing root `100vw` rules with strict `100%` bounds and zero-margin wrappers.
+### 1. Multi-Tenant Data Isolation & Query Scoping
+* **Challenge:** In a tiered administrative hierarchy, independent Sub-Admins ("Admin Masters") must manage their own customer cohorts, exchange catalogs, and transaction queues without any risk of cross-tenant data exposure.
+* **Solution:** Engineered a server-side tenant resolver (`subAdminHelper.js`) that dynamically extracts and verifies admin identifiers (`x-admin-id`, session tokens) from incoming requests, injecting strict isolation filters (`assignedAdmin`, `adminId`) across all Mongoose database queries to guarantee strict multi-tenant boundaries.
 
-### 2. React Portal Modals & Stacking Context Isolation
-* **Challenge:** Heavy CSS transforms, sticky navigation headers, and backdrop filters created stacking context issues where modals and dropdowns were clipped or rendered behind sibling cards.
-* **Solution:** Migrated all popups (`ChangePasswordModal`, `WebsiteDepositPopup`, `WalletWithdrawalPopup`) and dynamic drawers to React Portals (`ReactDOM.createPortal`), mounting them directly into dedicated DOM root containers (`#modal-root`). This guarantees flawless z-index layering regardless of DOM nesting depth.
+### 2. Atomic Wallet Balance Operations & Rate Reconciliation
+* **Challenge:** Preventing race conditions and double-spending when users submit concurrent panel creation or refill requests while exchange rates fluctuate.
+* **Solution:** Implemented atomic database operations (`$inc`, condition-guarded updates) and server-side rate re-validation before deducting wallet balances. Every transaction is tracked via unique UUID keys and dual-logged to the immutable ledger.
 
-### 3. Real-Time Balance Synchronization
-* **Challenge:** Balance discrepancies between cached client states and backend ledger operations when users trigger multiple transactions or when admins adjust balances concurrently.
-* **Solution:** Created a unified `BalanceProvider` React Context utilizing an event-driven polling and optimistic update model. Balance modifications trigger immediate UI reconciliation and background re-fetching to maintain absolute data integrity without requiring full-page reloads.
+### 3. Asynchronous Proof-of-Payment Asset Pipeline
+* **Challenge:** High-volume user receipt uploads (bank transfer screenshots) can degrade server throughput and consume excessive storage if handled synchronously on disk.
+* **Solution:** Integrated a stream-based multipart upload pipeline using Multer connected directly to Cloudinary's CDN. Image buffers are uploaded, optimized, and converted to secure HTTPS URLs asynchronously, decoupled from local server storage.
 
-### 4. Dynamic Multi-Origin CORS Enforcement
-* **Challenge:** The application is deployed across multiple staging, production, and custom domain names (`iceusers.info`, `the247panel.shop`, Vercel previews, local development ports).
-* **Solution:** Implemented a dynamic origin validator using normalized string pattern matching and regex verification in `server.js`, securely authorizing legitimate cross-domain requests while rejecting unauthorized origins with explicit policy errors.
+### 4. Enterprise Dynamic Origin CORS Sanitization
+* **Challenge:** The application runs across diverse production, staging, and custom client domains (`iceusers.info`, `the247panel.shop`, Vercel deploy previews) which cannot be solved safely with insecure `*` wildcard policies.
+* **Solution:** Implemented an enterprise-grade dynamic origin verification middleware in Express using regex matching against authorized domain patterns, safeguarding credentials and cookies while maintaining multi-environment compatibility.
 
 ---
 
@@ -320,91 +323,60 @@ iceUsers/
 
 ---
 
-## 🚀 Local Development & Setup Guide
+## 🚀 Setup & Local Execution
 
 ### Prerequisites
-* **Node.js**: v18.0.0 or higher
+* **Node.js**: v18.0.0+
 * **npm** or **yarn**
-* **MongoDB**: A running local instance or MongoDB Atlas URI
-* **Cloudinary Account**: (Optional, for production image hosting)
+* **MongoDB**: Local MongoDB instance or Atlas connection string
 
 ---
 
-### 1. Backend Service Configuration
+### 1. Backend Setup
 
-1. Clone the repository and navigate to `backend/`:
-   ```bash
-   cd backend
-   ```
-2. Install server dependencies:
-   ```bash
-   npm install
-   ```
-3. Create a `.env` configuration file:
-   ```env
-   PORT=5000
-   MONGO_URI=mongodb://localhost:27017/iceusers
-   JWT_SECRET=your_secure_development_jwt_secret_key
-   CORS_ORIGINS=http://localhost:5173,http://localhost:3000
-   
-   # Optional Cloudinary Storage Configuration
-   CLOUDINARY_CLOUD_NAME=your_cloud_name
-   CLOUDINARY_API_KEY=your_api_key
-   CLOUDINARY_API_SECRET=your_api_secret
-   ```
-4. Start the backend in development mode with auto-reload:
-   ```bash
-   npm run dev
-   ```
-   *The server will initialize on `http://localhost:5000`. On first run, the database auto-seeder provisions the default Superadmin credentials.*
+```bash
+cd backend
+npm install
+```
+
+Create a `.env` file in `backend/`:
+```env
+PORT=5000
+MONGO_URI=mongodb://localhost:27017/iceusers
+JWT_SECRET=your_jwt_secret_key
+CORS_ORIGINS=http://localhost:5173,http://localhost:3000
+```
+
+Start the backend:
+```bash
+npm run dev
+```
+*Initializes on `http://localhost:5000`. On first launch, `seedSuperAdmin.js` auto-creates the default Superadmin (`superadmin` / `Super@1234`).*
 
 ---
 
-### 2. Frontend Client Setup
+### 2. Frontend Setup
 
-1. Navigate to the frontend directory:
-   ```bash
-   cd ../frontend
-   ```
-2. Install client dependencies:
-   ```bash
-   npm install
-   ```
-3. Start the Vite development server:
-   ```bash
-   npm run dev
-   ```
-4. Launch your browser at `http://localhost:5173`.
+```bash
+cd ../frontend
+npm install
+npm run dev
+```
+*Launches the Vite dev server at `http://localhost:5173`.*
 
 ---
 
-## 📈 Recent Technical Updates & Engineering Changelog
+## 📈 Recent Engineering Updates (Changelog)
 
-* **Multi-Tenant Sub-Admin Architecture (`00d94b4`):**
-  - Built dedicated `adminController.js` logic and route handlers to isolate sub-admin user pools and exchange catalogs.
-  - Implemented the 13-point permission matrix with frontend switch toggles for dynamic capability control.
-* **Layout Width & Viewport Overflow Fix (`74cdd4e`):**
-  - Solved horizontal viewport jitter on mobile and desktop by replacing root `100vw` rules with `100%` and encapsulating drawer components.
-  - Migrated sidebar navigation into a persistent collapse state backed by `localStorage` and portal rendering.
-* **CORS Dynamic Origin Expansion (`7c86eb4`):**
-  - Extended backend CORS configuration with regex pattern verification to support multiple staging, preview, and production domains seamlessly.
-* **Dual-View ID Request & Transaction Redesign (`b683e2f`, `a889eb8`):**
-  - Refactored administrative table views into auto-collapsing cards on viewports $\le 880\text{px}$ to guarantee touch optimization and zero horizontal clipping.
-* **Coin Rate & Financial Math Refactor (`b53320b`, `6a5b776`):**
-  - Enhanced currency-to-coin calculation logic with dynamic minimum requirements and validation safeguards against negative or zero values.
-* **Scoped CSS Modules Migration (`6217c5c`):**
-  - Adopted CSS Modules for `HomeHeading` and `TopNavbar` components to isolate complex glassmorphic keyframes and prevent style bleeding.
-
----
-
-## 👨‍💻 Developer Summary
-
-* **Role:** Full-Stack Software Engineer
-* **Scope of Work:** End-to-end architecture, database schema design, REST API implementation, multi-tenant RBAC engine, frontend UI/UX engineering, and responsive optimization.
-* **Key Focus Areas:** Scalable system design, component reusability, secure authentication patterns, and responsive performance.
+- **Sub-Admin & User Management Engine (`00d94b4`):** Built controllers and routes to isolate user pools and assignable permissions for sub-admins.
+- **Layout Width Overflow Fix (`74cdd4e`):** Fixed mobile horizontal scroll by migrating `100vw` to `100%` and rendering sidebars through React Portals.
+- **Dynamic CORS Expansion (`7c86eb4`):** Extended CORS handling with regex matching for multi-domain production and preview deployments.
+- **Dual-View Mobile ID Request UI (`b683e2f`, `a889eb8`):** Redesigned dense tables into responsive stacked cards below 880px down to 320px.
+- **Coin Conversion Logic Refactor (`b53320b`, `6a5b776`):** Updated coin-to-currency formula safeguards and minimum threshold checks.
+- **Scoped CSS Modules Migration (`6217c5c`):** Migrated navigation and header styling to CSS Modules to isolate glassmorphic styles.
 
 ---
 
 <p align="center">
-  <sub>Developed as a high-performance, client-commissioned web application. All technical designs and implementations presented here are for technical portfolio and engineering demonstration purposes.</sub>
+  <sub>Engineered on contract as a client full-stack application. Maintained strictly for engineering portfolio demonstration.</sub>
 </p>

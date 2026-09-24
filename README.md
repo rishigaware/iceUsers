@@ -209,27 +209,28 @@ permissions: {
 ```mermaid
 sequenceDiagram
     autonumber
-    actor User as Client / User
-    participant App as React Frontend
+    actor User as User / Client
+    participant App as React Client
     participant API as Express API Server
     participant DB as MongoDB Cluster
-    actor Admin as Assigned Admin Master
+    actor Admin as Admin Master
 
-    User->>App: Navigates to "Create Self Admin Panel"
-    User->>App: Selects Exchange (e.g. Radheexch) & enters coin count
-    App->>App: Calculates cost via live rate (e.g. 1 INR = 1 Coin)
+    User->>App: Opens Create Self Admin Panel
+    User->>App: Selects target exchange and coin quantity
+    App->>App: Calculates total cost via dynamic coin rate
     App->>API: POST /api/user/request-id
-    API->>DB: Validates wallet balance; deducts coins & creates IdRequest (Pending)
+    API->>DB: Validates wallet balance, deducts coins, creates pending IdRequest
     API-->>App: 201 Created (Request queued)
     
-    Admin->>App: Opens ID Request Queue (Tenant Scoped)
-    Admin->>API: PATCH /api/admin/id-requests/:id/accept (Enters Panel URL, User, Pass)
-    API->>DB: Updates status to 'Accepted'; saves credentials
+    Admin->>App: Opens tenant-scoped ID Request queue
+    Admin->>API: PATCH /api/admin/id-requests/accept (Enters panel URL, username, password)
+    API->>DB: Updates status to Accepted and stores credentials
+    API-->>Admin: Confirmation response
     
-    User->>App: Checks "My IDs" Dashboard
+    User->>App: Navigates to My IDs dashboard
     App->>API: GET /api/user/my-ids
-    API-->>App: Returns active panel list with decrypted login credentials
-    App->>User: Displays interactive panel card with one-click copy & launch
+    API-->>App: Returns active panels with credentials
+    App->>User: Displays interactive panel card with one-click copy and launch
 ```
 
 ---

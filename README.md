@@ -122,29 +122,29 @@ The landing page features dynamic horizontal and square carousel modules managed
 
 ```mermaid
 flowchart TB
-    subgraph ClientLayer["🖥️ Frontend Client (React 18 + Vite)"]
-        UI[Glassmorphic UI / Dashboard]
-        AuthCtx[UserContext & Role Guard]
-        BalCtx[BalanceProvider State Engine]
-        Portals[React Portals / Modals]
+    subgraph ClientLayer["Frontend Client (React 18 + Vite)"]
+        UI["Glassmorphic UI / Dashboard"]
+        AuthCtx["UserContext and Role Guard"]
+        BalCtx["BalanceProvider State Engine"]
+        Portals["React Portals / Modals"]
     end
 
-    subgraph APILayer["⚙️ Backend REST API (Node.js + Express)"]
-        Router[Express Router]
-        AuthMW[RBAC & Origin Validation Middleware]
-        TenantScoper[SubAdmin Tenant Scoping Engine]
+    subgraph APILayer["Backend REST API (Node.js + Express)"]
+        Router["Express Router"]
+        AuthMW["RBAC and Origin Validation Middleware"]
+        TenantScoper["SubAdmin Tenant Scoping Engine"]
         
         subgraph Controllers["Modular Controllers"]
-            AdminCtrl[adminController.js]
-            UserCtrl[userController.js]
-            SupportCtrl[supportController.js]
-            ImgCtrl[imageController.js]
+            AdminCtrl["adminController.js"]
+            UserCtrl["userController.js"]
+            SupportCtrl["supportController.js"]
+            ImgCtrl["imageController.js"]
         end
     end
 
-    subgraph StorageLayer["🗄️ Persistence & Storage Layer"]
-        MongoDB[(MongoDB Atlas / Document Store)]
-        Cloudinary[(Cloudinary CDN / Proof Receipts)]
+    subgraph StorageLayer["Persistence and Storage Layer"]
+        MongoDB[("MongoDB Atlas Document Store")]
+        Cloudinary[("Cloudinary CDN Proof Receipts")]
     end
 
     UI -->|Authenticated API Requests| Router
@@ -153,7 +153,7 @@ flowchart TB
     TenantScoper --> Controllers
     Controllers -->|Mongoose Queries| MongoDB
     ImgCtrl -->|Multipart Upload Stream| Cloudinary
-    BalCtx <-->|Live Polling & Event Reconciliation| UserCtrl
+    BalCtx ---|Live State Synchronization| UserCtrl
 ```
 
 ---
@@ -164,19 +164,19 @@ The platform operates on a hierarchical multi-tenant structure:
 
 ```mermaid
 graph TD
-    Super[👑 Superadmin] -->|Provisions & Audits| SubAdmin[🛡️ Admin Master / Sub-Admin]
+    Super["Superadmin"] -->|Provisions and Audits| SubAdmin["Admin Master / Sub-Admin"]
     Super -->|Configures 13-Point Permissions| SubAdmin
-    Super -->|Global View| GlobalData[All Users, Transactions & Catalogs]
+    Super -->|Global View| GlobalData["All Users, Transactions and Catalogs"]
     
-    SubAdmin -->|Tenant Silo A| UserA1[User A1]
-    SubAdmin -->|Tenant Silo A| UserA2[User A2]
-    SubAdmin -->|Manages Isolated| GatewayA[Dedicated Banking Gateways]
-    SubAdmin -->|Manages Isolated| CatalogA[Custom Exchange Catalog & Coin Rates]
+    SubAdmin -->|Tenant Silo A| UserA1["User A1"]
+    SubAdmin -->|Tenant Silo A| UserA2["User A2"]
+    SubAdmin -->|Manages Isolated| GatewayA["Dedicated Banking Gateways"]
+    SubAdmin -->|Manages Isolated| CatalogA["Custom Exchange Catalog and Coin Rates"]
     
-    SubAdminB[🛡️ Admin Master B] -->|Tenant Silo B| UserB1[User B1]
-    SubAdminB -->|Manages Isolated| GatewayB[Bank Gateways B]
+    SubAdminB["Admin Master B"] -->|Tenant Silo B| UserB1["User B1"]
+    SubAdminB -->|Manages Isolated| GatewayB["Bank Gateways B"]
     
-    UserA1 -.x|Strictly Blocked Access| SubAdminB
+    UserA1 -.->|Blocked Cross-Tenant Access| SubAdminB
 ```
 
 ### The 13-Point Granular Permission Matrix

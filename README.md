@@ -368,12 +368,11 @@ npm run dev
 
 ## 📈 Recent Engineering Updates (Changelog)
 
-- **Sub-Admin & User Management Engine (`00d94b4`):** Built controllers and routes to isolate user pools and assignable permissions for sub-admins.
-- **Layout Width Overflow Fix (`74cdd4e`):** Fixed mobile horizontal scroll by migrating `100vw` to `100%` and rendering sidebars through React Portals.
-- **Dynamic CORS Expansion (`7c86eb4`):** Extended CORS handling with regex matching for multi-domain production and preview deployments.
-- **Dual-View Mobile ID Request UI (`b683e2f`, `a889eb8`):** Redesigned dense tables into responsive stacked cards below 880px down to 320px.
-- **Coin Conversion Logic Refactor (`b53320b`, `6a5b776`):** Updated coin-to-currency formula safeguards and minimum threshold checks.
-- **Scoped CSS Modules Migration (`6217c5c`):** Migrated navigation and header styling to CSS Modules to isolate glassmorphic styles.
+- **Sub-Admin Multi-Tenancy & Authorization Layer (`00d94b4`):** Implemented tenant isolation middleware, scoped query resolvers, and the 13-point permission matrix for Sub-Admins.
+- **Dynamic CORS & Multi-Origin Whitelist Handler (`7c86eb4`):** Engineered dynamic regex origin verification to support multi-domain deployments across production, preview, and local domains.
+- **Financial Ledger & Coin Rate Engine Refactor (`b53320b`, `6a5b776`):** Hardened currency-to-coin rate calculations with strict input sanitization, boundary checks, and atomic balance deductions.
+- **Transaction State Management & Moderation Pipeline (`a889eb8`):** Enhanced payment verification queues with instant status updates and audit logs.
+- **Component Modularity & Scoped CSS Migration (`6217c5c`, `74cdd4e`):** Modularized core layout components with scoped CSS modules, persistent drawer state, and portal-based overlays.
 
 ---
 

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useUser } from '../../context/UserContext';
+import { checkIsAdmin } from '../../utils/roles';
 import { getImageUrl } from '../../utils/imageUrl';
 import styles from './HomeBannerCarousel.module.css';
 
@@ -9,7 +10,7 @@ import styles from './HomeBannerCarousel.module.css';
  * canManage={false} → User view: read-only sliding carousel
  */
 const HomeBannerCarousel = ({ canManage = false }) => {
-  const { url } = useUser();
+  const { url, user } = useUser();
   const [images, setImages] = useState([]);
   const [current, setCurrent] = useState(0);
   const [uploading, setUploading] = useState(false);
@@ -22,7 +23,16 @@ const HomeBannerCarousel = ({ canManage = false }) => {
   const fetchImages = useCallback(async () => {
     try {
       setFetchError(false);
-      const res = await fetch(`${url}/api/admin/home-banner`);
+      const headers = {};
+      if (user) {
+        if (checkIsAdmin(user)) {
+          headers['x-admin-id'] = user.id || user._id || user.username || '';
+          headers['x-admin-role'] = user.role || 'admin';
+        } else {
+          headers['x-user-id'] = user.id || user._id || user.username || '';
+        }
+      }
+      const res = await fetch(`${url}/api/admin/home-banner`, { headers });
       if (!res.ok) throw new Error('Failed to fetch');
       const data = await res.json();
       setImages(data);
@@ -31,7 +41,7 @@ const HomeBannerCarousel = ({ canManage = false }) => {
       console.error('HomeBannerCarousel fetch error:', e);
       setFetchError(true);
     }
-  }, [url]);
+  }, [url, user]);
 
   useEffect(() => { fetchImages(); }, [fetchImages]);
 
@@ -59,15 +69,24 @@ const HomeBannerCarousel = ({ canManage = false }) => {
     try {
       const formData = new FormData();
       formData.append('image', file);
+      const headers = {};
+      if (user) {
+        headers['x-admin-id'] = user.id || user._id || user.username || '';
+        headers['x-admin-role'] = user.role || 'admin';
+      }
       const res = await fetch(`${url}/api/admin/home-banner`, {
         method: 'POST',
+        headers,
         body: formData,
       });
-      if (!res.ok) throw new Error('Upload failed');
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.message || 'Upload failed');
+      }
       await fetchImages();
     } catch (err) {
       console.error('Upload error:', err);
-      alert('Upload failed. Please try again.');
+      alert(err.message || 'Upload failed. Please try again.');
     } finally {
       setUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = '';
@@ -78,12 +97,23 @@ const HomeBannerCarousel = ({ canManage = false }) => {
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this banner image?')) return;
     try {
-      const res = await fetch(`${url}/api/admin/home-banner/${id}`, { method: 'DELETE' });
-      if (!res.ok) throw new Error('Delete failed');
+      const headers = {};
+      if (user) {
+        headers['x-admin-id'] = user.id || user._id || user.username || '';
+        headers['x-admin-role'] = user.role || 'admin';
+      }
+      const res = await fetch(`${url}/api/admin/home-banner/${id}`, {
+        method: 'DELETE',
+        headers,
+      });
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.message || 'Delete failed');
+      }
       await fetchImages();
     } catch (err) {
       console.error('Delete error:', err);
-      alert('Delete failed. Please try again.');
+      alert(err.message || 'Delete failed. Please try again.');
     }
   };
 

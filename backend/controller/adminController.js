@@ -33,6 +33,26 @@ exports.getAllAdmins = async (req, res) => {
   }
 };
 
+// Return current admin profile & permissions
+exports.getMe = async (req, res) => {
+  try {
+    const admin = await getAdminFromReq(req);
+    if (!admin) {
+      return res.status(404).json({ message: 'Admin not found.' });
+    }
+    const adminObj = admin.toObject();
+    delete adminObj.password;
+    res.status(200).json({
+      id: admin._id,
+      ...adminObj,
+      role: admin.role,
+      permissions: admin.permissions || {},
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Error retrieving admin info', error: error.message });
+  }
+};
+
 // Sub-admin management (Superadmin only)
 exports.getAllSubAdmins = async (req, res) => {
   try {
@@ -136,7 +156,7 @@ exports.createSubAdmin = async (req, res) => {
 exports.updateSubAdminPermissions = async (req, res) => {
   try {
     const admin = await getAdminFromReq(req);
-    if (admin && admin.role !== 'superadmin') {
+    if (!admin || admin.role !== 'superadmin') {
       return res.status(403).json({ message: 'Access denied. Superadmin only.' });
     }
 
@@ -149,9 +169,10 @@ exports.updateSubAdminPermissions = async (req, res) => {
     }
 
     targetAdmin.permissions = {
-      ...(targetAdmin.permissions ? targetAdmin.permissions.toObject() : {}),
+      ...(targetAdmin.permissions ? (targetAdmin.permissions.toObject ? targetAdmin.permissions.toObject() : targetAdmin.permissions) : {}),
       ...permissions,
     };
+    targetAdmin.markModified('permissions');
 
     await targetAdmin.save();
 
@@ -168,7 +189,7 @@ exports.updateSubAdminPermissions = async (req, res) => {
 exports.deleteSubAdmin = async (req, res) => {
   try {
     const admin = await getAdminFromReq(req);
-    if (admin && admin.role !== 'superadmin') {
+    if (!admin || admin.role !== 'superadmin') {
       return res.status(403).json({ message: 'Access denied. Superadmin only.' });
     }
 
@@ -273,12 +294,12 @@ exports.addAdminUser = async (req, res) => {
 exports.updateSubAdmin = async (req, res) => {
   try {
     const admin = await getAdminFromReq(req);
-    if (admin && admin.role !== 'superadmin') {
+    if (!admin || admin.role !== 'superadmin') {
       return res.status(403).json({ message: 'Access denied. Superadmin only.' });
     }
 
     const { id } = req.params;
-    const { name, phoneNumber, email, password, username, agentCode } = req.body;
+    const { name, phoneNumber, email, password, username, agentCode, permissions } = req.body;
 
     const targetAdmin = await Admin.findById(id);
     if (!targetAdmin) {
@@ -298,6 +319,13 @@ exports.updateSubAdmin = async (req, res) => {
     }
     if (agentCode !== undefined) {
       targetAdmin.agentCode = agentCode;
+    }
+    if (permissions && typeof permissions === 'object') {
+      targetAdmin.permissions = {
+        ...(targetAdmin.permissions ? (targetAdmin.permissions.toObject ? targetAdmin.permissions.toObject() : targetAdmin.permissions) : {}),
+        ...permissions,
+      };
+      targetAdmin.markModified('permissions');
     }
 
     await targetAdmin.save();
@@ -347,6 +375,9 @@ exports.updateUser = async (req, res) => {
       targetUser.username = username;
     }
     if (password && password.trim() !== '') {
+      if (admin && admin.role !== 'superadmin' && admin.permissions?.canChangeUserPassword === false) {
+        return res.status(403).json({ message: 'Permission denied: Cannot change user passwords.' });
+      }
       targetUser.password = password;
     }
     if (agentCode !== undefined) {
@@ -1254,7 +1285,10 @@ exports.getAllWebsites = async (req, res) => {
 exports.deleteWebsite = async (req, res) => {
   try {
     const admin = await getAdminFromReq(req);
-    if (admin && admin.role !== 'superadmin' && admin.permissions?.canDeleteWebsites === false) {
+    if (!admin) {
+      return res.status(401).json({ message: 'Authentication required: Admin ID is missing.' });
+    }
+    if (admin.role !== 'superadmin' && admin.permissions?.canDeleteWebsites !== true) {
       return res.status(403).json({ message: 'Permission denied: Cannot delete websites.' });
     }
 
@@ -1685,7 +1719,10 @@ exports.deleteUser = async (req, res) => {
 
   try {
     const admin = await getAdminFromReq(req);
-    if (admin && admin.role !== 'superadmin' && admin.permissions?.canDeleteUsers === false) {
+    if (!admin) {
+      return res.status(401).json({ message: 'Authentication required: Admin ID is missing.' });
+    }
+    if (admin.role !== 'superadmin' && admin.permissions?.canDeleteUsers !== true) {
       return res.status(403).json({ message: 'Permission denied: Cannot delete users.' });
     }
 
@@ -2742,15 +2779,115 @@ exports.rejectPasswordChangeRequest = async (req, res) => {
 };
 
 
+// ===== BANNER CAROUSEL SCOPING HELPER =====
+
+// Helper to fetch banner images scoped by viewer role & admin assignment:
+// - Guest (logged out): Returns Superadmin banners (adminId: 'superadmin' or legacy null/missing).
+// - Superadmin: Returns Superadmin banners.
+// - Admin Master (role 'admin'): Returns ONLY their own uploaded banners (adminId: admin._id.toString()).
+// - User (role 'user'): Looks up assigned Admin Master.
+//     If assigned Admin Master has banners (> 0), returns them.
+//     If assigned Admin Master has 0 banners, falls back to Superadmin banners.
+const getScopedBannerImages = async (req, type) => {
+  const adminId = req.headers['x-admin-id'] || req.query.adminId;
+  const userId = req.headers['x-user-id'] || req.query.userId;
+
+  const superAdminQuery = {
+    type,
+    $or: [
+      { adminId: 'superadmin' },
+      { adminId: { $exists: false } },
+      { adminId: null },
+      { adminId: '' }
+    ]
+  };
+
+  // Case 1: Requester is an Admin Master or Superadmin
+  if (adminId) {
+    let admin = null;
+    if (mongoose.Types.ObjectId.isValid(adminId)) {
+      admin = await Admin.findById(adminId);
+    }
+    if (!admin && typeof adminId === 'string') {
+      admin = await Admin.findOne({ username: adminId });
+    }
+
+    if (admin) {
+      if (admin.role === 'superadmin') {
+        return await Carousel.find(superAdminQuery).sort({ createdAt: -1 });
+      }
+      // Sub-Admin (Admin Master): Return ONLY their own uploaded posters
+      return await Carousel.find({
+        type,
+        $or: [
+          { adminId: admin._id.toString() },
+          ...(admin.username ? [{ adminId: admin.username }] : [])
+        ]
+      }).sort({ createdAt: -1 });
+    }
+  }
+
+  // Case 2: Requester is a regular User
+  if (userId) {
+    let user = null;
+    if (mongoose.Types.ObjectId.isValid(userId)) {
+      user = await User.findById(userId);
+    }
+    if (!user && typeof userId === 'string') {
+      user = await User.findOne({ username: userId });
+    }
+
+    if (user) {
+      let assignedAdminDoc = null;
+      let assignedAdminId = user.assignedAdmin ? user.assignedAdmin.toString() : null;
+
+      if (assignedAdminId && mongoose.Types.ObjectId.isValid(assignedAdminId)) {
+        assignedAdminDoc = await Admin.findById(assignedAdminId);
+      }
+      if (!assignedAdminDoc && assignedAdminId) {
+        assignedAdminDoc = await Admin.findOne({ username: assignedAdminId });
+      }
+      if (!assignedAdminDoc && user.assignedAdminUsername) {
+        assignedAdminDoc = await Admin.findOne({ username: user.assignedAdminUsername });
+      }
+
+      if (assignedAdminDoc) {
+        if (assignedAdminDoc.role === 'superadmin') {
+          return await Carousel.find(superAdminQuery).sort({ createdAt: -1 });
+        }
+
+        const masterBanners = await Carousel.find({
+          type,
+          $or: [
+            { adminId: assignedAdminDoc._id.toString() },
+            ...(assignedAdminDoc.username ? [{ adminId: assignedAdminDoc.username }] : [])
+          ]
+        }).sort({ createdAt: -1 });
+
+        // If Admin Master has uploaded posters (> 0), show their posters
+        if (masterBanners.length > 0) {
+          return masterBanners;
+        }
+        // Fallback: If Admin Master has 0 posters set for that banner, show superadmin posters
+        return await Carousel.find(superAdminQuery).sort({ createdAt: -1 });
+      }
+    }
+  }
+
+  // Case 3: Guest / Logged out / unauthenticated -> Show Superadmin posters
+  return await Carousel.find(superAdminQuery).sort({ createdAt: -1 });
+};
+
 // ===== HOME BANNER CAROUSEL =====
 
-// GET all home banner images
+// GET all home banner images (isolated by role & tenant)
 exports.getHomeBannerImages = async (req, res) => {
   try {
-    const images = await Carousel.find({ type: 'homeBanner' }).sort({ createdAt: -1 });
+    const images = await getScopedBannerImages(req, 'homeBanner');
     const formatted = images.map(img => ({
       id: img._id,
       imagePath: img.imagePath,
+      adminId: img.adminId,
       createdAt: img.createdAt,
     }));
     res.status(200).json(formatted);
@@ -2760,20 +2897,27 @@ exports.getHomeBannerImages = async (req, res) => {
   }
 };
 
-// POST upload a new home banner image
+// POST upload a new home banner image (scoped to uploading admin)
 exports.addHomeBannerImage = async (req, res) => {
   try {
     const admin = await getAdminFromReq(req);
-    if (admin && admin.role !== 'superadmin' && admin.permissions?.canManageBanners === false) {
+    if (!admin) {
+      return res.status(401).json({ message: 'Authentication required: Admin ID is missing.' });
+    }
+    if (admin.role !== 'superadmin' && admin.permissions?.canManageBanners !== true) {
       return res.status(403).json({ message: 'Permission denied: Cannot manage banners.' });
     }
 
     if (!req.file) {
       return res.status(400).json({ message: 'No image file uploaded' });
     }
+
+    const adminId = admin.role === 'superadmin' ? 'superadmin' : admin._id.toString();
+
     const newImage = new Carousel({
       imagePath: req.file.path,
       type: 'homeBanner',
+      adminId,
     });
     await newImage.save();
     res.status(201).json({
@@ -2781,6 +2925,7 @@ exports.addHomeBannerImage = async (req, res) => {
       image: {
         id: newImage._id,
         imagePath: newImage.imagePath,
+        adminId: newImage.adminId,
         createdAt: newImage.createdAt,
       },
     });
@@ -2790,12 +2935,15 @@ exports.addHomeBannerImage = async (req, res) => {
   }
 };
 
-// DELETE a home banner image (removes from MongoDB + Cloudinary)
+// DELETE a home banner image (removes from MongoDB + Cloudinary, verifies owner)
 exports.deleteHomeBannerImage = async (req, res) => {
   const { id } = req.params;
   try {
     const admin = await getAdminFromReq(req);
-    if (admin && admin.role !== 'superadmin' && admin.permissions?.canManageBanners === false) {
+    if (!admin) {
+      return res.status(401).json({ message: 'Authentication required: Admin ID is missing.' });
+    }
+    if (admin.role !== 'superadmin' && admin.permissions?.canManageBanners !== true) {
       return res.status(403).json({ message: 'Permission denied: Cannot manage banners.' });
     }
 
@@ -2803,6 +2951,14 @@ exports.deleteHomeBannerImage = async (req, res) => {
     if (!image || image.type !== 'homeBanner') {
       return res.status(404).json({ message: 'Home banner image not found' });
     }
+
+    // Isolation check: Admin Master can only delete their own banners
+    if (admin.role !== 'superadmin') {
+      if (image.adminId && image.adminId !== admin._id.toString()) {
+        return res.status(403).json({ message: 'Unauthorized: Cannot delete another admin\'s banner.' });
+      }
+    }
+
     // Extract Cloudinary public_id from the URL
     const urlParts = image.imagePath.split('/');
     const uploadIndex = urlParts.indexOf('upload');
@@ -2827,12 +2983,14 @@ exports.deleteHomeBannerImage = async (req, res) => {
 
 // --- SQUARE BANNER CAROUSEL ---
 
+// GET all square banner images (isolated by role & tenant)
 exports.getSquareBannerImages = async (req, res) => {
   try {
-    const images = await Carousel.find({ type: 'squareBanner' }).sort({ createdAt: -1 });
+    const images = await getScopedBannerImages(req, 'squareBanner');
     const formatted = images.map(img => ({
       id: img._id,
       imagePath: img.imagePath,
+      adminId: img.adminId,
       createdAt: img.createdAt,
     }));
     res.status(200).json(formatted);
@@ -2842,19 +3000,27 @@ exports.getSquareBannerImages = async (req, res) => {
   }
 };
 
+// POST upload a new square banner image (scoped to uploading admin)
 exports.addSquareBannerImage = async (req, res) => {
   try {
     const admin = await getAdminFromReq(req);
-    if (admin && admin.role !== 'superadmin' && admin.permissions?.canManageBanners === false) {
+    if (!admin) {
+      return res.status(401).json({ message: 'Authentication required: Admin ID is missing.' });
+    }
+    if (admin.role !== 'superadmin' && admin.permissions?.canManageBanners !== true) {
       return res.status(403).json({ message: 'Permission denied: Cannot manage banners.' });
     }
 
     if (!req.file) {
       return res.status(400).json({ message: 'No image file uploaded' });
     }
+
+    const adminId = admin.role === 'superadmin' ? 'superadmin' : admin._id.toString();
+
     const newImage = new Carousel({
       imagePath: req.file.path,
       type: 'squareBanner',
+      adminId,
     });
     await newImage.save();
     res.status(201).json({
@@ -2862,6 +3028,7 @@ exports.addSquareBannerImage = async (req, res) => {
       image: {
         id: newImage._id,
         imagePath: newImage.imagePath,
+        adminId: newImage.adminId,
         createdAt: newImage.createdAt,
       },
     });
@@ -2871,11 +3038,15 @@ exports.addSquareBannerImage = async (req, res) => {
   }
 };
 
+// DELETE a square banner image (removes from MongoDB + Cloudinary, verifies owner)
 exports.deleteSquareBannerImage = async (req, res) => {
   const { id } = req.params;
   try {
     const admin = await getAdminFromReq(req);
-    if (admin && admin.role !== 'superadmin' && admin.permissions?.canManageBanners === false) {
+    if (!admin) {
+      return res.status(401).json({ message: 'Authentication required: Admin ID is missing.' });
+    }
+    if (admin.role !== 'superadmin' && admin.permissions?.canManageBanners !== true) {
       return res.status(403).json({ message: 'Permission denied: Cannot manage banners.' });
     }
 
@@ -2883,6 +3054,14 @@ exports.deleteSquareBannerImage = async (req, res) => {
     if (!image || image.type !== 'squareBanner') {
       return res.status(404).json({ message: 'Square banner image not found' });
     }
+
+    // Isolation check: Admin Master can only delete their own banners
+    if (admin.role !== 'superadmin') {
+      if (image.adminId && image.adminId !== admin._id.toString()) {
+        return res.status(403).json({ message: 'Unauthorized: Cannot delete another admin\'s banner.' });
+      }
+    }
+
     // Cloudinary cleanup
     const urlParts = image.imagePath.split('/');
     const uploadIndex = urlParts.indexOf('upload');

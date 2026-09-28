@@ -60,7 +60,7 @@ const Websites = () => {
   const canEditWebsites =
     isSuperAdmin || user?.permissions?.canEditWebsites !== false;
   const canDeleteWebsites =
-    isSuperAdmin || user?.permissions?.canDeleteWebsites !== false;
+    isSuperAdmin || user?.permissions?.canDeleteWebsites === true;
   const canManageCategories =
     isSuperAdmin || user?.permissions?.canManageCategories !== false;
   const adminHeaderId = user?.id || user?._id || user?.username || "";

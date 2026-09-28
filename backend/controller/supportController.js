@@ -48,11 +48,22 @@ exports.getSupportLinks = async (req, res) => {
     const userId = req.headers['x-user-id'] || req.query.userId || adminId;
     const targetAdminId = req.headers['x-target-admin-id'] || req.query.targetAdminId;
 
-    if (!userId && !adminId) {
-      return res.status(400).json({ message: 'User or Admin ID is required to fetch support links.' });
-    }
-
     const superadminLinks = await getOrCreateSuperAdminLinks();
+
+    // If no user or admin ID provided, treat as guest visitor (show Superadmin links)
+    if (!userId && !adminId) {
+      return res.status(200).json({
+        role: 'guest',
+        canEdit: false,
+        links: {
+          whatsappSupport: superadminLinks.whatsappSupport,
+          whatsappChannel: superadminLinks.whatsappChannel,
+          telegram: superadminLinks.telegram,
+          instagram: superadminLinks.instagram,
+          facebook: superadminLinks.facebook,
+        }
+      });
+    }
 
     // Check if requester is an Admin or Superadmin
     let admin = null;
@@ -81,7 +92,12 @@ exports.getSupportLinks = async (req, res) => {
           }
 
           if (selectedAdmin) {
-            const foundDoc = await SupportLink.findOne({ adminId: selectedAdmin._id.toString() });
+            const foundDoc = await SupportLink.findOne({
+              $or: [
+                { adminId: selectedAdmin._id.toString() },
+                ...(selectedAdmin.username ? [{ adminId: selectedAdmin.username }] : [])
+              ]
+            });
             selectedAdminLinks = foundDoc || DEFAULT_LINKS;
           }
         }
@@ -112,10 +128,17 @@ exports.getSupportLinks = async (req, res) => {
       // Permission check: if canManageSupportLinks is false, subadmin can only see links like user (not editable)
       const hasSupportPermission = Boolean(admin.permissions && admin.permissions.canManageSupportLinks === true);
 
-      let subAdminLinks = await SupportLink.findOne({ adminId: admin._id.toString() });
+      let subAdminLinks = await SupportLink.findOne({
+        $or: [
+          { adminId: admin._id.toString() },
+          ...(admin.username ? [{ adminId: admin.username }] : [])
+        ]
+      });
       if (!subAdminLinks) {
         subAdminLinks = DEFAULT_LINKS;
       }
+
+      const defaultAdminWa = admin.phoneNumber ? `https://wa.me/${admin.phoneNumber.replace(/\D/g, '')}` : DEFAULT_LINKS.whatsappSupport;
 
       return res.status(200).json({
         role: 'admin',
@@ -129,7 +152,7 @@ exports.getSupportLinks = async (req, res) => {
           facebook: superadminLinks.facebook
         },
         myLinks: {
-          whatsappSupport: subAdminLinks.whatsappSupport || DEFAULT_LINKS.whatsappSupport,
+          whatsappSupport: subAdminLinks.whatsappSupport || defaultAdminWa,
           whatsappChannel: subAdminLinks.whatsappChannel || DEFAULT_LINKS.whatsappChannel,
           telegram: subAdminLinks.telegram || DEFAULT_LINKS.telegram,
           instagram: subAdminLinks.instagram || DEFAULT_LINKS.instagram,
@@ -164,29 +187,62 @@ exports.getSupportLinks = async (req, res) => {
 
     // Resolve assigned sub-admin
     let assignedAdminId = user.assignedAdmin ? user.assignedAdmin.toString() : null;
+    let parentAdmin = null;
 
-    if (!assignedAdminId && user.assignedAdminUsername) {
-      const parentAdmin = await Admin.findOne({ username: user.assignedAdminUsername });
-      if (parentAdmin) {
-        assignedAdminId = parentAdmin._id.toString();
-      }
+    if (assignedAdminId && mongoose.Types.ObjectId.isValid(assignedAdminId)) {
+      parentAdmin = await Admin.findById(assignedAdminId);
+    }
+    if (!parentAdmin && assignedAdminId) {
+      parentAdmin = await Admin.findOne({ username: assignedAdminId });
+    }
+    if (!parentAdmin && user.assignedAdminUsername) {
+      parentAdmin = await Admin.findOne({ username: user.assignedAdminUsername });
+    }
+    if (parentAdmin) {
+      assignedAdminId = parentAdmin._id.toString();
     }
 
     let resolvedLinks = null;
-    if (assignedAdminId) {
-      const subAdminLinkDoc = await SupportLink.findOne({ adminId: assignedAdminId });
-      if (subAdminLinkDoc) {
+
+    if (parentAdmin) {
+      if (parentAdmin.role === 'superadmin') {
         resolvedLinks = {
-          whatsappSupport: subAdminLinkDoc.whatsappSupport || DEFAULT_LINKS.whatsappSupport,
-          whatsappChannel: subAdminLinkDoc.whatsappChannel || DEFAULT_LINKS.whatsappChannel,
-          telegram: subAdminLinkDoc.telegram || DEFAULT_LINKS.telegram,
-          instagram: subAdminLinkDoc.instagram || DEFAULT_LINKS.instagram,
-          facebook: subAdminLinkDoc.facebook || DEFAULT_LINKS.facebook
+          whatsappSupport: superadminLinks.whatsappSupport,
+          whatsappChannel: superadminLinks.whatsappChannel,
+          telegram: superadminLinks.telegram,
+          instagram: superadminLinks.instagram,
+          facebook: superadminLinks.facebook,
         };
+      } else {
+        // Look for Admin Master's custom support links
+        const subAdminLinkDoc = await SupportLink.findOne({
+          $or: [
+            { adminId: assignedAdminId },
+            ...(parentAdmin.username ? [{ adminId: parentAdmin.username }] : [])
+          ]
+        });
+
+        const fallbackWa = parentAdmin.phoneNumber ? `https://wa.me/${parentAdmin.phoneNumber.replace(/\D/g, '')}` : DEFAULT_LINKS.whatsappSupport;
+
+        if (subAdminLinkDoc) {
+          resolvedLinks = {
+            whatsappSupport: subAdminLinkDoc.whatsappSupport || fallbackWa,
+            whatsappChannel: subAdminLinkDoc.whatsappChannel || DEFAULT_LINKS.whatsappChannel,
+            telegram: subAdminLinkDoc.telegram || DEFAULT_LINKS.telegram,
+            instagram: subAdminLinkDoc.instagram || DEFAULT_LINKS.instagram,
+            facebook: subAdminLinkDoc.facebook || DEFAULT_LINKS.facebook,
+          };
+        } else {
+          // If Admin Master hasn't configured custom links yet, provide default links with their phone number if available
+          resolvedLinks = {
+            ...DEFAULT_LINKS,
+            whatsappSupport: fallbackWa
+          };
+        }
       }
     }
 
-    // If sub-admin hasn't set custom links or user has no assigned admin, fallback to superadmin links
+    // Fallback if user has no assigned admin
     if (!resolvedLinks) {
       resolvedLinks = {
         whatsappSupport: superadminLinks.whatsappSupport,

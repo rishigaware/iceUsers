@@ -40,7 +40,7 @@ import resp18 from "../../assets/responsible_gaming_18_plus.png";
 import respPlaySafe from "../../assets/responsible_gaming_play_safe.png";
 import newlogo from "../../assets/logo.png";
 import { useUser } from "../../context/UserContext";
-import { checkIsAdmin } from "../../utils/roles";
+import { checkIsAdmin, checkIsSuperAdmin } from "../../utils/roles";
 import { ROUTES } from "../../utils/routes";
 import LoginPopup from "../Login/LoginPopup";
 import DepositPopup from "../Navbar/DepositPopup";
@@ -56,6 +56,8 @@ const HomeHeading = () => {
   const navigate = useNavigate();
   const { user, setUser, refreshUserBalance, logoPath } = useUser();
   const isAdmin = checkIsAdmin(user);
+  const isSuperAdmin = checkIsSuperAdmin(user);
+  const canManageBanners = isSuperAdmin || (isAdmin && user?.permissions?.canManageBanners === true);
 
   const [showDepositPopup, setShowDepositPopup] = useState(false);
   const [showWithdrawalPopup, setShowWithdrawalPopup] = useState(false);
@@ -330,7 +332,7 @@ const HomeHeading = () => {
       </div>
 
       {/* Home Banner Carousel - before Our Premium Services */}
-      <HomeBannerCarousel canManage={isAdmin} />
+      <HomeBannerCarousel canManage={canManageBanners} />
 
       {/* Top 10 Live Exchange Websites Vertical Upper-Scroll Showcase */}
       <WebsitesVerticalSlider isAdmin={isAdmin} />
@@ -376,7 +378,7 @@ const HomeHeading = () => {
       </div>
 
        {/* Square Banner Carousel - before How It Works */}
-      <SquareBannerCarousel canManage={isAdmin} />
+      <SquareBannerCarousel canManage={canManageBanners} />
 
 
       {/* Animated Stats Section */}

@@ -76,6 +76,48 @@ export const UserProvider = ({ children }) => {
   const isSuperOrMaster = useMemo(() => checkIsSuperOrMaster(user), [user?.role]);
   const isRegularUser = useMemo(() => checkIsUser(user), [user?.role]);
 
+  const refreshUserData = useCallback(async () => {
+    if (!user) return;
+    try {
+      const identifier = user.id || user._id || user.username;
+      if (checkIsAdmin(user)) {
+        const response = await fetch(`${url}/api/admin/me`, {
+          headers: { 'x-admin-id': identifier }
+        });
+        if (response.ok) {
+          const freshData = await response.json();
+          setUser((prev) => ({
+            ...prev,
+            ...freshData,
+            permissions: freshData.permissions || prev?.permissions || {},
+          }));
+        }
+      } else {
+        if (user.id || user._id) {
+          await refreshUserBalance();
+        }
+      }
+    } catch (e) {
+      console.warn("Could not sync user/admin data:", e);
+    }
+  }, [user?.id, user?._id, user?.username, user?.role, url, refreshUserBalance]);
+
+  useEffect(() => {
+    if (user?.id || user?._id || user?.username) {
+      refreshUserData();
+    }
+  }, [url]);
+
+  useEffect(() => {
+    const handleFocus = () => {
+      if (user?.id || user?._id || user?.username) {
+        refreshUserData();
+      }
+    };
+    window.addEventListener('focus', handleFocus);
+    return () => window.removeEventListener('focus', handleFocus);
+  }, [refreshUserData, user?.id, user?._id, user?.username]);
+
   // Memoize the context value to prevent unnecessary re-renders
   const contextValue = useMemo(
     () => ({
@@ -90,6 +132,7 @@ export const UserProvider = ({ children }) => {
       logoPath: LOGO_PATH,
       fetchUserBalance,
       refreshUserBalance,
+      refreshUserData,
     }),
     [
       user?.id,
@@ -98,6 +141,7 @@ export const UserProvider = ({ children }) => {
       user?.phoneNumber,
       user?.balance,
       user?.role,
+      user?.permissions,
       isAdmin,
       isSuperAdmin,
       isSuperOrMaster,
@@ -105,6 +149,7 @@ export const UserProvider = ({ children }) => {
       url,
       fetchUserBalance,
       refreshUserBalance,
+      refreshUserData,
     ],
   );
 

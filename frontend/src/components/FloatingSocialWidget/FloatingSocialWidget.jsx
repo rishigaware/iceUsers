@@ -80,7 +80,7 @@ const SOCIAL_ITEMS_CONFIG = [
 const FloatingSocialWidget = () => {
   const { user, url } = useUser();
   const [isOpen, setIsOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState('superadmin'); // 'superadmin' | 'myLinks'
+  const [activeTab, setActiveTab] = useState('myLinks'); // 'myLinks' | 'superadmin'
   const [supportData, setSupportData] = useState(null);
   const [selectedTargetAdminId, setSelectedTargetAdminId] = useState('superadmin');
   const [editingItem, setEditingItem] = useState(null);
@@ -91,28 +91,30 @@ const FloatingSocialWidget = () => {
   const location = useLocation();
   const widgetRef = useRef(null);
 
-  // Requirement: Hide if logged out (!user) or on login/signup pages
+  // Requirement: Hide only on login/signup pages; available on home and dashboard for guests and logged-in users
   const hiddenRoutes = [ROUTES.LOGIN, ROUTES.SIGNUP];
-  const isHidden = !user || hiddenRoutes.includes(location.pathname);
+  const isHidden = hiddenRoutes.includes(location.pathname);
 
-  // Fetch support links according to user or admin credentials
+  // Fetch support links according to user or admin credentials (or guest fallback)
   const fetchLinks = async (targetAdmin = 'superadmin') => {
-    if (!user) return;
     try {
       const headers = {};
-      const isAdmin = checkIsAdmin(user);
-      const isSuper = checkIsSuperAdmin(user);
-      const identifier = user.id || user._id || user.username;
+      if (user) {
+        const isAdmin = checkIsAdmin(user);
+        const isSuper = checkIsSuperAdmin(user);
+        const identifier = user.id || user._id || user.username;
 
-      if (isAdmin) {
-        headers['x-admin-id'] = identifier;
-        if (isSuper && targetAdmin) {
-          headers['x-target-admin-id'] = targetAdmin;
+        if (isAdmin) {
+          headers['x-admin-id'] = identifier;
+          if (isSuper && targetAdmin) {
+            headers['x-target-admin-id'] = targetAdmin;
+          }
+        } else {
+          headers['x-user-id'] = identifier;
         }
-      } else {
-        headers['x-user-id'] = identifier;
       }
 
+      const isSuper = user && checkIsSuperAdmin(user);
       const queryParam = isSuper && targetAdmin ? `?targetAdminId=${targetAdmin}` : '';
       const res = await fetch(`${url}/api/support/links${queryParam}`, { headers });
       if (res.ok) {
@@ -128,17 +130,13 @@ const FloatingSocialWidget = () => {
   };
 
   useEffect(() => {
-    if (user) {
-      fetchLinks();
-    }
+    fetchLinks();
   }, [user, url]);
 
-  // Set default active tab depending on role
+  // Set default active tab depending on role (both Superadmin and Admin Master default to their own links)
   useEffect(() => {
-    if (checkIsSuperAdmin(supportData?.role)) {
+    if (checkIsSuperAdmin(supportData?.role) || checkIsAdmin(supportData?.role)) {
       setActiveTab('myLinks');
-    } else if (checkIsAdmin(supportData?.role)) {
-      setActiveTab('superadmin');
     }
   }, [supportData?.role]);
 
@@ -426,22 +424,22 @@ const FloatingSocialWidget = () => {
           </div>
         )}
 
-        {/* Sub-Admin Tab Switcher: "Superadmin Support" vs "My Support Links" */}
+        {/* Sub-Admin Tab Switcher: "My Support Links" vs "Superadmin Support" */}
         {isSubAdmin && (
           <div className={styles.tabSwitcher}>
-            <button
-              type="button"
-              className={`${styles.tabBtn} ${activeTab === 'superadmin' ? styles.tabBtnActive : ''}`}
-              onClick={() => setActiveTab('superadmin')}
-            >
-              Superadmin
-            </button>
             <button
               type="button"
               className={`${styles.tabBtn} ${activeTab === 'myLinks' ? styles.tabBtnActive : ''}`}
               onClick={() => setActiveTab('myLinks')}
             >
               My Links
+            </button>
+            <button
+              type="button"
+              className={`${styles.tabBtn} ${activeTab === 'superadmin' ? styles.tabBtnActive : ''}`}
+              onClick={() => setActiveTab('superadmin')}
+            >
+              Superadmin
             </button>
           </div>
         )}
@@ -450,7 +448,7 @@ const FloatingSocialWidget = () => {
         {isSubAdmin && activeTab === 'myLinks' && !hasSubAdminEditPermission && (
           <div className={styles.readOnlyNotice}>
             <FaLock className={styles.readOnlyIcon} />
-            <span>View Only (Admin Master Permission Required)</span>
+            <span>View Only (Superadmin can configure links for your account)</span>
           </div>
         )}
 

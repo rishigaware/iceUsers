@@ -50,7 +50,7 @@ const Users = () => {
     const canCreateUsers = isSuperAdmin || user?.permissions?.canCreateUsers !== false;
     const canUpdateUserBalance = isSuperAdmin || user?.permissions?.canUpdateUserBalance !== false;
     const canChangeUserPassword = isSuperAdmin || user?.permissions?.canChangeUserPassword !== false;
-    const canDeleteUsers = isSuperAdmin || user?.permissions?.canDeleteUsers !== false;
+    const canDeleteUsers = isSuperAdmin || user?.permissions?.canDeleteUsers === true;
 
     const adminHeaderId = user?.id || user?._id || user?.username || '';
 

@@ -2792,10 +2792,21 @@ const getScopedBannerImages = async (req, type) => {
   const adminId = req.headers['x-admin-id'] || req.query.adminId;
   const userId = req.headers['x-user-id'] || req.query.userId;
 
+  let superAdminIds = ['superadmin'];
+  try {
+    const superAdminDoc = await Admin.findOne({ role: 'superadmin' });
+    if (superAdminDoc) {
+      superAdminIds.push(superAdminDoc._id.toString());
+      if (superAdminDoc.username) superAdminIds.push(superAdminDoc.username);
+    }
+  } catch (err) {
+    console.warn('Could not query superadmin for banner scoping:', err.message);
+  }
+
   const superAdminQuery = {
     type,
     $or: [
-      { adminId: 'superadmin' },
+      { adminId: { $in: superAdminIds } },
       { adminId: { $exists: false } },
       { adminId: null },
       { adminId: '' }

@@ -69,19 +69,22 @@ app.use(
 
       if (
         allowedOrigins.includes(normalizedOrigin) ||
+        normalizedOrigin.startsWith('http://localhost:') ||
+        normalizedOrigin.startsWith('http://127.0.0.1:') ||
         normalizedOrigin.endsWith('.iceusers.info') ||
         normalizedOrigin === 'https://iceusers.info' ||
         normalizedOrigin === 'http://iceusers.info' ||
         normalizedOrigin.endsWith('.saipunt.info') ||
         normalizedOrigin === 'https://saipunt.info' ||
         normalizedOrigin === 'http://saipunt.info' ||
-        normalizedOrigin.endsWith('.vercel.app')
+        normalizedOrigin.endsWith('.vercel.app') ||
+        normalizedOrigin.endsWith('.onrender.com')
       ) {
         return callback(null, true);
       }
 
-      const msg = `The CORS policy for this site does not allow access from the specified Origin: ${origin}`;
-      return callback(new Error(msg), false);
+      console.warn(`CORS blocked for origin: ${origin}`);
+      return callback(null, false);
     },
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     credentials: true,

@@ -22,12 +22,13 @@ const SquareBannerCarousel = ({ canManage = false }) => {
     try {
       setFetchError(false);
       const headers = {};
-      if (user) {
+      const validIdentifier = user?.id || user?._id || user?.username;
+      if (validIdentifier) {
         if (checkIsAdmin(user)) {
-          headers['x-admin-id'] = user.id || user._id || user.username || '';
+          headers['x-admin-id'] = validIdentifier;
           headers['x-admin-role'] = user.role || 'admin';
         } else {
-          headers['x-user-id'] = user.id || user._id || user.username || '';
+          headers['x-user-id'] = validIdentifier;
         }
       }
       const res = await fetch(`${url}/api/admin/square-banner`, { headers });

@@ -30,13 +30,17 @@
 ## 🎯 Accurate Project Use Case & Problem Statement
 
 ### The Real-World Domain Problem
+
 In the online sports exchange and gaming ecosystem (featuring platforms like Radhe Exchange, Diamond Exchange, Laser247, King Exchange, etc.), agents and players traditionally acquire **"Self-Admin"** or **"Master Panels"** through manual, untrusted middlemen over messaging apps (WhatsApp/Telegram). This legacy approach introduces severe friction:
+
 - **Fraud & Financial Risk:** Middlemen often manipulate coin conversion rates or disappear after receiving funds.
 - **Delayed Delivery:** Provisioning credentials and topping up coins manually often takes hours.
 - **Manual Bookkeeping:** Sub-agents struggle with tracking transactions, bank details, and customer balances.
 
 ### The Client Solution Built
+
 To solve this, the client commissioned **IceUsers (The247Panel)**—an automated, 24/7 self-service platform that digitizes and secures the entire workflow:
+
 1. **Self-Admin & Master Panel Creation:** Users can select from 16+ verified exchange websites, specify coin quantities, view real-time conversion rates (`1 INR = X Coins`), and request instant administrative panel credentials.
 2. **Automated Wallet & Panel Refills:** Users deposit funds directly to their assigned Admin Master's verified banking/UPI gateway, upload proof of payment, and receive automatic wallet credits to refill their exchange panels.
 3. **Multi-Tenant Sub-Admin (Admin Master) Hierarchy:** Independent master agents operate within their own isolated tenant silos—managing their private customer cohorts, setting custom coin pricing per exchange, and moderating their own deposit/withdrawal queues.
@@ -62,12 +66,12 @@ The frontend is styled in a custom dark-glassmorphic aesthetic (`#090d16` canvas
 
 The platform provides automated panel provisioning and coin rate calculations across 16+ major exchange networks:
 
-| | | | |
-|:---:|:---:|:---:|:---:|
-| <img src="./frontend/src/assets/websites/Radheexch.jpg" width="160" alt="Radhe Exchange" /><br/>**Radhe Exchange** | <img src="./frontend/src/assets/websites/Kingexch9.jpg" width="160" alt="King Exchange" /><br/>**King Exchange** | <img src="./frontend/src/assets/websites/Diamondexch99.jpg" width="160" alt="Diamond Exchange" /><br/>**Diamond Exchange** | <img src="./frontend/src/assets/websites/Goexch9.jpg" width="160" alt="Go Exchange" /><br/>**Go Exchange** |
-| <img src="./frontend/src/assets/websites/world777.jpg" width="160" alt="World777" /><br/>**World777** | <img src="./frontend/src/assets/websites/taj777.jpg" width="160" alt="Taj777" /><br/>**Taj777** | <img src="./frontend/src/assets/websites/mylaser247.jpg" width="160" alt="Laser247" /><br/>**Laser247** | <img src="./frontend/src/assets/websites/baazi888.jpg" width="160" alt="Baazi888" /><br/>**Baazi888** |
-| <img src="./frontend/src/assets/websites/the100exch.jpg" width="160" alt="The100 Exchange" /><br/>**The100 Exchange** | <img src="./frontend/src/assets/websites/allpanelexch.jpg" width="160" alt="All Panel Exch" /><br/>**All Panel Exch** | <img src="./frontend/src/assets/websites/Bikajiexch.jpg" width="160" alt="Bikaji Exchange" /><br/>**Bikaji Exchange** | <img src="./frontend/src/assets/websites/betonly777.jpg" width="160" alt="BetOnly777" /><br/>**BetOnly777** |
-| <img src="./frontend/src/assets/websites/jsk1.jpg" width="160" alt="JSK1" /><br/>**JSK1** | <img src="./frontend/src/assets/websites/ps777.jpg" width="160" alt="PS777" /><br/>**PS777** | <img src="./frontend/src/assets/websites/t10exchange.jpg" width="160" alt="T10 Exchange" /><br/>**T10 Exchange** | <img src="./frontend/src/assets/websites/Allowexch999.jpg" width="160" alt="Allow Exchange" /><br/>**Allow Exchange** |
+|                                                                                                                       |                                                                                                                       |                                                                                                                            |                                                                                                                       |
+| :-------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------: |
+|  <img src="./frontend/src/assets/websites/Radheexch.jpg" width="160" alt="Radhe Exchange" /><br/>**Radhe Exchange**   |   <img src="./frontend/src/assets/websites/Kingexch9.jpg" width="160" alt="King Exchange" /><br/>**King Exchange**    | <img src="./frontend/src/assets/websites/Diamondexch99.jpg" width="160" alt="Diamond Exchange" /><br/>**Diamond Exchange** |      <img src="./frontend/src/assets/websites/Goexch9.jpg" width="160" alt="Go Exchange" /><br/>**Go Exchange**       |
+|         <img src="./frontend/src/assets/websites/world777.jpg" width="160" alt="World777" /><br/>**World777**         |            <img src="./frontend/src/assets/websites/taj777.jpg" width="160" alt="Taj777" /><br/>**Taj777**            |          <img src="./frontend/src/assets/websites/mylaser247.jpg" width="160" alt="Laser247" /><br/>**Laser247**           |         <img src="./frontend/src/assets/websites/baazi888.jpg" width="160" alt="Baazi888" /><br/>**Baazi888**         |
+| <img src="./frontend/src/assets/websites/the100exch.jpg" width="160" alt="The100 Exchange" /><br/>**The100 Exchange** | <img src="./frontend/src/assets/websites/allpanelexch.jpg" width="160" alt="All Panel Exch" /><br/>**All Panel Exch** |   <img src="./frontend/src/assets/websites/Bikajiexch.jpg" width="160" alt="Bikaji Exchange" /><br/>**Bikaji Exchange**    |      <img src="./frontend/src/assets/websites/betonly777.jpg" width="160" alt="BetOnly777" /><br/>**BetOnly777**      |
+|               <img src="./frontend/src/assets/websites/jsk1.jpg" width="160" alt="JSK1" /><br/>**JSK1**               |             <img src="./frontend/src/assets/websites/ps777.jpg" width="160" alt="PS777" /><br/>**PS777**              |      <img src="./frontend/src/assets/websites/t10exchange.jpg" width="160" alt="T10 Exchange" /><br/>**T10 Exchange**      | <img src="./frontend/src/assets/websites/Allowexch999.jpg" width="160" alt="Allow Exchange" /><br/>**Allow Exchange** |
 
 ---
 
@@ -92,29 +96,31 @@ The landing page features dynamic horizontal and square carousel modules managed
 ## 🛠️ Complete Technical Stack
 
 ### Client-Side (Frontend SPA)
-| Technology | Role / Engineering Implementation |
-| :--- | :--- |
-| **React 18.3** | Functional components with concurrent rendering, custom hooks, and transition flags |
-| **Vite 6.0** | Next-generation ESM bundler providing sub-second HMR and optimized production chunks |
-| **React Router v6** | Client-side routing with role-gated routes (`ProtectedRoute`) and future v7 transition flags |
-| **TailwindCSS 3.4** | Utility-first CSS framework configured with custom glassmorphism extensions |
-| **CSS Modules** | Scoped, conflict-free component styling for complex layouts (`HomeHeading`, `Navbar`, `Popups`) |
-| **Framer Motion 13.4** | Physics-based spring animations for slide-overs, interactive modals, and ticker elements |
-| **Material UI (MUI)** | High-fidelity SVG icon library (`@mui/icons-material`), typography, and chip components |
-| **PrimeReact & Flowbite** | Enterprise data tables, interactive popovers, toasts, and status badges |
-| **React-Slick** | Touch-enabled multi-breakpoint carousels for promotional and announcement graphics |
-| **React Portals** | Modal overlays mounted to `#modal-root` to bypass CSS stacking contexts and transform clipping |
+
+| Technology                | Role / Engineering Implementation                                                               |
+| :------------------------ | :---------------------------------------------------------------------------------------------- |
+| **React 18.3**            | Functional components with concurrent rendering, custom hooks, and transition flags             |
+| **Vite 6.0**              | Next-generation ESM bundler providing sub-second HMR and optimized production chunks            |
+| **React Router v6**       | Client-side routing with role-gated routes (`ProtectedRoute`) and future v7 transition flags    |
+| **TailwindCSS 3.4**       | Utility-first CSS framework configured with custom glassmorphism extensions                     |
+| **CSS Modules**           | Scoped, conflict-free component styling for complex layouts (`HomeHeading`, `Navbar`, `Popups`) |
+| **Framer Motion 13.4**    | Physics-based spring animations for slide-overs, interactive modals, and ticker elements        |
+| **Material UI (MUI)**     | High-fidelity SVG icon library (`@mui/icons-material`), typography, and chip components         |
+| **PrimeReact & Flowbite** | Enterprise data tables, interactive popovers, toasts, and status badges                         |
+| **React-Slick**           | Touch-enabled multi-breakpoint carousels for promotional and announcement graphics              |
+| **React Portals**         | Modal overlays mounted to `#modal-root` to bypass CSS stacking contexts and transform clipping  |
 
 ### Server-Side (Backend REST API)
-| Technology | Role / Engineering Implementation |
-| :--- | :--- |
-| **Node.js** | Asynchronous, event-driven server runtime |
-| **Express 4.21** | RESTful routing architecture, JSON body parsing, and static file delivery |
-| **MongoDB & Mongoose 8.18** | Schema validation, compound indexing, multi-tenant document isolation, and population |
-| **Bcrypt.js** | Cryptographic password hashing (10 salt rounds) for tamper-proof credentials |
-| **Multer & Cloudinary** | Multipart receipt uploads with automatic cloud CDN storage and compression |
-| **Dynamic CORS Handler** | Whitelist validator supporting multi-domain production, staging, and localhost clients |
-| **UUID (v11)** | Collision-free unique transaction reference keys for payment tracking |
+
+| Technology                  | Role / Engineering Implementation                                                      |
+| :-------------------------- | :------------------------------------------------------------------------------------- |
+| **Node.js**                 | Asynchronous, event-driven server runtime                                              |
+| **Express 4.21**            | RESTful routing architecture, JSON body parsing, and static file delivery              |
+| **MongoDB & Mongoose 8.18** | Schema validation, compound indexing, multi-tenant document isolation, and population  |
+| **Bcrypt.js**               | Cryptographic password hashing (10 salt rounds) for tamper-proof credentials           |
+| **Multer & Cloudinary**     | Multipart receipt uploads with automatic cloud CDN storage and compression             |
+| **Dynamic CORS Handler**    | Whitelist validator supporting multi-domain production, staging, and localhost clients |
+| **UUID (v11)**              | Collision-free unique transaction reference keys for payment tracking                  |
 
 ---
 
@@ -133,7 +139,7 @@ flowchart TB
         Router["Express Router"]
         AuthMW["RBAC and Origin Validation Middleware"]
         TenantScoper["SubAdmin Tenant Scoping Engine"]
-        
+
         subgraph Controllers["Modular Controllers"]
             AdminCtrl["adminController.js"]
             UserCtrl["userController.js"]
@@ -167,15 +173,15 @@ graph TD
     Super["Superadmin"] -->|Provisions and Audits| SubAdmin["Admin Master / Sub-Admin"]
     Super -->|Configures 13-Point Permissions| SubAdmin
     Super -->|Global View| GlobalData["All Users, Transactions and Catalogs"]
-    
+
     SubAdmin -->|Tenant Silo A| UserA1["User A1"]
     SubAdmin -->|Tenant Silo A| UserA2["User A2"]
     SubAdmin -->|Manages Isolated| GatewayA["Dedicated Banking Gateways"]
     SubAdmin -->|Manages Isolated| CatalogA["Custom Exchange Catalog and Coin Rates"]
-    
+
     SubAdminB["Admin Master B"] -->|Tenant Silo B| UserB1["User B1"]
     SubAdminB -->|Manages Isolated| GatewayB["Bank Gateways B"]
-    
+
     UserA1 -.->|Blocked Cross-Tenant Access| SubAdminB
 ```
 
@@ -215,18 +221,18 @@ sequenceDiagram
     participant DB as MongoDB Cluster
     actor Admin as Admin Master
 
-    User->>App: Opens Create Self Admin Panel
+    User->>App: Opens Create Self Admin Master
     User->>App: Selects target exchange and coin quantity
     App->>App: Calculates total cost via dynamic coin rate
     App->>API: POST /api/user/request-id
     API->>DB: Validates wallet balance, deducts coins, creates pending IdRequest
     API-->>App: 201 Created (Request queued)
-    
+
     Admin->>App: Opens tenant-scoped ID Request queue
     Admin->>API: PATCH /api/admin/id-requests/accept (Enters panel URL, username, password)
     API->>DB: Updates status to Accepted and stores credentials
     API-->>Admin: Confirmation response
-    
+
     User->>App: Navigates to My IDs dashboard
     App->>API: GET /api/user/my-ids
     API-->>App: Returns active panels with credentials
@@ -238,20 +244,24 @@ sequenceDiagram
 ## 💡 Developer Perspective: Key Technical Challenges Solved
 
 ### 1. Multi-Tenant Data Isolation & Query Scoping
-* **Challenge:** In a tiered administrative hierarchy, independent Sub-Admins ("Admin Masters") must manage their own customer cohorts, exchange catalogs, and transaction queues without any risk of cross-tenant data exposure.
-* **Solution:** Engineered a server-side tenant resolver (`subAdminHelper.js`) that dynamically extracts and verifies admin identifiers (`x-admin-id`, session tokens) from incoming requests, injecting strict isolation filters (`assignedAdmin`, `adminId`) across all Mongoose database queries to guarantee strict multi-tenant boundaries.
+
+- **Challenge:** In a tiered administrative hierarchy, independent Sub-Admins ("Admin Masters") must manage their own customer cohorts, exchange catalogs, and transaction queues without any risk of cross-tenant data exposure.
+- **Solution:** Engineered a server-side tenant resolver (`subAdminHelper.js`) that dynamically extracts and verifies admin identifiers (`x-admin-id`, session tokens) from incoming requests, injecting strict isolation filters (`assignedAdmin`, `adminId`) across all Mongoose database queries to guarantee strict multi-tenant boundaries.
 
 ### 2. Atomic Wallet Balance Operations & Rate Reconciliation
-* **Challenge:** Preventing race conditions and double-spending when users submit concurrent panel creation or refill requests while exchange rates fluctuate.
-* **Solution:** Implemented atomic database operations (`$inc`, condition-guarded updates) and server-side rate re-validation before deducting wallet balances. Every transaction is tracked via unique UUID keys and dual-logged to the immutable ledger.
+
+- **Challenge:** Preventing race conditions and double-spending when users submit concurrent panel creation or refill requests while exchange rates fluctuate.
+- **Solution:** Implemented atomic database operations (`$inc`, condition-guarded updates) and server-side rate re-validation before deducting wallet balances. Every transaction is tracked via unique UUID keys and dual-logged to the immutable ledger.
 
 ### 3. Asynchronous Proof-of-Payment Asset Pipeline
-* **Challenge:** High-volume user receipt uploads (bank transfer screenshots) can degrade server throughput and consume excessive storage if handled synchronously on disk.
-* **Solution:** Integrated a stream-based multipart upload pipeline using Multer connected directly to Cloudinary's CDN. Image buffers are uploaded, optimized, and converted to secure HTTPS URLs asynchronously, decoupled from local server storage.
+
+- **Challenge:** High-volume user receipt uploads (bank transfer screenshots) can degrade server throughput and consume excessive storage if handled synchronously on disk.
+- **Solution:** Integrated a stream-based multipart upload pipeline using Multer connected directly to Cloudinary's CDN. Image buffers are uploaded, optimized, and converted to secure HTTPS URLs asynchronously, decoupled from local server storage.
 
 ### 4. Enterprise Dynamic Origin CORS Sanitization
-* **Challenge:** The application runs across diverse production, staging, and custom client domains (`iceusers.info`, `the247panel.shop`, Vercel deploy previews) which cannot be solved safely with insecure `*` wildcard policies.
-* **Solution:** Implemented an enterprise-grade dynamic origin verification middleware in Express using regex matching against authorized domain patterns, safeguarding credentials and cookies while maintaining multi-environment compatibility.
+
+- **Challenge:** The application runs across diverse production, staging, and custom client domains (`iceusers.info`, `the247panel.shop`, Vercel deploy previews) which cannot be solved safely with insecure `*` wildcard policies.
+- **Solution:** Implemented an enterprise-grade dynamic origin verification middleware in Express using regex matching against authorized domain patterns, safeguarding credentials and cookies while maintaining multi-environment compatibility.
 
 ---
 
@@ -327,9 +337,10 @@ iceUsers/
 ## 🚀 Setup & Local Execution
 
 ### Prerequisites
-* **Node.js**: v18.0.0+
-* **npm** or **yarn**
-* **MongoDB**: Local MongoDB instance or Atlas connection string
+
+- **Node.js**: v18.0.0+
+- **npm** or **yarn**
+- **MongoDB**: Local MongoDB instance or Atlas connection string
 
 ---
 
@@ -341,6 +352,7 @@ npm install
 ```
 
 Create a `.env` file in `backend/`:
+
 ```env
 PORT=5000
 MONGO_URI=mongodb://localhost:27017/iceusers
@@ -349,10 +361,12 @@ CORS_ORIGINS=http://localhost:5173,http://localhost:3000
 ```
 
 Start the backend:
+
 ```bash
 npm run dev
 ```
-*Initializes on `http://localhost:5000`. On first launch, `seedSuperAdmin.js` auto-creates the default Superadmin (`superadmin` / `Super@1234`).*
+
+_Initializes on `http://localhost:5000`. On first launch, `seedSuperAdmin.js` auto-creates the default Superadmin (`superadmin` / `Super@1234`)._
 
 ---
 
@@ -363,7 +377,8 @@ cd ../frontend
 npm install
 npm run dev
 ```
-*Launches the Vite dev server at `http://localhost:5173`.*
+
+_Launches the Vite dev server at `http://localhost:5173`._
 
 ---
 

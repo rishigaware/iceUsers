@@ -36,28 +36,29 @@ import rg3 from "../../assets/images/responsibleGaming/PHOTO-2026-02-15-10-32-08
 import rg4 from "../../assets/images/responsibleGaming/PHOTO-2026-02-15-10-32-54.jpg";
 import certRng from "../../assets/certification_rng_verified.png";
 import certSsl from "../../assets/certification_ssl_secure.png";
+import newlogo from "../../assets/logo.png";
 import resp18 from "../../assets/responsible_gaming_18_plus.png";
 import respPlaySafe from "../../assets/responsible_gaming_play_safe.png";
-import newlogo from "../../assets/logo.png";
 import { useUser } from "../../context/UserContext";
+import { formatCurrency } from "../../utils/currency";
 import { checkIsAdmin, checkIsSuperAdmin } from "../../utils/roles";
 import { ROUTES } from "../../utils/routes";
 import LoginPopup from "../Login/LoginPopup";
 import DepositPopup from "../Navbar/DepositPopup";
-import styles from "./HomeHeading.module.css";
-import WalletWithdrawalPopup from "./WalletWithdrawalPopup";
-import { formatCurrency } from "../../utils/currency";
-import HomeBannerCarousel from "./HomeBannerCarousel";
-import SquareBannerCarousel from "./SquareBannerCarousel";
-import WebsitesVerticalSlider from "./WebsitesVerticalSlider";
 import Sidebar from "../Sidebar/Sidebar";
+import HomeBannerCarousel from "./HomeBannerCarousel";
+import styles from "./HomeHeading.module.css";
+import SquareBannerCarousel from "./SquareBannerCarousel";
+import WalletWithdrawalPopup from "./WalletWithdrawalPopup";
+import WebsitesVerticalSlider from "./WebsitesVerticalSlider";
 
 const HomeHeading = () => {
   const navigate = useNavigate();
   const { user, setUser, refreshUserBalance, logoPath } = useUser();
   const isAdmin = checkIsAdmin(user);
   const isSuperAdmin = checkIsSuperAdmin(user);
-  const canManageBanners = isSuperAdmin || (isAdmin && user?.permissions?.canManageBanners === true);
+  const canManageBanners =
+    isSuperAdmin || (isAdmin && user?.permissions?.canManageBanners === true);
 
   const [showDepositPopup, setShowDepositPopup] = useState(false);
   const [showWithdrawalPopup, setShowWithdrawalPopup] = useState(false);
@@ -154,11 +155,7 @@ const HomeHeading = () => {
               <FaBars />
             </button>
           )}
-          <img
-            src={logoPath}
-            alt="Logo"
-            className={styles.navbarLogo}
-          />
+          <img src={logoPath} alt="Logo" className={styles.navbarLogo} />
         </div>
         <div className={styles.navbarActions}>
           {user ? (
@@ -189,18 +186,16 @@ const HomeHeading = () => {
 
           <div className={styles.second}>
             <div className={styles.logo}>
-              <img
-                src={logoPath}
-                alt="Logo"
-                className={styles.centerLogo}
-              />
+              <img src={logoPath} alt="Logo" className={styles.centerLogo} />
             </div>
 
             {!isAdmin && (
               <>
                 <div className={styles.balanceContainer}>
                   <FaBalanceScale size={20} />
-                  <p className={styles.balanceAmount}>{formatCurrency(user?.balance)}</p>
+                  <p className={styles.balanceAmount}>
+                    {formatCurrency(user?.balance)}
+                  </p>
                 </div>
                 <h3 className={styles.balance}>Wallet Balance</h3>
               </>
@@ -300,7 +295,9 @@ const HomeHeading = () => {
                   className={styles.tickerEditBtn}
                   title="Edit sliding announcement"
                 >
-                  <span style={{ fontSize: "10px", marginRight: "4px" }}>Edit</span>
+                  <span style={{ fontSize: "10px", marginRight: "4px" }}>
+                    Edit
+                  </span>
                   <FaEdit />
                 </button>
               )}
@@ -308,7 +305,7 @@ const HomeHeading = () => {
           )}
         </div>
       </div>
-      {/* Create Admin Panel Section */}
+      {/* Create Admin Master Section */}
       <div
         className={styles.createId}
         onClick={handleClick}
@@ -318,7 +315,7 @@ const HomeHeading = () => {
           <span className={styles.createIdEmoji}>🚀</span>
           <FaPlus size={18} className={styles.createIdIcon} />
           <span className={styles.createIdText}>
-            CREATE SELF ADMIN PANEL&apos;S
+            CREATE SELF ADMIN Masters&apos;S
           </span>
           <span className={styles.createIdEmoji}>⚡</span>
         </div>
@@ -336,7 +333,6 @@ const HomeHeading = () => {
 
       {/* Top 10 Live Exchange Websites Vertical Upper-Scroll Showcase */}
       <WebsitesVerticalSlider isAdmin={isAdmin} />
-
 
       {/* Animated Features Section */}
       <div className={styles.featuresSection}>
@@ -377,9 +373,8 @@ const HomeHeading = () => {
         </div>
       </div>
 
-       {/* Square Banner Carousel - before How It Works */}
+      {/* Square Banner Carousel - before How It Works */}
       <SquareBannerCarousel canManage={canManageBanners} />
-
 
       {/* Animated Stats Section */}
       <div className={styles.statsSection}>
@@ -402,13 +397,15 @@ const HomeHeading = () => {
         </div>
       </div>
 
-      
       {/* Services Section */}
       <div className={styles.gamingPlatformsSection}>
         <h2 className={styles.sectionTitle}>🚀 Our Premium Services</h2>
         <div className={styles.platformsGrid}>
           <div className={styles.platformCard}>
-            <div className={styles.platformIcon} style={{ color: "var(--whatsapp-color)" }}>
+            <div
+              className={styles.platformIcon}
+              style={{ color: "var(--whatsapp-color)" }}
+            >
               <FaWhatsapp size={40} />
             </div>
             <h3>APIs</h3>
@@ -418,7 +415,10 @@ const HomeHeading = () => {
             <div className={styles.platformBadge}>Best</div>
           </div>
           <div className={styles.platformCard}>
-            <div className={styles.platformIcon} style={{ color: "var(--primary-color)" }}>
+            <div
+              className={styles.platformIcon}
+              style={{ color: "var(--primary-color)" }}
+            >
               <FaCreditCard size={40} />
             </div>
             <h3>Payments</h3>
@@ -428,7 +428,10 @@ const HomeHeading = () => {
             <div className={styles.platformBadge}>Secure</div>
           </div>
           <div className={styles.platformCard}>
-            <div className={styles.platformIcon} style={{ color: "var(--telegram-color)" }}>
+            <div
+              className={styles.platformIcon}
+              style={{ color: "var(--telegram-color)" }}
+            >
               <FaSimCard size={40} />
             </div>
             <h3>SIM Services</h3>
@@ -438,7 +441,10 @@ const HomeHeading = () => {
             <div className={styles.platformBadge}>New</div>
           </div>
           <div className={styles.platformCard}>
-            <div className={styles.platformIcon} style={{ color: "var(--instagram-color)" }}>
+            <div
+              className={styles.platformIcon}
+              style={{ color: "var(--instagram-color)" }}
+            >
               <FaLaptop size={40} />
             </div>
             <h3>Digital Marketing</h3>
@@ -489,7 +495,6 @@ const HomeHeading = () => {
         </div>
       </div>
 
-     
       {/* How It Works Section */}
       <div className={styles.howItWorksSection}>
         <h2 className={styles.sectionTitle}>🚀 How It Works</h2>

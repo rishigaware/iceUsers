@@ -60,7 +60,7 @@ const Websites = () => {
   const canEditWebsites =
     isSuperAdmin || user?.permissions?.canEditWebsites !== false;
   const canDeleteWebsites =
-    isSuperAdmin || user?.permissions?.canDeleteWebsites === true;
+    isSuperAdmin || user?.permissions?.canDeleteWebsites !== false;
   const canManageCategories =
     isSuperAdmin || user?.permissions?.canManageCategories !== false;
   const adminHeaderId = user?.id || user?._id || user?.username || "";
@@ -493,6 +493,9 @@ const Websites = () => {
       formData.append("category", newWebsite.category);
       formData.append("minimumCoins", newWebsite.minimumCoins);
       formData.append("logo", file);
+      if (newWebsite.description) {
+        formData.append("description", newWebsite.description);
+      }
       if (isSuperAdmin && newWebsite.targetAdminId) {
         formData.append("targetAdminId", newWebsite.targetAdminId);
       }
@@ -675,7 +678,21 @@ const Websites = () => {
   // Function to handle the delete action
   const handleDelete = async (item) => {
     try {
-      const itemId = item.id;
+      const itemId = item?.id || item?._id;
+      if (!itemId) {
+        toast.current?.show({
+          severity: "error",
+          summary: "Error",
+          detail: "Website ID is missing.",
+          life: 2000,
+        });
+        return;
+      }
+
+      const websiteName = item.website || item.name || "this website";
+      if (!window.confirm(`Are you sure you want to delete "${websiteName}"?`)) {
+        return;
+      }
       const response = await fetch(
         `${url}/api/admin/delete-website/${itemId}`,
         {
@@ -707,34 +724,53 @@ const Websites = () => {
       }
     } catch (error) {
       console.error("Error:", error);
+      toast.current?.show({
+        severity: "error",
+        summary: "Delete failed",
+        detail: error.message || "Failed to delete website",
+        life: 3000,
+      });
     }
   };
 
   // Function to handle website editing
   const handleEditWebsite = async () => {
+    const websiteId = editingWebsite?.id || editingWebsite?._id;
+    if (!websiteId) {
+      setEditErrorMessage("Website ID is missing.");
+      return;
+    }
     if (
       !editingWebsite.website ||
-      !editingWebsite.url ||
-      !editingWebsite.category ||
-      !editingWebsite.minimumCoins
+      !editingWebsite.url
+
+
     ) {
-      setEditErrorMessage("All fields are required to edit a website.");
+      setEditErrorMessage("Website name and URL are required.");
       return;
     }
 
     try {
       setIsEditLoading(true);
       const formData = new FormData();
-      formData.append("website", editingWebsite.website);
-      formData.append("url", editingWebsite.url);
-      formData.append("category", editingWebsite.category);
-      formData.append("minimumCoins", editingWebsite.minimumCoins);
+      formData.append("website", editingWebsite.website.trim());
+      formData.append("url", editingWebsite.url.trim());
+      formData.append("category", editingWebsite.category?.trim() || "General");
+      formData.append(
+        "minimumCoins",
+        editingWebsite.minimumCoins !== undefined && editingWebsite.minimumCoins !== ""
+          ? editingWebsite.minimumCoins
+          : 0,
+      );
+      if (editingWebsite.description !== undefined) {
+        formData.append("description", editingWebsite.description);
+      }
       if (editFile) {
         formData.append("logo", editFile);
       }
 
       const response = await fetch(
-        `${url}/api/admin/update-website/${editingWebsite.id}`,
+        `${url}/api/admin/update-website/${websiteId}`,
         {
           method: "PUT",
           headers: {
@@ -744,7 +780,7 @@ const Websites = () => {
         },
       );
 
-      const data = await response.json();
+      const data = await response.json().catch(() => ({}));
       if (response.ok) {
         toast.current.show({
           severity: "success",
@@ -774,11 +810,15 @@ const Websites = () => {
   // Function to open edit modal
   const openEditModal = (website) => {
     setEditingWebsite({
-      id: website.id,
-      website: website.name || website.website || "",
+      id: website.id || website._id,
+      website: website.website || website.name || "",
       url: website.url || "",
-      category: website.category || "",
-      minimumCoins: website.minimumCoins || "",
+      category: website.category || "General",
+      description: website.description || "",
+      minimumCoins:
+        website.minimumCoins !== undefined && website.minimumCoins !== null
+          ? website.minimumCoins
+          : 0,
       logo: website.logo || "",
     });
     setEditFile(null);
@@ -1002,7 +1042,7 @@ const Websites = () => {
             {/* Website List */}
             {currentWebsites.length > 0 ? (
               currentWebsites.map((website, index) => (
-                <div key={website.id || index} className={styles.websiteCard}>
+                <div key={website.id || website._id || index} className={styles.websiteCard}>
                   <div className={styles.websiteInfo}>
                     <div className={styles.cardHeader}>
                       <img

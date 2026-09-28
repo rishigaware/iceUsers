@@ -42,7 +42,7 @@ const adminSchema = new mongoose.Schema({
         canDeleteUsers: { type: Boolean, default: false },
         canAddWebsites: { type: Boolean, default: true },
         canEditWebsites: { type: Boolean, default: true },
-        canDeleteWebsites: { type: Boolean, default: false },
+        canDeleteWebsites: { type: Boolean, default: true },
         canManageCategories: { type: Boolean, default: true },
         canManageIdRequests: { type: Boolean, default: true },
         canManageTransactions: { type: Boolean, default: true },

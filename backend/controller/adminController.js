@@ -129,7 +129,7 @@ exports.createSubAdmin = async (req, res) => {
         canDeleteUsers: false,
         canAddWebsites: true,
         canEditWebsites: true,
-        canDeleteWebsites: false,
+        canDeleteWebsites: true,
         canManageCategories: true,
         canManageIdRequests: true,
         canManageTransactions: true,
@@ -655,13 +655,13 @@ exports.addWebsite = async (req, res) => {
     }
 
     const newWebsite = new Website({
-      website,
-      url,
-      minimumCoins: parseInt(minimumCoins, 10),
-      category: category || '', // Add category field
+      website: website.trim(),
+      url: url.trim(),
+      minimumCoins: parseInt(minimumCoins, 10) || 0,
+      category: (category && category.trim()) || 'General',
       logo: logoPath,
       adminId: assignedAdminId,
-      description: description || '',
+      description: description ? description.trim() : '',
     });
 
     await newWebsite.save();
@@ -1206,16 +1206,27 @@ exports.updateWebsite = async (req, res) => {
       return res.status(404).json({ message: 'Website not found.' });
     }
 
-    if (admin && admin.role !== 'superadmin' && website.adminId && website.adminId !== admin._id.toString()) {
-      return res.status(403).json({ message: 'Unauthorized: Website does not belong to your account.' });
+    if (admin && admin.role !== 'superadmin') {
+      const isOwner = website.adminId && (website.adminId === admin._id.toString() || website.adminId === admin.username);
+      if (!isOwner) {
+        return res.status(403).json({ message: 'Unauthorized: Website does not belong to your account.' });
+      }
     }
 
-    if (newName) website.website = newName;
-    if (url) website.url = url;
+    if (newName) website.website = newName.trim();
+    if (url) website.url = url.trim();
 
-    if (minimumCoins) website.minimumCoins = parseInt(minimumCoins, 10);
-    if (category !== undefined) website.category = category;
-    if (description !== undefined) website.description = description;
+    if (minimumCoins !== undefined && minimumCoins !== '') {
+      website.minimumCoins = parseInt(minimumCoins, 10) || 0;
+    }
+    if (category !== undefined) {
+      website.category = category.trim() || 'General';
+    } else if (!website.category) {
+      website.category = 'General';
+    }
+    if (description !== undefined) {
+      website.description = description.trim();
+    }
 
     if (req.file) {
       website.logo = req.file.path; // Cloudinary URL
@@ -1229,7 +1240,7 @@ exports.updateWebsite = async (req, res) => {
     });
   } catch (error) {
     console.error('Error updating website:', error);
-    res.status(500).json({ message: 'Server error. Please try again later.' });
+    res.status(500).json({ message: error.message || 'Server error. Please try again later.' });
   }
 };
 
@@ -1288,7 +1299,7 @@ exports.deleteWebsite = async (req, res) => {
     if (!admin) {
       return res.status(401).json({ message: 'Authentication required: Admin ID is missing.' });
     }
-    if (admin.role !== 'superadmin' && admin.permissions?.canDeleteWebsites !== true) {
+    if (admin.role !== 'superadmin' && admin.permissions?.canDeleteWebsites === false) {
       return res.status(403).json({ message: 'Permission denied: Cannot delete websites.' });
     }
 
@@ -1299,8 +1310,11 @@ exports.deleteWebsite = async (req, res) => {
       return res.status(404).json({ message: 'Website not found.' });
     }
 
-    if (admin && admin.role !== 'superadmin' && website.adminId && website.adminId !== admin._id.toString()) {
-      return res.status(403).json({ message: 'Unauthorized: Website does not belong to your account.' });
+    if (admin.role !== 'superadmin') {
+      const isOwner = website.adminId && (website.adminId === admin._id.toString() || website.adminId === admin.username);
+      if (!isOwner) {
+        return res.status(403).json({ message: 'Unauthorized: Website does not belong to your account.' });
+      }
     }
 
     // Cloudinary cleanup for logo
@@ -1324,7 +1338,7 @@ exports.deleteWebsite = async (req, res) => {
     res.status(200).json({ message: 'Website and logo deleted successfully.' });
   } catch (error) {
     console.error('Error deleting website:', error);
-    res.status(500).json({ message: 'Server error. Please try again later.' });
+    res.status(500).json({ message: error.message || 'Server error. Please try again later.' });
   }
 };
 //corousel-->>>

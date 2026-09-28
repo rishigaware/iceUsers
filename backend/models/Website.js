@@ -12,7 +12,7 @@ const websiteSchema = new mongoose.Schema({
 
     category: {
         type: String,
-        required: true,
+        default: 'General',
     },
     logo: {
         type: String,

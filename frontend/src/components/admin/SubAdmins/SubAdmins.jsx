@@ -161,6 +161,17 @@ export default function SubAdmins() {
     fetchSubAdmins();
   }, [fetchSubAdmins]);
 
+  // Lock body scroll when modal is open to prevent background scrolling
+  useEffect(() => {
+    if (isModalOpen) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = originalOverflow || 'unset';
+      };
+    }
+  }, [isModalOpen]);
+
   const handleTogglePermission = async (adminId, permKey, currentValue) => {
     const newValue = !currentValue;
     const updateKey = `${adminId}-${permKey}`;
@@ -508,8 +519,8 @@ export default function SubAdmins() {
 
       {/* Create Sub-Admin Modal */}
       {isModalOpen && (
-        <div className={styles.modalOverlay}>
-          <div className={styles.modalContent}>
+        <div className={styles.modalOverlay} onClick={() => { setIsModalOpen(false); resetForm(); }}>
+          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
             <div className={styles.modalHeader}>
               <h2>{isEditing ? 'Edit Admin Master' : 'Register New Admin Master'}</h2>
               <button className={styles.closeBtn} onClick={() => { setIsModalOpen(false); resetForm(); }}>
@@ -617,10 +628,10 @@ export default function SubAdmins() {
 
               <div className={styles.modalFooter}>
                 <button type="button" className={styles.cancelBtn} onClick={() => { setIsModalOpen(false); resetForm(); }}>
-                  Cancel
+                  <FaTimes /> Cancel
                 </button>
                 <button type="submit" className={styles.primaryBtn}>
-                  {isEditing ? 'Save Changes' : 'Create Admin Master'}
+                  <FaCheck /> {isEditing ? 'Save Changes' : 'Create Admin Master'}
                 </button>
               </div>
             </form>

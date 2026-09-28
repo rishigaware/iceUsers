@@ -9,7 +9,11 @@
   box-sizing: border-box;
   overflow-x: hidden;
   color: var(--text-primary, #fff);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
 }
 
 /* Header Section */
@@ -59,7 +63,10 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem 1.5rem;
-  background: var(--success-gradient, linear-gradient(135deg, #28a745 0%, #20c997 100%));
+  background: var(
+    --success-gradient,
+    linear-gradient(135deg, #28a745 0%, #20c997 100%)
+  );
   color: var(--text-white, #fff);
   border: none;
   border-radius: 12px;
@@ -193,7 +200,9 @@
 .adminCardExpanded {
   border-color: var(--primary-color);
   background: rgba(30, 30, 45, 0.7) !important;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35), 0 0 20px rgba(var(--primary-color-rgb), 0.08);
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.35),
+    0 0 20px rgba(var(--primary-color-rgb), 0.08);
 }
 
 .adminCardCollapsed {
@@ -214,11 +223,9 @@
   -webkit-user-select: none;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
-  transition: background 0.2s ease, border-color 0.2s ease;
-}
-
-.cardHeader * {
-  pointer-events: none;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .cardHeader:hover {
@@ -324,6 +331,12 @@
   align-items: center;
   gap: 10px;
   flex-shrink: 0;
+  pointer-events: auto !important;
+}
+
+.cardHeaderActions button,
+.cardHeaderActions div {
+  pointer-events: auto !important;
 }
 
 .expandBtn {
@@ -338,11 +351,12 @@
   font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
+  pointer-events: auto !important;
   transition: all 0.2s ease;
 }
 
 .cardHeader:hover .expandBtn,
-.expandBtn:hover, 
+.expandBtn:hover,
 .expandBtnActive {
   background: var(--primary-color);
   color: #111;
@@ -498,7 +512,7 @@
   right: 0;
   bottom: 0;
   background-color: rgba(255, 255, 255, 0.18);
-  transition: .25s;
+  transition: 0.25s;
   border-radius: 22px;
 }
 
@@ -510,7 +524,7 @@
   left: 3px;
   bottom: 3px;
   background-color: white;
-  transition: .25s;
+  transition: 0.25s;
   border-radius: 50%;
 }
 
@@ -553,7 +567,9 @@
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
   padding: 24px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(var(--primary-color-rgb), 0.1);
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.6),
+    0 0 25px rgba(var(--primary-color-rgb), 0.1);
   box-sizing: border-box;
 }
 
@@ -665,7 +681,10 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: var(--primary-gradient, linear-gradient(135deg, #f59e0b 0%, #d97706 100%));
+  background: var(
+    --primary-gradient,
+    linear-gradient(135deg, #f59e0b 0%, #d97706 100%)
+  );
   color: #111116;
   border: none;
   padding: 10px 24px;
@@ -733,7 +752,8 @@
     gap: 0.5rem;
   }
 
-  .addUserButton, .secondaryBtn {
+  .addUserButton,
+  .secondaryBtn {
     font-size: 0.85rem;
     padding: 0.6rem 1rem;
     border-radius: 10px;
@@ -797,7 +817,8 @@
     padding: 0.1rem 0.5rem;
   }
 
-  .userCountBadge, .permCountBadge {
+  .userCountBadge,
+  .permCountBadge {
     font-size: 0.75rem;
     padding: 0.15rem 0.5rem;
   }
@@ -835,7 +856,8 @@
     gap: 6px;
   }
 
-  .addUserButton, .secondaryBtn {
+  .addUserButton,
+  .secondaryBtn {
     flex: 1;
     justify-content: center;
     font-size: 0.78rem;
@@ -882,11 +904,10 @@
   }
 
   .cardHeader {
-    padding: 0.85rem 0.75rem;
-    gap: 8px;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: center;
+    padding: 0.95rem 0.85rem;
+    gap: 12px;
+    flex-direction: column !important;
+    align-items: stretch !important;
   }
 
   .expandedSection {
@@ -894,17 +915,17 @@
   }
 
   .adminDetails {
-    gap: 8px;
+    gap: 10px;
     min-width: 0;
-    flex: 1;
+    width: 100% !important;
     display: flex;
     align-items: center;
   }
 
   .avatar {
-    width: 34px;
-    height: 34px;
-    font-size: 0.9rem;
+    width: 38px;
+    height: 38px;
+    font-size: 1rem;
     flex-shrink: 0;
   }
 
@@ -914,13 +935,13 @@
   }
 
   .adminMeta h3 {
-    font-size: 0.88rem;
-    gap: 4px;
+    font-size: 0.92rem;
+    gap: 6px;
     flex-wrap: wrap;
   }
 
   .adminNameText {
-    max-width: 120px;
+    max-width: 130px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -929,38 +950,55 @@
   }
 
   .usernameTag {
-    font-size: 0.7rem;
-    padding: 0.05rem 0.45rem;
+    font-size: 0.72rem;
+    padding: 0.08rem 0.5rem;
   }
 
   .badgesRow {
-    gap: 4px;
-    margin-top: 3px;
+    gap: 6px;
+    margin-top: 4px;
     flex-wrap: wrap;
   }
 
-  .userCountBadge, .permCountBadge {
-    font-size: 0.7rem;
-    padding: 0.12rem 0.45rem;
+  .userCountBadge,
+  .permCountBadge {
+    font-size: 0.72rem;
+    padding: 0.15rem 0.5rem;
   }
 
   .badgeIcon {
-    font-size: 0.65rem;
+    font-size: 0.7rem;
   }
 
   .cardHeaderActions {
-    flex-shrink: 0;
-    margin-left: auto;
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    margin-left: 0 !important;
+    padding-top: 8px !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    pointer-events: auto !important;
   }
 
+  .headerEditBtn,
+  .headerDeleteBtn,
   .expandBtn {
-    font-size: 0.74rem;
-    padding: 4px 8px;
-    border-radius: 8px;
+    flex: 1 !important;
+    display: inline-flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    min-height: 38px !important;
+    padding: 6px 8px !important;
+    font-size: 0.82rem !important;
+    border-radius: 8px !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
   }
 
   .expandIcon {
-    font-size: 0.65rem;
+    font-size: 0.7rem;
   }
 
   .adminMetaDetails {
@@ -1062,7 +1100,8 @@
     font-size: 1.15rem;
   }
 
-  .addUserButton, .secondaryBtn {
+  .addUserButton,
+  .secondaryBtn {
     font-size: 0.72rem;
     padding: 0.5rem 0.45rem;
   }
@@ -1083,4 +1122,199 @@
   .permLabel {
     font-size: 0.7rem;
   }
+}
+
+/* Card Header Action Buttons */
+.cardHeaderActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.headerEditBtn {
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.2s ease;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.headerEditBtn:hover {
+  background: rgba(56, 189, 248, 0.3);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.headerDeleteBtn {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.headerDeleteBtn:hover {
+  background: rgba(239, 68, 68, 0.3);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* In-App Delete Confirmation Modal */
+.deleteConfirmOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10003;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.deleteConfirmModal {
+  background: #18181b;
+  border: 1px solid rgba(248, 113, 113, 0.35);
+  border-radius: 20px;
+  padding: 1.75rem;
+  width: 100%;
+  max-width: 440px;
+  box-shadow:
+    0 25px 50px rgba(0, 0, 0, 0.6),
+    0 0 25px rgba(248, 113, 113, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  animation: deleteModalIn 0.2s ease-out;
+  box-sizing: border-box;
+}
+
+@keyframes deleteModalIn {
+  from {
+    opacity: 0;
+    transform: scale(0.93);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.deleteConfirmIconWrap {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: rgba(248, 113, 113, 0.15);
+  color: #f87171;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  font-size: 1.4rem;
+}
+
+.deleteConfirmTitle {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.35rem;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.deleteConfirmText {
+  margin: 0 0 0.5rem 0;
+  color: #cbd5e1;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.deleteConfirmText strong {
+  color: #f87171;
+  font-weight: 600;
+}
+
+.deleteConfirmSub {
+  margin: 0 0 1.5rem 0;
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+
+.deleteConfirmActions {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.deleteCancelBtn {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.deleteCancelBtn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.deleteProceedBtn {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  background: #dc2626;
+  border: 1px solid #ef4444;
+  color: #ffffff;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.deleteProceedBtn:hover:not(:disabled) {
+  background: #b91c1c;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+}
+
+.deleteProceedBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }

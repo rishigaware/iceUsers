@@ -8,7 +8,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  pointer-events: auto;
+  pointer-events: none; /* CRITICAL: container must NOT intercept mouse events or block underlying cards */
   user-select: none;
 }
 
@@ -49,6 +49,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  pointer-events: auto; /* Receives clicks directly */
   box-shadow:
     0 8px 25px rgba(var(--primary-color-rgb), 0.3),
     0 4px 12px rgba(0, 0, 0, 0.6);
@@ -173,7 +174,7 @@
 
 /* Menu list container */
 .menuList {
-  display: flex;
+  display: none; /* CRITICAL: Must be display none when closed so it does not consume vertical space and block underlying elements */
   flex-direction: column-reverse;
   gap: 12px;
   margin-bottom: 14px;
@@ -193,8 +194,9 @@
 }
 
 .menuListOpen {
-  pointer-events: auto;
-  visibility: visible;
+  display: flex !important;
+  pointer-events: auto !important;
+  visibility: visible !important;
 }
 
 /* Sub-Admin Tab Switcher */

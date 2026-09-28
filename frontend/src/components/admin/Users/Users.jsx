@@ -42,7 +42,11 @@ const Users = () => {
     const [addingUser, setAddingUser] = useState(false);
     const [isEditingUser, setIsEditingUser] = useState(false);
     const [editUserId, setEditUserId] = useState(null);
+    const [userToDelete, setUserToDelete] = useState(null);
+    const [isDeletingUser, setIsDeletingUser] = useState(false);
     const toast = useRef(null);
+    const modalOpenTimeRef = useRef(0);
+    const deleteConfirmOpenTimeRef = useRef(0);
     const { user: currentAdmin, url } = useUser();
 
     // Permission flags
@@ -50,17 +54,14 @@ const Users = () => {
     const canCreateUsers = isSuperAdmin || currentAdmin?.permissions?.canCreateUsers !== false;
     const canUpdateUserBalance = isSuperAdmin || currentAdmin?.permissions?.canUpdateUserBalance !== false;
     const canChangeUserPassword = isSuperAdmin || currentAdmin?.permissions?.canChangeUserPassword !== false;
-    const canDeleteUsers = isSuperAdmin;
+    const canDeleteUsers = Boolean(isSuperAdmin);
 
     const adminHeaderId = currentAdmin?.id || currentAdmin?._id || currentAdmin?.username || '';
 
-    // Check if current admin can edit this specific user:
-    // Superadmin can edit ALL users; Admin Master can edit HIS users only.
-    const canEditUser = (userItem) => {
+    // Check if current user item belongs to current admin (for tenant isolation)
+    const isUserAssignedToCurrentAdmin = (userItem) => {
         if (!userItem) return false;
         if (isSuperAdmin) return true;
-
-        if (currentAdmin?.permissions?.canCreateUsers === false) return false;
 
         const currentAdminId = (currentAdmin?.id || currentAdmin?._id || '').toString();
         const currentAdminUsername = (currentAdmin?.username || '').toLowerCase();
@@ -74,17 +75,25 @@ const Users = () => {
         const userAssignedAdminUsername = (userItem.assignedAdminUsername || '').toLowerCase();
         const userAgentCode = (userItem.agentCode || '').trim();
 
-        const isHisUser = Boolean(
+        return Boolean(
             (currentAdminId && userAssignedAdminId && currentAdminId === userAssignedAdminId) ||
             (currentAdminUsername && userAssignedAdminUsername && currentAdminUsername === userAssignedAdminUsername) ||
             (currentAdminAgentCode && userAgentCode && currentAdminAgentCode === userAgentCode)
         );
-
-        return isHisUser;
     };
 
-    // Only Superadmin can delete users as per requirements
-    const canDeleteUser = () => {
+    // Edit permission: Superadmin can edit ALL users; Admin Master can edit HIS users only if permission granted.
+    // If Admin Master lacks permission, hide edit button completely.
+    const canEditUser = (userItem) => {
+        if (!userItem) return false;
+        if (isSuperAdmin) return true;
+        if (currentAdmin?.permissions?.canCreateUsers === false) return false;
+        return isUserAssignedToCurrentAdmin(userItem);
+    };
+
+    // Delete permission: Users can ONLY be deleted by Superadmin. Admin Masters cannot delete users.
+    const canDeleteUser = (userItem) => {
+        if (!userItem) return false;
         return Boolean(isSuperAdmin);
     };
 
@@ -260,11 +269,27 @@ const Users = () => {
         setEditUserId(null);
     };
 
+    const handleModalBackdropClick = (e) => {
+        // Prevent accidental closing on mobile if modal was opened just milliseconds ago (ghost clicks)
+        if (Date.now() - modalOpenTimeRef.current < 450) {
+            return;
+        }
+        if (e.target === e.currentTarget) {
+            handleCloseAddUserModal(e);
+        }
+    };
+
     const openEditUserModal = (userToEdit, e) => {
         if (e) {
             if (e.preventDefault) e.preventDefault();
             if (e.stopPropagation) e.stopPropagation();
         }
+        console.log('[USERS DEBUG] openEditUserModal called for:', userToEdit?.username, 'canEdit:', canEditUser(userToEdit));
+        if (!canEditUser(userToEdit)) {
+            console.warn('[USERS DEBUG] User cannot be edited due to permissions');
+            return;
+        }
+        modalOpenTimeRef.current = Date.now();
         setSelectedUser(null);
 
         const targetAdminId = typeof userToEdit.assignedAdmin === 'object' && userToEdit.assignedAdmin !== null
@@ -495,11 +520,23 @@ const Users = () => {
         setUserPaymentDetails(null);
     };
 
-    const handleDeleteUser = async (userId, userName) => {
-        if (!window.confirm(`Are you sure you want to delete user "${userName}"?`)) {
-            return;
+    const triggerDeleteConfirm = (userItem, e) => {
+        if (e) {
+            if (e.preventDefault) e.preventDefault();
+            if (e.stopPropagation) e.stopPropagation();
         }
-        
+        console.log('[USERS DEBUG] triggerDeleteConfirm called for user:', userItem?.username, userItem);
+        deleteConfirmOpenTimeRef.current = Date.now();
+        setUserToDelete(userItem);
+    };
+
+    const handleConfirmDelete = async () => {
+        if (!userToDelete) return;
+        const userId = userToDelete.id || userToDelete._id;
+        const userName = userToDelete.name || userToDelete.username || 'User';
+        console.log('[USERS DEBUG] handleConfirmDelete started for user:', userName, userId);
+
+        setIsDeletingUser(true);
         try {
             const response = await fetch(`${url}/api/admin/delete-user/${userId}`, {
                 method: 'DELETE',
@@ -507,28 +544,34 @@ const Users = () => {
                     'x-admin-id': adminHeaderId,
                 },
             });
-      
+
+            const data = await response.json().catch(() => ({}));
+            console.log('[USERS DEBUG] Delete user response status:', response.status, data);
+
             if (!response.ok) {
-                throw new Error('Failed to delete user');
+                throw new Error(data.message || 'Failed to delete user');
             }
-            
+
             toast.current.show({
                 severity: 'success',
                 summary: 'User Deleted',
                 detail: `User "${userName}" deleted successfully`,
                 life: 2000,
             });
-      
+
             // Update local state to remove the user
             setUsers((prevUsers) => prevUsers.filter(u => u.id !== userId && u._id !== userId));
+            setUserToDelete(null);
         } catch (error) {
             toast.current.show({
                 severity: 'error',
                 summary: 'Delete Failed',
-                detail: 'Error while deleting user',
+                detail: error.message || 'Error while deleting user',
                 life: 2000,
             });
-            console.error("Error deleting user:", error);
+            console.error("[USERS DEBUG] Error deleting user:", error);
+        } finally {
+            setIsDeletingUser(false);
         }
     };
 
@@ -542,7 +585,7 @@ const Users = () => {
 
     // Prevent background scroll when modals are open
     useEffect(() => {
-        if (showAddUserModal || selectedUser) {
+        if (showAddUserModal || selectedUser || userToDelete) {
             document.body.style.overflow = 'hidden';
         } else {
             document.body.style.overflow = 'unset';
@@ -550,7 +593,7 @@ const Users = () => {
         return () => {
             document.body.style.overflow = 'unset';
         };
-    }, [showAddUserModal, selectedUser]);
+    }, [showAddUserModal, selectedUser, userToDelete]);
 
     // Filter users based on search query
     const filteredUsers = (users || []).filter((user) =>
@@ -743,14 +786,18 @@ const Users = () => {
                             <div
                                 key={userItem.id || userItem._id}
                                 className={styles.userCard}
-                                onClick={() => handleUserClick(userItem)}
+                                onClick={(e) => {
+                                    if (e.target.closest && e.target.closest(`.${styles.cardActions}`)) {
+                                        return;
+                                    }
+                                    handleUserClick(userItem);
+                                }}
                             >
                                 {/* Card Action Buttons (Edit & Delete) */}
                                 {(canEdit || canDel) && (
                                     <div
                                         className={styles.cardActions}
                                         onClick={(e) => {
-                                            e.preventDefault();
                                             e.stopPropagation();
                                         }}
                                     >
@@ -759,14 +806,14 @@ const Users = () => {
                                                 type="button"
                                                 className={`${styles.cardActionButton} ${styles.cardEditButton}`}
                                                 onClick={(e) => {
-                                                    e.preventDefault();
                                                     e.stopPropagation();
+                                                    console.log('[USERS DEBUG] Edit button clicked for:', userItem?.username);
                                                     openEditUserModal(userItem, e);
                                                 }}
                                                 title="Edit User"
                                                 aria-label={`Edit ${userItem.name || userItem.username}`}
                                             >
-                                                <EditOutlinedIcon style={{ fontSize: '1.2rem', pointerEvents: 'none' }} />
+                                                <EditOutlinedIcon style={{ fontSize: '1.25rem', pointerEvents: 'none' }} />
                                             </button>
                                         )}
                                         {canDel && (
@@ -774,14 +821,14 @@ const Users = () => {
                                                 type="button"
                                                 className={`${styles.cardActionButton} ${styles.cardDeleteButton}`}
                                                 onClick={(e) => {
-                                                    e.preventDefault();
                                                     e.stopPropagation();
-                                                    handleDeleteUser(userItem.id || userItem._id, userItem.name || userItem.username);
+                                                    console.log('[USERS DEBUG] Delete button clicked for:', userItem?.username);
+                                                    triggerDeleteConfirm(userItem, e);
                                                 }}
                                                 title="Delete User"
                                                 aria-label={`Delete ${userItem.name || userItem.username}`}
                                             >
-                                                <DeleteOutlineIcon style={{ fontSize: '1.2rem', pointerEvents: 'none' }} />
+                                                <DeleteOutlineIcon style={{ fontSize: '1.25rem', pointerEvents: 'none' }} />
                                             </button>
                                         )}
                                     </div>
@@ -908,7 +955,7 @@ const Users = () => {
                             </div>
                             
                             {/* Update Balance Section */}
-                            {canUpdateUserBalance && (
+                            {(isSuperAdmin || (currentAdmin?.permissions?.canUpdateUserBalance !== false && isUserAssignedToCurrentAdmin(selectedUser))) && (
                                 <div className={styles.updateBalance}>
                                     <label>
                                         <strong>Update Balance:</strong>
@@ -940,7 +987,7 @@ const Users = () => {
                             )}
 
                             {/* Update Password Section */}
-                            {canChangeUserPassword && (
+                            {(isSuperAdmin || (currentAdmin?.permissions?.canChangeUserPassword !== false && isUserAssignedToCurrentAdmin(selectedUser))) && (
                                 <div className={styles.updatePassword}>
                                     <label>
                                         <strong>Update Password:</strong>
@@ -970,32 +1017,34 @@ const Users = () => {
                             )}
 
                             {/* Update Agent Code Section */}
-                            <div className={styles.updatePassword}>
-                                <label>
-                                    <strong>Update Agent Code:</strong>
-                                </label>
-                                <input
-                                    type="text"
-                                    value={tempAgentCode}
-                                    onChange={(e) => setTempAgentCode(e.target.value)}
-                                    className={styles.passwordInput}
-                                    placeholder="Enter new agent code"
-                                />
-                                <button 
-                                    onClick={handleUpdateAgentCode} 
-                                    className={styles.updateButton}
-                                    disabled={updatingAgentCode}
-                                >
-                                    {updatingAgentCode ? (
-                                        <>
-                                            <PulseLoader color="#000000" size={8} />
-                                            <span style={{ marginLeft: '0.5rem' }}>Updating...</span>
-                                        </>
-                                    ) : (
-                                        'Update Agent Code'
-                                    )}
-                                </button>
-                            </div>
+                            {(isSuperAdmin || (currentAdmin?.permissions?.canCreateUsers !== false && isUserAssignedToCurrentAdmin(selectedUser))) && (
+                                <div className={styles.updatePassword}>
+                                    <label>
+                                        <strong>Update Agent Code:</strong>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={tempAgentCode}
+                                        onChange={(e) => setTempAgentCode(e.target.value)}
+                                        className={styles.passwordInput}
+                                        placeholder="Enter new agent code"
+                                    />
+                                    <button 
+                                        onClick={handleUpdateAgentCode} 
+                                        className={styles.updateButton}
+                                        disabled={updatingAgentCode}
+                                    >
+                                        {updatingAgentCode ? (
+                                            <>
+                                                <PulseLoader color="#000000" size={8} />
+                                                <span style={{ marginLeft: '0.5rem' }}>Updating...</span>
+                                            </>
+                                        ) : (
+                                            'Update Agent Code'
+                                        )}
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -1005,11 +1054,7 @@ const Users = () => {
             {showAddUserModal && (
                 <div
                     className={styles.addUserModal}
-                    onClick={(e) => {
-                        if (e.target === e.currentTarget) {
-                            handleCloseAddUserModal(e);
-                        }
-                    }}
+                    onClick={handleModalBackdropClick}
                 >
                     <div className={styles.addUserModalContent} onClick={(e) => e.stopPropagation()}>
                         <button
@@ -1116,33 +1161,37 @@ const Users = () => {
                                 {addUserErrors.agentCode && <p className={styles.errorText}>{addUserErrors.agentCode}</p>}
                             </div>
 
-                            <div className={styles.formGroup}>
-                                <label htmlFor="password" className={styles.label}>Password {isEditingUser ? '(Leave blank to keep)' : ''}</label>
-                                <input
-                                    type="password"
-                                    id="password"
-                                    name="password"
-                                    placeholder={isEditingUser ? "Leave blank to keep current" : "Enter password"}
-                                    value={addUserFormData.password}
-                                    onChange={handleAddUserChange}
-                                    className={styles.input}
-                                />
-                                {addUserErrors.password && <p className={styles.errorText}>{addUserErrors.password}</p>}
-                            </div>
+                            {(!isEditingUser || isSuperAdmin || currentAdmin?.permissions?.canChangeUserPassword !== false) && (
+                                <>
+                                    <div className={styles.formGroup}>
+                                        <label htmlFor="password" className={styles.label}>Password {isEditingUser ? '(Leave blank to keep)' : ''}</label>
+                                        <input
+                                            type="password"
+                                            id="password"
+                                            name="password"
+                                            placeholder={isEditingUser ? "Leave blank to keep current" : "Enter password"}
+                                            value={addUserFormData.password}
+                                            onChange={handleAddUserChange}
+                                            className={styles.input}
+                                        />
+                                        {addUserErrors.password && <p className={styles.errorText}>{addUserErrors.password}</p>}
+                                    </div>
 
-                            <div className={styles.formGroup}>
-                                <label htmlFor="confirmPassword" className={styles.label}>Confirm Password</label>
-                                <input
-                                    type="password"
-                                    id="confirmPassword"
-                                    name="confirmPassword"
-                                    placeholder="Confirm password"
-                                    value={addUserFormData.confirmPassword}
-                                    onChange={handleAddUserChange}
-                                    className={styles.input}
-                                />
-                                {addUserErrors.confirmPassword && <p className={styles.errorText}>{addUserErrors.confirmPassword}</p>}
-                            </div>
+                                    <div className={styles.formGroup}>
+                                        <label htmlFor="confirmPassword" className={styles.label}>Confirm Password</label>
+                                        <input
+                                            type="password"
+                                            id="confirmPassword"
+                                            name="confirmPassword"
+                                            placeholder="Confirm password"
+                                            value={addUserFormData.confirmPassword}
+                                            onChange={handleAddUserChange}
+                                            className={styles.input}
+                                        />
+                                        {addUserErrors.confirmPassword && <p className={styles.errorText}>{addUserErrors.confirmPassword}</p>}
+                                    </div>
+                                </>
+                            )}
 
                             <div className={styles.formActions}>
                                 <button 
@@ -1168,6 +1217,59 @@ const Users = () => {
                                 </button>
                             </div>
                         </form>
+                    </div>
+                </div>
+            )}
+
+            {/* Delete Confirmation Modal */}
+            {userToDelete && (
+                <div
+                    className={styles.deleteConfirmOverlay}
+                    onClick={(e) => {
+                        if (Date.now() - deleteConfirmOpenTimeRef.current < 450) {
+                            return;
+                        }
+                        if (e.target === e.currentTarget && !isDeletingUser) {
+                            setUserToDelete(null);
+                        }
+                    }}
+                >
+                    <div className={styles.deleteConfirmModal} onClick={(e) => e.stopPropagation()}>
+                        <div className={styles.deleteConfirmIconWrap}>
+                            <DeleteOutlineIcon style={{ fontSize: '2rem' }} />
+                        </div>
+                        <h3 className={styles.deleteConfirmTitle}>Delete User</h3>
+                        <p className={styles.deleteConfirmText}>
+                            Are you sure you want to delete user <strong>"{userToDelete.name || userToDelete.username}"</strong>?
+                        </p>
+                        <p className={styles.deleteConfirmSub}>
+                            This action cannot be undone and will permanently remove this user.
+                        </p>
+                        <div className={styles.deleteConfirmActions}>
+                            <button
+                                type="button"
+                                className={styles.deleteCancelBtn}
+                                onClick={() => setUserToDelete(null)}
+                                disabled={isDeletingUser}
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                type="button"
+                                className={styles.deleteProceedBtn}
+                                onClick={handleConfirmDelete}
+                                disabled={isDeletingUser}
+                            >
+                                {isDeletingUser ? (
+                                    <>
+                                        <PulseLoader color="#ffffff" size={6} />
+                                        <span style={{ marginLeft: '0.5rem' }}>Deleting...</span>
+                                    </>
+                                ) : (
+                                    'Yes, Delete'
+                                )}
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}

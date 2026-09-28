@@ -65,6 +65,30 @@ const Websites = () => {
     isSuperAdmin || user?.permissions?.canManageCategories !== false;
   const adminHeaderId = user?.id || user?._id || user?.username || "";
 
+  // Check if current admin can edit this specific website:
+  // Superadmin can edit ALL websites; Admin Master can edit their own websites only.
+  const canEditWebsiteItem = (website) => {
+    if (!website) return false;
+    if (isSuperAdmin) return true;
+    if (!canEditWebsites) return false;
+    const currentAdminId = (user?.id || user?._id || "").toString();
+    const currentUsername = (user?.username || "").toLowerCase();
+    const siteAdminId = (website.adminId || "").toString().toLowerCase();
+    return !siteAdminId || siteAdminId === currentAdminId.toLowerCase() || siteAdminId === currentUsername;
+  };
+
+  // Check if current admin can delete this specific website:
+  // Superadmin can delete ALL websites; Admin Master can delete their own websites only.
+  const canDeleteWebsiteItem = (website) => {
+    if (!website) return false;
+    if (isSuperAdmin) return true;
+    if (!canDeleteWebsites) return false;
+    const currentAdminId = (user?.id || user?._id || "").toString();
+    const currentUsername = (user?.username || "").toLowerCase();
+    const siteAdminId = (website.adminId || "").toString().toLowerCase();
+    return !siteAdminId || siteAdminId === currentAdminId.toLowerCase() || siteAdminId === currentUsername;
+  };
+
   const [subAdmins, setSubAdmins] = useState([]);
   const [selectedSubAdminFilter, setSelectedSubAdminFilter] = useState("all");
 
@@ -677,6 +701,7 @@ const Websites = () => {
 
   // Function to handle the delete action
   const handleDelete = async (item) => {
+    if (!canDeleteWebsiteItem(item)) return;
     try {
       const itemId = item?.id || item?._id;
       if (!itemId) {
@@ -809,6 +834,7 @@ const Websites = () => {
 
   // Function to open edit modal
   const openEditModal = (website) => {
+    if (!canEditWebsiteItem(website)) return;
     setEditingWebsite({
       id: website.id || website._id,
       website: website.website || website.name || "",
@@ -1096,7 +1122,7 @@ const Websites = () => {
                       )}
                     </div>
                     <div className={styles.websiteActions}>
-                      {canEditWebsites && (
+                      {canEditWebsiteItem(website) && (
                         <button
                           onClick={() => openEditModal(website)}
                           className={styles.editButton}
@@ -1106,7 +1132,7 @@ const Websites = () => {
                           <FaEdit size={17} />
                         </button>
                       )}
-                      {canDeleteWebsites && (
+                      {canDeleteWebsiteItem(website) && (
                         <button
                           onClick={() => handleDelete(website)}
                           className={styles.deleteButton}

@@ -194,7 +194,11 @@ exports.deleteSubAdmin = async (req, res) => {
     }
 
     const { id } = req.params;
-    const targetAdmin = await Admin.findById(id);
+    console.log('[BACKEND deleteSubAdmin] Deleting admin id/username:', id);
+    const targetAdmin = mongoose.Types.ObjectId.isValid(id)
+      ? await Admin.findById(id)
+      : await Admin.findOne({ username: id });
+
     if (!targetAdmin) {
       return res.status(404).json({ message: 'Sub-admin not found.' });
     }
@@ -203,7 +207,8 @@ exports.deleteSubAdmin = async (req, res) => {
       return res.status(400).json({ message: 'Cannot delete Superadmin.' });
     }
 
-    await Admin.findByIdAndDelete(id);
+    await Admin.findByIdAndDelete(targetAdmin._id);
+    console.log('[BACKEND deleteSubAdmin] Deleted successfully:', targetAdmin._id);
     res.status(200).json({ message: 'Sub-admin deleted successfully.' });
   } catch (error) {
     console.error('Error deleting sub-admin:', error);
@@ -294,14 +299,19 @@ exports.addAdminUser = async (req, res) => {
 exports.updateSubAdmin = async (req, res) => {
   try {
     const admin = await getAdminFromReq(req);
+    console.log('[BACKEND updateSubAdmin] Requester admin:', admin ? { id: admin._id, role: admin.role, username: admin.username } : 'NONE');
     if (!admin || admin.role !== 'superadmin') {
       return res.status(403).json({ message: 'Access denied. Superadmin only.' });
     }
 
     const { id } = req.params;
     const { name, phoneNumber, email, password, username, agentCode, permissions } = req.body;
+    console.log('[BACKEND updateSubAdmin] Target admin id/username:', id, 'Payload:', { name, username, email, phoneNumber, agentCode });
 
-    const targetAdmin = await Admin.findById(id);
+    const targetAdmin = mongoose.Types.ObjectId.isValid(id)
+      ? await Admin.findById(id)
+      : await Admin.findOne({ username: id });
+
     if (!targetAdmin) {
       return res.status(404).json({ message: 'Sub-admin not found.' });
     }
@@ -309,10 +319,18 @@ exports.updateSubAdmin = async (req, res) => {
     if (name) targetAdmin.name = name;
     if (phoneNumber) targetAdmin.phoneNumber = phoneNumber;
     if (email) targetAdmin.email = email.toLowerCase();
-    if (username) {
-      const existing = await Admin.findOne({ username, _id: { $ne: id } });
-      if (existing) return res.status(400).json({ message: 'Username is already taken.' });
-      targetAdmin.username = username;
+
+    // Only check uniqueness if the username actually changed
+    if (username && username.trim().toLowerCase() !== (targetAdmin.username || '').toLowerCase()) {
+      const existing = await Admin.findOne({ 
+        username: { $regex: new RegExp(`^${username.trim()}$`, 'i') }, 
+        _id: { $ne: targetAdmin._id } 
+      });
+      if (existing) {
+        console.warn('[BACKEND updateSubAdmin] Username conflict:', username);
+        return res.status(400).json({ message: 'Username is already taken.' });
+      }
+      targetAdmin.username = username.trim();
     }
     if (password && password.trim() !== '') {
       targetAdmin.password = password;
@@ -371,10 +389,13 @@ exports.updateUser = async (req, res) => {
     if (name) targetUser.name = name;
     if (phoneNumber) targetUser.phoneNumber = phoneNumber;
     if (email) targetUser.email = email.toLowerCase();
-    if (username) {
-      const existing = await User.findOne({ username, _id: { $ne: id } });
+    if (username && username.trim().toLowerCase() !== (targetUser.username || '').toLowerCase()) {
+      const existing = await User.findOne({ 
+        username: { $regex: new RegExp(`^${username.trim()}$`, 'i') }, 
+        _id: { $ne: targetUser._id } 
+      });
       if (existing) return res.status(400).json({ message: 'Username is already taken.' });
-      targetUser.username = username;
+      targetUser.username = username.trim();
     }
     if (password && password.trim() !== '') {
       if (admin && admin.role !== 'superadmin' && admin.permissions?.canChangeUserPassword === false) {
@@ -960,8 +981,13 @@ exports.updateUserAgentCode = async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    if (admin && admin.role !== 'superadmin' && user.assignedAdmin && user.assignedAdmin.toString() !== admin._id.toString()) {
-      return res.status(403).json({ message: 'Unauthorized: User is assigned to another administrator.' });
+    if (admin && admin.role !== 'superadmin') {
+      if (admin.permissions?.canCreateUsers === false) {
+        return res.status(403).json({ message: 'Permission denied: Cannot manage users.' });
+      }
+      if (user.assignedAdmin && user.assignedAdmin.toString() !== admin._id.toString()) {
+        return res.status(403).json({ message: 'Unauthorized: User is assigned to another administrator.' });
+      }
     }
 
     user.agentCode = agentCode;
@@ -1751,24 +1777,14 @@ exports.deleteUser = async (req, res) => {
     if (!admin) {
       return res.status(401).json({ message: 'Authentication required: Admin ID is missing.' });
     }
-    if (admin.role !== 'superadmin') {
-      return res.status(403).json({ message: 'Permission denied: Only Superadmin can delete users.' });
-    }
-
     const user = await User.findById(userId);
-
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    if (admin && admin.role !== 'superadmin') {
-      const allowedIdentifiers = await getAdminUserIdentifiers(admin._id);
-      const isOwner = (user.assignedAdmin && user.assignedAdmin.toString() === admin._id.toString()) ||
-                      allowedIdentifiers.includes(user._id.toString()) ||
-                      allowedIdentifiers.includes(user.username);
-      if (!isOwner) {
-        return res.status(403).json({ message: 'Unauthorized: User does not belong to your assigned users.' });
-      }
+    if (!admin || admin.role !== 'superadmin') {
+      console.warn('[BACKEND deleteUser] Unauthorized delete attempt by non-superadmin:', admin ? admin.username : 'unauthenticated');
+      return res.status(403).json({ message: 'Permission denied: Users can only be deleted by Superadmin.' });
     }
 
     await User.findByIdAndDelete(userId);

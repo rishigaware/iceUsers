@@ -7,6 +7,7 @@ import {
   FaUsers, 
   FaPlus, 
   FaTrash, 
+  FaEdit,
   FaTimes, 
   FaKey, 
   FaCheck, 
@@ -45,6 +46,8 @@ export default function SubAdmins() {
   const [updatingPerms, setUpdatingPerms] = useState({});
   const [statusMessage, setStatusMessage] = useState({ text: '', type: '' });
   const [expandedAdmins, setExpandedAdmins] = useState({}); // Default collapsed (empty object)
+  const [adminToDelete, setAdminToDelete] = useState(null);
+  const [isDeletingAdmin, setIsDeletingAdmin] = useState(false);
 
   const toggleExpand = (adminId) => {
     setExpandedAdmins(prev => ({
@@ -52,6 +55,17 @@ export default function SubAdmins() {
       [adminId]: !prev[adminId]
     }));
   };
+
+  useEffect(() => {
+    if (isModalOpen || adminToDelete) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isModalOpen, adminToDelete]);
 
   // Form state
   const [formData, setFormData] = useState({
@@ -112,6 +126,7 @@ export default function SubAdmins() {
   };
 
   const openEditModal = (admin) => {
+    console.log('[SUBADMIN DEBUG] openEditModal called with admin:', admin);
     setFormData({
       name: admin.name || '',
       username: admin.username || '',
@@ -222,12 +237,14 @@ export default function SubAdmins() {
     }
   };
 
-  const handleDeleteSubAdmin = async (adminId, username) => {
-    if (!window.confirm(`Are you sure you want to delete Admin Master "${username}"? Users created by this Admin Master will lose their assigned admin.`)) {
-      return;
-    }
+  const handleConfirmDeleteSubAdmin = async () => {
+    if (!adminToDelete) return;
+    const adminId = adminToDelete.id || adminToDelete._id;
+    const username = adminToDelete.username;
+    console.log('[SUBADMIN DEBUG] handleConfirmDeleteSubAdmin started for:', username, adminId);
 
     try {
+      setIsDeletingAdmin(true);
       const res = await fetch(`${url}/api/admin/subadmins/${adminId}`, {
         method: 'DELETE',
         headers: {
@@ -236,21 +253,27 @@ export default function SubAdmins() {
         }
       });
 
+      const data = await res.json().catch(() => ({}));
+      console.log('[SUBADMIN DEBUG] Delete subadmin response status:', res.status, data);
+
       if (res.ok) {
         showToast(`Admin Master "${username}" deleted successfully`);
         setSubAdmins(prev => prev.filter(a => (a.id !== adminId && a._id !== adminId)));
+        setAdminToDelete(null);
       } else {
-        const err = await res.json();
-        showToast(err.message || 'Failed to delete Admin Master', 'error');
+        showToast(data.message || 'Failed to delete Admin Master', 'error');
       }
     } catch (e) {
-      console.error('Error deleting Admin Master:', e);
+      console.error('[SUBADMIN DEBUG] Error deleting Admin Master:', e);
       showToast('Error deleting Admin Master', 'error');
+    } finally {
+      setIsDeletingAdmin(false);
     }
   };
 
   const handleCreateSubmit = async (e) => {
     e.preventDefault();
+    console.log('[SUBADMIN DEBUG] Submitting subadmin form, isEditing:', isEditing, 'editAdminId:', editAdminId, 'formData:', formData);
 
     if (!formData.name || !formData.username || (!isEditing && !formData.password) || !formData.email || !formData.phoneNumber) {
       showToast('Please fill out all required fields', 'error');
@@ -260,6 +283,7 @@ export default function SubAdmins() {
     try {
       const endpoint = isEditing ? `${url}/api/admin/subadmins/${editAdminId}` : `${url}/api/admin/subadmins`;
       const method = isEditing ? 'PUT' : 'POST';
+      console.log('[SUBADMIN DEBUG] Fetching:', method, endpoint);
 
       const res = await fetch(endpoint, {
         method,
@@ -271,6 +295,7 @@ export default function SubAdmins() {
       });
 
       const data = await res.json();
+      console.log('[SUBADMIN DEBUG] Response status:', res.status, data);
 
       if (res.ok) {
         showToast(`Admin Master "${formData.username}" ${isEditing ? 'updated' : 'created'} successfully!`);
@@ -281,7 +306,7 @@ export default function SubAdmins() {
         showToast(data.message || `Failed to ${isEditing ? 'update' : 'create'} Admin Master`, 'error');
       }
     } catch (e) {
-      console.error(`Error ${isEditing ? 'updating' : 'creating'} Admin Master:`, e);
+      console.error(`[SUBADMIN DEBUG] Error ${isEditing ? 'updating' : 'creating'} Admin Master:`, e);
       showToast('Error submitting form', 'error');
     }
   };
@@ -422,12 +447,44 @@ export default function SubAdmins() {
                   </div>
 
                   <div className={styles.cardHeaderActions}>
+                    <button
+                      type="button"
+                      className={styles.headerEditBtn}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        console.log('[SUBADMIN DEBUG] Header Edit button clicked for:', subAdmin.username);
+                        openEditModal(subAdmin);
+                      }}
+                      title="Edit Admin Master"
+                      aria-label={`Edit ${subAdmin.username}`}
+                    >
+                      <FaEdit /> <span>Edit</span>
+                    </button>
+                    <button
+                      type="button"
+                      className={styles.headerDeleteBtn}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        console.log('[SUBADMIN DEBUG] Header Delete button clicked for:', subAdmin.username);
+                        setAdminToDelete(subAdmin);
+                      }}
+                      title="Delete Admin Master"
+                      aria-label={`Delete ${subAdmin.username}`}
+                    >
+                      <FaTrash /> <span>Delete</span>
+                    </button>
                     <div 
                       className={`${styles.expandBtn} ${isExpanded ? styles.expandBtnActive : ''}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleExpand(adminId);
+                      }}
+                      role="button"
+                      tabIndex={0}
                       aria-label={isExpanded ? "Collapse Admin Master details" : "Expand Admin Master details and permissions"}
                     >
                       <span className={styles.expandBtnText}>
-                        {isExpanded ? 'Hide Perms' : 'Permissions'}
+                        {isExpanded ? 'Hide' : 'Perms'}
                       </span>
                       {isExpanded ? (
                         <FaChevronUp className={styles.expandIcon} />
@@ -457,19 +514,21 @@ export default function SubAdmins() {
                           className={styles.secondaryBtn}
                           onClick={(e) => {
                             e.stopPropagation();
+                            console.log('[SUBADMIN DEBUG] Expanded Section Edit button clicked for:', subAdmin.username);
                             openEditModal(subAdmin);
                           }}
                           title="Edit Admin Master"
-                          style={{ background: 'rgba(255,255,255,0.1)', color: '#fff', border: 'none', padding: '6px 12px', borderRadius: '6px', fontSize: '13px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}
+                          style={{ background: 'rgba(56, 189, 248, 0.15)', color: '#38bdf8', border: '1px solid rgba(56, 189, 248, 0.3)', padding: '6px 12px', borderRadius: '8px', fontSize: '13px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 600 }}
                         >
-                          Edit
+                          <FaEdit /> Edit
                         </button>
                         <button 
                           type="button"
                           className={styles.deleteBtn}
                           onClick={(e) => {
                             e.stopPropagation();
-                            handleDeleteSubAdmin(adminId, subAdmin.username);
+                            console.log('[SUBADMIN DEBUG] Expanded Section Delete button clicked for:', subAdmin.username);
+                            setAdminToDelete(subAdmin);
                           }}
                           title="Delete Admin Master"
                         >
@@ -635,6 +694,45 @@ export default function SubAdmins() {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* In-App Delete Confirmation Modal */}
+      {adminToDelete && (
+        <div 
+          className={styles.deleteConfirmOverlay}
+          onClick={() => !isDeletingAdmin && setAdminToDelete(null)}
+        >
+          <div className={styles.deleteConfirmModal} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.deleteConfirmIconWrap}>
+              <FaTrash />
+            </div>
+            <h3 className={styles.deleteConfirmTitle}>Delete Admin Master</h3>
+            <p className={styles.deleteConfirmText}>
+              Are you sure you want to delete Admin Master <strong>"{adminToDelete.username}"</strong>?
+            </p>
+            <p className={styles.deleteConfirmSub}>
+              Users created by this Admin Master will lose their assigned admin. This action cannot be undone.
+            </p>
+            <div className={styles.deleteConfirmActions}>
+              <button
+                type="button"
+                className={styles.deleteCancelBtn}
+                onClick={() => setAdminToDelete(null)}
+                disabled={isDeletingAdmin}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className={styles.deleteProceedBtn}
+                onClick={handleConfirmDeleteSubAdmin}
+                disabled={isDeletingAdmin}
+              >
+                {isDeletingAdmin ? 'Deleting...' : 'Yes, Delete'}
+              </button>
+            </div>
           </div>
         </div>
       )}

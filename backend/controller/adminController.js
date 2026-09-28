@@ -352,7 +352,7 @@ exports.updateUser = async (req, res) => {
     }
 
     const { id } = req.params;
-    const { name, phoneNumber, email, password, username, agentCode } = req.body;
+    const { name, phoneNumber, email, password, username, agentCode, targetAdminId } = req.body;
 
     const targetUser = await User.findById(id);
     if (!targetUser) {
@@ -360,8 +360,10 @@ exports.updateUser = async (req, res) => {
     }
 
     if (admin && admin.role !== 'superadmin') {
-       if (targetUser.assignedAdmin?.toString() !== admin._id.toString() &&
-           targetUser.assignedAdminUsername !== admin.username) {
+       const isOwner = (targetUser.assignedAdmin && targetUser.assignedAdmin.toString() === admin._id.toString()) ||
+                       (targetUser.assignedAdminUsername && admin.username && targetUser.assignedAdminUsername.toLowerCase() === admin.username.toLowerCase()) ||
+                       (targetUser.agentCode && admin.agentCode && targetUser.agentCode.trim() !== '' && targetUser.agentCode === admin.agentCode);
+       if (!isOwner) {
           return res.status(403).json({ message: 'Access denied: You do not manage this user.' });
        }
     }
@@ -395,6 +397,19 @@ exports.updateUser = async (req, res) => {
             targetUser.assignedAdminUsername = superAdmin.username;
           }
         }
+      }
+    }
+
+    if (admin && admin.role === 'superadmin' && targetAdminId !== undefined) {
+      if (targetAdminId && targetAdminId !== '') {
+        const targetAdmin = await Admin.findById(targetAdminId);
+        if (targetAdmin) {
+          targetUser.assignedAdmin = targetAdmin._id;
+          targetUser.assignedAdminUsername = targetAdmin.username;
+        }
+      } else {
+        targetUser.assignedAdmin = null;
+        targetUser.assignedAdminUsername = 'Superadmin';
       }
     }
 
@@ -1736,8 +1751,8 @@ exports.deleteUser = async (req, res) => {
     if (!admin) {
       return res.status(401).json({ message: 'Authentication required: Admin ID is missing.' });
     }
-    if (admin.role !== 'superadmin' && admin.permissions?.canDeleteUsers !== true) {
-      return res.status(403).json({ message: 'Permission denied: Cannot delete users.' });
+    if (admin.role !== 'superadmin') {
+      return res.status(403).json({ message: 'Permission denied: Only Superadmin can delete users.' });
     }
 
     const user = await User.findById(userId);

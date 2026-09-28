@@ -43,16 +43,50 @@ const Users = () => {
     const [isEditingUser, setIsEditingUser] = useState(false);
     const [editUserId, setEditUserId] = useState(null);
     const toast = useRef(null);
-    const { user, url } = useUser();
+    const { user: currentAdmin, url } = useUser();
 
     // Permission flags
-    const isSuperAdmin = checkIsSuperAdmin(user);
-    const canCreateUsers = isSuperAdmin || user?.permissions?.canCreateUsers !== false;
-    const canUpdateUserBalance = isSuperAdmin || user?.permissions?.canUpdateUserBalance !== false;
-    const canChangeUserPassword = isSuperAdmin || user?.permissions?.canChangeUserPassword !== false;
-    const canDeleteUsers = isSuperAdmin || user?.permissions?.canDeleteUsers === true;
+    const isSuperAdmin = checkIsSuperAdmin(currentAdmin);
+    const canCreateUsers = isSuperAdmin || currentAdmin?.permissions?.canCreateUsers !== false;
+    const canUpdateUserBalance = isSuperAdmin || currentAdmin?.permissions?.canUpdateUserBalance !== false;
+    const canChangeUserPassword = isSuperAdmin || currentAdmin?.permissions?.canChangeUserPassword !== false;
+    const canDeleteUsers = isSuperAdmin;
 
-    const adminHeaderId = user?.id || user?._id || user?.username || '';
+    const adminHeaderId = currentAdmin?.id || currentAdmin?._id || currentAdmin?.username || '';
+
+    // Check if current admin can edit this specific user:
+    // Superadmin can edit ALL users; Admin Master can edit HIS users only.
+    const canEditUser = (userItem) => {
+        if (!userItem) return false;
+        if (isSuperAdmin) return true;
+
+        if (currentAdmin?.permissions?.canCreateUsers === false) return false;
+
+        const currentAdminId = (currentAdmin?.id || currentAdmin?._id || '').toString();
+        const currentAdminUsername = (currentAdmin?.username || '').toLowerCase();
+        const currentAdminAgentCode = (currentAdmin?.agentCode || '').trim();
+
+        const userAssignedAdminId = userItem.assignedAdmin
+            ? (typeof userItem.assignedAdmin === 'object'
+                ? (userItem.assignedAdmin._id || userItem.assignedAdmin.id || '').toString()
+                : userItem.assignedAdmin.toString())
+            : '';
+        const userAssignedAdminUsername = (userItem.assignedAdminUsername || '').toLowerCase();
+        const userAgentCode = (userItem.agentCode || '').trim();
+
+        const isHisUser = Boolean(
+            (currentAdminId && userAssignedAdminId && currentAdminId === userAssignedAdminId) ||
+            (currentAdminUsername && userAssignedAdminUsername && currentAdminUsername === userAssignedAdminUsername) ||
+            (currentAdminAgentCode && userAgentCode && currentAdminAgentCode === userAgentCode)
+        );
+
+        return isHisUser;
+    };
+
+    // Only Superadmin can delete users as per requirements
+    const canDeleteUser = () => {
+        return Boolean(isSuperAdmin);
+    };
 
     // Function to get user initials
     const getUserInitials = (name) => {
@@ -205,7 +239,11 @@ const Users = () => {
     };
 
     // Handle close add user modal
-    const handleCloseAddUserModal = () => {
+    const handleCloseAddUserModal = (e) => {
+        if (e) {
+            if (e.preventDefault) e.preventDefault();
+            if (e.stopPropagation) e.stopPropagation();
+        }
         setShowAddUserModal(false);
         setAddUserFormData({
             name: '',
@@ -223,7 +261,16 @@ const Users = () => {
     };
 
     const openEditUserModal = (userToEdit, e) => {
-        e.stopPropagation();
+        if (e) {
+            if (e.preventDefault) e.preventDefault();
+            if (e.stopPropagation) e.stopPropagation();
+        }
+        setSelectedUser(null);
+
+        const targetAdminId = typeof userToEdit.assignedAdmin === 'object' && userToEdit.assignedAdmin !== null
+            ? (userToEdit.assignedAdmin._id ? userToEdit.assignedAdmin._id.toString() : userToEdit.assignedAdmin.id ? userToEdit.assignedAdmin.id.toString() : '')
+            : (userToEdit.assignedAdmin ? String(userToEdit.assignedAdmin) : '');
+
         setAddUserFormData({
             name: userToEdit.name || '',
             username: userToEdit.username || '',
@@ -232,7 +279,7 @@ const Users = () => {
             confirmPassword: '',
             phoneNumber: userToEdit.phoneNumber || '',
             agentCode: userToEdit.agentCode || '',
-            targetAdminId: userToEdit.assignedAdmin || '',
+            targetAdminId: targetAdminId,
         });
         setAddUserErrors({});
         setIsEditingUser(true);
@@ -407,15 +454,18 @@ const Users = () => {
         }
     };
 
-    const handleUserClick = async (user) => {
-        fetchUsers(selectedSubAdminFilter);
-        const latestUser = users.find((u) => u.id === user.id);
+    const handleUserClick = async (userItem) => {
+        const uId = userItem?.id || userItem?._id;
+        const latestUser = users.find((u) => (u.id || u._id) === uId) || userItem;
+        if (!latestUser) return;
         setSelectedUser(latestUser);
-        setTempBalance(latestUser.balance || "0");
+        setTempBalance(latestUser.balance !== undefined ? String(latestUser.balance) : "0");
         setTempAgentCode(latestUser.agentCode || "");
         
         // Fetch payment details for the user
-        await fetchUserPaymentDetails(user.id);
+        if (uId) {
+            await fetchUserPaymentDetails(uId);
+        }
     };
 
     // Function to fetch user payment details
@@ -470,7 +520,7 @@ const Users = () => {
             });
       
             // Update local state to remove the user
-            setUsers(users.filter(user => user.id !== userId));
+            setUsers((prevUsers) => prevUsers.filter(u => u.id !== userId && u._id !== userId));
         } catch (error) {
             toast.current.show({
                 severity: 'error',
@@ -685,64 +735,88 @@ const Users = () => {
                         <p>Try adjusting your search criteria or check if there are any users in the system.</p>
                     </div>
                 ) : (
-                    currentUsers.map((user) => (
-                        <div
-                            key={user.id}
-                            className={styles.userCard}
-                            onClick={() => handleUserClick(user)}
-                        >
-                            <div className={styles.userCardContent}>
-                                {/* Initials Avatar */}
-                                <div className={styles.initialsAvatar}>
-                                    {getUserInitials(user.name)}
-                                </div>
+                    currentUsers.map((userItem) => {
+                        const canEdit = canEditUser(userItem);
+                        const canDel = canDeleteUser(userItem);
 
-                                {/* User Details */}
-                                <div className={styles.userDetails}>
-                                    <p>
-                                        <strong>Name:</strong> {user.name || 'N/A'}
-                                    </p>
-                                    <p>
-                                        <strong>Username:</strong> {user.username || 'N/A'}
-                                    </p>
-                                    <p>
-                                        <strong>Phone:</strong> {user.phoneNumber || 'N/A'}
-                                    </p>
-                                    <p>
-                                        <strong>Balance:</strong> ₹{(parseFloat(user.balance) || 0).toFixed(2)}
-                                    </p>
-                                    {isSuperAdmin && (
-                                        <div className={styles.assignedAdminBadge}>
-                                            Admin: {user.assignedAdminUsername || 'Superadmin'}
-                                        </div>
-                                    )}
-                                </div>
+                        return (
+                            <div
+                                key={userItem.id || userItem._id}
+                                className={styles.userCard}
+                                onClick={() => handleUserClick(userItem)}
+                            >
+                                {/* Card Action Buttons (Edit & Delete) */}
+                                {(canEdit || canDel) && (
+                                    <div
+                                        className={styles.cardActions}
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                        }}
+                                    >
+                                        {canEdit && (
+                                            <button
+                                                type="button"
+                                                className={`${styles.cardActionButton} ${styles.cardEditButton}`}
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    e.stopPropagation();
+                                                    openEditUserModal(userItem, e);
+                                                }}
+                                                title="Edit User"
+                                                aria-label={`Edit ${userItem.name || userItem.username}`}
+                                            >
+                                                <EditOutlinedIcon style={{ fontSize: '1.2rem', pointerEvents: 'none' }} />
+                                            </button>
+                                        )}
+                                        {canDel && (
+                                            <button
+                                                type="button"
+                                                className={`${styles.cardActionButton} ${styles.cardDeleteButton}`}
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    e.stopPropagation();
+                                                    handleDeleteUser(userItem.id || userItem._id, userItem.name || userItem.username);
+                                                }}
+                                                title="Delete User"
+                                                aria-label={`Delete ${userItem.name || userItem.username}`}
+                                            >
+                                                <DeleteOutlineIcon style={{ fontSize: '1.2rem', pointerEvents: 'none' }} />
+                                            </button>
+                                        )}
+                                    </div>
+                                )}
 
-                                {/* Delete Icon */}
-                                <div style={{ display: 'flex', gap: '8px', position: 'absolute', top: '15px', right: '15px' }}>
-                                    {canCreateUsers && (
-                                        <EditOutlinedIcon
-                                            className={styles.deleteIcon}
-                                            style={{ color: '#ffffff', background: 'rgba(255,255,255,0.1)', padding: '4px', borderRadius: '4px', fontSize: '1.8rem' }}
-                                            onClick={(e) => openEditUserModal(user, e)}
-                                            titleAccess="Edit User"
-                                        />
-                                    )}
-                                    {canDeleteUsers && (
-                                        <DeleteOutlineIcon
-                                            className={styles.deleteIcon}
-                                            style={{ padding: '4px', borderRadius: '4px', fontSize: '1.8rem' }}
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                handleDeleteUser(user.id, user.name || user.username);
-                                            }}
-                                            titleAccess="Delete User"
-                                        />
-                                    )}
+                                <div className={styles.userCardContent}>
+                                    {/* Initials Avatar */}
+                                    <div className={styles.initialsAvatar}>
+                                        {getUserInitials(userItem.name)}
+                                    </div>
+
+                                    {/* User Details */}
+                                    <div className={styles.userDetails}>
+                                        <p>
+                                            <strong>Name:</strong> {userItem.name || 'N/A'}
+                                        </p>
+                                        <p>
+                                            <strong>Username:</strong> {userItem.username || 'N/A'}
+                                        </p>
+                                        <p>
+                                            <strong>Phone:</strong> {userItem.phoneNumber || 'N/A'}
+                                        </p>
+                                        <p>
+                                            <strong>Balance:</strong> ₹{(parseFloat(userItem.balance) || 0).toFixed(2)}
+                                        </p>
+                                        {isSuperAdmin && (
+                                            <div className={styles.assignedAdminBadge}>
+                                                Admin: {userItem.assignedAdminUsername || 'Superadmin'}
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))
+                        );
+                    })
                 )}
             </div>
 
@@ -929,9 +1003,21 @@ const Users = () => {
 
             {/* Add User Modal */}
             {showAddUserModal && (
-                <div className={styles.addUserModal}>
-                    <div className={styles.addUserModalContent}>
-                        <button onClick={handleCloseAddUserModal} className={styles.closeButton}>
+                <div
+                    className={styles.addUserModal}
+                    onClick={(e) => {
+                        if (e.target === e.currentTarget) {
+                            handleCloseAddUserModal(e);
+                        }
+                    }}
+                >
+                    <div className={styles.addUserModalContent} onClick={(e) => e.stopPropagation()}>
+                        <button
+                            type="button"
+                            onClick={(e) => handleCloseAddUserModal(e)}
+                            className={styles.closeButton}
+                            aria-label="Close"
+                        >
                             &times;
                         </button>
                         

@@ -315,7 +315,7 @@ const HomeHeading = () => {
           <span className={styles.createIdEmoji}>🚀</span>
           <FaPlus size={18} className={styles.createIdIcon} />
           <span className={styles.createIdText}>
-            CREATE SELF ADMIN Masters&apos;S
+            CREATE SELF USER ID&apos;S
           </span>
           <span className={styles.createIdEmoji}>⚡</span>
         </div>

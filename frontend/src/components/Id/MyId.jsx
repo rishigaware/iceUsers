@@ -432,6 +432,33 @@ const MyId = () => {
                 </>
               )}
             </div>
+
+            {item.type !== "request" && item.status !== "Closed" && item.status !== "Close Requested" && (
+              <div className={styles.cardActionsRow}>
+                <button
+                  type="button"
+                  className={styles.cardDepositBtn}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDepositClick(item);
+                  }}
+                >
+                  <PiHandDepositDuotone className={styles.cardActionIcon} />
+                  <span>Deposit</span>
+                </button>
+                <button
+                  type="button"
+                  className={styles.cardWithdrawalBtn}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleWithdrawalClick(item);
+                  }}
+                >
+                  <BiMoneyWithdraw className={styles.cardActionIcon} />
+                  <span>Withdrawal</span>
+                </button>
+              </div>
+            )}
             {item.type === "request" ? (
               <div className={styles.iconContainer}>
                 <div className={styles.requestOptions}>
@@ -520,24 +547,6 @@ const MyId = () => {
                           className={`${styles.mobileIcon} ${styles.infoIcon}`}
                         />
                         <span>ID Details</span>
-                      </div>
-                      <div
-                        className={styles.mobilePopupItem}
-                        onClick={() => handleMobileAction("deposit", item)}
-                      >
-                        <PiHandDepositDuotone
-                          className={`${styles.mobileIcon} ${styles.depositIcon}`}
-                        />
-                        <span>Deposit</span>
-                      </div>
-                      <div
-                        className={styles.mobilePopupItem}
-                        onClick={() => handleMobileAction("withdrawal", item)}
-                      >
-                        <BiMoneyWithdraw
-                          className={`${styles.mobileIcon} ${styles.withdrawalIcon}`}
-                        />
-                        <span>Withdrawal</span>
                       </div>
                       <div
                         className={styles.mobilePopupItem}

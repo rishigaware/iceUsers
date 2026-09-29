@@ -556,6 +556,75 @@
   /* Red */
 }
 
+/* Card Deposit & Withdrawal Action Buttons */
+.cardActionsRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  width: 100%;
+}
+
+.cardDepositBtn,
+.cardWithdrawalBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: 7px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 28px;
+  border: 1px solid transparent;
+  flex: 1;
+  max-width: 120px;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cardDepositBtn {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.22) 0%, rgba(5, 150, 105, 0.32) 100%);
+  border-color: rgba(16, 185, 129, 0.55);
+  color: #34d399;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.15);
+}
+
+.cardDepositBtn:hover,
+.cardDepositBtn:active {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.35) 0%, rgba(5, 150, 105, 0.45) 100%);
+  border-color: #10b981;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(16, 185, 129, 0.25);
+}
+
+.cardWithdrawalBtn {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.22) 0%, rgba(217, 119, 6, 0.32) 100%);
+  border-color: rgba(245, 158, 11, 0.55);
+  color: #fbbf24;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15);
+}
+
+.cardWithdrawalBtn:hover,
+.cardWithdrawalBtn:active {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.35) 0%, rgba(217, 119, 6, 0.45) 100%);
+  border-color: #f59e0b;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(245, 158, 11, 0.25);
+}
+
+.cardActionIcon {
+  font-size: 0.95rem;
+}
+
+@media (min-width: 768px) {
+  .cardActionsRow {
+    display: none;
+  }
+}
+
 /* ===== MOBILE POPUP STYLES ===== */
 .mobileMenu {
   display: none;
@@ -718,11 +787,12 @@
 /* Mobile screens */
 @media (max-width: 767px) {
   .idCard {
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     align-items: flex-start;
-    padding: 10px 12px;
-    gap: 12px;
+    padding: 12px;
+    gap: 10px;
     min-height: auto;
+    position: relative;
   }
 
   .details {
@@ -732,13 +802,16 @@
     order: 2;
     width: auto;
     flex: 1;
+    min-width: 0;
     margin-top: 0;
+    padding-right: 36px;
   }
 
   .logo {
     order: 1;
     width: 60px;
     height: 60px;
+    flex-shrink: 0;
   }
 
   .iconContainer {
@@ -765,10 +838,55 @@
   .mobileMenu {
     display: block;
   }
+
+  .cardActionsRow {
+    display: flex;
+    order: 3;
+    width: 100%;
+    gap: 8px;
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    box-sizing: border-box;
+  }
+
+  .cardDepositBtn,
+  .cardWithdrawalBtn {
+    flex: 1;
+    width: 50%;
+    max-width: none;
+    min-width: 0;
+    padding: 5px 8px;
+    font-size: 0.75rem;
+    min-height: 28px;
+    gap: 4px;
+    border-radius: 6px;
+    white-space: nowrap;
+    box-sizing: border-box;
+  }
 }
 
 /* Small mobile screens */
 @media (max-width: 480px) {
+  .cardActionsRow {
+    gap: 6px;
+    margin-top: 5px;
+    padding-top: 5px;
+  }
+
+  .cardDepositBtn,
+  .cardWithdrawalBtn {
+    padding: 4px 6px;
+    font-size: 0.72rem;
+    min-height: 26px;
+    gap: 3px;
+    border-radius: 6px;
+  }
+
+  .cardActionIcon {
+    font-size: 0.88rem;
+  }
+
   .iconContainer {
     gap: 0.3rem;
     flex-wrap: wrap;

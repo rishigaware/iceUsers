@@ -136,7 +136,9 @@ const Transactions = () => {
       });
       setTransactions((prevTransactions) =>
         prevTransactions.map((txn) =>
-          txn.id === txnId ? { ...txn, status: "Accepted" } : txn,
+          txn.id === txnId || txn._id === txnId
+            ? { ...txn, status: "Accepted" }
+            : txn,
         ),
       );
     } catch (err) {
@@ -177,7 +179,9 @@ const Transactions = () => {
       });
       setTransactions((prevTransactions) =>
         prevTransactions.map((txn) =>
-          txn.id === txnId ? { ...txn, status: "Rejected" } : txn,
+          txn.id === txnId || txn._id === txnId
+            ? { ...txn, status: "Rejected" }
+            : txn,
         ),
       );
     } catch (err) {
@@ -434,15 +438,22 @@ const Transactions = () => {
 
               {isAdmin && (
                 <div className={styles.column}>
-                  {txn.status === "Pending" &&
-                  !(
-                    txn.transactionType === "deposit" ||
-                    txn.description?.includes("ID Creation Request") ||
-                    txn.paymentMethod === "ID Creation Request" ||
-                    txn.transactionType === "withdrawal" ||
-                    txn.transactionType === "close_id" ||
-                    txn.transactionType === "password_change"
-                  ) ? (
+                  {txn.description?.includes("ID Creation Request") ||
+                  txn.paymentMethod === "ID Creation Request" ? (
+                    <div className={styles.actions}>
+                      <span className={styles.autoProcessedNote}>
+                        Auto-processed via My IDs
+                      </span>
+                    </div>
+                  ) : txn.transactionType === "close_id" ||
+                    txn.transactionType === "password_change" ? (
+                    <div className={styles.actions}>
+                      <span className={styles.autoProcessedNote}>
+                        Handled via ID Requests
+                      </span>
+                    </div>
+                  ) : txn.status === "Pending" ||
+                    txn.status?.toLowerCase() === "pending" ? (
                     canManageTransactions ? (
                       <div className={styles.actions}>
                         <button
@@ -463,19 +474,10 @@ const Transactions = () => {
                         View Only
                       </span>
                     )
-                  ) : txn.description?.includes("ID Creation Request") ||
-                    txn.paymentMethod === "ID Creation Request" ? (
-                    <div className={styles.actions}>
-                      <span className={styles.autoProcessedNote}>
-                        Auto-processed via My IDs
-                      </span>
-                    </div>
                   ) : (
                     <div className={styles.actions}>
                       <span className={styles.processedText}>
-                        {txn.status === "Pending"
-                          ? "Pending Action"
-                          : `Processed (${txn.status})`}
+                        Processed ({txn.status})
                       </span>
                     </div>
                   )}
